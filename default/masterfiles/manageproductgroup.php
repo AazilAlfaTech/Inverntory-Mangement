@@ -59,7 +59,7 @@ include_once "../../files/head.php";
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
-                                                <label class=" col-form-label">Groupe Cade</label>
+                                                <label class=" col-form-label">Group Code</label>
                                                 <input type="text" class="form-control" placeholder="">
                                             </div>
                                             <div class="col-sm-6">
