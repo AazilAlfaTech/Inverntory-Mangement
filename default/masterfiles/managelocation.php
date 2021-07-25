@@ -16,7 +16,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Product Location</h4>
+                                    <h4>Manage Location</h4>
 
                                 </div>
                             </div>
