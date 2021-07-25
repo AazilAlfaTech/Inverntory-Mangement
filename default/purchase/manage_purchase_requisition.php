@@ -16,7 +16,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Purchase Requisition added by me</h4>
+                                    <h4>Manage Purchase Requisition</h4>
 
                                 </div>
                             </div>
@@ -138,6 +138,7 @@ include_once "../../files/head.php";
                                                         <th>Product</th>
                                                         <th>Price</th>
                                                         <th>Qty</th>
+                                                        <th>Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -145,6 +146,7 @@ include_once "../../files/head.php";
                                                         <th scope="row">1</th>
                                                         <td>Mark</td>
                                                         <td>Otto</td>
+                                                        <td>@mdo</td>
                                                         <td>@mdo</td>
                                                     </tr>
                                                     <tr>
