@@ -407,17 +407,17 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../purchase/manage_purchase_requisition.php">
+                                        <a href="../purchase_requisition/manage_purchase_requisition.php">
                                             <span class="pcoded-mtext">Manage Purchase Requisition</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../purchase/manage_purchase_order.php " >
+                                        <a href="../purchase_order/manage_purchase_order.php " >
                                             <span class="pcoded-mtext">Mange Purchase Order </span>
                                         </a>
                                     </li>
                                     <li class="">
-                                        <a href="../purchase/manage_GRN.php "> 
+                                        <a href="../GRN/manage_GRN.php "> 
                                             <span class="pcoded-mtext">Manage GRN</span>
                                         </a>
                                     </li>
