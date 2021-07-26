@@ -58,13 +58,31 @@ include_once "../../files/head.php";
 
 
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label class=" col-form-label">Location Code</label>
                                                 <input type="text" class="form-control" placeholder="">
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label class=" col-form-label">location Name</label>
                                                 <input type="text" class="form-control" placeholder="">
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <label class=" col-form-label">Contact No</label>
+                                                <input type="text" class="form-control" placeholder="">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                           
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">E-mail </label>
+                                                <input type="text" class="form-control" placeholder="">
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">Address </label>
+                                                <textarea rows="5" cols="5" class="form-control" placeholder="" spellcheck="false"></textarea>
                                             </div>
                                         </div>
 
@@ -108,6 +126,10 @@ include_once "../../files/head.php";
                                                                     <tr>
                                                                         <th>Location Code</th>
                                                                         <th>Lcation Name</th>
+                                                                        <th>Contact No</th>
+                                                                        <th>E-mail</th>
+                                                                        <th>Address</th>
+                                                                      
                                                                       
                                                                     </tr>
                                                                 </thead>
@@ -115,6 +137,10 @@ include_once "../../files/head.php";
                                                                     <tr>
                                                                         <td>At123</td>
                                                                         <td>Alfa grp</td>
+                                                                        <td>At123</td>
+                                                                        <td>Alfa grp</td>
+                                                                        <td>Alfa grp</td>
+                                                                       
                                                                        
                                                                     </tr>
                                            
