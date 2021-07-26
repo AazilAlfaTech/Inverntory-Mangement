@@ -2,13 +2,8 @@
 <html lang="en">
 
 <head>
-    <title>Adminty - Premium Admin Template by Colorlib </title>
-    <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 10]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <title> Alfa Tech Inventory Mangement System </title>
+  
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -50,6 +45,8 @@
     <link rel="stylesheet" type="text/css" href="..\..\files\assets\css\style.css">
     <link rel="stylesheet" type="text/css" href="..\..\files\assets\css\jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="..\..\files\assets\scss\partials\menu\_pcmenu.htm">
+
+  
 
 </head>
 
@@ -374,28 +371,28 @@
                                 <ul class="pcoded-submenu">
                         
                                     <li class=" ">
-                                        <a href="../masterfiles/manageproductgroup.php">
+                                        <a href="../group/manageproductgroup.php">
                                             <span class="pcoded-mtext">  Group</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../masterfiles/mangeproducttype.php" target="">
+                                        <a href="../producttype/manageproducttype.php " target="">
                                             <span class="pcoded-mtext">Type</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../masterfiles/managelocation.php" target="">
+                                        <a href="../location/managelocation.php" target="">
                                             <span class="pcoded-mtext">Location</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../masterfiles/uom.php" target="">
+                                        <a href="../uom/uom.php" target="">
                                             <span class="pcoded-mtext">UOM</span>
                                         </a>
                                     </li>
 
                                     <li class=" ">
-                                        <a href="../masterfiles/manageproduct.php " target="">
+                                        <a href="../product/manageproduct.php " target="">
                                             <span class="pcoded-mtext">Products</span>
                                         </a>
                                     </li>
@@ -415,12 +412,12 @@
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="widget-data.htm">
+                                        <a href="../purchase/manage_purchase_order.php " >
                                             <span class="pcoded-mtext">Mange Purchase Order </span>
                                         </a>
                                     </li>
                                     <li class="">
-                                        <a href="widget-chart.htm">
+                                        <a href="../purchase/manage_GRN.php "> 
                                             <span class="pcoded-mtext">Manage GRN</span>
                                         </a>
                                     </li>

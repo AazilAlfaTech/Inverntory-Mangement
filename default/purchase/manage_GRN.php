@@ -16,7 +16,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Purchase Requisition</h4>
+                                    <h4>Manage GRN</h4>
 
                                 </div>
                             </div>
@@ -36,8 +36,8 @@ include_once "../../files/head.php";
                 <!-- Page-header end -->
 
                 <div class="d-flex flex-row-reverse">
-<a href="add_new_purchase_requisition.php">
-                    <button class="btn btn-mat btn-primary ">Add New Purchas Requisition</i></button>
+<a href="add_new_GRN.php">
+                    <button class="btn btn-mat btn-primary ">Add New GRN</i></button>
 </a>
                 </div>
 
@@ -56,7 +56,7 @@ include_once "../../files/head.php";
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Purchase Requisition</h5>
+                                    <h5>Purchase Order</h5>
                                     <span></span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -88,8 +88,8 @@ include_once "../../files/head.php";
                                                                 class="fa fa-trash"></i> </button>
                                                         <button class="btn btn-mat btn-info "><i class="fa fa-edit"></i>
                                                         </button>
-                                                        <a href="view_puchase_requisition.php">   <button class="btn btn-mat btn-primary "><i
-                                                                class="icofont icofont-eye-alt"></i></button> </a>
+                                                      <button class="btn btn-mat btn-primary "><i
+                                                                class="icofont icofont-eye-alt"></i></button>
                                                     </td>
 
                                                 </tr>
