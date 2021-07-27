@@ -76,6 +76,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Code</label>
+
                                                 <input type="text" name="groupcode" class="form-control" id="gr_code" value="<?=$group1->group_code ?>" placeholder="">
                                                 <input type="text" name="groupid" class="form-control" id="gr_id" value="<?=$group1->group_id ?>" placeholder="">
 
@@ -83,6 +84,13 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Name</label>
                                                 <input type="text" name="groupname" class="form-control" id="gr_name" value="<?=$group1->group_name ?>" placeholder="">
+
+                                                <input type="text" class="form-control" placeholder="" name="groupcode" id="gr_code">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">Group Name</label>
+                                                <input type="text" class="form-control" placeholder="" name="groupname" id="gr_name">
+
                                             </div>
                                         </div>
 

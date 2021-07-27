@@ -93,7 +93,7 @@ include_once "../../files/head.php";
                                         <!-- Edit With Button card start -->
 
                                         <div class="table-responsive">
-                                        <table  id="example-1">
+
                                                     <table class="table table-striped table-bordered" id="example-2">
                                                         <thead>
                                                             <tr>
