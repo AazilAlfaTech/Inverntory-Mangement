@@ -5,6 +5,7 @@ include_once "../../files/head.php";
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
 
+
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
         <!-- Main-body start -->
@@ -16,7 +17,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Purchase Requisition</h4>
+                                    <h4>Add New Purchase Requisition</h4>
 
                                 </div>
                             </div>
@@ -35,7 +36,10 @@ include_once "../../files/head.php";
                 </div>
                 <!-- Page-header end -->
 
-                <div class="page-body">
+
+
+
+<div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card">
@@ -118,7 +122,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Total</label>
-                                                <input type="text" class="form-control" placeholder="" disabled >
+                                                <input type="text" class="form-control" placeholder="" disabled>
                                             </div>
 
                                         </div>
@@ -139,6 +143,7 @@ include_once "../../files/head.php";
                                                         <th>Price</th>
                                                         <th>Qty</th>
                                                         <th>Total</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -148,6 +153,11 @@ include_once "../../files/head.php";
                                                         <td>Otto</td>
                                                         <td>@mdo</td>
                                                         <td>@mdo</td>
+                                                        <td> <button class="btn btn-mat btn-danger "><i
+                                                                    class="fa fa-trash"></i> </button>
+                                                            <button class="btn btn-mat btn-info "><i
+                                                                    class="fa fa-edit"></i> </button>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">2</th>
@@ -164,7 +174,12 @@ include_once "../../files/head.php";
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <div class="d-flex flex-row-reverse">
+                    <button type="button" class="btn btn-primary">Submit</button>
+                                        </div>
                                     </form>
+
+
                                 </div>
 
                             </div>
@@ -172,78 +187,13 @@ include_once "../../files/head.php";
                     </div>
 
 
+
+
                 </div>
 
-                <!-- ----------------------------------------------------------------------------------------------------------------------------- -->
 
 
-
-                <!-- Page-body start -->
-                <div class="page-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <!-- Autofill table start -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Purchase Requisition</h5>
-                                    <span></span>
-                                    <div class="card-header-right">
-                                        <ul class="list-unstyled card-option">
-                                            <li><i class="feather icon-maximize full-card"></i></li>
-                                            <li><i class="feather icon-minus minimize-card"></i></li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-block">
-                                    <div class="dt-responsive table-responsive">
-                                        <table id="autofill" class="table table-striped table-bordered nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Reference No</th>
-                                                    <th>Date  </th>
-                                                    <th>Supplier</th>
-                                                    <th>Action</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>At123</td>
-                                                    <td>Alfa grp</td>
-                                                    <td>At123</td>
-                                                    <td>Alfa grp</td>
-
-                                                </tr>
-
-                                                </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <!-- ----------------------------------------------------------------------------------------------------------------- -->
-                            <?php
+                <?php
 
 include_once "../../files/foot.php";
 

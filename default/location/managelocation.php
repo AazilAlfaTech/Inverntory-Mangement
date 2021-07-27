@@ -16,7 +16,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Product </h4>
+                                    <h4>Manage Location</h4>
 
                                 </div>
                             </div>
@@ -40,7 +40,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Product </h5>
+                                    <h5>Add New Product Location</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -59,59 +59,31 @@ include_once "../../files/head.php";
 
                                         <div class="form-group row">
                                             <div class="col-sm-4">
-                                                <label class=" col-form-label"> Select Group</label>
-                                                <select name="select" class="form-control">
-                                                                    <option value="opt1">Select Group</option>
-                                                                    <option value="opt2">Type 2</option>
-                                                                    <option value="opt3">Type 3</option>
-                                                                    <option value="opt4">Type 4</option>
-                                                                    <option value="opt5">Type 5</option>
-                                                                    <option value="opt6">Type 6</option>
-                                                                    <option value="opt7">Type 7</option>
-                                                                    <option value="opt8">Type 8</option>
-                                                                </select>
+                                                <label class=" col-form-label">Location Code</label>
+                                                <input type="text" class="form-control" placeholder="">
                                             </div>
                                             <div class="col-sm-4">
-                                                <label class=" col-form-label">Select Type </label>
-                                                <select name="select" class="form-control">
-                                                                    <option value="opt1">Select Type</option>
-                                                                    <option value="opt2">Type 2</option>
-                                                                    <option value="opt3">Type 3</option>
-                                                                    <option value="opt4">Type 4</option>
-                                                                    <option value="opt5">Type 5</option>
-                                                                    <option value="opt6">Type 6</option>
-                                                                    <option value="opt7">Type 7</option>
-                                                                    <option value="opt8">Type 8</option>
-                                                                </select>
+                                                <label class=" col-form-label">location Name</label>
+                                                <input type="text" class="form-control" placeholder="">
                                             </div>
+
                                             <div class="col-sm-4">
-                                                <label class=" col-form-label"> Select UOM </label>
-                                                <select name="select" class="form-control">
-                                                                    <option value="opt1">Select UOM</option>
-                                                                    <option value="opt2">Type 2</option>
-                                                                    <option value="opt3">Type 3</option>
-                                                                    <option value="opt4">Type 4</option>
-                                                                    <option value="opt5">Type 5</option>
-                                                                    <option value="opt6">Type 6</option>
-                                                                    <option value="opt7">Type 7</option>
-                                                                    <option value="opt8">Type 8</option>
-                                                                </select>
+                                                <label class=" col-form-label">Contact No</label>
+                                                <input type="text" class="form-control" placeholder="">
                                             </div>
                                         </div>
 
-
                                         <div class="form-group row">
-                                            <div class="col-sm-4">
-                                                <label class=" col-form-label"> Product Name</label>
+                                           
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">E-mail </label>
                                                 <input type="text" class="form-control" placeholder="">
                                             </div>
 
                                             <div class="col-sm-6">
-                                                <label class=" col-form-label"> Product Discription</label>
-                                                <textarea rows="5" cols="5" class="form-control" placeholder="Default textarea"></textarea>
+                                                <label class=" col-form-label">Address </label>
+                                                <textarea rows="5" cols="5" class="form-control" placeholder="" spellcheck="false"></textarea>
                                             </div>
-
-
                                         </div>
 
                                         <button class="btn btn-primary">ADD</button>
@@ -152,11 +124,11 @@ include_once "../../files/head.php";
                                                             <table id="autofill" class="table table-striped table-bordered nowrap">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Product Code</th>
-                                                                        <th>Product Name</th>
-                                                                        <th>Product Group</th>
-                                                                        <th>Product Type</th>
-                                                                        <th>Product UOM</th>
+                                                                        <th>Location Code</th>
+                                                                        <th>Lcation Name</th>
+                                                                        <th>Contact No</th>
+                                                                        <th>E-mail</th>
+                                                                        <th>Address</th>
                                                                       
                                                                       
                                                                     </tr>
@@ -165,6 +137,10 @@ include_once "../../files/head.php";
                                                                     <tr>
                                                                         <td>At123</td>
                                                                         <td>Alfa grp</td>
+                                                                        <td>At123</td>
+                                                                        <td>Alfa grp</td>
+                                                                        <td>Alfa grp</td>
+                                                                       
                                                                        
                                                                     </tr>
                                            
