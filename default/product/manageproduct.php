@@ -60,7 +60,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select Group</label>
-                                                <select name="select" class="form-control">
+                                                <select name="select" class="form-control" name="groupid" id="gr_id">
                                                     <option value="opt1">Select Group</option>
                                                     <option value="opt2">Type 2</option>
                                                     <option value="opt3">Type 3</option>
@@ -73,7 +73,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Type </label>
-                                                <select name="select" class="form-control">
+                                                <select name="select" class="form-control" name="typeid" id="typ-id">
                                                     <option value="opt1">Select Type</option>
                                                     <option value="opt2">Type 2</option>
                                                     <option value="opt3">Type 3</option>
@@ -86,7 +86,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select UOM </label>
-                                                <select name="select" class="form-control">
+                                                <select name="select" class="form-control" name="unitid" id="unit_id">
                                                     <option value="opt1">Select UOM</option>
                                                     <option value="opt2">Type 2</option>
                                                     <option value="opt3">Type 3</option>
