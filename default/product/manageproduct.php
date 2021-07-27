@@ -60,7 +60,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select Group</label>
-                                                <select name="select" class="form-control">
+                                                <select name="select" class="form-control" name="groupid" id="gr_id">
                                                     <option value="opt1">Select Group</option>
                                                     <option value="opt2">Type 2</option>
                                                     <option value="opt3">Type 3</option>
@@ -73,7 +73,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Type </label>
-                                                <select name="select" class="form-control">
+                                                <select name="select" class="form-control" name="typeid" id="typ-id">
                                                     <option value="opt1">Select Type</option>
                                                     <option value="opt2">Type 2</option>
                                                     <option value="opt3">Type 3</option>
@@ -86,7 +86,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select UOM </label>
-                                                <select name="select" class="form-control">
+                                                <select name="select" class="form-control" name="unitid" id="unit_id">
                                                     <option value="opt1">Select UOM</option>
                                                     <option value="opt2">Type 2</option>
                                                     <option value="opt3">Type 3</option>
@@ -103,7 +103,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Product Name</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="productname" id="prod_name">
                                             </div>
 
                                             <div class="col-sm-4">
@@ -121,8 +121,8 @@ include_once "../../files/head.php";
 
                                             </div>
                                             <div class="col-sm-4">
-                                                <label class=" col-form-label"> Product Name</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <label class=" col-form-label"> Product batch</label>
+                                                <input type="text" class="form-control" placeholder="" name="productbatch" id="prod_batch">
                                             </div>
 
                                         </div>
@@ -133,7 +133,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label"> Product Discription</label>
                                                 <textarea rows="5" cols="5" class="form-control"
-                                                    placeholder="Default textarea"></textarea>
+                                                    placeholder="Default textarea" name="productdesc" id="prod_desc"></textarea>
                                             </div>
 
 
