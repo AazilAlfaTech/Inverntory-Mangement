@@ -60,7 +60,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Code</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="" id="">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Name</label>
