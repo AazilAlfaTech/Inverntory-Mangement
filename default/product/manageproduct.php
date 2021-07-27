@@ -121,8 +121,8 @@ include_once "../../files/head.php";
 
                                             </div>
                                             <div class="col-sm-4">
-                                                <label class=" col-form-label"> Product Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="productname" id="prod_name">
+                                                <label class=" col-form-label"> Product batch</label>
+                                                <input type="text" class="form-control" placeholder="" name="productbatch" id="prod_batch">
                                             </div>
 
                                         </div>
