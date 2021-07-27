@@ -60,15 +60,15 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Type Code</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="typeid" id="typ-id">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Type Name</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="typename" id="typ-name">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Group</label>
-                                                <select name="select" class="form-control">
+                                                <select name="select" class="form-control" name="typegroup" id="typ_group">
                                                                     <option value="opt1">Select Group</option>
                                                                     <option value="opt2">Type 2</option>
                                                                     <option value="opt3">Type 3</option>

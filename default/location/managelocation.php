@@ -60,16 +60,16 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Location Code</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="loccode" id="loc_code">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">location Name</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="locname" id="loc_name">
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Contact No</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="locnum" id="loc_num">
                                             </div>
                                         </div>
 
@@ -77,12 +77,13 @@ include_once "../../files/head.php";
                                            
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">E-mail </label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="locmail" id="loc_mail">
                                             </div>
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Address </label>
-                                                <textarea rows="5" cols="5" class="form-control" placeholder="" spellcheck="false"></textarea>
+                                                <textarea rows="5" cols="5" class="form-control" placeholder="" name="locadd" id="loc_add"
+                                                 spellcheck="false"></textarea>
                                             </div>
                                         </div>
 
