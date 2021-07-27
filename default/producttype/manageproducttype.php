@@ -1,5 +1,22 @@
 <?php
 
+include_once ("producttype.php");
+
+$producttype1=new producttype ();
+$P=$producttype1->type_getall();
+if (isset($_POST["typename"]))
+{
+    $producttype1->ptype_name=$_POST["typename"];
+    $producttype1->ptype_group_id=$_POST["typegroup"];
+    $producttype1->ptype_code=$_POST["typecode"];
+
+    $producttype1->type_add();
+
+}
+if(isset($_GET["did"]))
+{
+    if($producttype1->type_delete($_GET["did"]));
+}
 include_once "../../files/head.php";
 
 ?>
@@ -53,36 +70,38 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form>
+                                    <form method="POST" action="manageproducttype.php">
 
 
 
                                         <div class="form-group row">
                                             <div class="col-sm-4">
+
+
+
                                                 <label class=" col-form-label">Type Code</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="typecode" id="typ_code">
+
+
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Type Name</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="typename" id="typ_name">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Group</label>
-                                                <select name="select" class="form-control">
-                                                                    <option value="opt1">Select Group</option>
-                                                                    <option value="opt2">Type 2</option>
-                                                                    <option value="opt3">Type 3</option>
-                                                                    <option value="opt4">Type 4</option>
-                                                                    <option value="opt5">Type 5</option>
-                                                                    <option value="opt6">Type 6</option>
-                                                                    <option value="opt7">Type 7</option>
-                                                                    <option value="opt8">Type 8</option>
-                                                                </select>
+                                                <select name="typegroup" class="form-control" id="typ_group">
+                                                    <option value="-1">Select Group</option>
+                                                    <option value="1">Type 1</option>
+                                                    <option value="2">Type 2</option>
+                                                    <option value="3">Type 3</option>
+                                                    
+                                                </select>
                                             </div>
                                         </div>
 
-                                        <button class="btn btn-primary">ADD</button>
-                                        <button class="btn btn-inverse">CLEAR</button>
+                                        <button class="btn btn-primary" type="submit">ADD</button>
+                                        <button class="btn btn-inverse" type="reset">CLEAR</button>
                                     </form>
                                 </div>
 
@@ -127,19 +146,25 @@ include_once "../../files/head.php";
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>At123</td>
-                                                                        <td>Alfa type</td>
-                                                                        <td>Alfa grp</td>
-                                                                        <td>
-                                                                      
-                                                                        <button class="btn btn-mat btn-danger "><i class="fa fa-trash"></i>  </button>
-                                                                        <button class="btn btn-mat btn-info "><i class="fa fa-edit"></i> </button>
-                                                                    </td>
-
+                                                                    <?php
+                                                                        foreach ($P as $item)
+                                                                        {
+                                                                            echo
+                                                                            "<tr>
+                                                                                <td>$item->ptype_code</td>
+                                                                                <td>$item->ptype_name</td>
+                                                                                <td>$item->ptype_group_id</td>
+                                                                                <td>
+                                                                                    <button class='btn btn-mat btn-danger' onclick='del_type($item->ptype_id)'><i class='fa fa-trash'></i>  </button>
+                                                                                    <button class='btn btn-mat btn-info'><i class='fa fa-edit'></i> </button>
+                                                                                </td>
+                                                                            </tr>";
+                                                                        }
+                                                                    ?>
+                                                                </tbody>
                                                                         
                                                                        
-                                                                    </tr>
+                                                                    
                                            
                                                                 </tfoot>
                                                             </table>
@@ -173,3 +198,12 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
+<script>
+    function del_type(d)
+    {
+        if(confirm("Are you sure you want to delete category?"+d))
+        {
+            window.location.href="manageproducttype.php?did="+d;
+        }
+    }
+</script>
