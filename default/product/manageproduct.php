@@ -103,7 +103,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Product Name</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="productname" id="prod_name">
                                             </div>
 
                                             <div class="col-sm-4">
@@ -122,7 +122,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Product Name</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="productname" id="prod_name">
                                             </div>
 
                                         </div>
@@ -133,7 +133,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label"> Product Discription</label>
                                                 <textarea rows="5" cols="5" class="form-control"
-                                                    placeholder="Default textarea"></textarea>
+                                                    placeholder="Default textarea" name="productdesc" id="prod_desc"></textarea>
                                             </div>
 
 

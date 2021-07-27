@@ -60,11 +60,11 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Code</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="unitcode" id="unit_code">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Name</label>
-                                                <input type="text" class="form-control" placeholder="">
+                                                <input type="text" class="form-control" placeholder="" name="unitname" id="unit_name">
                                             </div>
                                         </div>
 
