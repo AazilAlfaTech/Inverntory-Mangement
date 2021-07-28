@@ -62,6 +62,7 @@
             $ar=array();
 
             while($row=$result->fetch_array())
+            
             {
                 $ptype= new producttype();
                 $ptype->ptype_id=$row["ptype_id"];

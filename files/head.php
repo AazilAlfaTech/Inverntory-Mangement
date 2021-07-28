@@ -424,6 +424,32 @@
 
                                 </ul>
                             </li>
+
+
+
+
+                             
+                            <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)">
+                                    <span class="pcoded-micon"><i class="fa fa-male"></i></span>
+                                    <span class="pcoded-mtext">Supplier</span>
+                               
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class="">
+                                        <a href="../supplier_group/manage_suppilier_group.php ">
+                                            <span class="pcoded-mtext">Manage Supplier Group</span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="../supplier/manage_supplier.php " >
+                                            <span class="pcoded-mtext">Manage Supplier </span>
+                                        </a>
+                                    </li>
+                                  
+
+                                </ul>
+                            </li>
                         </ul>
                       
                    
