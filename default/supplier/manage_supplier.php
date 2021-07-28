@@ -114,7 +114,7 @@ include_once "../../files/head.php";
                                                 <!-- Autofill table start -->
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5>UOM List</h5>
+                                                        <h5>Supplier List</h5>
                                                         <span></span>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
