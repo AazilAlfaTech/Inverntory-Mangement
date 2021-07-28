@@ -398,7 +398,7 @@
                                     </li>
                                 </ul>
                             </li>
-                          
+                          <!-- ---------------------------------------------------------------------- -->
                             <li class="pcoded-hasmenu">
                                 <a href="javascript:void(0)">
                                     <span class="pcoded-micon"><i class="feather icon-layers"></i></span>
@@ -424,24 +424,65 @@
 
                                 </ul>
                             </li>
+<!-- ------------------------------------------------------------------------------------------------------------------------------------- -->
+                             
+                            <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)">
+                                    <span class="pcoded-micon"><i class="fa fa-male"></i></span>
+                                    <span class="pcoded-mtext">Supplier</span>
+                               
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class="">
+                                        <a href="../supplier_group/manage_suppilier_group.php ">
+                                            <span class="pcoded-mtext">Manage Supplier Group</span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="../supplier/manage_supplier.php " >
+                                            <span class="pcoded-mtext">Manage Supplier </span>
+                                        </a>
+                                    </li>
+                                  
+
+                                </ul>
+                            </li>
+
+
+                            <!-- ------------------------------------------------------------------------------------------------------------------------------------- -->
+                             
+                            <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)">
+                                    <span class="pcoded-micon"><i class="fa fa-user"></i></span>
+                                    <span class="pcoded-mtext">Customer</span>
+                               
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class="">
+                                        <a href="../customer_group/manage_customer_group.php ">
+                                            <span class="pcoded-mtext">Manage Customer Group</span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="../customer/manage_customer.php " >
+                                            <span class="pcoded-mtext">Manage Customer </span>
+                                        </a>
+                                    </li>
+                                  
+
+                                </ul>
+                            </li>
+
+
+
+
                         </ul>
                       
                    
                        
                       
-                            <li class="">
-                                <a href="javascript:void(0)" class="disabled">
-                                    <span class="pcoded-micon"><i class="feather icon-power"></i></span>
-                                    <span class="pcoded-mtext">Disabled Menu</span>
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="sample-page.htm">
-                                    <span class="pcoded-micon"><i class="feather icon-watch"></i></span>
-                                    <span class="pcoded-mtext">Sample Page</span>
-                                </a>
-                            </li>
-                        </ul>
+                            
+                       
                     
                     </div>
                 </nav>

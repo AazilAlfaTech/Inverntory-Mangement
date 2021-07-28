@@ -85,6 +85,44 @@ function delete_group($type_groupid){
 
 }
 
+function get_group_by_code($groupcode){
+    $sql="SELECT * FROM product_group WHERE group_code='$groupcode'";
+    echo $sql;
+    $result=$this->db->query($sql);
+
+    // $group_array=array();
+
+    $row=$result->fetch_array();
+        $group_item=new group();
+        $group_item->group_id=$row["group_id"];
+        $group_item->group_code=$row["group_code"];
+        $group_item->group_name=$row["group_name"];
+        $group_item->group_status=$row["group_status"];
+        $group_item->group_date=$row["group_date"];
+
+       
+    return $group_item;
+}
+
+function get_group_by_name($groupname){
+    $sql="SELECT * FROM product_group WHERE group_code=$groupname";
+    echo $sql;
+    $result=$this->db->query($sql);
+
+    // $group_array=array();
+
+    $row=$result->fetch_array();
+        $group_item=new group();
+        $group_item->group_id=$row["group_id"];
+        // $group_item->group_code=$row["group_code"];
+        // $group_item->group_name=$row["group_name"];
+        // $group_item->group_status=$row["group_status"];
+        // $group_item->group_date=$row["group_date"];
+
+       
+    return $group_item;
+}
+
 
 
 // function {
