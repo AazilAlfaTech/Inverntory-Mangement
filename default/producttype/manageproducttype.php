@@ -3,20 +3,31 @@
 include_once ("producttype.php");
 
 $producttype1=new producttype ();
-$P=$producttype1->type_getall();
+
 if (isset($_POST["typename"]))
 {
     $producttype1->ptype_name=$_POST["typename"];
     $producttype1->ptype_group_id=$_POST["typegroup"];
     $producttype1->ptype_code=$_POST["typecode"];
 
-    $producttype1->type_add();
+    if(isset($_POST['ptypeid']))
+    {
+        $producttype1->edit_type($_POST['ptypeid']);
+    }else
+
+    $producttype1->add_type();
 
 }
 if(isset($_GET["did"]))
 {
-    if($producttype1->type_delete($_GET["did"]));
+    $producttype1->delete_type($_GET["did"]);
 }
+if(isset($_GET["view"]))
+{
+    // $producttype1->get_type_by_id($_GET["view"]);
+    $producttype1->getbyid($_GET["view"]);
+}
+$P=$producttype1->getall_type();
 include_once "../../files/head.php";
 
 ?>
@@ -71,7 +82,12 @@ include_once "../../files/head.php";
                                 <div class="card-block">
 
                                     <form method="POST" action="manageproducttype.php">
-
+                                    <?php
+                                                if(isset($_GET["view"]))
+                                                {
+                                                    echo"<input type='text' class='form-control' value='".$_GET['view']."' name='ptypeid' required>";
+                                                }
+                                            ?>
 
 
                                         <div class="form-group row">
@@ -80,13 +96,14 @@ include_once "../../files/head.php";
 
 
                                                 <label class=" col-form-label">Type Code</label>
-                                                <input type="text" class="form-control" placeholder="" name="typecode" id="typ_code">
+                                                <input type="text" class="form-control" placeholder="" name="typecode" id="typ_code" value="<?=$producttype1->ptype_code?>">
 
-
+                                              
                                             </div>
+                                            
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Type Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="typename" id="typ_name">
+                                                <input type="text" class="form-control" placeholder="" name="typename" id="typ_name" value="<?=$producttype1->ptype_name?>">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Group</label>
@@ -156,7 +173,7 @@ include_once "../../files/head.php";
                                                                                 <td>$item->ptype_group_id</td>
                                                                                 <td>
                                                                                     <button class='btn btn-mat btn-danger' onclick='del_type($item->ptype_id)'><i class='fa fa-trash'></i>  </button>
-                                                                                    <button class='btn btn-mat btn-info'><i class='fa fa-edit'></i> </button>
+                                                                                    <button class='btn btn-mat btn-info' onclick='edit_type($item->ptype_id)'><i class='fa fa-edit'></i> </button>
                                                                                 </td>
                                                                             </tr>";
                                                                         }
@@ -205,5 +222,10 @@ include_once "../../files/foot.php";
         {
             window.location.href="manageproducttype.php?did="+d;
         }
+    }
+
+    function edit_type(e)
+    {
+        window.location.href="manageproducttype.php?view="+e;
     }
 </script>

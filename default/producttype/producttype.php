@@ -17,7 +17,7 @@
         }
 
         //insert a new producttype 
-        function type_add()
+        function add_type()
         {
             $SQL="INSERT INTO product_type(ptype_name,ptype_code,ptype_group_id) VALUES ('$this->ptype_name','$this->ptype_code','$this->ptype_group_id')";
             $this->db->query($SQL);
@@ -26,21 +26,25 @@
         }
 
         //edit a new producttype 
-        function type_edit()
+        function edit_type($typeid)
         {
+            $SQL="UPDATE product_type SET ptype_name='$this->ptype_name',ptype_code='$this->ptype_code',ptype_group_id='$this->ptype_group_id' WHERE ptype_id=$typeid";
+            $this->db->query($SQL);
+            echo $SQL;
+            return true;
 
         }
         
         //delete a new producttype 
-        function type_delete($id)
+        function delete_type($type_prodid)
         {
-            $SQLCHECK="SELECT * FROM product WHERE product_type=$id AND product_status='ACTIVE'";
+            $SQLCHECK="SELECT * FROM product WHERE product_type=$type_prodid AND product_status='ACTIVE'";
             $result=$this->db->query($SQLCHECK);
             echo $SQLCHECK;
 
             if($result->num_rows==0)
             {
-                $SQL="UPDATE product_type SET ptype_status='INACTIVE' WHERE ptype_id=$id";
+                $SQL="UPDATE product_type SET ptype_status='INACTIVE' WHERE ptype_id=$type_prodid";
                 $this->db->query($SQL);
                 echo $SQL;
                 return true;
@@ -51,7 +55,7 @@
         }
 
         //getall producttype 
-        function type_getall()
+        function getall_type()
         {
             $SQL="SELECT * FROM product_type WHERE ptype_status='ACTIVE'";
             $result=$this->db->query($SQL);
@@ -68,6 +72,37 @@
                 $ar[]=$ptype;
             }
             return $ar;
+        }
+
+        function get_type_by_id($typeid)
+        {
+            $SQL="SELECT * FROM product_type WHERE ptype_id=$typeid";
+            echo $SQL;
+            $result=$this->db->query($SQL);
+
+            $row=$result->fetch_array();
+            $ptype=new producttype();
+            $ptype->ptype_id=$row["ptype_id"];
+            $ptype->ptype_name=$row["ptype_name"];
+            $ptype->ptype_code=$row["ptype_code"];
+            $ptype->ptype_group_id=$row["ptype_group_id"];
+            $ptype->ptype_status=$row["ptype_status"];
+
+            return $ptype;
+        }
+
+        function getbyid($id)
+        {
+            $SQL="SELECT * FROM product_type WHERE ptype_id=$id";
+            $r=$this->db->query($SQL);
+            $row=$r->fetch_array();
+
+            $this->ptype_id=$row["ptype_id"];
+            $this->ptype_code=$row["ptype_code"];
+            $this->ptype_name=$row["ptype_name"];
+            $this->ptype_group_id=$row["ptype_group_id"];
+            $this->ptype_status=$row["ptype_status"];
+            return $this;
         }
     }
 ?>
