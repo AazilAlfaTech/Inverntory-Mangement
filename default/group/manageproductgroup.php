@@ -1,7 +1,5 @@
 <?php
 
-
-
 include_once "group.php";
 $group1=new group();//create a new object 
 
@@ -16,6 +14,8 @@ if(isset($_GET['view'])){
 }
 
 $result_group=$group1->get_all_group();
+
+
 include_once "../../files/head.php";
 
 ?>

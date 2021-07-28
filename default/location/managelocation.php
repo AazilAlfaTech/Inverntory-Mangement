@@ -1,6 +1,49 @@
 <?php
+include_once "location.php";
+
+    $location1 = new location();
+
+
+    if(isset($_POST["locname"])){
+
+        $location1->location_code = $_POST["loccode"];
+        $location1->location_name = $_POST["locname"];
+        $location1->location_add = $_POST["locadd"];
+        $location1->location_number = $_POST["locnum"];
+        $location1->location_email = $_POST["locmail"];
+
+
+        if(isset($_POST["edit_location"])){
+            $location1->edit_location ($_POST["edit_location"]);
+        }
+else{
+        $location1->insert_location();
+    }
+    }
+
+    
+    $result_location = $location1->get_all_location();
+
+    if(isset($_GET['edit_location'])){
+        $location1=$location1->get_location_by_id($_GET['edit_location']);
+    }
+
+
+
+    if(isset($_GET['d_id'])){
+        $location1->delete_location ($_GET['d_id']);
+    }
+
+    // print_r($result_location);
+
+
+
 
 include_once "../../files/head.php";
+
+
+
+
 
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
@@ -53,41 +96,55 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form>
+                                    <form action="managelocation.php" method="POST" id="">
 
+                                        <?php
+                                   
+                                   if(isset($_GET["edit_location"])){
+                                    echo"  <input type='text'  class='form-control' value='".$_GET['edit_location'] ."' name='edit_location' required readonly>";
+                                   }
+                                    
 
+                                   ?>
 
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Location Code</label>
-                                                <input type="text" class="form-control" placeholder="" name="loccode" id="loc_code">
+                                                <input type="text" value="<?=$location1->location_code?>"
+                                                    class="form-control" placeholder="" name="loccode" id="loc_code">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">location Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="locname" id="loc_name">
+                                                <input type="text" value="<?=$location1->location_name ?>"
+                                                    class="form-control" placeholder="" name="locname" id="loc_name">
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Contact No</label>
-                                                <input type="text" class="form-control" placeholder="" name="locnum" id="loc_num">
+                                                <input type="text" value="<?=$location1->location_number ?>"
+                                                    class="form-control" placeholder="" name="locnum" id="loc_num">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                           
+
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">E-mail </label>
-                                                <input type="text" class="form-control" placeholder="" name="locmail" id="loc_mail">
+                                                <input type="text" value="<?=$location1->location_email ?>"
+                                                    class="form-control" placeholder="" name="locmail" id="loc_mail">
+
+
                                             </div>
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Address </label>
-                                                <textarea rows="5" cols="5" class="form-control" placeholder="" name="locadd" id="loc_add"
-                                                 spellcheck="false"></textarea>
+                                                <textarea value="<?=$location1->location_add ?> " rows="5" cols="5"
+                                                    class="form-control" placeholder="" name="locadd" id="loc_add"
+                                                    spellcheck="false"></textarea>
                                             </div>
                                         </div>
 
-                                        <button class="btn btn-primary">ADD</button>
+                                        <button type="submit" class="btn btn-primary">ADD</button>
                                         <button class="btn btn-inverse">CLEAR</button>
                                     </form>
                                 </div>
@@ -102,54 +159,69 @@ include_once "../../files/head.php";
                 <!-- ----------------------------------------------------------------------------------------------------------------------------- -->
 
 
-         
-     <!-- Page-body start -->
-     <div class="page-body">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <!-- Autofill table start -->
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Location List</h5>
-                                                        <span></span>
-                                                        <div class="card-header-right">
-                                                            <ul class="list-unstyled card-option">
-                                                                <li><i class="feather icon-maximize full-card"></i></li>
-                                                                <li><i class="feather icon-minus minimize-card"></i></li>
-                                                          
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-block">
-                                                        <div class="dt-responsive table-responsive">
-                                                            <table id="autofill" class="table table-striped table-bordered nowrap">
-                                                                <thead>
+
+                <!-- Page-body start -->
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- Autofill table start -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Location List</h5>
+                                    <span></span>
+                                    <div class="card-header-right">
+                                        <ul class="list-unstyled card-option">
+                                            <li><i class="feather icon-maximize full-card"></i></li>
+                                            <li><i class="feather icon-minus minimize-card"></i></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div class="dt-responsive table-responsive">
+                                        <table id="autofill" class="table table-striped table-bordered nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>Location id</th>
+                                                    <th>Location Code</th>
+                                                    <th>Lcation Name</th>
+                                                    <th>Address</th>
+                                                    <th>Contact No</th>
+                                                    <th>E-mail</th>
+
+                                                    <th>Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+  foreach($result_location as $item){
+                                                                    echo"
                                                                     <tr>
-                                                                        <th>Location Code</th>
-                                                                        <th>Lcation Name</th>
-                                                                        <th>Contact No</th>
-                                                                        <th>E-mail</th>
-                                                                        <th>Address</th>
-                                                                      
-                                                                      
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>At123</td>
-                                                                        <td>Alfa grp</td>
-                                                                        <td>At123</td>
-                                                                        <td>Alfa grp</td>
-                                                                        <td>Alfa grp</td>
+                                                                        <td>$item->location_id</td>
+                                                                        <td>$item->location_code</td>
+                                                                        <td>$item->location_name  </td>
+                                                                        <td>$item->location_add  </td>
+                                                                        <td>$item->location_number </td> 
+                                                                        <td>$item->location_email </td>
+
+                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>
+                                        <a href='managelocation.php?edit_location=$item->location_id '>  <button type='button'  class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
+                                               <button type='button'  onclick='delete_location($item->location_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                               </td> 
+                                               
+                                               
                                                                        
                                                                        
                                                                     </tr>
-                                           
-                                                                </tfoot>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>     
+                                                                    ";
+  }
+                                           ?>
+                                                </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
@@ -171,9 +243,23 @@ include_once "../../files/head.php";
 
 
 
-<!-- ----------------------------------------------------------------------------------------------------------------- -->
-  <?php
+                            <!-- ----------------------------------------------------------------------------------------------------------------- -->
+                            <?php
 
 include_once "../../files/foot.php";
 
 ?>
+
+                            <!-- ------------------------------------------------------------------------------------------------- -->
+
+
+                            <script>
+                            function delete_location(deleteid) {
+
+                                if (confirm("Do you want to delete id" + "" + deleteid)) {
+                                    window.location.href = "managelocation.php?d_id=" + deleteid;
+                                }
+
+
+                            }
+                            </script>

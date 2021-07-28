@@ -30,9 +30,9 @@ function insert_location(){
  VALUES('$this->location_code','$this->location_name','$this->location_add','$this->location_number','$this->location_email')
  ";
 
-echo $sql;
-$this->db->query($sql);
-return true;
+    echo $sql;
+    $this->db->query($sql);
+    return true;
 
 }
 
@@ -40,14 +40,16 @@ return true;
 
 
 function get_all_location(){
+
     $sql="SELECT * FROM location WHERE location_status='ACTIVE' ";
     echo $sql;
     $result=$this->db->query($sql);
+
     $location_array=array();
 
     while($row=$result->fetch_array()){
 
-        $location_item = new group();
+        $location_item = new location();
 
         $location_item->location_id=$row["location_id"];
         $location_item->location_code=$row["location_code"];
@@ -58,7 +60,7 @@ function get_all_location(){
         $location_item->location_status=$row["location_status"];
         $location_item->location_date=$row["location_date"];
 
-        $locatio_array[]=$location_item;
+        $location_array[]=$location_item;
     }
 
     return $location_array;
@@ -73,12 +75,12 @@ function get_location_by_id($locationid){
     $sql="SELECT * FROM location WHERE location_id = $locationid";
     echo $sql;
     $result=$this->db->query($sql);
-    $location_array=array();
+
 
 
     $row=$result->fetch_array();
 
-    $location_item = new group();
+    $location_item = new location();
 
     $location_item->location_id=$row["location_id"];
     $location_item->location_code=$row["location_code"];
@@ -89,7 +91,7 @@ function get_location_by_id($locationid){
     $location_item->location_status=$row["location_status"];
 
        
-    return $location_array;
+    return $location_item;
 }
 
 
@@ -100,7 +102,7 @@ function get_location_by_id($locationid){
 function edit_location($locationid){
 
     $sql="UPDATE location  SET 
-    location_code='$this->',location_name='$this->location_name',location_add='$this->location_add',location_number='$this->location_number',location_email='$this->location_email'
+    location_code='$this->location_code', location_name='$this->location_name',location_add='$this->location_add',location_number='$this->location_number',location_email='$this->location_email'
     WHERE location_id=$locationid ";
 
     echo $sql;
@@ -115,6 +117,9 @@ function edit_location($locationid){
 function delete_location($location_id){
 
     $sql="UPDATE location SET location_status='INACTIVE' WHERE location_id=$location_id ";
+
+    
+    echo $sql;
     $this->db->query($sql);
     return true;
 
