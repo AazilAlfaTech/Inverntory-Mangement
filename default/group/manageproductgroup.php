@@ -199,22 +199,42 @@ include_once "../../files/foot.php";
 ?>
 <script type="text/javascript" src="..\..\default\javascript\masterfile.js"></script>
 <script>
-     function check_groupcode(){
+     function check_groupcode()
+     {
        let code=$("#gr_code").val();
        console.log(code);
-       var codelegnth=code.length
+       var codelegnth=code.length;
       //$("#codecheck_msg").show();
-      if(codelegnth>1){
-        $.get("../ajax/ajaxmaster.php?type=checkgroupcode&productgroup_code="+code,"",function(data){
-          var tmp=JSON.parse(data);
-          console.log(tmp);
-            if(tmp.group_id>0)
-            {
-            $("#codecheck_msg").show();
-          }else{
-            console.log("error")
-          }
-        });
+      if(codelegnth>1)
+      {
+        // $.get("../ajax/ajaxmaster.php?type=checkgroupcode&productgroup_code="+code, "" ,function(data)
+        // {
+        //   var tmp=JSON.parse(data);
+        //   console.log(tmp);
+        //     if(tmp.group_id>0)
+        //     {
+        //     $("#codecheck_msg").show();
+        //     }
+        // }
+        // );
+        // .....................
+        $.get("../ajax/ajaxmaster.php?type=checkgroupcode&productgroup_code="+code, "" ,function(data){
+                    console.log(data);
+                    var tmp=JSON.parse(data);
+                    console.log("hi");
+                    console.log(tmp.group_id);
+                    if(tmp.group_id>0){
+                        $("#codecheck_msg").show();
+                       // $(".error").css("display","none");
+                    }else{
+                        console.log("error");
+                        
+                
+                    }
+                    
+                });
+
+        // ..................
       }
      }
 </script>
