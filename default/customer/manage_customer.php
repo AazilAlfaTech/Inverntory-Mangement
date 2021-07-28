@@ -16,7 +16,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Supplier Group</h4>
+                                    <h4>Manage Customer </h4>
 
                                 </div>
                             </div>
@@ -40,7 +40,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Supplier Group</h5>
+                                    <h5>Add New Customer </h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -58,15 +58,72 @@ include_once "../../files/head.php";
 
 
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <label class=" col-form-label">Supplier Group  Code</label>
+                                            <div class="col-sm-3">
+                                                <label class=" col-form-label">Customer Code</label>
                                                 <input type="text" class="form-control" placeholder="" name="sup_grcode" id="sup_gr_code">
                                             </div>
+                                            <div class="col-sm-3">
+                                                <label class=" col-form-label">Customer Group</label>
+                                                <select class="js-example-basic-single col-sm-12">
+
+                                                    <option value="AL">Alabama</option>
+                                                    <option value="WY">Wyoming</option>
+                                                    <option value="WY">Peter</option>
+                                                    <option value="WY">Hanry Die</option>
+                                                    <option value="WY">John Doe</option>
+
+                                                </select>
+                                            </div>
+
                                             <div class="col-sm-6">
-                                                <label class=" col-form-label">Supplier Group Name</label>
+                                                <label class=" col-form-label">Customer  Name</label>
                                                 <input type="text" class="form-control" placeholder="" name="sup_grname" id="sup_gr_name">
                                             </div>
                                         </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">Contact Number</label>
+                                                <input type="text" class="form-control" placeholder="" name="sup_grcode" id="sup_gr_code">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">E-mail</label>
+                                                <input type="text" class="form-control" placeholder="" name="sup_grcode" id="sup_gr_code">
+                                            </div>
+
+                                            
+                                        </div>
+
+
+                                        <hr>
+
+                                         <div class="card-header">
+                                        <span>Customer Address</span>
+                                        </div>
+
+                                        <div class="form-group row">
+                                       
+
+ <div class="col-sm-9">
+                                                <label class=" col-form-label">Street</label>
+                                                <input type="text" class="form-control" placeholder="" name="sup_grcode" id="sup_gr_code">
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <label class=" col-form-label">City</label>
+                                                <select class="js-example-basic-single col-sm-12">
+
+<option value="AL">Alabama</option>
+<option value="WY">Wyoming</option>
+<option value="WY">Peter</option>
+<option value="WY">Hanry Die</option>
+<option value="WY">John Doe</option>
+
+</select>
+                                            </div>
+                                        </div>
+
+
 
                                         <button class="btn btn-primary">ADD</button>
                                         <button class="btn btn-inverse">CLEAR</button>
@@ -91,7 +148,7 @@ include_once "../../files/head.php";
                                                 <!-- Autofill table start -->
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5>Supplier Group List</h5>
+                                                        <h5>Customer  List</h5>
                                                         <span></span>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
@@ -106,8 +163,11 @@ include_once "../../files/head.php";
                                                             <table id="autofill" class="table table-striped table-bordered nowrap">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Group Code</th>
-                                                                        <th>Group Name</th>
+                                                                        <th>Customer  Code</th>
+                                                                        <th> Customer  Name</th>
+                                                                        <th>Contact Number </th>
+                                                                        <th>Email </th>
+
                                                                         <th>Action</th>
                                                                       
                                                                     </tr>
@@ -116,6 +176,10 @@ include_once "../../files/head.php";
                                                                     <tr>
                                                                         <td>At123</td>
                                                                         <td>Alfa grp</td>
+                                                                        <td>At123</td>
+                                                                        <td>Alfa grp</td>
+
+
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
                                       <button type='button'  class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> 
                                                <button type='button'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>

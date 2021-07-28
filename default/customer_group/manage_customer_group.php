@@ -16,7 +16,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Supplier Group</h4>
+                                    <h4>Manage Customer Group</h4>
 
                                 </div>
                             </div>
@@ -40,7 +40,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Supplier Group</h5>
+                                    <h5>Add New Customer Group</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -59,11 +59,11 @@ include_once "../../files/head.php";
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
-                                                <label class=" col-form-label">Supplier Group  Code</label>
+                                                <label class=" col-form-label">Customer Group  Code</label>
                                                 <input type="text" class="form-control" placeholder="" name="sup_grcode" id="sup_gr_code">
                                             </div>
                                             <div class="col-sm-6">
-                                                <label class=" col-form-label">Supplier Group Name</label>
+                                                <label class=" col-form-label">Customer Group Name</label>
                                                 <input type="text" class="form-control" placeholder="" name="sup_grname" id="sup_gr_name">
                                             </div>
                                         </div>
@@ -91,7 +91,7 @@ include_once "../../files/head.php";
                                                 <!-- Autofill table start -->
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5>Supplier Group List</h5>
+                                                        <h5>Customer Group List</h5>
                                                         <span></span>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
@@ -106,8 +106,8 @@ include_once "../../files/head.php";
                                                             <table id="autofill" class="table table-striped table-bordered nowrap">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Group Code</th>
-                                                                        <th>Group Name</th>
+                                                                        <th>Customer Group Code</th>
+                                                                        <th> Customer Group Name</th>
                                                                         <th>Action</th>
                                                                       
                                                                     </tr>
