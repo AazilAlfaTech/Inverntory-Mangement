@@ -1,33 +1,5 @@
 <?php
 
-include_once ("producttype.php");
-
-$producttype1=new producttype ();
-
-if (isset($_POST["typename"]))
-{
-    $producttype1->ptype_name=$_POST["typename"];
-    $producttype1->ptype_group_id=$_POST["typegroup"];
-    $producttype1->ptype_code=$_POST["typecode"];
-
-    if(isset($_POST['ptypeid']))
-    {
-        $producttype1->edit_type($_POST['ptypeid']);
-    }else
-
-    $producttype1->add_type();
-
-}
-if(isset($_GET["did"]))
-{
-    $producttype1->delete_type($_GET["did"]);
-}
-if(isset($_GET["view"]))
-{
-    // $producttype1->get_type_by_id($_GET["view"]);
-    $producttype1->getbyid($_GET["view"]);
-}
-$P=$producttype1->getall_type();
 include_once "../../files/head.php";
 
 ?>
@@ -44,7 +16,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Product Type</h4>
+                                    <h4>Manage Supplier </h4>
 
                                 </div>
                             </div>
@@ -68,7 +40,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Product Type</h5>
+                                    <h5>Add New Supplier </h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -81,33 +53,18 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form method="POST" action="manageproducttype.php">
-                                    <?php
-                                                if(isset($_GET["view"]))
-                                                {
-                                                    echo"<input type='text' class='form-control' value='".$_GET['view']."' name='ptypeid' required>";
-                                                }
-                                            ?>
+                                    <form>
+
 
 
                                         <div class="form-group row">
-                                            <div class="col-sm-4">
-
-
-
-                                                <label class=" col-form-label">Type Code</label>
-                                                <input type="text" class="form-control" placeholder="" name="typecode" id="typ_code" value="<?=$producttype1->ptype_code?>">
-
-                                              
+                                            <div class="col-sm-3">
+                                                <label class=" col-form-label">Supplier  Code</label>
+                                                <input type="text" class="form-control" placeholder="" name="supcode" id="code">
                                             </div>
-                                            
-                                            <div class="col-sm-4">
-                                                <label class=" col-form-label">Type Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="typename" id="typ_name" value="<?=$producttype1->ptype_name?>">
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <label class=" col-form-label">Group</label>
-                                                <select name="typegroup" class="form-control" id="typ_group">
+                                            <div class="col-sm-3">
+                                                <label class=" col-form-label">Supplier Group </label>
+                                                <select name="supgroup" class="form-control" id="sup_group">
                                                     <option value="-1">Select Group</option>
                                                     <option value="1">Type 1</option>
                                                     <option value="2">Type 2</option>
@@ -115,10 +72,27 @@ include_once "../../files/head.php";
                                                     
                                                 </select>
                                             </div>
+
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label"> Name</label>
+                                                <input type="text" class="form-control" placeholder="" name="supname" id="sup_name">
+                                            </div>
                                         </div>
 
-                                        <button class="btn btn-primary" type="submit">ADD</button>
-                                        <button class="btn btn-inverse" type="reset">CLEAR</button>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label"> E-mail</label>
+                                                <input type="email" class="form-control" placeholder="" name="supemail" id="sup_email">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">Telliphone No </label>
+                                                <input type="text" class="form-control" placeholder="" name="supno" id="sup_no">
+                                            </div>
+                                        </div>
+
+                                        <button class="btn btn-primary">ADD</button>
+                                        <button class="btn btn-inverse">CLEAR</button>
                                     </form>
                                 </div>
 
@@ -140,7 +114,7 @@ include_once "../../files/head.php";
                                                 <!-- Autofill table start -->
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5>Product List</h5>
+                                                        <h5>UOM List</h5>
                                                         <span></span>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
@@ -155,33 +129,29 @@ include_once "../../files/head.php";
                                                             <table id="autofill" class="table table-striped table-bordered nowrap">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Type Code</th>
-                                                                        <th>Type Name</th>
-                                                                        <th>Type groupe</th>
-                                                                        <th> </th>
+                                                                        <th>Group </th>
+                                                                        <th> Name</th>
+                                                                        <th>E-mail </th>
+                                                                        <th> Tell-No</th>
+                                                                        <th>Action</th>
                                                                       
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <?php
-                                                                        foreach ($P as $item)
-                                                                        {
-                                                                            echo
-                                                                            "<tr>
-                                                                                <td>$item->ptype_code</td>
-                                                                                <td>$item->ptype_name</td>
-                                                                                <td>$item->ptype_group_id</td>
-                                                                                <td>
-                                                                                    <button class='btn btn-mat btn-danger' onclick='del_type($item->ptype_id)'><i class='fa fa-trash'></i>  </button>
-                                                                                    <button class='btn btn-mat btn-info' onclick='edit_type($item->ptype_id)'><i class='fa fa-edit'></i> </button>
-                                                                                </td>
-                                                                            </tr>";
-                                                                        }
-                                                                    ?>
-                                                                </tbody>
-                                                                        
+                                                                    <tr>
+                                                                        <td>At123</td>
+                                                                        <td>Alfa grp</td>
+                                                                        <td>At123</td>
+                                                                        <td>Alfa grp</td>
+
+
+
+                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>
+                                      <button type='button'  class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> 
+                                               <button type='button'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                               </td> 
                                                                        
-                                                                    
+                                                                    </tr>
                                            
                                                                 </tfoot>
                                                             </table>
@@ -215,17 +185,3 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
-<script>
-    function del_type(d)
-    {
-        if(confirm("Are you sure you want to delete category?"+d))
-        {
-            window.location.href="manageproducttype.php?did="+d;
-        }
-    }
-
-    function edit_type(e)
-    {
-        window.location.href="manageproducttype.php?view="+e;
-    }
-</script>
