@@ -237,4 +237,24 @@ include_once "../../files/foot.php";
         // ..................
       }
      }
+
+
+
+
+     function checkemail() {
+    let x = $("#customer_email").val();
+    // alert(x);
+    $.get("../ajax/ajax.php?type=email_customer&ee=" + x, "", function(data) {
+
+        // console.log(data);
+        var tmp = JSON.parse(data);
+        // console.log(tmp.customer_email);
+
+        if (tmp.customer_id > 0) {
+
+            $("#efm").show(); // show message
+        }
+    });
+
+}
 </script>
