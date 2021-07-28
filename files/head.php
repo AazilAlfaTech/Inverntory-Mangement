@@ -386,7 +386,7 @@
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../uom/uom.php" target="">
+                                        <a href="../uom/manageuom.php" target="">
                                             <span class="pcoded-mtext">UOM</span>
                                         </a>
                                     </li>
