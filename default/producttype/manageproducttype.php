@@ -27,7 +27,7 @@ if(isset($_GET["view"]))
     // $producttype1->get_type_by_id($_GET["view"]);
     $producttype1->getbyid($_GET["view"]);
 }
-$P=$producttype1->getall_type();
+ $result_ptype=$producttype1->getall_type();
 include_once "../../files/head.php";
 
 ?>
@@ -157,14 +157,14 @@ include_once "../../files/head.php";
                                                                     <tr>
                                                                         <th>Type Code</th>
                                                                         <th>Type Name</th>
-                                                                        <th>Type groupe</th>
+                                                                        <th>Type Group</th>
                                                                         <th> </th>
                                                                       
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <?php
-                                                                        foreach ($P as $item)
+                                                                        foreach ($result_ptype as $item)
                                                                         {
                                                                             echo
                                                                             "<tr>

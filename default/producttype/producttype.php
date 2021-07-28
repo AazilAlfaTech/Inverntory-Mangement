@@ -59,7 +59,7 @@
         {
             $SQL="SELECT * FROM product_type WHERE ptype_status='ACTIVE'";
             $result=$this->db->query($SQL);
-            $ar=array();
+            $type_array=array();
 
             while($row=$result->fetch_array())
             {
@@ -69,14 +69,14 @@
                 $ptype->ptype_code=$row["ptype_code"];
                 $ptype->ptype_group_id=$row["ptype_group_id"];
                 $ptype->ptype_status=$row["ptype_status"];
-                $ar[]=$ptype;
+                $type_array[]=$ptype;
             }
-            return $ar;
+            return $type_array;
         }
 
-        function get_type_by_id($typeid)
+        function get_type_by_id($id)
         {
-            $SQL="SELECT * FROM product_type WHERE ptype_id=$typeid";
+            $SQL="SELECT * FROM product_type WHERE ptype_id=$id";
             echo $SQL;
             $result=$this->db->query($SQL);
 
@@ -94,8 +94,8 @@
         function getbyid($id)
         {
             $SQL="SELECT * FROM product_type WHERE ptype_id=$id";
-            $r=$this->db->query($SQL);
-            $row=$r->fetch_array();
+            $result=$this->db->query($SQL);
+            $row=$result->fetch_array();
 
             $this->ptype_id=$row["ptype_id"];
             $this->ptype_code=$row["ptype_code"];

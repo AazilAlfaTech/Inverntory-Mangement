@@ -1,6 +1,23 @@
 <?php
 
+include_once "product.php";
 include_once "../../files/head.php";
+
+$product1=new product();
+
+if(isset($_POST[""]))
+{
+    $product1->product_name=$_POST["productname"];
+    $product1->product_type=$_POST["typeid"];
+    $product1->product_uom=$_POST["unitid"];
+    $product1->product_desc=$_POST["productdesc"];
+    $product1->product_inventory_value=$_POST["radio"];
+    $product1->product_batch=$_POST["productbatch"];
+
+    $product1->insert_product();
+    
+
+}
 
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
@@ -53,7 +70,7 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form>
+                                    <form method="POST" action="manageproduct.php">
 
 
 
