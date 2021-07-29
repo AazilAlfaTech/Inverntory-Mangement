@@ -93,7 +93,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Code</label>
 
-                                                <input type="text" name="groupcode" class="form-control" id="gr_code" onblur="check_groupcode()" onkeyup="check_groupcode()" value="<?=$group1->group_code ?>" placeholder="" required>
+                                                <input type="text" name="groupcode" pattern="^[A-Z0-9]*$" class="form-control" id="gr_code" onblur="check_groupcode()" onkeyup="check_groupcode()" value="<?=$group1->group_code ?>" placeholder="" required>
                                                 <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
                                                             another?
                                                 </div>
@@ -109,7 +109,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Name</label>
                                                 <input type="text" name="groupname" class="form-control" id="gr_name" value="<?=$group1->group_name ?>" onblur="check_groupname()" onkeyup="check_groupname()" placeholder="" required>
-                                                <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that name is taken. Try
+                                                <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
                                                             another?
                                                 </div>
                                                 
@@ -197,64 +197,9 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
-<script type="text/javascript" src="..\..\default\javascript\masterfile.js"></script>
-<script>
-     function check_groupcode()
-     {
-       let code=$("#gr_code").val();
-       console.log(code);
-       var codelegnth=code.length;
-      //$("#codecheck_msg").show();
-      if(codelegnth>1)
-      {
-        // $.get("../ajax/ajaxmaster.php?type=checkgroupcode&productgroup_code="+code, "" ,function(data)
-        // {
-        //   var tmp=JSON.parse(data);
-        //   console.log(tmp);
-        //     if(tmp.group_id>0)
-        //     {
-        //     $("#codecheck_msg").show();
-        //     }
-        // }
-        // );
-        // .....................
-        $.get("../ajax/ajaxmaster.php?type=checkgroupcode&productgroup_code="+code, "" ,function(data){
-                    console.log(data);
-                    var tmp=JSON.parse(data);
-                    console.log("hi");
-                    console.log(tmp.group_id);
-                    if(tmp.group_id>0){
-                        $("#codecheck_msg").show();
-                       // $(".error").css("display","none");
-                    }else{
-                        console.log("error");
-                        
-                
-                    }
-                    
-                });
-
-        // ..................
-      }
-     }
+<script type="text/javascript" src="../javascript/masterfile.js"></script>
 
 
-
-
-     function checkemail() {
-    let x = $("#customer_email").val();
-    // alert(x);
-    $.get("../ajax/ajax.php?type=email_customer&ee=" + x, "", function(data) {
-
-        // console.log(data);
-        var tmp = JSON.parse(data);
-        // console.log(tmp.customer_email);
-
-        if (tmp.customer_id > 0) {
-
-            $("#efm").show(); // show message
-        }
-    });
-
-}
-</script>
+<!-- <script>
+    
+</script> -->
