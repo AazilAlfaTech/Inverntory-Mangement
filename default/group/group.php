@@ -87,7 +87,7 @@ function delete_group($type_groupid){
 
 function get_group_by_code($groupcode){
     $sql="SELECT * FROM product_group WHERE group_code='$groupcode'";
-    echo $sql;
+   // echo $sql;
     $result=$this->db->query($sql);
 
     // $group_array=array();
@@ -105,8 +105,8 @@ function get_group_by_code($groupcode){
 }
 
 function get_group_by_name($groupname){
-    $sql="SELECT * FROM product_group WHERE group_code=$groupname";
-    echo $sql;
+    $sql="SELECT * FROM product_group WHERE group_name='$groupname'";
+    //echo $sql;
     $result=$this->db->query($sql);
 
     // $group_array=array();

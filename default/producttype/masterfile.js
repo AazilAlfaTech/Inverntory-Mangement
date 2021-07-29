@@ -68,7 +68,7 @@ function check_groupcode()
    }
   }
 
-  function check_locationmail(){
+  function check_locationmail(){ 
 
     let mail=$("#loc_mail").val();
     console.log(mail);
@@ -85,8 +85,37 @@ function check_groupcode()
    }
   }
 
-  //...................PRODUCT TYPE.......................................
+  //.................PRODUCT TYPE................................................
 
- 
+  function check_typecode(){
+    let code=$("#typ_code").val();
+    console.log(code);
+    var codelegnth=code.length
+   $("#codecheck_msg").hide();
+   if(codelegnth>1){
+     $.get("../ajax/ajaxmaster.php?type=checktypecode&producttype_code="+code+"",function(data){
+       console.log(data);
+      var tmp=JSON.parse(data);
+       
+         if(tmp.ptype_id>0){
+         $("#codecheck_msg").show();}
+     });
+   }
+  }
 
+  function check_typename(){
+    let name=$("#typ_name").val();
+    console.log(name);
+    var namelegnth=name.length
+   $("#namecheck_msg").hide();
+   if(namelegnth>1){
+     $.get("../ajax/ajaxmaster.php?type=checktypename&producttype_name="+name+"",function(data){
+       console.log(data);
+      var tmp=JSON.parse(data);
+       
+         if(tmp.ptype_id>0){
+         $("#namecheck_msg").show();}
+     });
+   }
+  }
 

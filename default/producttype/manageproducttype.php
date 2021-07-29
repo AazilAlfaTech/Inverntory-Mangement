@@ -98,18 +98,24 @@ include_once "../../files/head.php";
 
 
                                                 <label class=" col-form-label">Type Code</label>
-                                                <input type="text" class="form-control" placeholder="" name="typecode" id="typ_code" value="<?=$producttype1->ptype_code?>">
+                                                <input type="text" class="form-control" pattern="^[A-Z0-9]*$" placeholder="" name="typecode" id="typ_code" onkeyup="check_typecode()" onblur="check_typecode()" value="<?=$producttype1->ptype_code?>" required>
+                                                <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
+                                                            another?
+                                                </div>
 
                                               
                                             </div>
                                             
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Type Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="typename" id="typ_name" value="<?=$producttype1->ptype_name?>">
+                                                <input type="text" class="form-control" placeholder="" name="typename" id="typ_name" onkeyup="check_typename()" onblur="check_typename()" value="<?=$producttype1->ptype_name?>" required>
+                                                <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Group</label>
-                                                <select name="typegroup" class="form-control" id="typ_group">
+                                                <select name="typegroup" class="form-control" id="typ_group" required>
                                                     <option value="-1">Select Group</option>
                                                    <?php
                                                         foreach($result_group as $item)
@@ -218,6 +224,7 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
+<script type="text/javascript" src="../javascript/masterfile.js"></script>
 <script>
     function del_type(d)
     {

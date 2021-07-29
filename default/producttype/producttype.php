@@ -99,6 +99,56 @@
             return $ptype_item;
         }
 
-        
+
+        function getbyid($id)
+        {
+            $SQL="SELECT * FROM product_type WHERE ptype_id=$id";
+            $r=$this->db->query($SQL);
+            $row=$r->fetch_array();
+
+            $this->ptype_id=$row["ptype_id"];
+            $this->ptype_code=$row["ptype_code"];
+            $this->ptype_name=$row["ptype_name"];
+            $this->ptype_group_id=$row["ptype_group_id"];
+            $this->ptype_status=$row["ptype_status"];
+            return $this;
+        }
+
+        function get_type_by_code($typecode)
+        {
+            $SQL="SELECT * FROM product_type WHERE ptype_code='$typecode'";
+            //echo $SQL;
+            $result=$this->db->query($SQL);
+
+            $row=$result->fetch_array();
+            $ptype=new producttype();
+            $ptype->ptype_id=$row["ptype_id"];
+            $ptype->ptype_name=$row["ptype_name"];
+            $ptype->ptype_code=$row["ptype_code"];
+            $ptype->ptype_group_id=$row["ptype_group_id"];
+            $ptype->ptype_status=$row["ptype_status"];
+
+            return $ptype;
+        }
+
+        function get_type_by_name($typename)
+        {
+            $SQL="SELECT * FROM product_type WHERE ptype_name='$typename'";
+           // echo $SQL;
+            $result=$this->db->query($SQL);
+
+            $row=$result->fetch_array();
+            $ptype=new producttype();
+            $ptype->ptype_id=$row["ptype_id"];
+            $ptype->ptype_name=$row["ptype_name"];
+            $ptype->ptype_code=$row["ptype_code"];
+            $ptype->ptype_group_id=$row["ptype_group_id"];
+            $ptype->ptype_status=$row["ptype_status"];
+
+            return $ptype;
+        }
+
+
+    
     }
 ?>
