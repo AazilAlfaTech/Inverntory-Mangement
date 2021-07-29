@@ -1,8 +1,11 @@
 <?php
 
 include_once ("producttype.php");
+include_once "../group/group.php";
 
 $producttype1=new producttype ();
+$group=new group();
+$result_group=$group->get_all_group();
 
 if (isset($_POST["typename"]))
 {
@@ -24,10 +27,9 @@ if(isset($_GET["did"]))
 }
 if(isset($_GET["view"]))
 {
-    // $producttype1->get_type_by_id($_GET["view"]);
-    $producttype1->getbyid($_GET["view"]);
+    $producttype1=$producttype1->get_type_by_id($_GET["view"]);
 }
-$P=$producttype1->getall_type();
+ $result_ptype=$producttype1->getall_type();
 include_once "../../files/head.php";
 
 ?>
@@ -115,9 +117,10 @@ include_once "../../files/head.php";
                                                 <label class=" col-form-label">Group</label>
                                                 <select name="typegroup" class="form-control" id="typ_group" required>
                                                     <option value="-1">Select Group</option>
-                                                    <option value="1">Type 1</option>
-                                                    <option value="2">Type 2</option>
-                                                    <option value="3">Type 3</option>
+                                                   <?php
+                                                        foreach($result_group as $item)
+                                                        echo"<option value='$item->group_id'>$item->group_name</option>"
+                                                   ?>
                                                     
                                                 </select>
                                             </div>
@@ -163,20 +166,20 @@ include_once "../../files/head.php";
                                                                     <tr>
                                                                         <th>Type Code</th>
                                                                         <th>Type Name</th>
-                                                                        <th>Type groupe</th>
+                                                                        <th>Type Group</th>
                                                                         <th> </th>
                                                                       
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <?php
-                                                                        foreach ($P as $item)
+                                                                        foreach ($result_ptype as $item)
                                                                         {
                                                                             echo
                                                                             "<tr>
                                                                                 <td>$item->ptype_code</td>
                                                                                 <td>$item->ptype_name</td>
-                                                                                <td>$item->ptype_group_id</td>
+                                                                                <td>".$item->ptype_group_id->group_name."</td>
                                                                                 <td>
                                                                                     <button class='btn btn-mat btn-danger' onclick='del_type($item->ptype_id)'><i class='fa fa-trash'></i>  </button>
                                                                                     <button class='btn btn-mat btn-info' onclick='edit_type($item->ptype_id)'><i class='fa fa-edit'></i> </button>
