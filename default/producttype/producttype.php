@@ -23,7 +23,7 @@
         {
             $SQL="INSERT INTO product_type(ptype_name,ptype_code,ptype_group_id) VALUES ('$this->ptype_name','$this->ptype_code','$this->ptype_group_id')";
             $this->db->query($SQL);
-            echo $SQL;
+            // echo $SQL;
             return true;
         }
 
@@ -32,7 +32,7 @@
         {
             $SQL="UPDATE product_type SET ptype_name='$this->ptype_name',ptype_code='$this->ptype_code',ptype_group_id='$this->ptype_group_id' WHERE ptype_id=$typeid";
             $this->db->query($SQL);
-            echo $SQL;
+            // echo $SQL;
             return true;
 
         }
@@ -42,13 +42,13 @@
         {
             $SQLCHECK="SELECT * FROM product WHERE product_type=$type_prodid AND product_status='ACTIVE'";
             $result=$this->db->query($SQLCHECK);
-            echo $SQLCHECK;
+            // echo $SQLCHECK;
 
             if($result->num_rows==0)
             {
                 $SQL="UPDATE product_type SET ptype_status='INACTIVE' WHERE ptype_id=$type_prodid";
                 $this->db->query($SQL);
-                echo $SQL;
+                // echo $SQL;
                 return true;
             }
             else
@@ -81,7 +81,7 @@
 
         function get_type_by_id($typeid){
             $SQL="SELECT * FROM product_type WHERE ptype_id=$typeid";
-            echo $SQL;
+            // echo $SQL;
             $result=$this->db->query($SQL);
             $type_group1=new group();
         

@@ -27,7 +27,7 @@
                 VALUES ('$this->product_name','$this->product_type','$this->product_uom','$this->product_desc','$this->product_inventory_val',
                 '$this->product_batch')";
                 $this->db->query($SQL);
-                echo $SQL;
+                // echo $SQL;
                 return true;
             }
 
@@ -37,7 +37,7 @@
                 product_desc='$this->product_desc',product_inventory_val='$this->product_inventory_val',product_batch='$this->product_batch' 
                 WHERE product_id=$productid";
                 $this->db->query($SQL);
-                echo $SQL;
+                // echo $SQL;
                 return true;
             }
 
@@ -74,7 +74,7 @@
             {
                 $SQL="SELECT * FROM product WHERE product_id=$productid";
                 $result=$this->db->query($SQL);
-                echo $SQL;
+                // echo $SQL;
 
                 $row=$result->fetch_array();
                 $ptype1=new producttype();
