@@ -159,7 +159,7 @@ include_once "../../files/head.php";
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="card-block">
+                                                    <div class="card-block"  style="display: none;">
                                                         <div class="dt-responsive table-responsive">
                                                             <table id="autofill" class="table table-striped table-bordered nowrap">
                                                                 <thead>
@@ -181,8 +181,14 @@ include_once "../../files/head.php";
                                                                                 <td>$item->ptype_name</td>
                                                                                 <td>".$item->ptype_group_id->group_name."</td>
                                                                                 <td>
-                                                                                    <button class='btn btn-mat btn-danger' onclick='del_type($item->ptype_id)'><i class='fa fa-trash'></i>  </button>
-                                                                                    <button class='btn btn-mat btn-info' onclick='edit_type($item->ptype_id)'><i class='fa fa-edit'></i> </button>
+
+                                                                                <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                                <button type='button' onclick='edit_type()'   data-toggle='modal' data-target='#category-edit' class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                                                   <button type='button' onclick='del_type()'  class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+                                                                                   
+                                                                               </div>
+                                                                                
+      
                                                                                 </td>
                                                                             </tr>";
                                                                         }

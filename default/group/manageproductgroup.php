@@ -145,13 +145,14 @@ include_once "../../files/head.php";
                     <div class="card-header-right">
                         <ul class="list-unstyled card-option">
                             <li><i class="feather icon-maximize full-card"></i></li>
-                            <li><i class="feather icon-minus minimize-card"></i></li>
+                            <li><i class="feather icon-plus minimize-card"></i></li>
                         
                         </ul>
                     </div>
                 </div>
-                <div class="card-block">
+                <div class="card-block"  style="display: none;">
                     <div class="dt-responsive table-responsive">
+
                         <table id="autofill" class="table table-striped table-bordered nowrap">
                             <thead>
                                 <tr>
@@ -169,8 +170,9 @@ include_once "../../files/head.php";
                                             <td id='gr_id_td'>$item->group_id</td>
                                             <td>$item->group_code</td>
                                             <td>$item->group_name</td>
+
                                             <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                            <button type='button' id='$item->group_id' data-toggle='modal' data-target='#category-edit' class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                            <button type='button' id='$item->group_id'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                <button type='button'  id='$item->group_id' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
                                                
                                            </div></td>

@@ -183,7 +183,7 @@ include_once "../../files/head.php";
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-block">
+                                <div class="card-block"  style="display: none;">
                                     <div class="dt-responsive table-responsive">
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>

@@ -343,24 +343,7 @@
                                     <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                                     <span class="pcoded-mtext">Dashboard</span>
                                 </a>
-                                <ul class="pcoded-submenu">
-                                    <li class="">
-                                        <a href="index-1.htm">
-                                            <span class="pcoded-mtext">Default</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="dashboard-crm.htm">
-                                            <span class="pcoded-mtext">CRM</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="dashboard-analytics.htm">
-                                            <span class="pcoded-mtext">Analytics</span>
-                                            <span class="pcoded-badge label label-info ">NEW</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                            
                             </li>
                             <li class="pcoded-hasmenu">
                                 <a href="javascript:void(0)">
@@ -371,28 +354,28 @@
                                 <ul class="pcoded-submenu">
                         
                                     <li class=" ">
-                                        <a href="../group/manageproductgroup.php">
+                                        <a href="../group/manageproductgroup.php" target="_blank">
                                             <span class="pcoded-mtext">  Group</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../producttype/manageproducttype.php " target="">
+                                        <a href="../producttype/manageproducttype.php" target="_blank">
                                             <span class="pcoded-mtext">Type</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../location/managelocation.php" target="">
+                                        <a href="../location/managelocation.php" target="_blank">
                                             <span class="pcoded-mtext">Location</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../uom/manageuom.php" target="">
+                                        <a href="../uom/manageuom.php"  target="_blank">
                                             <span class="pcoded-mtext">UOM</span>
                                         </a>
                                     </li>
 
                                     <li class=" ">
-                                        <a href="../product/manageproduct.php " target="">
+                                        <a href="../product/manageproduct.php" target="_blank">
                                             <span class="pcoded-mtext">Products</span>
                                         </a>
                                     </li>
@@ -407,17 +390,17 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../purchase_requisition/manage_purchase_requisition.php">
+                                        <a href="../purchase_requisition/manage_purchase_requisition.php" target="_blank">
                                             <span class="pcoded-mtext">Manage Purchase Requisition</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../purchase_order/manage_purchase_order.php " >
+                                        <a href="../purchase_order/manage_purchase_order.php" target="_blank" >
                                             <span class="pcoded-mtext">Mange Purchase Order </span>
                                         </a>
                                     </li>
                                     <li class="">
-                                        <a href="../GRN/manage_GRN.php "> 
+                                        <a href="../GRN/manage_GRN.php " target="_blank"> 
                                             <span class="pcoded-mtext">Manage GRN</span>
                                         </a>
                                     </li>
@@ -434,12 +417,12 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../supplier_group/manage_suppilier_group.php ">
+                                        <a href="../supplier_group/manage_suppilier_group.php " target="_blank" >
                                             <span class="pcoded-mtext">Manage Supplier Group</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../supplier/manage_supplier.php " >
+                                        <a href="../supplier/manage_supplier.php " target="_blank" >
                                             <span class="pcoded-mtext">Manage Supplier </span>
                                         </a>
                                     </li>
@@ -459,18 +442,28 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../customer_group/manage_customer_group.php ">
+                                        <a href="../customer_group/manage_customer_group.php " target="_blank">
                                             <span class="pcoded-mtext">Manage Customer Group</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../customer/manage_customer.php " >
+                                        <a href="../customer/manage_customer.php" target="_blank" >
                                             <span class="pcoded-mtext">Manage Customer </span>
                                         </a>
                                     </li>
                                   
 
                                 </ul>
+                            </li>
+
+
+                            <li class="">
+                                <a href="../city/manage_city.php" target="_blank">
+                                    <span class="pcoded-micon"><i class="fa fa-user"></i></span>
+                                    <span class="pcoded-mtext">Add City</span>
+                               
+                                </a>
+                             
                             </li>
 
 

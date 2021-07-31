@@ -83,7 +83,7 @@ if(isset($_POST["productname"]))
                                     </div>
                                 </div>
 
-                                <div class="card-block">
+                                <div class="card-block"  style="display: none;">
 
                                     <form method="POST" action="manageproduct.php">
 
