@@ -1,9 +1,25 @@
 <?php
 
+include_once "uom.php";
+
+$uom1 = new uom(); //$uom1 is object
+
+if(isset($_POST["unitcode"])){
+
+    $uom1->uom_code = $_POST["unitcode"];
+    $uom1->uom_name = $_POST["unitname"];
+
+    $uom1->insert_uom();
+
+
+}
+
 include_once "../../files/head.php";
+
 
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
+
 
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
@@ -53,7 +69,7 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form>
+                                    <form method = "POST" action = "manageuom.php"> 
 
 
 
@@ -68,7 +84,7 @@ include_once "../../files/head.php";
                                             </div>
                                         </div>
 
-                                        <button class="btn btn-primary">ADD</button>
+                                        <button class="btn btn-primary" type ="submit">ADD</button>
                                         <button class="btn btn-inverse">CLEAR</button>
                                     </form>
                                 </div>
