@@ -1,6 +1,38 @@
 <?php
 
+include_once "product.php";
+include_once "../group/group.php";
+include_once "../producttype/producttype.php";
+include_once "../location/location.php";
+// include_once "../uom/uom.php";
 include_once "../../files/head.php";
+
+$group1=new group();
+$result_group=$group1->get_all_group();
+
+$ptype1=new producttype();
+$result_type=$ptype1->getall_type();
+
+$location1=new location();
+$result_location=$location1->get_all_location();
+
+$product1=new product();
+$result_product=$product1->getall_product();
+
+
+if(isset($_POST["productname"]))
+{
+    $product1->product_name=$_POST["productname"];
+    $product1->product_type=$_POST["typeid"];
+    $product1->product_uom=$_POST["unitid"];
+    $product1->product_desc=$_POST["productdesc"];
+    $product1->product_inventory_value=$_POST["radio"];
+    $product1->product_batch=$_POST["productbatch"];
+
+    $product1->insert_product();
+    
+
+}
 
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
@@ -51,9 +83,9 @@ include_once "../../files/head.php";
                                     </div>
                                 </div>
 
-                                <div class="card-block">
+                                <div class="card-block"  style="display: none;">
 
-                                    <form>
+                                    <form method="POST" action="manageproduct.php">
 
 
 
@@ -61,40 +93,31 @@ include_once "../../files/head.php";
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select Group</label>
                                                 <select name="select" class="form-control" name="groupid" id="gr_id">
-                                                    <option value="opt1">Select Group</option>
-                                                    <option value="opt2">Type 2</option>
-                                                    <option value="opt3">Type 3</option>
-                                                    <option value="opt4">Type 4</option>
-                                                    <option value="opt5">Type 5</option>
-                                                    <option value="opt6">Type 6</option>
-                                                    <option value="opt7">Type 7</option>
-                                                    <option value="opt8">Type 8</option>
+                                                    <option value="-1">Select Group</option>
+                                                    <?php
+                                                        foreach($result_group as $item)
+                                                        echo"<option value='$item->group_id'>$item->group_name</option>"
+                                                   ?>
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Type </label>
                                                 <select name="select" class="form-control" name="typeid" id="typ-id">
-                                                    <option value="opt1">Select Type</option>
-                                                    <option value="opt2">Type 2</option>
-                                                    <option value="opt3">Type 3</option>
-                                                    <option value="opt4">Type 4</option>
-                                                    <option value="opt5">Type 5</option>
-                                                    <option value="opt6">Type 6</option>
-                                                    <option value="opt7">Type 7</option>
-                                                    <option value="opt8">Type 8</option>
+                                                    <option value="-1">Select Type</option>
+                                                    <?php
+                                                        foreach($result_type as $item)
+                                                        echo"<option value='$item->ptype_id'>$item->ptype_name</option>"
+                                                   ?>                                       
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select UOM </label>
                                                 <select name="select" class="form-control" name="unitid" id="unit_id">
-                                                    <option value="opt1">Select UOM</option>
-                                                    <option value="opt2">Type 2</option>
-                                                    <option value="opt3">Type 3</option>
-                                                    <option value="opt4">Type 4</option>
-                                                    <option value="opt5">Type 5</option>
-                                                    <option value="opt6">Type 6</option>
-                                                    <option value="opt7">Type 7</option>
-                                                    <option value="opt8">Type 8</option>
+                                                    <option value="-1">Select UOM</option>
+                                                    <!-- <?php
+                                                        foreach($result_uom as $item)
+                                                        echo"<option value='$item->uom_id'>$item->uom_name</option>"
+                                                   ?> -->
                                                 </select>
                                             </div>
                                         </div>
@@ -139,7 +162,7 @@ include_once "../../files/head.php";
 
                                         </div>
 
-                                        <button class="btn btn-primary">ADD</button>
+                                        <button class="btn btn-primary" type="submit">ADD</button>
                                         <button class="btn btn-inverse">CLEAR</button>
                                     </form>
                                 </div>
@@ -179,24 +202,30 @@ include_once "../../files/head.php";
                                                 <tr>
                                                     <th>Product Code</th>
                                                     <th>Product Name</th>
-                                                    <th>Product Group</th>
+                                                    <!-- <th>Product Group</th> -->
                                                     <th>Product Type</th>
-                                                    <th>Product UOM</th>
+                                                    <!-- <th>Product UOM</th> -->
 
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>At123</td>
-                                                    <td>Alfa grp</td>
-                                                    <td>At123</td>
-                                                    <td>Alfa grp</td>
-                                                    <td>Alfa grp</td>
-
-                                                </tr>
-
-                                                </tfoot>
+                                            <?php
+                                                foreach ($result_product as $item)
+                                                    {
+                                                        echo
+                                                        "<tr>
+                                                            <td>$item->product_code</td>
+                                                            <td>$item->product_name</td>
+                                                            <td>".$item->product_type->ptype_name."</td>
+                                                            <td>
+                                                                <button class='btn btn-mat btn-danger' onclick='del_type($item->product_id)'><i class='fa fa-trash'></i>  </button>
+                                                                <button class='btn btn-mat btn-info' onclick='edit_type($item->product_id)'><i class='fa fa-edit'></i> </button>
+                                                            </td>
+                                                        </tr>";
+                                                    }
+                                            ?>
+                                            </tbody>    
                                         </table>
                                     </div>
                                 </div>

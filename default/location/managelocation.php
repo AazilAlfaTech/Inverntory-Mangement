@@ -111,18 +111,21 @@ include_once "../../files/head.php";
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Location Code</label>
                                                 <input type="text" value="<?=$location1->location_code?>"
-                                                    class="form-control" placeholder="" name="loccode" id="loc_code">
+                                                    class="form-control" placeholder="" name="loccode" pattern="^[A-Z0-9]*$" id="loc_code" onkeyup="check_locationcode()" onblur="check_locationcode()" required>
+                                                    <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that name is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label class=" col-form-label">location Name</label>
+                                                <label class=" col-form-label">Location Name</label>
                                                 <input type="text" value="<?=$location1->location_name ?>"
-                                                    class="form-control" placeholder="" name="locname" id="loc_name">
+                                                    class="form-control" placeholder="" name="locname" id="loc_name" required>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Contact No</label>
                                                 <input type="text" value="<?=$location1->location_number ?>"
-                                                    class="form-control" placeholder="" name="locnum" id="loc_num">
+                                                    class="form-control" placeholder="" name="locnum" id="loc_num" required>
                                             </div>
                                         </div>
 
@@ -130,8 +133,11 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">E-mail </label>
-                                                <input type="text" value="<?=$location1->location_email ?>"
-                                                    class="form-control" placeholder="" name="locmail" id="loc_mail">
+                                                <input type="email" value="<?=$location1->location_email ?>"
+                                                    class="form-control" placeholder="" name="locmail" id="loc_mail" onkeyup="check_locationmail()" onblur="check_locationmail()" required>
+                                                    <div class="col-form-label" id="mailcheck_msg" style="display:none;">Sorry, that e-mail is taken. Try
+                                                            another?
+                                                </div>
 
 
                                             </div>
@@ -177,7 +183,7 @@ include_once "../../files/head.php";
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-block">
+                                <div class="card-block"  style="display: none;">
                                     <div class="dt-responsive table-responsive">
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
@@ -252,7 +258,7 @@ include_once "../../files/foot.php";
 
                             <!-- ------------------------------------------------------------------------------------------------- -->
 
-
+                            <script type="text/javascript" src="../javascript/masterfile.js"></script>
                             <script>
                             function delete_location(deleteid) {
 

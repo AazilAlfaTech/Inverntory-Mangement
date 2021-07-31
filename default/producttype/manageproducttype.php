@@ -1,8 +1,11 @@
 <?php
 
 include_once ("producttype.php");
+include_once "../group/group.php";
 
 $producttype1=new producttype ();
+$group=new group();
+$result_group=$group->get_all_group();
 
 if (isset($_POST["typename"]))
 {
@@ -24,10 +27,9 @@ if(isset($_GET["did"]))
 }
 if(isset($_GET["view"]))
 {
-    // $producttype1->get_type_by_id($_GET["view"]);
-    $producttype1->getbyid($_GET["view"]);
+    $producttype1=$producttype1->get_type_by_id($_GET["view"]);
 }
-$P=$producttype1->getall_type();
+ $result_ptype=$producttype1->getall_type();
 include_once "../../files/head.php";
 
 ?>
@@ -96,22 +98,29 @@ include_once "../../files/head.php";
 
 
                                                 <label class=" col-form-label">Type Code</label>
-                                                <input type="text" class="form-control" placeholder="" name="typecode" id="typ_code" value="<?=$producttype1->ptype_code?>">
+                                                <input type="text" class="form-control" pattern="^[A-Z0-9]*$" placeholder="" name="typecode" id="typ_code" onkeyup="check_typecode()" onblur="check_typecode()" value="<?=$producttype1->ptype_code?>" required>
+                                                <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
+                                                            another?
+                                                </div>
 
                                               
                                             </div>
                                             
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Type Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="typename" id="typ_name" value="<?=$producttype1->ptype_name?>">
+                                                <input type="text" class="form-control" placeholder="" name="typename" id="typ_name" onkeyup="check_typename()" onblur="check_typename()" value="<?=$producttype1->ptype_name?>" required>
+                                                <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Group</label>
-                                                <select name="typegroup" class="form-control" id="typ_group">
+                                                <select name="typegroup" class="form-control" id="typ_group" required>
                                                     <option value="-1">Select Group</option>
-                                                    <option value="1">Type 1</option>
-                                                    <option value="2">Type 2</option>
-                                                    <option value="3">Type 3</option>
+                                                   <?php
+                                                        foreach($result_group as $item)
+                                                        echo"<option value='$item->group_id'>$item->group_name</option>"
+                                                   ?>
                                                     
                                                 </select>
                                             </div>
@@ -150,30 +159,36 @@ include_once "../../files/head.php";
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="card-block">
+                                                    <div class="card-block"  style="display: none;">
                                                         <div class="dt-responsive table-responsive">
                                                             <table id="autofill" class="table table-striped table-bordered nowrap">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Type Code</th>
                                                                         <th>Type Name</th>
-                                                                        <th>Type groupe</th>
+                                                                        <th>Type Group</th>
                                                                         <th> </th>
                                                                       
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <?php
-                                                                        foreach ($P as $item)
+                                                                        foreach ($result_ptype as $item)
                                                                         {
                                                                             echo
                                                                             "<tr>
                                                                                 <td>$item->ptype_code</td>
                                                                                 <td>$item->ptype_name</td>
-                                                                                <td>$item->ptype_group_id</td>
+                                                                                <td>".$item->ptype_group_id->group_name."</td>
                                                                                 <td>
-                                                                                    <button class='btn btn-mat btn-danger' onclick='del_type($item->ptype_id)'><i class='fa fa-trash'></i>  </button>
-                                                                                    <button class='btn btn-mat btn-info' onclick='edit_type($item->ptype_id)'><i class='fa fa-edit'></i> </button>
+
+                                                                                <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                                <button type='button' onclick='edit_type()'   data-toggle='modal' data-target='#category-edit' class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                                                   <button type='button' onclick='del_type()'  class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+                                                                                   
+                                                                               </div>
+                                                                                
+      
                                                                                 </td>
                                                                             </tr>";
                                                                         }
@@ -215,6 +230,7 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
+<script type="text/javascript" src="../javascript/masterfile.js"></script>
 <script>
     function del_type(d)
     {
