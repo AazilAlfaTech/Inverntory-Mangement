@@ -118,7 +118,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Location Name</label>
-                                                <input type="text" value="<?=$location1->location_name ?>"
+                                                <input type="text" value="<?= $location1->location_name ?>"
                                                     class="form-control" placeholder="" name="locname" id="loc_name" required>
                                             </div>
 
