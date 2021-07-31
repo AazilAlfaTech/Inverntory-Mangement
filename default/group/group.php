@@ -3,16 +3,21 @@ include_once "../../files/config.php";
 
 
 class group{
+    
 public $group_id;
 public $group_code;
 public $group_name;
 public $group_status;
 public $group_date;
 
+
+
+
 function __construct(){
     $this->db=new mysqli(host,un,pw,db1);
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 function insert_group(){
 
     $sql="INSERT INTO product_group(group_code,group_name) VALUES ('$this->group_code','$this->group_name');";
@@ -22,6 +27,7 @@ function insert_group(){
 }
 
 
+// -----------------------------------------------------------------------------------------------------------------------------------
 function get_all_group(){
     $sql="SELECT * FROM product_group WHERE group_status='ACTIVE' ";
     //echo $sql;
@@ -42,6 +48,7 @@ function get_all_group(){
     return $group_array;
 }
 
+// ----------------------------------------------------------------------------------------------------------------------
 function get_group_by_id($groupid){
     $sql="SELECT * FROM product_group WHERE group_id=$groupid";
     echo $sql;
