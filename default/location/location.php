@@ -45,13 +45,13 @@ function get_all_location(){
     echo $sql;
     $result=$this->db->query($sql);
 
-    $location_array=array();
+    $location_array=array(); //array created
 
     while($row=$result->fetch_array()){
 
         $location_item = new location();
 
-        $location_item->location_id=$row["location_id"];
+        //$location_item->location_id=$row["location_id"];
         $location_item->location_code=$row["location_code"];
         $location_item->location_name=$row["location_name"];
         $location_item->location_add=$row["location_add"];
