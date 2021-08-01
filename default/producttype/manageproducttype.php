@@ -98,7 +98,7 @@ include_once "../../files/head.php";
 
 
                                                 <label class=" col-form-label">Type Code</label>
-                                                <input type="text" class="form-control" pattern="^[A-Z0-9]*$" placeholder="" name="typecode" id="typ_code" onkeyup="check_typecode()" onblur="check_typecode()" value="<?=$producttype1->ptype_code?>" required>
+                                                <input type="text" class="form-control" pattern="^[A-Z0-9]*$" placeholder="" name="typecode" id="typ_code" onkeyup="check_typecode()" onblur="check_typecode()" value="<?=$producttype1->ptype_code?>" <?php if($producttype1->ptype_code){echo "disabled=\"disabled\" ";} ?>" required>
                                                 <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
                                                             another?
                                                 </div>

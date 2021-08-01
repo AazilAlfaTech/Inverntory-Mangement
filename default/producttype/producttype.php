@@ -83,7 +83,7 @@
             $SQL="SELECT * FROM product_type WHERE ptype_id=$typeid";
             // echo $SQL;
             $result=$this->db->query($SQL);
-            $type_group1=new group();
+            //$type_group1=new group();
         
             // $group_array=array();
         
@@ -100,19 +100,19 @@
         }
 
 
-        function getbyid($id)
-        {
-            $SQL="SELECT * FROM product_type WHERE ptype_id=$id";
-            $r=$this->db->query($SQL);
-            $row=$r->fetch_array();
+        // function getbyid($id)
+        // {
+        //     $SQL="SELECT * FROM product_type WHERE ptype_id=$id";
+        //     $r=$this->db->query($SQL);
+        //     $row=$r->fetch_array();
 
-            $this->ptype_id=$row["ptype_id"];
-            $this->ptype_code=$row["ptype_code"];
-            $this->ptype_name=$row["ptype_name"];
-            $this->ptype_group_id=$row["ptype_group_id"];
-            $this->ptype_status=$row["ptype_status"];
-            return $this;
-        }
+        //     $this->ptype_id=$row["ptype_id"];
+        //     $this->ptype_code=$row["ptype_code"];
+        //     $this->ptype_name=$row["ptype_name"];
+        //     $this->ptype_group_id=$row["ptype_group_id"];
+        //     $this->ptype_status=$row["ptype_status"];
+        //     return $this;
+        // }
 
         function get_type_by_code($typecode)
         {
