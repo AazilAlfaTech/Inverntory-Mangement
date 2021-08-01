@@ -183,8 +183,8 @@ include_once "../../files/head.php";
                                                                                 <td>
 
                                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                                <button type='button' onclick='edit_type()'   data-toggle='modal' data-target='#category-edit' class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
-                                                                                   <button type='button' onclick='del_type()'  class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+                                                                                <button type='button' onclick='edit_type1($item->ptype_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                                                   <button type='button' onclick='del_type1($item->ptype_id)'  class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
                                                                                    
                                                                                </div>
                                                                                 
@@ -230,18 +230,20 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
-<script type="text/javascript" src="../javascript/masterfile.js"></script>
+<!-- <script type="text/javascript" src="../javascript/masterfile.js"></script> -->
 <script>
-    function del_type(d)
+    function del_type1(d)
     {
-        if(confirm("Are you sure you want to delete category?"+d))
-        {
-            window.location.href="manageproducttype.php?did="+d;
-        }
+        console.log(d);
+        // if(confirm("Are you sure you want to delete category?"+d))
+        // {
+        //     window.location.href="manageproducttype.php?did="+d;
+        // }
     }
 
-    function edit_type(e)
+    function edit_type1(e)
     {
-        window.location.href="manageproducttype.php?view="+e;
+        console.log(e);
+        //window.location.href="manageproducttype.php?view="+e;
     }
 </script>
