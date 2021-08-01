@@ -214,7 +214,7 @@ $result_product=$product1->getall_product();
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
                                             <li><i class="feather icon-maximize full-card"></i></li>
-                                            <li><i class="feather icon-minus minimize-card"></i></li>
+                                            <li><i class="feather icon-plus minimize-card"></i></li>
 
                                         </ul>
                                     </div>

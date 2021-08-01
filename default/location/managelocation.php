@@ -111,7 +111,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Location Code</label>
-                                                <input type="text" value="<?=$location1->location_code?>"
+                                                <input type="text" value="<?=$location1->location_code?>" <?php if($location1->location_code){echo "disabled=\"disabled\" ";} ?>"
                                                     class="form-control" placeholder="" name="loccode" pattern="^[A-Z0-9]*$" id="loc_code" onkeyup="check_locationcode()" onblur="check_locationcode()" required>
                                                     <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that name is taken. Try
                                                             another?

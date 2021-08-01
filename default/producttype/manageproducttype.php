@@ -103,7 +103,7 @@ include_once "../../files/head.php";
 
 
                                                 <label class=" col-form-label">Type Code</label>
-                                                <input type="text" class="form-control" pattern="^[A-Z0-9]*$" placeholder="" name="typecode" id="typ_code" onkeyup="check_typecode()" onblur="check_typecode()" value="<?=$producttype1->ptype_code?>" required>
+                                                <input type="text" class="form-control" pattern="^[A-Z0-9]*$" placeholder="" name="typecode" id="typ_code" onkeyup="check_typecode()" onblur="check_typecode()" value="<?=$producttype1->ptype_code?>" <?php if($producttype1->ptype_code){echo "disabled=\"disabled\" ";} ?>" required>
                                                 <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
                                                             another?
                                                 </div>
@@ -192,9 +192,11 @@ include_once "../../files/head.php";
                                                                                 <td>
 
                                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
+
                                                                                 <button type='button'  onclick='edit_type($item->ptype_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                                                 <button type='button'  onclick='delete_type($item->ptype_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
                                                                                 </div>
+
                                                                                 
       
                                                                                 </td>
@@ -238,7 +240,18 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
-<script type="text/javascript" src="../javascript/masterfile.js"></script>
+
+ <script type="text/javascript" src="../javascript/masterfile.js"></script> 
+<script>
+    function del_type1(d)
+    {
+        console.log(d);
+        // if(confirm("Are you sure you want to delete category?"+d))
+        // {
+        //     window.location.href="manageproducttype.php?did="+d;
+        // }
+
+
 <script>
 
     function delete_type(deleteid) {
@@ -250,8 +263,4 @@ include_once "../../files/foot.php";
 
     }
 
-    function edit_type(e)
-    {
-        window.location.href="manageproducttype.php?view="+e;
-    }
 </script>
