@@ -221,9 +221,9 @@ include_once "../../files/foot.php";
 
                             function edit_uom(edit_uom) {
 
-                                if (confirm("Do you want to edit id" + " " + edit_uom)) {
+                   
                                     window.location.href = "manageuom.php?edit_uom=" + edit_uom;
-                                }
+                         
 
 
                             }
