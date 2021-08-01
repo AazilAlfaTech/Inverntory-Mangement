@@ -41,9 +41,22 @@
                 return true;
             }
 
-            function delete_product()
+            function delete_product($productid)
             {
-                
+                // $SQLCHECK="SELECT * FROM product WHERE product_type=$type_prodid AND product_status='ACTIVE'";
+                // $result=$this->db->query($SQLCHECK);
+                // echo $SQLCHECK;
+
+                // if($result->num_rows==0)
+                // {
+                    $SQL="UPDATE product SET product_status='INACTIVE' WHERE product_id=$productid";
+                    $this->db->query($SQL);
+                    // echo $SQL;
+                    return true;
+                // }
+                // else
+                // echo "No rows";
+                // return false;
             }
 
             function getall_product()
