@@ -21,15 +21,20 @@ if (isset($_POST["typename"]))
     $producttype1->add_type();
 
 }
-if(isset($_GET["did"]))
-{
-    $producttype1->delete_type($_GET["did"]);
-}
+
+$result_ptype=$producttype1->getall_type();
+
 if(isset($_GET["view"]))
 {
     $producttype1=$producttype1->get_type_by_id($_GET["view"]);
 }
- $result_ptype=$producttype1->getall_type();
+
+if(isset($_GET["d_id"]))
+{
+    $producttype1->delete_type($_GET["d_id"]);
+}
+$result_ptype=$producttype1->getall_type();
+ 
 include_once "../../files/head.php";
 
 ?>
@@ -119,8 +124,12 @@ include_once "../../files/head.php";
                                                     <option value="-1">Select Group</option>
                                                    <?php
                                                         foreach($result_group as $item)
-                                                        echo"<option value='$item->group_id'>$item->group_name</option>"
-                                                   ?>
+                                                        // echo"<option value='$item->group_id'>$item->group_name</option>"
+                                                        if($item->group_id==$producttype1->ptype_group_id->group_id)   
+			                                        echo "<option value='$item->group_id' selected='selected'>$item->group_name</option>";
+                                                    else
+                                                    echo"<option value='$item->group_id'>$item->group_name</option>";
+                                                    ?>
                                                     
                                                 </select>
                                             </div>
@@ -154,7 +163,7 @@ include_once "../../files/head.php";
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
-                                                                <li><i class="feather icon-minus minimize-card"></i></li>
+                                                                <li><i class="feather icon-plus minimize-card"></i></li>
                                                           
                                                             </ul>
                                                         </div>
@@ -178,15 +187,20 @@ include_once "../../files/head.php";
                                                                             echo
                                                                             "<tr>
                                                                                 <td>$item->ptype_code</td>
-                                                                                <td>$item->ptype_name</td>
+                                                                                <td>$item->ptype_name
+                                                                                </td>
                                                                                 <td>".$item->ptype_group_id->group_name."</td>
                                                                                 <td>
 
                                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                                <button type='button' onclick='edit_type1($item->ptype_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
-                                                                                   <button type='button' onclick='del_type1($item->ptype_id)'  class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
-                                                                                   
-                                                                               </div>
+
+
+                                                                                <button type='button' onclick='edit_type($item->ptype_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                                                 <button type='button'  onclick='del_type($item->ptype_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+                                                                               
+                                                                             </div>
+
+
                                                                                 
       
                                                                                 </td>
@@ -230,7 +244,8 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
-<!-- <script type="text/javascript" src="../javascript/masterfile.js"></script> -->
+
+ <script type="text/javascript" src="../javascript/masterfile.js"></script> 
 <script>
     function del_type1(d)
     {
@@ -239,11 +254,17 @@ include_once "../../files/foot.php";
         // {
         //     window.location.href="manageproducttype.php?did="+d;
         // }
+
+
+<script>
+
+    function delete_type(deleteid) {
+
+    if (confirm("Are you sure you want to delete product type?" + "" + deleteid)) {
+        window.location.href = "manageproducttype.php?d_id=" + deleteid;
     }
 
-    function edit_type1(e)
-    {
-        console.log(e);
-        //window.location.href="manageproducttype.php?view="+e;
+
     }
+
 </script>
