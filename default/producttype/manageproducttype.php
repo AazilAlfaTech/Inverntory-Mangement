@@ -154,7 +154,7 @@ include_once "../../files/head.php";
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
-                                                                <li><i class="feather icon-minus minimize-card"></i></li>
+                                                                <li><i class="feather icon-plus minimize-card"></i></li>
                                                           
                                                             </ul>
                                                         </div>
@@ -178,13 +178,14 @@ include_once "../../files/head.php";
                                                                             echo
                                                                             "<tr>
                                                                                 <td>$item->ptype_code</td>
-                                                                                <td>$item->ptype_name</td>
+                                                                                <td>$item->ptype_name
+                                                                                </td>
                                                                                 <td>".$item->ptype_group_id->group_name."</td>
                                                                                 <td>
 
                                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                                <button type='button' onclick='edit_type()'   data-toggle='modal' data-target='#category-edit' class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
-                                                                                   <button type='button' onclick='del_type()'  class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+                                                                                <button type='button' onclick='edit_type($item->ptype_id)'   style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                                                   <button type='button' onclick='del_type($item->ptype_id)'  class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
                                                                                    
                                                                                </div>
                                                                                 

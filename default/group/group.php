@@ -57,6 +57,7 @@ function get_group_by_id($groupid){
     // $group_array=array();
 
     $row=$result->fetch_array();
+    
         $group_item=new group();
         $group_item->group_id=$row["group_id"];
         $group_item->group_code=$row["group_code"];
