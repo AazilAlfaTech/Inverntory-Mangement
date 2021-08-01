@@ -1,6 +1,11 @@
 <?php
 
 include_once "uom.php";
+include_once "../../files/head.php";
+
+
+
+
 
 $uom1 = new uom(); //$uom1 is object
 
@@ -14,7 +19,18 @@ if(isset($_POST["unitcode"])){
 
 }
 
-include_once "../../files/head.php";
+$uom_result = $uom1->get_all_uom(); //calling a function and given to a variable value
+
+//Print_r ($uom_result);
+
+//.............
+
+
+
+if(isset($_GET['edit_uom'])){
+    $uom1->get_uom_by_id($_GET['edit_uom']);
+}
+
 
 
 ?>
@@ -128,18 +144,30 @@ include_once "../../files/head.php";
                                                                       
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+
+
+                                                                <?php
+  foreach($uom_result as $item){
+                                                                    echo"
                                                                     <tr>
-                                                                        <td>At123</td>
-                                                                        <td>Alfa grp</td>
+                                                                       
+                                                                        <td>$item->uom_code</td>
+                                                                        <td>$item->uom_name</td>      
+                                                                        
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                            <button type='button' id='$item->group_id' data-toggle='modal' data-target='#category-edit' class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
-                                               <button type='button'  id='$item->group_id' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+ <a href='manageuom.php?edit_uom=$item->uom_id'>  <button type='button'  class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
+  <button type='button'  class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
                                                
                                            </div></td>
+                                          
+                                               
+                                                                       
+                                                                       
                                                                     </tr>
+                                                                    ";
+  }
+                                           ?>
                                            
-                                                                </tfoot>
                                                             </table>
                                                         </div>
                                                     </div>

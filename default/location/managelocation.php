@@ -212,7 +212,7 @@ include_once "../../files/head.php";
                                                                         <td>$item->location_email </td>
 
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                        <a href='managelocation.php?edit_location=$item->location_id '>  <button type='button'  class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
+                                        <a href='managelocation.php?edit_location=$item->location_id'>  <button type='button'  class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
                                                <button type='button'  onclick='delete_location($item->location_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
                                                </td> 
                                                
