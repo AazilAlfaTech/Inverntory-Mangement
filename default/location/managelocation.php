@@ -14,6 +14,7 @@ include_once "location.php";
 
 
         if(isset($_POST["edit_location"])){
+            
             $location1->edit_location ($_POST["edit_location"]);
         }
 else{

@@ -92,15 +92,24 @@ else{
 
 
                                         <div class="form-group row">
+
+                                            <?php
+                                   
+                                   if(isset($_GET["edit_uom"])){
+                                    echo"  <input type='text'  class='form-control' value='".$_GET['edit_uom'] ."' name='edit_uom' required readonly>";
+                                   }
+                                    
+
+                                   ?>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Code</label>
                                                 <input type="text" class="form-control" placeholder="" name="unitcode"
-                                                    id="unit_code">
+                                                    value="<?= $uom1->uom_code?> " id="unit_code">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Name</label>
                                                 <input type="text" class="form-control" placeholder="" name="unitname"
-                                                    id="unit_name">
+                                                    value="<?= $uom1->uom_name?> " id="unit_name">
                                             </div>
                                         </div>
 
@@ -157,7 +166,7 @@ else{
                                                                         <td>$item->uom_code </td>
                                                                         <td>$item->uom_name </td>
                                                                         <td> <div class='btn-group btn-group-sm' style='float: none;'>
-                                            <button type='button'   class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                              <button type='button' onclick='edit_uom($item->uom_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                <button type='button'  onclick='delete_uom($item->uom_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
                                              
                                            </div></td>
@@ -166,7 +175,7 @@ else{
                                                                
 ";}
                                                                 ?>
-                                                                 </tfoot>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -205,6 +214,15 @@ include_once "../../files/foot.php";
 
                                 if (confirm("Do you want to delete id" + " " + d_id)) {
                                     window.location.href = "manageuom.php?d_id=" + d_id;
+                                }
+
+
+                            }
+
+                            function edit_uom(edit_uom) {
+
+                                if (confirm("Do you want to edit id" + " " + edit_uom)) {
+                                    window.location.href = "manageuom.php?edit_uom=" + edit_uom;
                                 }
 
 
