@@ -24,7 +24,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Location</h4>
+                                    <h4>Manage City</h4>
 
                                 </div>
                             </div>
@@ -48,7 +48,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Product Location</h5>
+                                    <h5>Add New City</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
