@@ -97,7 +97,7 @@ $result_product=$product1->getall_product();
                                     </div>
                                 </div>
 
-                                <div class="card-block"  style="display: none;">
+                                <div class="card-block" >
 
                                     <form method="POST" action="manageproduct.php">
                                             <?php
@@ -219,7 +219,7 @@ $result_product=$product1->getall_product();
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-block">
+                                <div class="card-block"  style="display: none;">
                                     <div class="dt-responsive table-responsive">
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>

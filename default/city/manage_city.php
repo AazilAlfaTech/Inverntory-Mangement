@@ -24,7 +24,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Location</h4>
+                                    <h4>Manage City</h4>
 
                                 </div>
                             </div>
@@ -48,7 +48,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Product Location</h5>
+                                    <h5>Add New City</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -138,7 +138,7 @@ include_once "../../files/head.php";
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
                                             <li><i class="feather icon-maximize full-card"></i></li>
-                                            <li><i class="feather icon-minus minimize-card"></i></li>
+                                            <li><i class="feather icon-plus minimize-card"></i></li>
 
                                         </ul>
                                     </div>
@@ -180,7 +180,7 @@ include_once "../../files/head.php";
                                                                         class='icofont icofont-ui-edit'></span></button>
                                                             </a>
                                                             <button type='button'
-                                                                onclick='delete_location($item->location_id)'
+                                                                onclick='delete_city( )'
                                                                 class='tabledit-delete-button btn btn-danger waves-effect waves-light'
                                                                 style='float: none;margin: 5px;'><span
                                                                     class='icofont icofont-ui-delete'></span></button>
