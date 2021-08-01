@@ -51,7 +51,7 @@ function get_all_group(){
 // ----------------------------------------------------------------------------------------------------------------------
 function get_group_by_id($groupid){
     $sql="SELECT * FROM product_group WHERE group_id=$groupid";
-    echo $sql;
+    // echo $sql;
     $result=$this->db->query($sql);
 
     // $group_array=array();

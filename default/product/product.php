@@ -27,7 +27,7 @@
                 VALUES ('$this->product_name','$this->product_type','$this->product_uom','$this->product_desc','$this->product_inventory_val',
                 '$this->product_batch')";
                 $this->db->query($SQL);
-                // echo $SQL;
+                echo $SQL;
                 return true;
             }
 

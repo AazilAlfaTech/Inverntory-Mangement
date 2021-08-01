@@ -23,8 +23,8 @@ $result_product=$product1->getall_product();
 if(isset($_POST["productname"]))
 {
     $product1->product_name=$_POST["productname"];
-    $product1->product_type=$_POST["typeid"];
-    $product1->product_uom=$_POST["unitid"];
+    $product1->product_type=$_POST["ptypeid"];
+    // $product1->product_uom=$_POST["unitid"];
     $product1->product_desc=$_POST["productdesc"];
     $product1->product_inventory_value=$_POST["radio"];
     $product1->product_batch=$_POST["productbatch"];
@@ -102,7 +102,7 @@ if(isset($_POST["productname"]))
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Type </label>
-                                                <select name="select" class="form-control" name="typeid" id="typ-id">
+                                                <select name="select" class="form-control" name="ptypeid" id="typ_id">
                                                     <option value="-1">Select Type</option>
                                                     <?php
                                                         foreach($result_type as $item)
