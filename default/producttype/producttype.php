@@ -83,7 +83,7 @@
             $SQL="SELECT * FROM product_type WHERE ptype_id=$typeid";
             // echo $SQL;
             $result=$this->db->query($SQL);
-            //$type_group1=new group();
+        $type_group1=new group();
         
             // $group_array=array();
         
