@@ -128,7 +128,7 @@ include_once "../../files/head.php";
                                                         if($item->group_id==$producttype1->ptype_group_id->group_id)   
 			                                        echo "<option value='$item->group_id' selected='selected'>$item->group_name</option>";
                                                     else
-                                                    echo"<option value='$item->group_id'>$item->group_name</option>"
+                                                    echo"<option value='$item->group_id'>$item->group_name</option>";
                                                     ?>
                                                     
                                                 </select>
