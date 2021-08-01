@@ -58,7 +58,7 @@ include_once "../../files/head.php";
                                 <div class="card-header">
                                     <h5>Purchase Requisition</h5>
                                     <span></span>
-                                    <div class="card-header-right">
+                                    <div class="card-header-right" >
                                         <ul class="list-unstyled card-option">
                                             <li><i class="feather icon-maximize full-card"></i></li>
                                             <li><i class="feather icon-minus minimize-card"></i></li>
@@ -66,7 +66,7 @@ include_once "../../files/head.php";
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-block">
+                                <div class="card-block"  style="display: none;">
                                     <div class="dt-responsive table-responsive">
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>

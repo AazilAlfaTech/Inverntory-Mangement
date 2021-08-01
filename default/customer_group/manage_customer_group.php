@@ -51,7 +51,7 @@ include_once "../../files/head.php";
                                     </div>
                                 </div>
 
-                                <div class="card-block">
+                                <div class="card-block" >
 
                                     <form>
 
