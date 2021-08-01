@@ -3,7 +3,7 @@
 include_once "product.php";
 include_once "../group/group.php";
 include_once "../producttype/producttype.php";
-// include_once "../uom/uom.php";
+include_once "../uom/uom.php";
 include_once "../../files/head.php";
 
 $group1=new group();
@@ -12,8 +12,8 @@ $result_group=$group1->get_all_group();
 $ptype1=new producttype();
 $result_type=$ptype1->getall_type();
 
-// $uom1=new uom();
-// $result_uom=$uom1->get_all_uom();
+$uom1=new uom();
+$result_uom=$uom1->get_all_uom();
 
 $product1=new product();
 
@@ -21,7 +21,7 @@ if(isset($_POST["productname"]))
 {
     $product1->product_name=$_POST["productname"];
     $product1->product_type=$_POST["prodtypeid"];
-    // $product1->product_uom=$_POST["unitid"];
+    $product1->product_uom=$_POST["unitid"];
     $product1->product_desc=$_POST["productdesc"];
     $product1->product_inventory_val=$_POST["productval"];
     $product1->product_batch=$_POST["productbatch"];
@@ -159,9 +159,9 @@ $result_product=$product1->getall_product();
                                                 <label class=" col-form-label"> Inventory Valuation</label>
                                                 <br>
                                             
-                                                <input type="radio" name="productval" id="prod_val" <?php if($product1->product_inventory_val=="FIFO"){ ?> checked="checked"<?php } ?>>
+                                                <input type="radio" name="productval" id="prod_val" value="FIFO" <?php if($product1->product_inventory_val=="FIFO"){ ?> checked="checked"<?php } ?>>
                                                 <i class="helper"></i>FIFO
-                                                <input type="radio" name="productval" id="prod_val" <?php if($product1->product_inventory_val=="AVCO"){ ?> checked="checked"<?php } ?>>
+                                                <input type="radio" name="productval" id="prod_val" value="AVCO"<?php if($product1->product_inventory_val=="AVCO"){ ?> checked="checked"<?php } ?>>
                                                  <i class="helper"></i>AVCO
                                                                        
 
