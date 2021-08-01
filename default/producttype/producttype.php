@@ -83,7 +83,7 @@
             $SQL="SELECT * FROM product_type WHERE ptype_id=$typeid";
             // echo $SQL;
             $result=$this->db->query($SQL);
-            $type_group1=new group();
+            //$type_group1=new group();
         
             // $group_array=array();
         
@@ -96,6 +96,7 @@
                 $ptype_item->ptype_group_id=$type_group1->get_group_by_id($row["ptype_group_id"]);
             return $ptype_item;
         }
+
 
 
         function getbyid($id)
@@ -111,6 +112,7 @@
             $this->ptype_status=$row["ptype_status"];
             return $this;
         }
+
 
         function get_type_by_code($typecode)
         {

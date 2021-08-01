@@ -93,7 +93,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Code</label>
 
-                                                <input type="text" name="groupcode" pattern="^[A-Z0-9]*$" class="form-control" id="gr_code" onblur="check_groupcode()" onkeyup="check_groupcode()" value="<?=$group1->group_code ?>" placeholder="" required>
+                                                <input type="text" name="groupcode" pattern="^[A-Z0-9]*$" class="form-control" id="gr_code" onblur="check_groupcode()" value="<?=$group1->group_code?>" <?php if($group1->group_code){echo "disabled=\"disabled\" ";} ?>" placeholder="" required>
                                                 <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
                                                             another?
                                                 </div>
@@ -108,7 +108,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Name</label>
-                                                <input type="text" name="groupname" class="form-control" id="gr_name" value="<?=$group1->group_name ?>" onblur="check_groupname()" onkeyup="check_groupname()" placeholder="" required>
+                                                <input type="text" name="groupname" class="form-control" id="gr_name" value="<?=$group1->group_name ?>" onblur="check_groupname()"  placeholder="" required>
                                                 <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
                                                             another?
                                                 </div>

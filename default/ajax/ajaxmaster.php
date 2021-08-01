@@ -51,4 +51,18 @@ function checktypename(){
      
 }
 
+function checkuomcode(){
+    include_once ("../uom/uom.php");
+    $uom4=new uom();
+    $uom_item=$uom4->get_uom_by_code($_GET['productuom_code']);
+    echo json_encode($uom_item);
+}
+
+function checkuomname(){
+    include_once ("../uom/uom.php");
+    $uom4=new uom();
+    $uom_item=$uom4->get_uom_by_name($_GET['productuom_name']);
+    echo json_encode($uom_item);
+}
+
 ?>

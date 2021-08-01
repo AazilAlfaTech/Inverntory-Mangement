@@ -64,7 +64,7 @@ function get_all_uom(){
 //...........................gat by ID..........
 
 function get_uom_by_id($uom_id){
-    $sql = "SELECT * FROM product_uom WHERE uom_id = '$uom_id'";
+    $sql = "SELECT * FROM product_uom WHERE uom_id =$uom_id";
 
     echo $sql;
     $result=$this->db->query($sql);
@@ -103,6 +103,35 @@ function delete_uom($uom_id){
     return true;
 }
 //.....................
+
+function get_uom_by_code($uom_code){
+    $sql = "SELECT * FROM product_uom WHERE uom_id ='$uom_code'";
+
+   // echo $sql;
+    $result=$this->db->query($sql);
+    $row=$result->fetch_array();
+        $uom_item=new uom(); //object
+        $uom_item->uom_id=$row["uom_id"];
+        $uom_item->uom_code=$row["uom_code"];
+        $uom_item->uom_name=$row["uom_name"];
+        return $uom_item;
+
+}
+
+function get_uom_by_name($uom_name){
+    $sql = "SELECT * FROM product_uom WHERE uom_id ='$uom_name'";
+
+   // echo $sql;
+    $result=$this->db->query($sql);
+    $row=$result->fetch_array();
+        $uom_item=new uom(); //object
+        $uom_item->uom_id=$row["uom_id"];
+        $uom_item->uom_code=$row["uom_code"];
+        $uom_item->uom_name=$row["uom_name"];
+        return $uom_item;
+
+}
+
 
 
 }
