@@ -25,16 +25,11 @@ function check_groupcode()
      // console.log(id1);
      window.location.href="../group/manageproductgroup.php?view="+id1;
     
+     $("#gr_code").attr("readonly",true);
+    
     });
 
-    $(".delete_group").click(function(){
-      var id1=$(this).attr("id");
-     console.log(id1);
-     if(confirm("Do you want to delete id"+""+id1))
-     { window.location.href="../group/manageproductgroup.php?delete="+id1;
-     }
-    }); 
-
+    
 
   function check_groupname(){
       let code=$("#gr_name").val();
