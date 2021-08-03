@@ -26,13 +26,9 @@ function insert_uom(){
 
 
     $sql = "INSERT INTO product_uom (uom_code, uom_name) VALUES ('$this->uom_code', '$this->uom_name')";
-
     $this->db->query($sql);
-
-
-        echo $sql;
-
-        return true;
+     echo $sql;
+     return true;
 
 }
 //........................get all function........................
