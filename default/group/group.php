@@ -1,5 +1,6 @@
 <?php
 include_once "../../files/config.php";
+include_once "../../default/producttype/producttype.php";
 
 
 class group{
@@ -21,7 +22,7 @@ function __construct(){
 function insert_group(){
 
     $sql="INSERT INTO product_group(group_code,group_name) VALUES ('$this->group_code','$this->group_name');";
-    echo $sql;
+    //echo $sql;
     $this->db->query($sql);
     return true;
 }
@@ -73,8 +74,8 @@ function get_group_by_id($groupid){
 }
 
 function edit_group($groupid){
-    $sql="UPDATE product_group SET group_code='$this->group_code',group_name='$this->group_name' WHERE group_id=$groupid";
-    echo $sql;
+    $sql="UPDATE product_group SET group_name='$this->group_name' WHERE group_id=$groupid";
+    //echo $sql;
     $this->db->query($sql);
     return true;
     
@@ -84,12 +85,13 @@ function edit_group($groupid){
 
 function delete_group($type_groupid){
 
-    $sql="SELECT * FROM product_type WHERE type_group_id=$type_groupid";
+    $sql="SELECT * FROM product_type WHERE ptype_group_id=$type_groupid";
     $result=$this->db->query($sql);
-
+    
     if($result->num_rows==0){
-        $sql="UPDATE product_group SET group_status='INACTIVE' WHERE group_id=$type_groupid ";
-        $this->db->query($sql);
+        $sql1="UPDATE product_group SET group_status='INACTIVE' WHERE group_id=$type_groupid ";
+        $this->db->query($sql1);
+        
         return true;
     }else
     return false;
@@ -135,10 +137,6 @@ function get_group_by_name($groupname){
 }
 
 
-
-// function {
-
-// }
 
 
 }

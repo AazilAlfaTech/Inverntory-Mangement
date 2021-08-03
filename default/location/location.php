@@ -30,7 +30,7 @@ function insert_location(){
  VALUES('$this->location_code','$this->location_name','$this->location_add','$this->location_number','$this->location_email')
  ";
 
-    echo $sql;
+    //echo $sql;
     $this->db->query($sql);
     return true;
 
@@ -42,7 +42,7 @@ function insert_location(){
 function get_all_location(){
 
     $sql="SELECT * FROM location WHERE location_status='ACTIVE' ";
-    echo $sql;
+    //echo $sql;
     $result=$this->db->query($sql);
 
     $location_array=array();
@@ -73,11 +73,8 @@ function get_all_location(){
 function get_location_by_id($locationid){
 
     $sql="SELECT * FROM location WHERE location_id = $locationid";
-    echo $sql;
+    //echo $sql;
     $result=$this->db->query($sql);
-
-
-
     $row=$result->fetch_array();
 
     $location_item = new location();
@@ -104,8 +101,7 @@ function edit_location($locationid){
     $sql="UPDATE location  SET 
     location_code='$this->location_code', location_name='$this->location_name',location_add='$this->location_add',location_number='$this->location_number',location_email='$this->location_email'
     WHERE location_id=$locationid ";
-
-    echo $sql;
+    //echo $sql;
     $this->db->query($sql);
     return true;
 
@@ -117,9 +113,7 @@ function edit_location($locationid){
 function delete_location($location_id){
 
     $sql="UPDATE location SET location_status='INACTIVE' WHERE location_id=$location_id ";
-
-    
-    echo $sql;
+    //echo $sql;
     $this->db->query($sql);
     return true;
 
