@@ -417,7 +417,7 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../supplier_group/manage_suppilier_group.php " target="_blank" >
+                                        <a href="../supplier_group/manage_supplier_group.php " target="_blank" >
                                             <span class="pcoded-mtext">Manage Supplier Group</span>
                                         </a>
                                     </li>

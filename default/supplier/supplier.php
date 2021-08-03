@@ -1,5 +1,6 @@
 <?php
 include_once "../../files/config.php";
+include_once "../supplier_group/supplier_group.php";
 
 
 class supplier {
@@ -7,6 +8,7 @@ class supplier {
    public $supplier_id;
    public $supplier_code;
    public $supplier_name;
+   public $supplier_group;
    public $supplier_add;
    public $supplier_contactno;
    public $supplier_email;
@@ -25,8 +27,8 @@ function __construct(){
 
 function insert_suppier(){
 
-    $sql="INSERT INTO supplier (supplier_code,supplier_name,supplier_add,supplier_contactno,supplier_email) 
-    VALUES ('$this->supcode ','$this->supname ','$this->supadd','$this->suppliercontactno','$this->suppliercontactno');";
+    $sql="INSERT INTO supplier (supplier_code,supplier_name,supplier_group,supplier_add,supplier_contactno,supplier_email) 
+    VALUES ('$this->supplier_code','$this->supplier_name','$this->supplier_group','$this->supplier_add','$this->supplier_contactno','$this->supplier_email');";
     echo $sql;
     $this->db->query($sql);
     return true;
@@ -41,10 +43,20 @@ function get_all_supplier(){
     $supplier_array=array();
 
     while($row=$result->fetch_array()){
+
         $supplier_item=new supplier();
+     
+
         $supplier_item->supplier_id=$row["supplier_id"];
         $supplier_item->supplier_code=$row["supplier_code"];
         $supplier_item->supplier_name=$row["supplier_name"];
+         $supplier_item->supplier_group=$row["supplier_group"];
+
+       
+
+        $supplier_item->supplier_add=$row["supplier_add"];
+        $supplier_item->supplier_contactno=$row["supplier_contactno"];
+        $supplier_item->supplier_email=$row["supplier_email"];
         $supplier_item->supplier_status=$row["supplier_status"];
         $supplier_item->supplier_date=$row["supplier_date"];
 
@@ -63,13 +75,25 @@ function get_supplier_by_id($supplierid){
     echo $sql;
     $result=$this->db->query($sql);
 
-    // $supplier_array=array();
+   
+
 
     $row=$result->fetch_array();
+    
         $supplier_item=new supplier();
+        $supplier_group1 = new supplier_group();
+
         $supplier_item->supplier_id=$row["supplier_id"];
         $supplier_item->supplier_code=$row["supplier_code"];
         $supplier_item->supplier_name=$row["supplier_name"];
+
+        $supplier_item->supplier_group=$row["supplier_group"];
+        $supplier_item->supplier_group=$supplier_group1->get_supplier_group_by_id($row["supplier_group"]);
+
+        $supplier_item->supplier_add=$row["supplier_add"];
+        $supplier_item->supplier_contactno=$row["supplier_contactno"];
+        $supplier_item->supplier_email=$row["supplier_email"];
+
         $supplier_item->supplier_status=$row["supplier_status"];
         $supplier_item->supplier_date=$row["supplier_date"];
 
