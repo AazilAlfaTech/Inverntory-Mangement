@@ -1,6 +1,7 @@
 <?php
         include_once("../../files/config.php");
         include_once "../producttype/producttype.php";
+        include_once "../uom/uom.php";
         // include_once "../group/group.php";
 
         class product
@@ -91,12 +92,13 @@
 
                 $row=$result->fetch_array();
                 $ptype1=new producttype();
+                $uom1=new uom();
                 $product=new product();
                 $product->product_id=$row["product_id"];
                 $product->product_code=$row["product_code"];
                 $product->product_name=$row["product_name"];
                 $product->product_type=$ptype1->get_type_by_id ($row["product_type"]);
-                $product->product_uom=$row["product_uom"];
+                $product->product_uom=$uom1->get_uom_by_id($row["product_uom"]);
                 $product->product_desc=$row["product_desc"];
                 $product->product_inventory_val=$row["product_inventory_val"];
                 $product->product_batch=$row["product_batch"];
@@ -105,6 +107,8 @@
                 return $product;
 
             }
+
+            
             
         }
 ?>

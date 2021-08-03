@@ -4,7 +4,6 @@ include_once "product.php";
 include_once "../group/group.php";
 include_once "../producttype/producttype.php";
 include_once "../uom/uom.php";
-include_once "../../files/head.php";
 
 $group1=new group();
 $result_group=$group1->get_all_group();
@@ -33,7 +32,7 @@ if(isset($_POST["productname"]))
     }else
 
     $product1->insert_product();
-    
+    header("location:manageproduct.php");
 }
 
 if(isset($_GET["view_product"]))
@@ -46,6 +45,7 @@ if(isset($_GET["d_id"]))
     $product1->delete_product($_GET["d_id"]);
 }
 $result_product=$product1->getall_product();
+include_once "../../files/head.php";
 
 
 ?>
@@ -111,7 +111,7 @@ $result_product=$product1->getall_product();
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select Group</label>
-                                                <select class="form-control" name="groupid" id="gr_id">
+                                                <select class="form-control productgroup" name="" id="gr_id" onchange="autocode()">
                                                     <option value="-1">Select Group</option>
                                                     <?php
                                                         foreach($result_group as $item)
@@ -121,7 +121,7 @@ $result_product=$product1->getall_product();
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Type </label>
-                                                <select class="form-control" name="prodtypeid" id="typ_id">
+                                                <select class="form-control productitem" name="prodtypeid" id="type_id" onchange="autocode()">
                                                     <option value="-1">Select Type</option>
                                                     <?php
                                                         foreach($result_type as $item)
@@ -180,10 +180,13 @@ $result_product=$product1->getall_product();
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label"> Product Discription</label>
                                                 <textarea rows="5" cols="5" class="form-control"
-                                                    placeholder="Default textarea" name="productdesc" id="prod_desc" value="<?=$product1->product_desc?>"></textarea>
+                                                    placeholder="Default textarea" name="productdesc" id="prod_desc"> <?php if(isset($_GET['view_product'])) { echo "$product1->product_desc";} ?></textarea>
                                             </div>
 
-
+                                            <div class="col-sm-4">
+                                                <label class=" col-form-label"> Product code</label>
+                                                <input type="text" class="form-control" placeholder="" name="productcode" id="prod_code"   value="<?=$product1->product_code?>">
+                                            </div>
                                         </div>
 
                                         <button class="btn btn-primary" type="submit">ADD</button>
@@ -209,7 +212,7 @@ $result_product=$product1->getall_product();
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Location List</h5>
+                                    <h5>Product List</h5>
                                     <span></span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -263,6 +266,7 @@ $result_product=$product1->getall_product();
 include_once "../../files/foot.php";
 
 ?>
+<script type="text/javascript" src="../javascript/masterfile.js"></script>
 
 <script>
 
