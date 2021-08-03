@@ -261,8 +261,7 @@ include_once "../../files/head.php";
                                     ?>
                                 </tbody>
                                         
-                                        
-                                    
+                        
             
                                 </tfoot>
                             </table>
