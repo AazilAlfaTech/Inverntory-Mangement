@@ -116,14 +116,14 @@
                                    ?>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Code</label>
-                              <input type="text" class="form-control" placeholder="" name="unitcode" id="unit_code" onkeyup="check_uomcode()" onblur="check_uomcode()">
+                                                <input type="text" class="form-control" placeholder="" name="unitcode" id="unit_code" onkeyup="check_uomcode()" onblur="check_uomcode()" value="<?=$uom1->uom_code ?>"<?php if($uom1->uom_code){echo "readonly=\"readonly\"";} ?>> 
                                                 <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
                                                             another?
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="unitname" id="unit_name" onblur=" check_uomname()" onkeyup=" check_uomname() ">
+                                                <input type="text" class="form-control" placeholder="" name="unitname" value="<?=$uom1->uom_name ?>" id="unit_name" onblur=" check_uomname()" onkeyup=" check_uomname() ">
                                                 <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
                                                             another?
                                                 </div>
