@@ -265,26 +265,6 @@ include_once "../../files/head.php";
                                 </div>
                             </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             <!-- ----------------------------------------------------------------------------------------------------------------- -->
                             <?php
 
@@ -298,10 +278,11 @@ include_once "../../files/foot.php";
                             <script>
                             function delete_location(deleteid) {
 
-                                if (confirm("Do you want to delete id" + "" + deleteid)) {
+                                if (confirm("Do you want to delete id" + " " + deleteid)) {
                                     window.location.href = "managelocation.php?d_id=" + deleteid;
                                 }
 
-
                             }
+                            
+
                             </script>

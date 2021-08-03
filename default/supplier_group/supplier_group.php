@@ -22,10 +22,10 @@ function __construct(){
 
 
 
-function insert_suppier(){
+function insert_suppier_group(){
 
     $sql="INSERT INTO supplier_group (suppliergroup_code,suppliergroup_name) 
-    VALUES ('$this->sup_grcode ','$this->sup_grname ');";
+    VALUES ('$this->suppliergroup_code ','$this->suppliergroup_name')";
     echo $sql;
     $this->db->query($sql);
     return true;
@@ -40,12 +40,15 @@ function get_all_supplier_group(){
     $supplier_group_array=array();
 
     while($row=$result->fetch_array()){
+
         $supplier_group_item=new supplier_group();
-        $supplier_group_item->suppliergroup_id=$row["supplier_group_id"];
-        $supplier_group_item->suppliergroup_code=$row["supplier_group_code"];
-        $supplier_group_item->suppliergroup_name=$row["supplier_group_name"];
-        $supplier_group_item->suppliergroup_status=$row["supplier_group_status"];
-        $supplier_group_item->suppliergroup_date=$row["supplier_group_date"];
+
+
+        $supplier_group_item->suppliergroup_id=$row["suppliergroup_id"];
+        $supplier_group_item->suppliergroup_code=$row["suppliergroup_code"];
+        $supplier_group_item->suppliergroup_name=$row["suppliergroup_name"];
+        $supplier_group_item->suppliergroup_status=$row["suppliergroup_status"];
+        $supplier_group_item->suppliergroup_date=$row["suppliergroup_date"];
 
         $supplier_group_array[]=$supplier_group_item;
     }
@@ -62,17 +65,17 @@ function get_supplier_group_by_id($supplier_groupid){
     echo $sql;
     $result=$this->db->query($sql);
 
-    // $supplier_group_array=array();
+   
 
     $row=$result->fetch_array();
 
         $supplier_group_item = new supplier_group();
 
-        $supplier_group_item->suppliergroup_id=$row["supplier_group_id"];
-        $supplier_group_item->suppliergroup_code=$row["supplier_group_code"];
-        $supplier_group_item->suppliergroup_name=$row["supplier_group_name"];
-        $supplier_group_item->suppliergroup_status=$row["supplier_group_status"];
-        $supplier_group_item->suppliergroup_date=$row["supplier_group_date"];
+        $supplier_group_item->suppliergroup_id=$row["suppliergroup_id"];
+        $supplier_group_item->suppliergroup_code=$row["suppliergroup_code"];
+        $supplier_group_item->suppliergroup_name=$row["suppliergroup_name"];
+        $supplier_group_item->suppliergroup_status=$row["suppliergroup_status"];
+        $supplier_group_item->suppliergroup_date=$row["suppliergroup_date"];
 
        
     return $supplier_group_item;
