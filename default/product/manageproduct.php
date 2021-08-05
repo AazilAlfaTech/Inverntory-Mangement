@@ -44,7 +44,7 @@ if(isset($_GET["d_id"]))
 {
     $product1->delete_product($_GET["d_id"]);
 }
-$result_product=$product1->getall_product();
+$result_product=$product1->getall_product2();
 include_once "../../files/head.php";
 
 
@@ -99,7 +99,7 @@ include_once "../../files/head.php";
 
                                 <div class="card-block" >
 
-                                    <form method="POST" action="manageproduct.php">
+                                    <form method="POST" action="manageproduct.php" enctype="multipart/form-data">
                                             <?php
                                                 if(isset($_GET["view_product"]))
                                                 {
@@ -115,6 +115,9 @@ include_once "../../files/head.php";
                                                     <option value="-1">Select Group</option>
                                                     <?php
                                                         foreach($result_group as $item)
+                                                        // if($item->ptype_id==$product1->product_type->ptype_group_id)
+                                                        // echo"<option value='$item->ptype_group_id' selected='selected'>".$item->ptype_id->ptype_group_id->group_name."</option>";
+                                                        // else
                                                         echo"<option value='$item->group_id'>$item->group_name</option>";
                                                    ?>
                                                 </select>
@@ -159,15 +162,15 @@ include_once "../../files/head.php";
                                                 <label class=" col-form-label"> Inventory Valuation</label>
                                                 <br>
                                             
-                                                <input type="radio" name="productval" id="prod_val" value="FIFO" <?php if($product1->product_inventory_val=="FIFO"){ ?> checked="checked"<?php } ?>>
+                                                <input type="radio" name="productval" id="prod_valf" value="FIFO" <?php if($product1->product_inventory_val=="FIFO"){ ?> checked="checked"<?php } ?>>
                                                 <i class="helper"></i>FIFO
-                                                <input type="radio" name="productval" id="prod_val" value="AVCO"<?php if($product1->product_inventory_val=="AVCO"){ ?> checked="checked"<?php } ?>>
+                                                <input type="radio" name="productval" id="prod_vala" value="AVCO"<?php if($product1->product_inventory_val=="AVCO"){ ?> checked="checked"<?php } ?>>
                                                  <i class="helper"></i>AVCO
                                                                        
 
 
                                             </div>
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="pbatch">
                                                 <label class=" col-form-label"> Product batch</label>
                                                 <input type="text" class="form-control" placeholder="" name="productbatch" id="prod_batch" value="<?=$product1->product_batch?>">
                                             </div>
@@ -183,10 +186,21 @@ include_once "../../files/head.php";
                                                     placeholder="Default textarea" name="productdesc" id="prod_desc"> <?php if(isset($_GET['view_product'])) { echo "$product1->product_desc";} ?></textarea>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <!-- <div class="col-sm-4">
                                                 <label class=" col-form-label"> Product code</label>
                                                 <input type="text" class="form-control" placeholder="" name="productcode" id="prod_code"   value="<?=$product1->product_code?>">
+                                            </div> -->
+
+                                            <!-- <div class="col-sm-6 row"> -->
+                                            <div class="col-sm-3">
+                                                <label class=" col-form-label"> Product image</label>
+                                                <input type="file" class="form-control" placeholder="" name="productimage" id="prod_image"   value="">
                                             </div>
+                                                <div class="col-sm-3">
+                                            <img src="/IMS/inventory/default/product/productimage/<?=$product1->product_id?>.jpg" style="height: 100px; width: 150px;">  
+                                            </div>
+                                            <!-- </div> -->
+                                            
                                         </div>
 
                                         <button class="btn btn-primary" type="submit">ADD</button>
@@ -229,7 +243,7 @@ include_once "../../files/head.php";
                                                 <tr>
                                                     <th>Product Code</th>
                                                     <th>Product Name</th>
-                                                    <!-- <th>Product Group</th> -->
+                                                    <th>Product Group</th>
                                                     <th>Product Type</th>
                                                     <!-- <th>Product UOM</th> -->
 
@@ -244,10 +258,11 @@ include_once "../../files/head.php";
                                                         "<tr>
                                                             <td>$item->product_code</td>
                                                             <td>$item->product_name</td>
+                                                            <td>".$item->groupname->group_name."</td>
                                                             <td>".$item->product_type->ptype_name."</td>
                                                             <td>
                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                    <button type='button'  onclick='edit_product($item->product_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                                    <button type='button' id='editprod' onclick='edit_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                                     <button type='button'  onclick='delete_product($item->product_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
                                                                 </div>
                                                             </td>
@@ -269,7 +284,10 @@ include_once "../../files/foot.php";
 <script type="text/javascript" src="../javascript/masterfile.js"></script>
 
 <script>
+    // Hiding the product batch textbox
+    $("#pbatch").hide();
 
+    // Deleting the product
     function delete_product(deleteid) {
 
     if (confirm("Are you sure you want to delete product ?" + "" + deleteid)) {
@@ -279,6 +297,7 @@ include_once "../../files/foot.php";
 
     }
 
+    // Editing the product
     function edit_product(e)
     {
         window.location.href="manageproduct.php?view_product="+e;

@@ -183,35 +183,28 @@ function check_typename(){
     });
   });
 
-  // Auto generation of product code
-  function autocode()
+  // Hide the product batch when FIFo is clicked
+  $("#prod_valf").click(function()
   {
-    var group_id=$("#gr_id").val();
-    // console.log(group_id);
-    // alert(group_id);
-    $.get("../ajax/ajaxmaster.php?type=checkgroupid",{productgroup_id:group_id},function(data)
-    {
-      console.log(data);
-      var group_data = JSON.parse(data);
-      gname=group_data.group_name;
-      console.log(gname);
-      var g1=(gname.charAt(0));
-      // var res=$("#prod_code").val(g1);
+      hide_pbatch();
+  });
 
-    });
+    // Show the product batch when AVCO is clicked
+  $("#prod_vala").click(function()
+  {
+    show_pbatch();
+  });
 
-    var ptype_id=$("#type_id").val();
-    // console.log(group_id);
-    // alert(group_id);
-    $.get("../ajax/ajaxmaster.php?type=checktypeid",{producttype_id:ptype_id},function(data)
-    {
-      console.log(data);
-      var type_data = JSON.parse(data);
-      tname=type_data.ptype_name;
-      console.log(tname);
-      var t1=(tname.charAt(0));
-      // var re=$("#prod_code").val(t1);
-    });
 
-     
+//  show product batch function
+  function show_pbatch()
+  {   
+    $("#pbatch").show();   
   }
+
+  //  hide product batch function
+  function hide_pbatch()
+  {    
+    $("#pbatch").hide();   
+  }
+  
