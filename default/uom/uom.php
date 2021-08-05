@@ -23,19 +23,28 @@ function __construct(){
 //..............................insert funtion..................
 
 function insert_uom(){
-
+    $CODE=$_POST["unitcode"];
+    $NAME=$_POST["unitname"];
+    $sql1="SELECT * FROM  product_uom WHERE uom_status = 'ACTIVE' AND uom_code='$CODE' OR uom_code='$NAME'";
+    $res_code=$this->db->query($sql1);
+   
+    if($res_code->num_rows==0){
 
     $sql = "INSERT INTO product_uom (uom_code, uom_name) VALUES ('$this->uom_code', '$this->uom_name')";
     $this->db->query($sql);
      echo $sql;
      return true;
+   }else {
+    return false;
+ }
+   
 
 }
 //........................get all function........................
 
 function get_all_uom(){
     $sql = "SELECT * FROM product_uom WHERE uom_status = 'ACTIVE' ";
-    echo $sql;
+    //echo $sql;
     $result = $this->db->query($sql);   
 
     $uom_array = array();
@@ -62,7 +71,7 @@ function get_all_uom(){
 function get_uom_by_id($uom_id){
     $sql = "SELECT * FROM product_uom WHERE uom_id =$uom_id";
 
-    echo $sql;
+   // echo $sql;
     $result=$this->db->query($sql);
 
     // $group_array=array();
@@ -83,10 +92,23 @@ function get_uom_by_id($uom_id){
 //.............................Edit...........
 
 function edit_uom($uom_id){
-    $sql = "UPDATE product_uom SET uom_code = '$this->uom_code', uom_name = '$this->uom_name' WHERE uom_id = '$uom_id'";
+   
+    $NAME=$_POST["unitname"];
+    $sql1="SELECT * FROM  product_uom WHERE uom_status = 'ACTIVE' AND uom_name='$NAME'";
+    echo $sql1;
+    $res_code=$this->db->query($sql1);
+   
+    if($res_code->num_rows==0){
 
-    $this->db->query($sql);
-    return true;
+        $sql = "UPDATE product_uom SET  uom_name = '$this->uom_name' WHERE uom_id = '$uom_id'";
+        echo $sql;
+        $this->db->query($sql);
+        return true;
+   }else {
+    return false;
+ }
+   
+    
     
 }
 //............................Delete.............

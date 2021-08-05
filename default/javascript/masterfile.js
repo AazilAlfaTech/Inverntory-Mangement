@@ -1,4 +1,5 @@
 
+
 //.......PRODUCT GROUP JS.............................
 
 function check_groupcode()

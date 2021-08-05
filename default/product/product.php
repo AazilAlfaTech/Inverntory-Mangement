@@ -60,6 +60,7 @@
             }
 
             function getall_product()
+            SELECT *, product_type.ptype_id ,product_group.group_name AS itemname FROM product_type join product_group on product_type.ptype_group_id=product_group.group_id WHERE ptype_status='ACTVE'
             {
                 $SQL="SELECT * FROM product WHERE product_status='ACTIVE'";
                 $result=$this->db->query($SQL);

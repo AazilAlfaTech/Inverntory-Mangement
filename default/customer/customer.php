@@ -57,7 +57,7 @@ function insert_customer(){
 function get_all_customer(){
 
     $sql="SELECT * FROM customer WHERE customer_status='ACTIVE' ";
-    echo $sql;
+   // echo $sql;
     $result=$this->db->query($sql);
 
     $customer_array=array();

@@ -3,25 +3,34 @@
     $uom1 = new uom();
 
     //code to insert and update data............................................................... 
-
-     if(isset($_POST["unitcode"])){
-
+    if(isset($_POST["unitcode"]))
+    {
         $uom1->uom_code = $_POST["unitcode"];
         $uom1->uom_name = $_POST["unitname"];
-     
-    if(isset($_POST["edit_uom"])){
-        $res_edit=$uom1->edit_uom ($_POST["edit_uom"]);
+        //....................................................
+        if(isset($_POST["edit_uom"]))
+        {
+            $res_edit=$uom1->edit_uom($_POST["edit_uom"]);
+                //code for insert validation
+                if($res_edit==true){
+                   
+                    header("location:../uom/manageuom.php?success_edit=1");
+                }elseif($res_edit==false){
+                    header("location:../uom/manageuom.php?notsuccess=1");
+                }
+        }else
+        {
+            $res_insert=$uom1->insert_uom();
+                //code for insert validation
+                if($res_insert==true){
+                    
+                    header("location:../uom/manageuom.php?success=1");
+                }elseif($res_insert==false){
+                    header("location:../uom/manageuom.php?notsuccess=1");
+                }
         }
-    else{
-        $res_insert=$uom1->insert_uom();}
-        //code for alert validations
-        if($res_insert==true){
-            header("location:../uom/manageuom.php?success=1");
-        }elseif($res_edit==true){
-        header("location:../uom/manageuom.php?success_edit=1");
-        }else{
-        echo"False";
-        }
+    
+    
     }
 //code to get uom details  into datatable........................................................................
     
@@ -38,7 +47,7 @@
         //code for delete validations
         if($res_del==true){
             
-            $msg_2="Deleted Successfully";
+            header("location:../uom/manageuom.php?delete_success=1");
         }else{
         
             $msg_2="Unit of measure already exists therefore cannot delete";
@@ -116,14 +125,14 @@
                                    ?>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Code</label>
-                                                <input type="text" class="form-control" placeholder="" name="unitcode" id="unit_code" onkeyup="check_uomcode()" onblur="check_uomcode()" value="<?=$uom1->uom_code ?>"<?php if($uom1->uom_code){echo "readonly=\"readonly\"";} ?>> 
+                                                <input type="text" class="form-control" pattern="^[A-Z0-9]*$" placeholder="" name="unitcode" id="unit_code" onkeyup="check_uomcode()" onblur="check_uomcode()" value="<?=$uom1->uom_code ?>"<?php if($uom1->uom_code){echo "readonly=\"readonly\"";} ?> required> 
                                                 <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
                                                             another?
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="unitname" value="<?=$uom1->uom_name ?>" id="unit_name" onblur=" check_uomname()" onkeyup=" check_uomname() ">
+                                                <input type="text" class="form-control" placeholder="" name="unitname" value="<?=$uom1->uom_name ?>" id="unit_name" onblur="check_uomname()"  required>
                                                 <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
                                                             another?
                                                 </div>
@@ -132,7 +141,7 @@
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">ADD</button>
-                                        <button class="btn btn-inverse">CLEAR</button>
+                                        <button type="reset" class="btn btn-inverse">CLEAR</button>
                                     </form>
                                 </div>
 
@@ -182,6 +191,26 @@
             </div>";
             }
             ?>
+            <?php
+            if(isset($_GET['notsuccess'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>The code or the name already exists.Please try again</strong> 
+            </div>";
+            }
+            ?>
+             <?php
+            if(isset($_GET['delete_success'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Deleted successful</strong> 
+            </div>";
+            }
+            ?>
               <!-- //ALERT MESSAGES END................... -->
                             <!-- Autofill table start -->
                             <div class="card">
@@ -218,7 +247,8 @@
                                                                         <td>$item->uom_code </td>
                                                                         <td>$item->uom_name </td>
                                                                         <td> <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                        <button type='button' onclick='edit_uom($item->uom_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                                        
+                                                                        <button type='button'  onclick='edit_uom($item->uom_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                                         <button type='button'  onclick='delete_uom($item->uom_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
                                                                         
                                                                     </div></td>
@@ -260,7 +290,9 @@ include_once "../../files/foot.php";
 
 ?>
                             <!-- ----------------------------------------------------------------------------------------------------------- -->
+                           
 
+                           
                             <script>
                             function delete_uom(d_id) {
 
@@ -271,12 +303,14 @@ include_once "../../files/foot.php";
 
                             }
 
-                            function edit_uom(edit_uom) {
+                            function edit_uom(edit_uom_id) {
 
                    
-                                    window.location.href = "manageuom.php?edit_uom=" + edit_uom;
+                                    window.location.href = "manageuom.php?edit_uom=" + edit_uom_id;
                          
 
 
                             }
                             </script>
+                             <script type="text/javascript" src="../javascript/masterfile.js"></script>
+                        

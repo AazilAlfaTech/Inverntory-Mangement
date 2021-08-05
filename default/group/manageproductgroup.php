@@ -5,24 +5,36 @@ $group1=new group();//create a new object
 
 //code to insert and update data............................................................... 
 
-
-if(isset($_POST["groupcode"])){
+if(isset($_POST["groupcode"]))
+{
     $group1->group_code=$_POST["groupcode"];
     $group1->group_name=$_POST["groupname"];
-
-    if(isset($_POST['groupid'])){
+    //.....................................................
+    if(isset($_POST['groupid']))
+    {
         $res_edit=$group1->edit_group($_POST['groupid']);
-        }else
-        $res_insert=$group1->insert_group();
-   
-//code for alert validations
-  if($res_insert==true){
-        header("location:../group/manageproductgroup.php?success=1");
-    }elseif($res_edit==true){
-       header("location:../group/manageproductgroup.php?success_edit=1");
-   }else{
-       echo"False";
-   }
+            //code for edit valaidation
+            if($res_edit==true){
+                "EDITING DONE";
+                header("location:../group/manageproductgroup.php?success_edit=1");
+            }elseif($res_edit==false){
+                echo "FALSE";
+                header("location:../group/manageproductgroup.php?notsuccess=1");
+            }
+    }else
+    {
+        $res_insert=$group1->insert_group2();
+            //code for insert alert validations
+                if($res_insert==true){
+                    echo "insert done";
+                    header("location:../group/manageproductgroup.php?success=1");
+                }elseif($res_insert==false){
+                    echo"false";
+                    header("location:../group/manageproductgroup.php?notsuccess=1");
+                }
+
+    }
+
 }
 
 //code to view group................................................................
@@ -37,8 +49,8 @@ if(isset($_GET['delete_g'])){
     $res_del=$group1->delete_group($_GET['delete_g']);
     //code for delete validations
     if($res_del==true){
-        
-        $msg_2="Deleted Successfully";
+        header("location:../group/manageproductgroup.php?delete_success=1");
+       
     }else{
        
         $msg_2="Group already exists therefore cannot delete";
@@ -176,12 +188,32 @@ include_once "../../files/head.php";
             }
             ?>
             <?php
+            if(isset($_GET['delete_success'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Deleted successful</strong> 
+            </div>";
+            }
+            ?>
+            <?php
             if(isset($_GET['delete_g'])) {
                 echo"<div class='alert alert-danger background-danger'>
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                     <i class='icofont icofont-close-line-circled text-white'></i>
                 </button>
                 <strong>$msg_2</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['notsuccess'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>The code or the name already exists.Please try again</strong> 
             </div>";
             }
             ?>
@@ -252,13 +284,7 @@ include_once "../../files/foot.php";
 
 
 <script>
-    // $(".delete_group_name").click(function(){
-    //   var id2=$(this).attr("id");
-    //  console.log(id2);
-    //  if(confirm("Do you want to delete id"+""+id2))
-    //  { window.location.href="../group/manageproductgroup.php?delete_g="+id2;
-    //  }
-    // }); 
+  
 
     function del_group(del_id){
         console.log("hi");
@@ -268,6 +294,9 @@ include_once "../../files/foot.php";
      }
 
     }
+
+    
+$( ".alert" ).fadeIn( 300 ).delay( 1800 ).fadeOut( 400 );
 
     
 </script>

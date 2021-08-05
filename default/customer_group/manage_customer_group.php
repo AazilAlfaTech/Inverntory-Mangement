@@ -4,55 +4,62 @@
 include_once "customer_group.php";
 
     $customergroup1 = new customergroup();
-
-
-    if(isset($_POST["cust_grcode"])){
-
-        $customergroup1->customergroup_code = $_POST["cust_grcode"];
-        $customergroup1->customergroup_name = $_POST["cust_grname"];
-       
-
-
-        if(isset($_POST["edit_cus_grp"])){
-            
-            $customergroup1->edit_customer_group ($_POST["edit_cus_grp"]);
-        }
-else{
-        $customergroup1->insert_customer_group();
-        header("location:../customer_group/manage_customer_group.php ");
-    }
-    }
-
     
+    //code to insert and update data............................................................... 
+    if (isset($_POST["cust_grcode"]))
+    {
+        $customergroup1->customergroup_code = $_POST["cust_grcode"];
+            $customergroup1->customergroup_name = $_POST["cust_grname"];
+        //....................................................
+        if(isset($_POST["edit_cus_grp"]))
+        {
+            $res_edit=$customergroup1->edit_customer_group ($_POST["edit_cus_grp"]);
+                //code for insert validation
+                if($res_edit==true){
+                   
+                    header("location:../customer_group/manage_customer_group.php?success_edit=1");
+                }elseif($res_edit==false){
+                    header("location:../customer_group/manage_customer_group.php?notsuccess=1");
+                }
+        }else
+        {
+                $res_insert=$customergroup1->insert_customer_group();   
+                //code for insert validation
+                if($res_insert==true){
+                    
+                    header("location:../customer_group/manage_customer_group.php?success=1");
+                }elseif($res_insert==false){
+                    header("location:../customer_group/manage_customer_group.php?notsuccess=1");
+                }
+        }
+    
+    
+    }
+
+    //code to get data into datatable.........................................................................................
     $result_customer_group = $customergroup1->get_all_customer_group();
 
+    //code to view cu
     if(isset($_GET['edit_cus_grp'])){
         $customergroup1=$customergroup1->get_customer_group_by_id($_GET['edit_cus_grp']);
-        header("location:../customer_group/manage_customer_group.php ");
+        
     }
 
 
 
     if(isset($_GET['d_id'])){
-        $customergroup1->delete_customer_group ($_GET['d_id']);
-        header("location:../customer_group/manage_customer_group.php ");
+        $res_del=$customergroup1->delete_customer_group ($_GET['d_id']);
+       
+                //code for delete validations
+            if($res_del==true){
+               
+            header("location:../customer_group/manage_customer_group.php?delete_success=1");
+            }else{
+                $msg_2="Group already exists therefore cannot delete";
+            }
     }
 
     // print_r($result_customer_group);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 include_once "../../files/head.php";
 
 ?>
@@ -116,7 +123,7 @@ include_once "../../files/head.php";
                                         <?php
                                    
                                    if(isset($_GET["edit_cus_grp"])){
-                                    echo"  <input type='text'  class='form-control' value='".$_GET['edit_cus_grp'] ."' name='edit_cus_grp' required readonly>";
+                                    echo"  <input type='hidden'  class='form-control' value='".$_GET['edit_cus_grp'] ."' name='edit_cus_grp' required readonly>";
                                    }
                                     
 
@@ -124,20 +131,27 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Customer Group Code</label>
-                                                <input type="text" class="form-control" placeholder=""
-                                                    value="<?=$customergroup1->customergroup_code ?>" name="cust_grcode"
-                                                    id="cust_gr_code">
+                                                <input type="text" class="form-control" placeholder="" pattern="^[A-Z0-9]*$"
+                                                    value="<?=$customergroup1->customergroup_code ?>" <?php if($customergroup1->customergroup_code ){echo "readonly=\"readonly\"";} ?> name="cust_grcode"
+                                                    id="cust_gr_code" onblur="check_customer_groupcode()" required>
+                                                    <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
+                                                            another?
+                                                    </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Customer Group Name</label>
                                                 <input type="text" class="form-control" placeholder=""
                                                     value="<?=$customergroup1->customergroup_name ?>" name="cust_grname"
-                                                    id="cust_gr_name">
+                                                    id="cust_gr_name" onblur="check_customer_groupname()" required >
+                                                    <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
+                                                            another?
+                                                    </div>
+                                                
                                             </div>
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">ADD</button>
-                                        <button class="btn btn-inverse">CLEAR</button>
+                                        <button type="reset" class="btn btn-inverse">CLEAR</button>
                                     </form>
                                 </div>
 
@@ -156,6 +170,58 @@ include_once "../../files/head.php";
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
+                                        <!-- //ALERT MESSAGES START................... -->
+            <?php
+            if(isset($_GET['success'])) {
+                echo"<div class='alert alert-success background-success'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>New group added successfully</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['success_edit'])) {
+                echo"<div class='alert alert-info background-info'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Group details updated successfully</strong> 
+            </div>";
+            }
+            ?>
+             <?php
+            if(isset($_GET['delete_success'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Deleted successful</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['d_id'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>$msg_2</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['notsuccess'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>The code or the name already exists.Please try again</strong> 
+            </div>";
+            }
+            ?>
+              <!-- //ALERT MESSAGES END................... -->
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
@@ -241,25 +307,25 @@ include_once "../../files/foot.php";
 
 ?>
 
-                            <!-- ------------------------------------------------------------------------------------------------------ -->
+    <!-- ------------------------------------------------------------------------------------------------------ -->
 
 
-                            <script type="text/javascript" src="../javascript/masterfile.js"></script>
-                            <script>
-                            function edit_cus_grp(edit_cus_grp) {
+    <script type="text/javascript" src="../javascript/customer.js"></script>
+    <script>
+    function edit_cus_grp(edit_cus_grp) {
+
+        console.log(edit_cus_grp);
+        window.location.href = "manage_customer_group.php?edit_cus_grp=" + edit_cus_grp;
 
 
-                                window.location.href = "manage_customer_group.php?edit_cus_grp=" + edit_cus_grp;
+    }
 
 
-                            }
+    function delete_cus_grp(deleteid) {
 
+        if (confirm("Do you want to delete id" + " " + deleteid)) {
+            window.location.href = "manage_customer_group.php?d_id=" + deleteid;
+        }
 
-                            function delete_cus_grp(deleteid) {
-
-                                if (confirm("Do you want to delete id" + " " + deleteid)) {
-                                    window.location.href = "manage_customer_group.php?d_id=" + deleteid;
-                                }
-
-                            }
-                            </script>
+    }
+    </script>

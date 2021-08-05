@@ -10,11 +10,6 @@ public $customergroup_code;
 public $customergroup_name;
 public $customergroup_status;
 public $customergroup_date;
-
-
-
-
-
 private $db;
 
 // --------------------------------------------------------------------------------------------------------------------'
@@ -28,14 +23,20 @@ function __construct(){
 
 
 function insert_customer_group(){
+    $cus_groupcode=$_POST["cust_grcode"];
+    $cus_groupname=$_POST["cust_grname"];
 
- $sql="INSERT INTO customer_group (customergroup_code,customergroup_name)
- VALUES('$this->customergroup_code','$this->customergroup_name')
- ";
-
-    echo $sql;
-    $this->db->query($sql);
-    return true;
+    $sql_check="SELECT * FROM customer_group WHERE customergroup_code = '$cus_groupcode' OR customergroup_name=' $cus_groupname' ";
+    $res_code=$this->db->query($sql_check);
+    //echo $sql_check;
+        if($res_code->num_rows==0){
+                $sql="INSERT INTO customer_group (customergroup_code,customergroup_name) VALUES('$this->customergroup_code','$this->customergroup_name')";
+                echo $sql;
+                 $this->db->query($sql);
+                return true;}
+        else {
+            return false;
+        }
 
 }
 
@@ -45,7 +46,7 @@ function insert_customer_group(){
 function get_all_customer_group(){
 
     $sql="SELECT * FROM customer_group WHERE customergroup_status='ACTIVE' ";
-    echo $sql;
+   // echo $sql;
     $result=$this->db->query($sql);
 
     $cus_grp_array=array();
@@ -75,9 +76,6 @@ function get_customer_group_by_id($cus_grp_id){
     $sql="SELECT * FROM customer_group WHERE customergroup_id = $cus_grp_id";
     echo $sql;
     $result=$this->db->query($sql);
-
-
-
     $row=$result->fetch_array();
 
     $cus_grp_item = new customergroup();
@@ -86,8 +84,6 @@ function get_customer_group_by_id($cus_grp_id){
     $cus_grp_item->customergroup_code=$row["customergroup_code"];
     $cus_grp_item->customergroup_name=$row["customergroup_name"];
     $cus_grp_item->customergroup_status=$row["customergroup_status"];
-
-       
     return $cus_grp_item;
 }
 
@@ -112,13 +108,19 @@ function edit_customer_group($cus_grp_id){
 //-------------------------------------------------------------------------------------------------------------------
 
 function delete_customer_group($customergroup_id){
+    $sql_check="SELECT * FROM customer WHERE customer_group =$customergroup_id";
+    $result=$this->db->query ($sql_check);
 
-    $sql="UPDATE customer_group SET customergroup_status='INACTIVE' WHERE customergroup_id=$customergroup_id ";
+    if($result->num_rows==0){
+        $sql="UPDATE customer_group SET customergroup_status='INACTIVE' WHERE customergroup_id=$customergroup_id ";
+        echo $sql;
+        $this->db->query($sql);
+        return true;
+    }else{
+        return false;
+    }
 
     
-    echo $sql;
-    $this->db->query($sql);
-    return true;
 
 
 }
@@ -144,6 +146,21 @@ function get_customer_group_by_code($cus_grp_id){
 }
 
 //.......................................................................................
+function get_customer_group_by_name($cus_grp_name){
+
+    $sql="SELECT * FROM customer_group WHERE customergroup_name = '$cus_grp_name'";
+    //echo $sql;
+    $result=$this->db->query($sql);
+    $row=$result->fetch_array();
+
+    $cus_grp_item = new customergroup();
+
+    $cus_grp_item->customergroup_id=$row["customergroup_id"];
+    $cus_grp_item->customergroup_code=$row["customergroup_code"];
+    $cus_grp_item->customergroup_name=$row["customergroup_name"];
+    $cus_grp_item->customergroup_status=$row["customergroup_status"];
+    return $cus_grp_item;
+}
 
 
 
