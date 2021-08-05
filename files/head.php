@@ -459,8 +459,18 @@
 
                             <li class="">
                                 <a href="../city/manage_city.php" target="_blank">
-                                    <span class="pcoded-micon"><i class="fa fa-user"></i></span>
+                                    <span class="pcoded-micon"><i class="ti-map-alt"></i></span>
                                     <span class="pcoded-mtext">Add City</span>
+                               
+                                </a>
+                             
+                            </li>
+
+
+                            <li class="">
+                                <a href="../salesrep/manage_salesrep.php" target="_blank">
+                                    <span class="pcoded-micon"><i class="ti-user"></i></span>
+                                    <span class="pcoded-mtext">Sales Rep</span>
                                
                                 </a>
                              
