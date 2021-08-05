@@ -15,9 +15,14 @@ function checkgroupcode()
 
 function checkgroupname(){
     include_once ("../group/group.php");
-    
     $group3=new group();
     $group_item1=$group3->get_group_by_name($_GET['productgroup_name']);
+    echo json_encode($group_item1);
+}
+function checkgroupid(){
+    include_once ("../group/group.php");
+    $group3=new group();
+    $group_item1=$group3->get_group_by_id($_GET['productgroup_id']);
     echo json_encode($group_item1);
 }
 
@@ -47,6 +52,21 @@ function checktypename(){
     include_once ("../producttype/producttype.php");
     $type=new producttype();
     $type_item=$type->get_type_by_name($_GET['producttype_name']);
+    echo json_encode($type_item);
+     
+}
+function checktypeid(){
+    include_once ("../producttype/producttype.php");
+    $type=new producttype();
+    $type_item=$type->get_type_by_id($_GET['producttype_id']);
+    echo json_encode($type_item);
+     
+}
+
+function checktypegroup(){
+    include_once ("../producttype/producttype.php");
+    $type=new producttype();
+    $type_item=$type->get_type_by_group($_GET['producttype_group']);
     echo json_encode($type_item);
      
 }

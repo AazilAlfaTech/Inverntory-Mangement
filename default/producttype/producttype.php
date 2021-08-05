@@ -152,6 +152,29 @@
             return $ptype;
         }
 
+        function get_type_by_group($group)
+        {
+            $SQL="SELECT * FROM product_type WHERE ptype_group_id='$group'";
+            $result=$this->db->query($SQL);
+            $type_array=array();
+            $type_group1=new group();
+
+            while($row=$result->fetch_array())
+            
+            {
+                $ptype= new producttype();
+                $ptype->ptype_id=$row["ptype_id"];
+                $ptype->ptype_name=$row["ptype_name"];
+                $ptype->ptype_code=$row["ptype_code"];
+                $ptype->ptype_group_id=$type_group1->get_group_by_id($row["ptype_group_id"]);
+                $ptype->ptype_group_id=$row["ptype_group_id"];
+                $ptype->ptype_status=$row["ptype_status"];
+                $ptype->ptype_date=$row["ptype_date"];
+                $type_array[]=$ptype;
+            }
+            return $type_array;
+        }
+
 
     
     }

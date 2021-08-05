@@ -149,7 +149,7 @@ include_once "../../files/head.php";
                                                         if($item->group_id==$producttype1->ptype_group_id->group_id)   
 			                                        echo "<option value='$item->group_id' selected='selected'>$item->group_name</option>";
                                                     else
-                                                    echo"<option value='$item->group_id'>$item->group_name</option>";
+                                                    echo"<option value='$item->group_id'>$item->group_name</option>"
                                                     ?>
                                                     
                                                 </select>
@@ -174,6 +174,7 @@ include_once "../../files/head.php";
          
      <!-- Page-body start -->
      <div class="page-body">
+
         <div class="row">
             <div class="col-sm-12">
             <?php
@@ -260,14 +261,14 @@ include_once "../../files/head.php";
                                     ?>
                                 </tbody>
                                         
-                                        
-                                    
+                        
             
                                 </tfoot>
                             </table>
                         </div>
                     </div>
                 </div>     
+
 
 <!-- ----------------------------------------------------------------------------------------------------------------- -->
   <?php
