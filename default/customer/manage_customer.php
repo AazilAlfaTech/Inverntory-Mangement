@@ -133,7 +133,7 @@ include_once "../../files/head.php";
                                                    <?php
                                                         foreach($result_cus_group as $item)
                                                       
-                                                        if($item->customergroup_id==$customer1->customer_group->customergroup_id)   
+                                                        if($item->customergroup_id==$customer1->vvvvvvvvvvvvvvvvvvvvvvvvvvvv->customergroup_id)   
 			                                        echo "<option value='$item->customergroup_id' selected='selected'>$item->customergroup_name</option>";
                                                     else
                                                     echo"<option value='$item->customergroup_id'>$item->customergroup_name</option>";

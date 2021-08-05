@@ -163,4 +163,49 @@ function check_typename(){
 
   }
 
+// ...........................PRODUCT ITEM JS......................................................................
 
+// Filtering the product type according to the group
+  $(".productgroup").change(function()
+  {
+    var group_id=$(".productgroup").val();
+    console.log(group_id);
+    $.get("../ajax/ajaxmaster.php?type=checktypegroup",{producttype_group:group_id},function(data)
+    {
+      console.log(data);
+      var d=JSON.parse(data);
+      $("#type_id").html("");
+      $.each(d,function(i,x)
+      {
+        console.log(i);
+        console.log(x);
+        $("#type_id").append("<option value='"+d[i].ptype_id+"'> "+d[i].ptype_name+" </option>");
+      });
+    });
+  });
+
+  // Hide the product batch when FIFo is clicked
+  $("#prod_valf").click(function()
+  {
+      hide_pbatch();
+  });
+
+    // Show the product batch when AVCO is clicked
+  $("#prod_vala").click(function()
+  {
+    show_pbatch();
+  });
+
+
+//  show product batch function
+  function show_pbatch()
+  {   
+    $("#pbatch").show();   
+  }
+
+  //  hide product batch function
+  function hide_pbatch()
+  {    
+    $("#pbatch").hide();   
+  }
+  

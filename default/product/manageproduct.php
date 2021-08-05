@@ -3,8 +3,7 @@
 include_once "product.php";
 include_once "../group/group.php";
 include_once "../producttype/producttype.php";
-// include_once "../uom/uom.php";
-include_once "../../files/head.php";
+include_once "../uom/uom.php";
 
 $group1=new group();
 $result_group=$group1->get_all_group();
@@ -12,8 +11,8 @@ $result_group=$group1->get_all_group();
 $ptype1=new producttype();
 $result_type=$ptype1->getall_type();
 
-// $uom1=new uom();
-// $result_uom=$uom1->get_all_uom();
+$uom1=new uom();
+$result_uom=$uom1->get_all_uom();
 
 $product1=new product();
 
@@ -21,7 +20,7 @@ if(isset($_POST["productname"]))
 {
     $product1->product_name=$_POST["productname"];
     $product1->product_type=$_POST["prodtypeid"];
-    // $product1->product_uom=$_POST["unitid"];
+    $product1->product_uom=$_POST["unitid"];
     $product1->product_desc=$_POST["productdesc"];
     $product1->product_inventory_val=$_POST["productval"];
     $product1->product_batch=$_POST["productbatch"];
@@ -33,7 +32,7 @@ if(isset($_POST["productname"]))
     }else
 
     $product1->insert_product();
-    
+    header("location:manageproduct.php");
 }
 
 if(isset($_GET["view_product"]))
@@ -45,7 +44,8 @@ if(isset($_GET["d_id"]))
 {
     $product1->delete_product($_GET["d_id"]);
 }
-$result_product=$product1->getall_product();
+$result_product=$product1->getall_product2();
+include_once "../../files/head.php";
 
 
 ?>
@@ -99,7 +99,7 @@ $result_product=$product1->getall_product();
 
                                 <div class="card-block" >
 
-                                    <form method="POST" action="manageproduct.php">
+                                    <form method="POST" action="manageproduct.php" enctype="multipart/form-data">
                                             <?php
                                                 if(isset($_GET["view_product"]))
                                                 {
@@ -111,17 +111,20 @@ $result_product=$product1->getall_product();
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select Group</label>
-                                                <select class="form-control" name="groupid" id="gr_id">
+                                                <select class="form-control productgroup" name="" id="gr_id" onchange="autocode()">
                                                     <option value="-1">Select Group</option>
                                                     <?php
                                                         foreach($result_group as $item)
+                                                        // if($item->ptype_id==$product1->product_type->ptype_group_id)
+                                                        // echo"<option value='$item->ptype_group_id' selected='selected'>".$item->ptype_id->ptype_group_id->group_name."</option>";
+                                                        // else
                                                         echo"<option value='$item->group_id'>$item->group_name</option>";
                                                    ?>
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Type </label>
-                                                <select class="form-control" name="prodtypeid" id="typ_id">
+                                                <select class="form-control productitem" name="prodtypeid" id="type_id" onchange="autocode()">
                                                     <option value="-1">Select Type</option>
                                                     <?php
                                                         foreach($result_type as $item)
@@ -159,15 +162,15 @@ $result_product=$product1->getall_product();
                                                 <label class=" col-form-label"> Inventory Valuation</label>
                                                 <br>
                                             
-                                                <input type="radio" name="productval" id="prod_val" <?php if($product1->product_inventory_val=="FIFO"){ ?> checked="checked"<?php } ?>>
+                                                <input type="radio" name="productval" id="prod_valf" value="FIFO" <?php if($product1->product_inventory_val=="FIFO"){ ?> checked="checked"<?php } ?>>
                                                 <i class="helper"></i>FIFO
-                                                <input type="radio" name="productval" id="prod_val" <?php if($product1->product_inventory_val=="AVCO"){ ?> checked="checked"<?php } ?>>
+                                                <input type="radio" name="productval" id="prod_vala" value="AVCO"<?php if($product1->product_inventory_val=="AVCO"){ ?> checked="checked"<?php } ?>>
                                                  <i class="helper"></i>AVCO
                                                                        
 
 
                                             </div>
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" id="pbatch">
                                                 <label class=" col-form-label"> Product batch</label>
                                                 <input type="text" class="form-control" placeholder="" name="productbatch" id="prod_batch" value="<?=$product1->product_batch?>">
                                             </div>
@@ -180,10 +183,24 @@ $result_product=$product1->getall_product();
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label"> Product Discription</label>
                                                 <textarea rows="5" cols="5" class="form-control"
-                                                    placeholder="Default textarea" name="productdesc" id="prod_desc" value="<?=$product1->product_desc?>"></textarea>
+                                                    placeholder="Default textarea" name="productdesc" id="prod_desc"> <?php if(isset($_GET['view_product'])) { echo "$product1->product_desc";} ?></textarea>
                                             </div>
 
+                                            <!-- <div class="col-sm-4">
+                                                <label class=" col-form-label"> Product code</label>
+                                                <input type="text" class="form-control" placeholder="" name="productcode" id="prod_code"   value="<?=$product1->product_code?>">
+                                            </div> -->
 
+                                            <!-- <div class="col-sm-6 row"> -->
+                                            <div class="col-sm-3">
+                                                <label class=" col-form-label"> Product image</label>
+                                                <input type="file" class="form-control" placeholder="" name="productimage" id="prod_image"   value="">
+                                            </div>
+                                                <div class="col-sm-3">
+                                            <img src="/IMS/inventory/default/product/productimage/<?=$product1->product_id?>.jpg" style="height: 100px; width: 150px;">  
+                                            </div>
+                                            <!-- </div> -->
+                                            
                                         </div>
 
                                         <button class="btn btn-primary" type="submit">ADD</button>
@@ -209,7 +226,7 @@ $result_product=$product1->getall_product();
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Location List</h5>
+                                    <h5>Product List</h5>
                                     <span></span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -226,7 +243,7 @@ $result_product=$product1->getall_product();
                                                 <tr>
                                                     <th>Product Code</th>
                                                     <th>Product Name</th>
-                                                    <!-- <th>Product Group</th> -->
+                                                    <th>Product Group</th>
                                                     <th>Product Type</th>
                                                     <!-- <th>Product UOM</th> -->
 
@@ -241,10 +258,11 @@ $result_product=$product1->getall_product();
                                                         "<tr>
                                                             <td>$item->product_code</td>
                                                             <td>$item->product_name</td>
+                                                            <td>".$item->groupname->group_name."</td>
                                                             <td>".$item->product_type->ptype_name."</td>
                                                             <td>
                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                    <button type='button'  onclick='edit_product($item->product_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                                    <button type='button' id='editprod' onclick='edit_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                                     <button type='button'  onclick='delete_product($item->product_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
                                                                 </div>
                                                             </td>
@@ -263,9 +281,13 @@ $result_product=$product1->getall_product();
 include_once "../../files/foot.php";
 
 ?>
+<script type="text/javascript" src="../javascript/masterfile.js"></script>
 
 <script>
+    // Hiding the product batch textbox
+    $("#pbatch").hide();
 
+    // Deleting the product
     function delete_product(deleteid) {
 
     if (confirm("Are you sure you want to delete product ?" + "" + deleteid)) {
@@ -275,6 +297,7 @@ include_once "../../files/foot.php";
 
     }
 
+    // Editing the product
     function edit_product(e)
     {
         window.location.href="manageproduct.php?view_product="+e;

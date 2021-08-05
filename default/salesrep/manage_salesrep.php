@@ -1,65 +1,54 @@
 <?php
-include_once "location.php";
+include_once "salesrep.php";
 
-    $location1 = new location();
+    $salesrep1 = new salesrep();
 
 //code to insert and update data............................................................... 
 
-if(isset($_POST["locname"]))
-{
-    $location1->location_code = $_POST["loccode"];
-    $location1->location_name = $_POST["locname"];
-    $location1->location_add = $_POST["locadd"];
-    $location1->location_number = $_POST["locnum"];
-    $location1->location_email = $_POST["locmail"];
-    //....................................................
-    if(isset($_POST["edit_location"]))
-    {
-        $res_edit=$location1->edit_location ($_POST["edit_location"]);
-            //code for insert validation
-            if($res_edit==true){
-               echo"EDIT";
-               header("location:../location/managelocation.php?success_edit=1");
-            }elseif($res_edit==false){
-                    echo"not edit";
-               header("location:../location/managelocation.php?notsuccess=1");
-            }
-    }else
-    {
-        $res_insert=$location1->insert_location();
-            //code for insert validation
-            if($res_insert==true){
-                echo "INSER DONE";
-                header("location:../location/managelocation.php?success=1");
-            }elseif($res_insert==false){
-                        echo "no insert";
-               header("location:../location/managelocation.php?notsuccess=1");
-            }
+    if(isset($_POST["locname"])){
+
+        $salesrep1->salesrep_code = $_POST["loccode"];
+        $salesrep1->salesrep_name = $_POST["locname"];
+
+
+     if(isset($_POST["edit_salesrep"])){
+        $res_edit=$salesrep1->edit_salesrep ($_POST["edit_salesrep"]);
+        }
+    else{
+        $res_insert=$salesrep1->insert_salesrep();}
+        //code for alert validations
+            // if($res_insert==true){
+               
+            //     header("salesrep:../salesrep/manage_salesrep.php?success=1");
+            // }elseif($res_edit==true){
+            //     header("salesrep:../salesrep/manage_salesrep.php?success_edit=1");
+            // }else{
+            //     echo"False";
+            // }
+
     }
-
-
-}
-//code to get location details  into datatable........................................................................
+//code to get salesrep details  into datatable........................................................................
     
-    $result_location = $location1->get_all_location();
-//code to view location................................................................
-    if(isset($_GET['edit_location'])){
-        $location1=$location1->get_location_by_id($_GET['edit_location']);
+    $result_salesrep = $salesrep1->get_all_salesrep();
+//code to view salesrep................................................................
+    if(isset($_GET['edit_salesrep'])){
+        $salesrep1=$salesrep1->get_salesrep_by_id($_GET['edit_salesrep']);
     }
-//code to delete location..................................................................................
+//code to delete group..................................................................................
 
 $msg_2="";//alert message for delete
 
 
     if(isset($_GET['d_id'])){
-        $res_del=$location1->delete_location ($_GET['d_id']);
+        $res_del=$salesrep1->delete_salesrep ($_GET['d_id']);
+        
         //code for delete validations
             if($res_del==true){
                 
-                header("location:../location/managelocation.php?delete_success=1");
+                $msg_2="Deleted Successfully";
             }else{
             
-                $msg_2="Location already exists therefore cannot delete";
+                $msg_2="salesrep already exists therefore cannot delete";
             }
     }
 include_once "../../files/head.php";
@@ -77,7 +66,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Location</h4>
+                                    <h4>Manage salesrep</h4>
 
                                 </div>
                             </div>
@@ -101,7 +90,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Product Location</h5>
+                                    <h5>Add New  salesrep</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -114,62 +103,63 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form action="managelocation.php" method="POST" id="">
+                                    <form action="manage_salesrep.php" method="POST" id="">
 
                                         <?php
                                    
-                                   if(isset($_GET["edit_location"])){
-                                    echo"  <input type='hidden'  class='form-control' value='".$_GET['edit_location'] ."' name='edit_location' required readonly>";
+                                   if(isset($_GET["edit_salesrep"])){
+                                    echo"  <input type='hidden'  class='form-control' value='".$_GET['edit_salesrep'] ."' name='edit_salesrep' required readonly>";
                                    }
                                     
 
                                    ?>
 
                                         <div class="form-group row">
-                                            <div class="col-sm-4">
-                                                <label class=" col-form-label">Location Code</label>
-                                                <input type="text" value="<?=$location1->location_code?>" <?php if($location1->location_code){echo "readonly=\"readonly\"";} ?>
-                                                    class="form-control" placeholder="" name="loccode" pattern="^[A-Z0-9]*$" id="loc_code" onkeyup="check_locationcode()" onblur="check_locationcode()" required>
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">salesrep Code</label>
+                                                <input type="text" value="<?=$salesrep1->salesrep_code?>" <?php if($salesrep1->salesrep_code){echo "readonly=\"readonly\"";} ?>
+                                                    class="form-control" placeholder="" name="loccode" pattern="^[A-Z0-9]*$" id="loc_code" onkeyup="check_salesrepcode()" onblur="check_salesrepcode()" required>
                                                     <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that name is taken. Try
                                                             another?
                                                 </div>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <label class=" col-form-label">Location Name</label>
-                                                <input type="text" value="<?= $location1->location_name ?>"
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">salesrep Name</label>
+                                                <input type="text" value="<?= $salesrep1->salesrep_name ?>"
                                                     class="form-control" placeholder="" name="locname" id="loc_name" required>
                                             </div>
 
-                                            <div class="col-sm-4">
-                                                <label class=" col-form-label">Contact No</label>
-                                                <input type="text" value="<?=$location1->location_number ?>"
-                                                    class="form-control" placeholder="" name="locnum" id="loc_num" pattern="[0-9]{10}" required>
-                                            </div>
+                                       
                                         </div>
 
                                         <div class="form-group row">
 
-                                            <div class="col-sm-6">
-                                                <label class=" col-form-label">E-mail </label>
-                                                <input type="email" value="<?=$location1->location_email ?>"
-                                                    class="form-control" placeholder="" name="locmail" id="loc_mail"  onblur="check_locationmail()" required>
-                                                    <div class="col-form-label" id="mailcheck_msg" style="display:none;">Sorry, that e-mail is taken. Try
+                                        <div class="col-sm-4">
+                                                <label class=" col-form-label">city</label>
+                                                <input type="text" value="<?=$salesrep1->salesrep_code?>" <?php if($salesrep1->salesrep_code){echo "readonly=\"readonly\"";} ?>
+                                                    class="form-control" placeholder="" name="loccode" pattern="^[A-Z0-9]*$" id="loc_code" onkeyup="check_salesrepcode()" onblur="check_salesrepcode()" required>
+                                                    <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that name is taken. Try
                                                             another?
                                                 </div>
-
-
                                             </div>
-
-                                            <div class="col-sm-6">
-                                                <label class=" col-form-label">Address </label>
-                                                <textarea value="<?=$location1->location_add ?> " rows="5" cols="5"
-                                                    class="form-control" placeholder="" name="locadd" id="loc_add"
-                                                    spellcheck="false"></textarea>
+                                            <!-- <div class="col-sm-4">
+                                                <label class=" col-form-label">salesrep Name</label>
+                                                <input type="text" value="<?= $salesrep1->salesrep_name ?>"
+                                                    class="form-control" placeholder="" name="locname" id="loc_name" required>
                                             </div>
+                                            <div class="col-sm-4">
+                                                <label class=" col-form-label">salesrep Name</label>
+                                                <input type="text" value="<?= $salesrep1->salesrep_name ?>"
+                                                    class="form-control" placeholder="" name="locname" id="loc_name" required>
+                                            </div> -->
+
+                   
+
+                                        
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">ADD</button>
-                                        <button type="reset" class="btn btn-inverse">CLEAR</button>
+                                        <button class="btn btn-inverse">CLEAR</button>
                                     </form>
                                 </div>
 
@@ -195,7 +185,7 @@ include_once "../../files/head.php";
                                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                                     <i class='icofont icofont-close-line-circled text-white'></i>
                                 </button>
-                                <strong>New location added successfully</strong> 
+                                <strong>New salesrep added successfully</strong> 
                             </div>";
                             }
                             ?>
@@ -205,20 +195,10 @@ include_once "../../files/head.php";
                                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                                     <i class='icofont icofont-close-line-circled text-white'></i>
                                 </button>
-                                <strong>Location details updated successfully</strong> 
+                                <strong>salesrep details updated successfully</strong> 
                             </div>";
                             }
                             ?>
-                             <?php
-                                if(isset($_GET['delete_success'])) {
-                                    echo"<div class='alert alert-danger background-danger'>
-                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                        <i class='icofont icofont-close-line-circled text-white'></i>
-                                    </button>
-                                    <strong>Deleted successful</strong> 
-                                </div>";
-                                }
-                                ?>
                             <?php
                             if(isset($_GET['d_id'])) {
                                 echo"<div class='alert alert-danger background-danger'>
@@ -229,21 +209,11 @@ include_once "../../files/head.php";
                             </div>";
                             }
                             ?>
-                            <?php
-                            if(isset($_GET['notsuccess'])) {
-                                echo"<div class='alert alert-danger background-danger'>
-                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                    <i class='icofont icofont-close-line-circled text-white'></i>
-                                </button>
-                                <strong>The code or the e-mail already exists.Please try again</strong> 
-                            </div>";
-                            }
-                            ?>
                         <!-- //ALERT MESSAGES END................... -->
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Location List</h5>
+                                    <h5>salesrep List</h5>
                                     <span></span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -258,12 +228,10 @@ include_once "../../files/head.php";
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Location id</th>
-                                                    <th>Location Code</th>
+                                                    <th>salesrep id</th>
+                                                    <th>salesrep Code</th>
                                                     <th>Lcation Name</th>
-                                                    <th>Address</th>
-                                                    <th>Contact No</th>
-                                                    <th>E-mail</th>
+  
 
                                                     <th>Action</th>
 
@@ -271,20 +239,19 @@ include_once "../../files/head.php";
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    foreach($result_location as $item){
+                                                    foreach($result_salesrep as $item){
                                                         echo"
                                                         <tr>
-                                                            <td>$item->location_id</td>
-                                                            <td>$item->location_code</td>
-                                                            <td>$item->location_name  </td>
-                                                            <td>$item->location_add  </td>
-                                                            <td>$item->location_number </td> 
-                                                            <td>$item->location_email </td>
+                                                            <td>$item->salesrep_id</td>
+                                                            <td>$item->salesrep_code</td>
+                                                            <td>$item->salesrep_name  </td>
+                                                         
 
                                                             <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                            <a href='managelocation.php?edit_location=$item->location_id '>  <button type='button'  class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
-                                                            <button type='button'  onclick='delete_location($item->location_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
-                                                            </td> 
+                                                            <button type='button' onclick='edit_salesrep($item->salesrep_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                            <button type='button'  onclick='delete_salesrep($item->salesrep_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+                                                            
+                                                        </div>
                                                         </tr>
                                                         ";
                                                         }
@@ -304,15 +271,23 @@ include_once "../../files/foot.php";
 
                             <!-- ------------------------------------------------------------------------------------------------- -->
 
-                            <script type="text/javascript" src="../javascript/masterfile.js"></script>
+                          
                             <script>
-                            function delete_location(deleteid) {
+                            function delete_salesrep(d_id) {
 
-                                if (confirm("Do you want to delete id" + " " + deleteid)) {
-                                    window.location.href = "managelocation.php?d_id=" + deleteid;
+                                if (confirm("Do you want to delete id" + " " + d_id)) {
+                                    window.location.href = "manage_salesrep.php?d_id=" + d_id;
                                 }
 
-                            }
-                            
 
+                            }
+
+                            function edit_salesrep(edit_salesrep) {
+
+                   
+                                    window.location.href = "manage_salesrep.php?edit_salesrep=" + edit_salesrep;
+                         
+
+
+                            }
                             </script>
