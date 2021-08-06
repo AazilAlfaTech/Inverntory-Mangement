@@ -1,7 +1,13 @@
 <?php
 include_once "salesrep.php";
+include_once "../city/city.php";
 
     $salesrep1 = new salesrep();
+
+    $city1 = new city();
+
+    $result_city=$city1->get_all_city();
+    
 
 //code to insert and update data............................................................... 
 
@@ -95,8 +101,8 @@ include_once "../../files/head.php";
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
                                             <li><i class="feather icon-maximize full-card"></i></li>
-                                            <li><i class="feather icon- minimize-card"></i></li>
-                                            <!-- <li><i class="feather icon-trash-2 close-card"></i></li> -->
+                                            <li><i class="feather icon-plus minimize-card"></i></li>
+                                        
                                         </ul>
                                     </div>
                                 </div>
@@ -132,29 +138,62 @@ include_once "../../files/head.php";
                                        
                                         </div>
 
+                                        <hr>
                                         <div class="form-group row">
+                                            <div class="col-sm-6">
 
-                                        <div class="col-sm-4">
-                                                <label class=" col-form-label">city</label>
-                                                <input type="text" value="<?=$salesrep1->salesrep_code?>" <?php if($salesrep1->salesrep_code){echo "readonly=\"readonly\"";} ?>
-                                                    class="form-control" placeholder="" name="loccode" pattern="^[A-Z0-9]*$" id="loc_code" onkeyup="check_salesrepcode()" onblur="check_salesrepcode()" required>
-                                                    <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that name is taken. Try
-                                                            another?
-                                                </div>
+                                          
+
+                                                <label class=" col-form-label">City</label>
+                                                <select class="js-example-basic-single col-sm-12" name="custcity"
+                                                    id="cust_city">
+
+                                                    <!-- location not done -->
+                                                    <option value="-1">Select City</option>
+                                                   <?php
+                                                        foreach($result_city as $item)
+                                                      
+                                                        if($item->city_id==$customer1->city_id)   
+			                                        echo "<option value='$item->city_id' selected='selected'>$item->customercity_namegroup_name</option>";
+                                                    else
+                                                    echo"<option value='$item->city_id'>$item->city_name</option>";
+                                                    ?>
+
+                                                </select>
                                             </div>
-                                            <!-- <div class="col-sm-4">
-                                                <label class=" col-form-label">salesrep Name</label>
-                                                <input type="text" value="<?= $salesrep1->salesrep_name ?>"
-                                                    class="form-control" placeholder="" name="locname" id="loc_name" required>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <label class=" col-form-label">salesrep Name</label>
-                                                <input type="text" value="<?= $salesrep1->salesrep_name ?>"
-                                                    class="form-control" placeholder="" name="locname" id="loc_name" required>
-                                            </div> -->
+                                           
+
+                                       
+                                        </div>
+
+
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>City</th>
+                                                      
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">1</th>
+                                                        <td>Mark</td>
+                                                     
+                                                      
+                                                    </tr>
+                                                
+                                               
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                
+                    
 
                    
-
+</div>
                                         
                                         </div>
 

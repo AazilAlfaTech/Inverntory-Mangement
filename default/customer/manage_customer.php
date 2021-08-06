@@ -2,6 +2,12 @@
 
 include_once "customer.php";
 include_once "../customer_group/customer_group.php";
+include_once "../city/city.php";
+
+
+    $city1 = new city();
+
+   $result_city=$city1->get_all_city();
 
     $customer_grp = new customergroup();
 
@@ -133,7 +139,7 @@ include_once "../../files/head.php";
                                                    <?php
                                                         foreach($result_cus_group as $item)
                                                       
-                                                        if($item->customergroup_id==$customer1->vvvvvvvvvvvvvvvvvvvvvvvvvvvv->customergroup_id)   
+                                                        if($item->customergroup_id==$customer1->customergroup_id)   
 			                                        echo "<option value='$item->customergroup_id' selected='selected'>$item->customergroup_name</option>";
                                                     else
                                                     echo"<option value='$item->customergroup_id'>$item->customergroup_name</option>";
@@ -186,14 +192,14 @@ include_once "../../files/head.php";
                                                     id="cust_city">
 
                                                     <!-- location not done -->
-                                                    <option value="-1">Select Customer Group</option>
+                                                    <option value="-1">Select City</option>
                                                    <?php
-                                                        foreach($result_cus_group as $item)
+                                                        foreach($result_city as $item)
                                                       
-                                                        if($item->customergroup_id==$customer1->customer_group->customergroup_id)   
-			                                        echo "<option value='$item->customergroup_id' selected='selected'>$item->customergroup_name</option>";
+                                                        if($item->city_id==$customer1->city_id)   
+			                                        echo "<option value='$item->city_id' selected='selected'>$item->customercity_namegroup_name</option>";
                                                     else
-                                                    echo"<option value='$item->customergroup_id'>$item->customergroup_name</option>";
+                                                    echo"<option value='$item->city_id'>$item->city_name</option>";
                                                     ?>
 
                                                 </select>

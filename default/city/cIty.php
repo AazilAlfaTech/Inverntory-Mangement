@@ -2,6 +2,7 @@
 
 include_once "../../files/config.php";
 include_once "../province/province.php";
+ include_once "../district/district.php";
 
 class city {
 
@@ -48,12 +49,16 @@ function get_all_city(){
     while($row = $result->fetch_array()){
 
         $city_item = new city(); 
+        $province1 = new province();
+        $district1 = new district();
 
         $city_item->city_id=$row["city_id"];
         $city_item->city_code=$row["city_code"];
         $city_item->city_name=$row["city_name"];
         $city_item->city_province=$row["city_province"];
+        $city_item->city_province=$province1->get_province_by_id($row["city_province"]);
         $city_item->city_district=$row["city_district"];
+        $city_item->city_district=$district1->get_district_by_id($row["city_district"]);
 
     $city_array[] = $city_item;
 
@@ -73,16 +78,19 @@ function get_city_by_id($city_id){
     echo $sql;
     $result=$this->db->query($sql);
 
-    // $group_array=array();
 
     $row=$result->fetch_array();
         $city_item=new city(); //object
+        $province1 = new province();
+        $district1 = new district();
 
         $city_item->city_id=$row["city_id"];
         $city_item->city_code=$row["city_code"];
         $city_item->city_name=$row["city_name"];
         $city_item->city_province=$row["city_province"];
+        $city_item->city_province=$province1->get_province_by_id($row["city_province"]);
         $city_item->city_district=$row["city_district"];
+        $city_item->city_district=$district1->get_district_by_id($row["city_district"]);
         
 
        

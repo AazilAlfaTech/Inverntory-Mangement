@@ -1,6 +1,13 @@
 <?php
 
-include_once "cIty.php";
+include_once "city.php";
+
+
+
+include_once "../district/district.php";
+$district1 = new district();
+
+$result_district = $district1->get_all_district();
 
 include_once "../province/province.php";
 $province1= new province();
@@ -160,9 +167,10 @@ include_once "../../files/head.php";
 
                                                 <?php
                                                         foreach($result_province as $item)
-                                                        //  echo"<option value='$item->province_id'>$item->province_name</option>"
-                                                         if($item->province_id==$city1->city_province->province_id)   
-			                                         echo "<option value='$item->province_id`' selected='selected'>$item->province_name</option>";
+                                                  
+                                                         if($item->province_id==$city1->city_province) 
+
+			                                         echo "<option value='$item->province_id' selected='selected'>$item->province_name</option>";
                                                      else
                                                     echo"<option value='$item->province_id'>$item->province_name</option>"
                                                     ?>
@@ -174,12 +182,15 @@ include_once "../../files/head.php";
                                                 <label class=" col-form-label"> District </label>
                                                 <select class="js-example-basic-single col-sm-12" name="citydistrict" id="city_district">
 
-                                                    <option value="AL">Alabama</option>
-                                                    <option value="WY">Wyoming</option>
-                                                    <option value="WY">Peter</option>
-                                                    <option value="WY">Hanry Die</option>
-                                                    <option value="WY">John Doe</option>
-
+                                                <?php
+                                                        foreach($result_district as $item)
+                                                     
+                                                         if($item->district_id==$city1->city_district)   
+			                                         echo "<option value='$item->district_id' selected='selected'>$item->district_name</option>";
+                                                     else
+                                                    echo"<option value='$item->district_id'>$item->district_name</option>"
+                                                    ?>
+                                                    
                                                 </select>
                                             </div>
 
@@ -245,8 +256,8 @@ include_once "../../files/head.php";
                                                             <td>$item->city_id</td>
                                                             <td>$item->city_code</td>
                                                             <td>$item->city_name  </td>
-                                                            <td>$item->city_province</td>
-                                                            <td>$item->city_district  </td>
+                                                            <td>".$item->city_province->province_name."</td> 
+                                                            <td>".$item->city_district->district_name."  </td>
 
                                                             <td><div class='btn-group btn-group-sm' style='float: none;'>
                                                             <button type='button' onclick='edit_city($item->city_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
