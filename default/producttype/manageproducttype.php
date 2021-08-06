@@ -151,7 +151,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Group</label>
-                                                <select name="typegroup" class="form-control" id="typ_group" required>
+                                                <select name="typegroup" class="js-example-basic-single col-sm-12" id="typ_group" required>
                                                     <option value="-1">Select Group</option>
                                                    <?php
                                                         foreach($result_group as $item)

@@ -101,7 +101,17 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Product Location</h5>
+                                    <h5>
+                                        
+                                        <?php
+                                    
+                                            if(isset($_GET["edit_location"])){
+                                                echo"Edit Product Location";
+                                            }
+                                            else
+                                            echo "Add New Product Location";
+                                        ?>
+                                    </h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -164,7 +174,7 @@ include_once "../../files/head.php";
                                                 <label class=" col-form-label">Address </label>
                                                 <textarea value="<?=$location1->location_add ?> " rows="5" cols="5"
                                                     class="form-control" placeholder="" name="locadd" id="loc_add"
-                                                    spellcheck="false"></textarea>
+                                                    spellcheck="false"> <?php if(isset($_GET['edit_location'])) { echo "$location1->location_add";} ?></textarea>
                                             </div>
                                         </div>
 

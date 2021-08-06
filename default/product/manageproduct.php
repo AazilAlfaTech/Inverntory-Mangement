@@ -109,7 +109,16 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Product </h5>
+                                    <h5>
+                                    <?php
+                                                if(isset($_GET["view_product"]))
+                                                {
+                                                    echo"Edit Product";
+                                                }
+                                                else
+                                                echo "Add New Product";
+                                            ?>
+                                    </h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -134,7 +143,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select Group</label>
-                                                <select class="form-control productgroup" name="" id="gr_id" onchange="autocode()">
+                                                <select class="js-example-basic-single col-sm-12 productgroup" name="" id="gr_id" onchange="autocode()">
                                                     <option value="-1">Select Group</option>
                                                     <?php
                                                         foreach($result_group as $item)
@@ -147,7 +156,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Type </label>
-                                                <select class="form-control productitem" name="prodtypeid" id="type_id" onchange="autocode()">
+                                                <select class="js-example-basic-single col-sm-12 productitem" name="prodtypeid" id="type_id" onchange="autocode()">
                                                     <option value="-1">Select Type</option>
                                                     <?php
                                                         foreach($result_type as $item)
@@ -161,7 +170,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select UOM </label>
-                                                <select class="form-control" name="unitid" id="unit_id">
+                                                <select class="js-example-basic-single col-sm-12" name="unitid" id="unit_id">
                                                     <option value="-1">Select UOM</option>
                                                     <?php
                                                         foreach($result_uom as $item)
