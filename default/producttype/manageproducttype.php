@@ -274,9 +274,9 @@ include_once "../../files/head.php";
                                                 <td>$item->ptype_id</td>
                                                 <td>$item->ptype_code</td>
                                                 <td>$item->ptype_name
-                                                </td>
+                                      
                                                 <td>".$item->ptype_group_id->group_name."</td>
-                                                <td>
+                                                
 
 
                                                 <div class='btn-group btn-group-sm' style='float: none;'>
