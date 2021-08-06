@@ -96,7 +96,17 @@
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Product UOM</h5>
+                                    <h5>
+                                    <?php
+                                   
+                                   if(isset($_GET["edit_uom"])){
+                                    echo"Edit Product";
+                                   }
+                                   else
+                                   echo "Add New Product UOM";
+                                    
+
+                                   ?></h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
