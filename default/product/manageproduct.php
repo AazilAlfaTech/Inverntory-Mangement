@@ -16,7 +16,7 @@ $result_uom=$uom1->get_all_uom();
 
 $product1=new product();
 
-if(isset($_POST["productname"]))
+if (isset($_POST["productname"]))
 {
     $product1->product_name=$_POST["productname"];
     $product1->product_type=$_POST["prodtypeid"];
@@ -25,24 +25,47 @@ if(isset($_POST["productname"]))
     $product1->product_inventory_val=$_POST["productval"];
     $product1->product_batch=$_POST["productbatch"];
 
-    if(isset($_POST['product_id']))
+    //....................................................
+    if(isset($_POST["product_id"]))
     {
-        $product1->edit_product($_POST['product_id']);
-        // header("location:manageproduct.php");
+        $res_edit= $product1->edit_product($_POST['product_id']); 
+            //code for insert validation
+            if($res_edit==true){
+               
+                header("location:../product/manageproduct.php?success_edit=1");
+            }elseif($res_edit==false){
+                header("location:../product/manageproduct.php?notsuccess=1");
+            }
     }else
+    {
+            $res_insert=$product1->insert_product();   
+            //code for insert validation
+            if($res_insert==true){
+                
+                header("location:../product/manageproduct.php?success=1");
+            }elseif($res_insert==false){
+                header("location:../product/manageproduct.php?notsuccess=1");
+            }
+    }
 
-    $product1->insert_product();
-    header("location:manageproduct.php");
+
 }
 
 if(isset($_GET["view_product"]))
 {
-    $product1=$product1->get_product_by_id($_GET["view_product"]);
+    $product1=$product1->get_product_by_id2($_GET["view_product"]);
 }
 
 if(isset($_GET["d_id"]))
 {
-    $product1->delete_product($_GET["d_id"]);
+    $res_del=$product1->delete_product($_GET["d_id"]);
+    if($res_del==true){
+        header("location:../product/manageproduct.php?delete_success=1");
+       
+    }else{
+       
+        $msg_2="Group already exists therefore cannot delete";
+    }
 }
 $result_product=$product1->getall_product2();
 include_once "../../files/head.php";
@@ -115,9 +138,9 @@ include_once "../../files/head.php";
                                                     <option value="-1">Select Group</option>
                                                     <?php
                                                         foreach($result_group as $item)
-                                                        // if($item->ptype_id==$product1->product_type->ptype_group_id)
-                                                        // echo"<option value='$item->ptype_group_id' selected='selected'>".$item->ptype_id->ptype_group_id->group_name."</option>";
-                                                        // else
+                                                        if($item->group_id==$product1->product_typegroupID)
+                                                        echo"<option value='$item->group_id' selected='selected'>$item->group_name</option>";
+                                                        else
                                                         echo"<option value='$item->group_id'>$item->group_name</option>";
                                                    ?>
                                                 </select>
@@ -128,7 +151,7 @@ include_once "../../files/head.php";
                                                     <option value="-1">Select Type</option>
                                                     <?php
                                                         foreach($result_type as $item)
-                                                        if($item->ptype_id==$product1->product_type->ptype_id)
+                                                        if($item->ptype_id==$product1->product_type)
                                                         echo"<option value='$item->ptype_id' selected='selected'>$item->ptype_name</option>";
                                                         else
                                                         echo"<option value='$item->ptype_id'>$item->ptype_name</option>";
@@ -223,6 +246,58 @@ include_once "../../files/head.php";
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
+                            <!-- //ALERT MESSAGES START................... -->
+                            <?php
+                            if(isset($_GET['success'])) {
+                                echo"<div class='alert alert-success background-success'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>New group added successfully</strong> 
+                            </div>";
+                            }
+                            ?>
+                            <?php
+                            if(isset($_GET['success_edit'])) {
+                                echo"<div class='alert alert-info background-info'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>Group details updated successfully</strong> 
+                            </div>";
+                            }
+                            ?>
+                            <?php
+                            if(isset($_GET['delete_success'])) {
+                                echo"<div class='alert alert-danger background-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>Deleted successful</strong> 
+                            </div>";
+                            }
+                            ?>
+                            <?php
+                            if(isset($_GET['d_id'])) {
+                                echo"<div class='alert alert-danger background-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>$msg_2</strong> 
+                            </div>";
+                            }
+                            ?>
+                            <?php
+                            if(isset($_GET['notsuccess'])) {
+                                echo"<div class='alert alert-danger background-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>The code or the name already exists.Please try again</strong> 
+                            </div>";
+                            }
+                            ?>
+                            <!-- //ALERT MESSAGES END................... -->
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
@@ -241,6 +316,7 @@ include_once "../../files/head.php";
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
+                                                    <th>#</th>
                                                     <th>Product Code</th>
                                                     <th>Product Name</th>
                                                     <th>Product Group</th>
@@ -256,10 +332,11 @@ include_once "../../files/head.php";
                                                     {
                                                         echo
                                                         "<tr>
+                                                            <td>$item->product_id</td>
                                                             <td>$item->product_code</td>
                                                             <td>$item->product_name</td>
-                                                            <td>".$item->groupname->group_name."</td>
-                                                            <td>".$item->product_type->ptype_name."</td>
+                                                            <td>$item->product_typegroupname</td>
+                                                            <td>$item->product_typename</td>
                                                             <td>
                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
                                                                     <button type='button' id='editprod' onclick='edit_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>

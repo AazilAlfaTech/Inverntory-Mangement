@@ -123,7 +123,7 @@ function delete_uom($uom_id){
 //.....................
 
 function get_uom_by_code($uom_code){
-    $sql = "SELECT * FROM product_uom WHERE uom_id ='$uom_code'";
+    $sql = "SELECT * FROM product_uom WHERE uom_code ='$uom_code'";
 
    // echo $sql;
     $result=$this->db->query($sql);
@@ -137,7 +137,7 @@ function get_uom_by_code($uom_code){
 }
 
 function get_uom_by_name($uom_name){
-    $sql = "SELECT * FROM product_uom WHERE uom_id ='$uom_name'";
+    $sql = "SELECT * FROM product_uom WHERE uom_name ='$uom_name'";
 
    // echo $sql;
     $result=$this->db->query($sql);

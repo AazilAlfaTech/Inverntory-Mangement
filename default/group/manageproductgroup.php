@@ -121,7 +121,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Code</label>
 
-                                                <input type="text" name="groupcode" pattern="^[A-Z0-9]*$" class="form-control" id="gr_code" onkeyup="check_groupcode()" value="<?=$group1->group_code?>"<?php if($group1->group_code){echo "readonly=\"readonly\"";} ?> placeholder="" required>
+                                                <input type="text" name="groupcode" pattern="^[A-Z0-9]*$" class="form-control" id="gr_code" onkeyup="check_groupcode()" onblur="check_groupcode()"value="<?=$group1->group_code?>"<?php if($group1->group_code){echo "readonly=\"readonly\"";} ?> placeholder="" required>
                                                 <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
                                                             another?
                                                 </div>
@@ -296,7 +296,7 @@ include_once "../../files/foot.php";
     }
 
     
-$( ".alert" ).fadeIn( 300 ).delay( 1800 ).fadeOut( 400 );
+$( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
 
     
 </script>

@@ -132,7 +132,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="unitname" value="<?=$uom1->uom_name ?>" id="unit_name" onblur="check_uomname()"  required>
+                                                <input type="text" class="form-control" placeholder="" name="unitname" value="<?=$uom1->uom_name ?>" id="unit_name" onblur="check_uomname()" onkeyup="check_uomname()" required>
                                                 <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
                                                             another?
                                                 </div>
