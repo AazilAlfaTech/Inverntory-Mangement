@@ -150,7 +150,7 @@
                 product.product_batch,product.product_desc,product_type.ptype_name,product_group.group_name,product_group.group_id,product_group.group_code  FROM product INNER JOIN product_type ON product.product_type =product_type.ptype_id INNER JOIN product_group
                 ON product_type.ptype_group_id =product_group.group_id  WHERE product_id=$productid";
                 $result=$this->db->query($SQL);
-                echo $SQL;
+                // echo $SQL;
 
                 $row=$result->fetch_array();
                 

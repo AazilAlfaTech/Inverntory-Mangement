@@ -291,7 +291,7 @@ include_once "../../files/foot.php";
 ?>
                             <!-- ----------------------------------------------------------------------------------------------------------- -->
                            
-
+                            <script type="text/javascript" src="../javascript/masterfile.js"></script>
                            
                             <script>
                             function delete_uom(d_id) {
@@ -311,6 +311,8 @@ include_once "../../files/foot.php";
 
 
                             }
+                            
+                            $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
                             </script>
-                             <script type="text/javascript" src="../javascript/masterfile.js"></script>
+                     
                         

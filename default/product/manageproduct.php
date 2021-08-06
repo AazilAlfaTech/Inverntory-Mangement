@@ -379,4 +379,6 @@ include_once "../../files/foot.php";
     {
         window.location.href="manageproduct.php?view_product="+e;
     }
+
+    $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
 </script>

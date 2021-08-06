@@ -323,4 +323,6 @@ include_once "../../files/foot.php";
     {
         window.location.href="manageproducttype.php?view="+e;
     }
+
+    $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
 </script>
