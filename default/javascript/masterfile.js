@@ -1,4 +1,5 @@
 
+
 //.......PRODUCT GROUP JS.............................
 
 function check_groupcode()
@@ -11,10 +12,11 @@ function check_groupcode()
      {
        $.get("../ajax/ajaxmaster.php?type=checkgroupcode&productgroup_code="+code, "" ,function(data){
           var tmp=JSON.parse(data);
+          console.log(tmp);
            if(tmp.group_id>0){
                
-                $("#codecheck_msg").fadeIn().delay(1000).fadeOut()
-              // $(".error").css("display","none");
+                $("#codecheck_msg").fadeIn().delay(2000).fadeOut()
+             
             }
              });
       }
@@ -38,7 +40,7 @@ function check_groupcode()
      $("#namecheck_msg").hide();
      if(codelegnth>1){
        $.get("../ajax/ajaxmaster.php?type=checkgroupname&productgroup_name="+code+"",function(data){
-         console.log(data);
+        
         var tmp=JSON.parse(data);
          
            if(tmp.group_id>0){
@@ -127,7 +129,7 @@ function check_typename(){
 //..............................PRODUCT UOM...................................
 
   function check_uomcode(){
-    let code=$("#unitcode").val();
+    let code=$("#unit_code").val();
   console.log(code);
   var codelegnth=code.length
  $("#codecheck_msg").hide();
@@ -145,7 +147,7 @@ function check_typename(){
   }
 
   function check_uomname(){
-    let name=$("#unit_code").val();
+    let name=$("#unit_name").val();
     console.log(name);
     var namelegnth=name.length
    $("#namecheck_msg").hide();
@@ -154,7 +156,7 @@ function check_typename(){
        console.log(data);
       var tmp=JSON.parse(data);
        
-         if(tmp.ptype_id>0){
+         if(tmp.uom_id>0){
        
          $("#namecheck_msg").fadeIn().delay(1000).fadeOut();}
      });
@@ -185,13 +187,14 @@ function check_typename(){
 
   // Hide the product batch when FIFo is clicked
   $("#prod_valf").click(function()
-  {
+  {   console.log("fifo");
       hide_pbatch();
   });
 
     // Show the product batch when AVCO is clicked
   $("#prod_vala").click(function()
   {
+    console.log("fifo");
     show_pbatch();
   });
 

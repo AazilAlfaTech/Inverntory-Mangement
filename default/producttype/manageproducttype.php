@@ -15,22 +15,32 @@ if (isset($_POST["typename"]))
     $producttype1->ptype_name=$_POST["typename"];
     $producttype1->ptype_group_id=$_POST["typegroup"];
     $producttype1->ptype_code=$_POST["typecode"];
-
-    if(isset($_POST['ptypeid']))
+    //....................................................
+    if(isset($_POST["ptypeid"]))
     {
         $res_edit=$producttype1->edit_type($_POST['ptypeid']);
+            //code for insert validation
+            if($res_edit==true){
+               
+                header("location:../producttype/manageproducttype.php?success_edit=1");
+            }elseif($res_edit==false){
+                header("location:../producttype/manageproducttype.php?notsuccess=1");
+            }
     }else
-        {$res_insert=$producttype1->add_type();}
-
-        //code for alert validations
+    {
+        $res_insert=$producttype1->add_type();
+            //code for insert validation
             if($res_insert==true){
+                
                 header("location:../producttype/manageproducttype.php?success=1");
-            }elseif($res_edit==true){
-            header("location:../producttype/manageproducttype.php?success_edit=1");
-            }else{
-            echo"False";
+            }elseif($res_insert==false){
+                header("location:../producttype/manageproducttype.php?notsuccess=1");
             }
     }
+
+
+}
+
 //code to view group................................................................
 $result_ptype=$producttype1->getall_type();
 
@@ -46,8 +56,8 @@ if(isset($_GET["d_id"]))
     $res_del=$producttype1->delete_type($_GET["d_id"]);
      //code for delete validations
      if($res_del==true){
-        
-        $msg_2="Deleted Successfully";
+        header("location:../producttype/manageproducttype.php?delete_success=1");
+      
     }else{
        
         $msg_2="Type already exists therefore cannot delete";
@@ -198,12 +208,32 @@ include_once "../../files/head.php";
             }
             ?>
             <?php
+            if(isset($_GET['delete_success'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Deleted successful</strong> 
+            </div>";
+            }
+            ?>
+            <?php
             if(isset($_GET['d_id'])) {
                 echo"<div class='alert alert-danger background-danger'>
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                     <i class='icofont icofont-close-line-circled text-white'></i>
                 </button>
                 <strong>$msg_2</strong> 
+            </div>";
+            }
+            ?>
+              <?php
+            if(isset($_GET['notsuccess'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>The code or the name already exists.Please try again</strong> 
             </div>";
             }
             ?>

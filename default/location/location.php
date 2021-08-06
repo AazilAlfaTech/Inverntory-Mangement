@@ -25,15 +25,24 @@ function __construct(){
 
 
 function insert_location(){
+    $CODE=$_POST["loccode"];
+    $MAIL=$_POST["locmail"];
+    $sql1= "SELECT * FROM location WHERE location_status='ACTIVE' AND location_code='$CODE' OR location_email='$MAIL' ";
+    echo($sql1);
+    $res_code=$this->db->query($sql1);
 
- $sql="INSERT INTO location (location_code,location_name,location_add,location_number,location_email)
- VALUES('$this->location_code','$this->location_name','$this->location_add','$this->location_number','$this->location_email')
- ";
+ 
+if($res_code->num_rows==0){
+    $sql="INSERT INTO location (location_code,location_name,location_add,location_number,location_email)
+    VALUES('$this->location_code','$this->location_name','$this->location_add','$this->location_number','$this->location_email')
+    ";
+       //echo $sql;
+       $this->db->query($sql);
+       return true;
 
-    //echo $sql;
-    $this->db->query($sql);
-    return true;
-
+    }else {
+       return false;
+    }
 }
 
 // ----EDIT LOCATION------------------------------------------------------------------------------------------------------------------
@@ -97,13 +106,24 @@ function get_location_by_id($locationid){
 
 
 function edit_location($locationid){
+ 
+    $MAIL=$_POST["locmail"];
+    $sql1= "SELECT * FROM location WHERE location_status='ACTIVE' AND location_email='$MAIL' ";
+        echo($sql1);
+    $res_code=$this->db->query($sql1);
 
+ 
+if($res_code->num_rows==0){
     $sql="UPDATE location  SET 
-    location_code='$this->location_code', location_name='$this->location_name',location_add='$this->location_add',location_number='$this->location_number',location_email='$this->location_email'
+     location_name='$this->location_name',location_add='$this->location_add',location_number='$this->location_number',location_email='$this->location_email'
     WHERE location_id=$locationid ";
     //echo $sql;
     $this->db->query($sql);
     return true;
+    }else {
+       return false;
+    }
+   
 
 
 }

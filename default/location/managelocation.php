@@ -5,30 +5,40 @@ include_once "location.php";
 
 //code to insert and update data............................................................... 
 
-    if(isset($_POST["locname"])){
-
-        $location1->location_code = $_POST["loccode"];
-        $location1->location_name = $_POST["locname"];
-        $location1->location_add = $_POST["locadd"];
-        $location1->location_number = $_POST["locnum"];
-        $location1->location_email = $_POST["locmail"];
-
-     if(isset($_POST["edit_location"])){
+if(isset($_POST["locname"]))
+{
+    $location1->location_code = $_POST["loccode"];
+    $location1->location_name = $_POST["locname"];
+    $location1->location_add = $_POST["locadd"];
+    $location1->location_number = $_POST["locnum"];
+    $location1->location_email = $_POST["locmail"];
+    //....................................................
+    if(isset($_POST["edit_location"]))
+    {
         $res_edit=$location1->edit_location ($_POST["edit_location"]);
-        }
-    else{
-        $res_insert=$location1->insert_location();}
-        //code for alert validations
-            if($res_insert==true){
-               
-                header("location:../location/managelocation.php?success=1");
-            }elseif($res_edit==true){
-                header("location:../location/managelocation.php?success_edit=1");
-            }else{
-                echo"False";
+            //code for insert validation
+            if($res_edit==true){
+               echo"EDIT";
+               header("location:../location/managelocation.php?success_edit=1");
+            }elseif($res_edit==false){
+                    echo"not edit";
+               header("location:../location/managelocation.php?notsuccess=1");
             }
-
+    }else
+    {
+        $res_insert=$location1->insert_location();
+            //code for insert validation
+            if($res_insert==true){
+                echo "INSER DONE";
+                header("location:../location/managelocation.php?success=1");
+            }elseif($res_insert==false){
+                        echo "no insert";
+               header("location:../location/managelocation.php?notsuccess=1");
+            }
     }
+
+
+}
 //code to get location details  into datatable........................................................................
     
     $result_location = $location1->get_all_location();
@@ -46,7 +56,7 @@ $msg_2="";//alert message for delete
         //code for delete validations
             if($res_del==true){
                 
-                $msg_2="Deleted Successfully";
+                header("location:../location/managelocation.php?delete_success=1");
             }else{
             
                 $msg_2="Location already exists therefore cannot delete";
@@ -159,7 +169,7 @@ include_once "../../files/head.php";
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">ADD</button>
-                                        <button class="btn btn-inverse">CLEAR</button>
+                                        <button type="reset" class="btn btn-inverse">CLEAR</button>
                                     </form>
                                 </div>
 
@@ -199,6 +209,16 @@ include_once "../../files/head.php";
                             </div>";
                             }
                             ?>
+                             <?php
+                                if(isset($_GET['delete_success'])) {
+                                    echo"<div class='alert alert-danger background-danger'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>Deleted successful</strong> 
+                                </div>";
+                                }
+                                ?>
                             <?php
                             if(isset($_GET['d_id'])) {
                                 echo"<div class='alert alert-danger background-danger'>
@@ -206,6 +226,16 @@ include_once "../../files/head.php";
                                     <i class='icofont icofont-close-line-circled text-white'></i>
                                 </button>
                                 <strong>$msg_2</strong> 
+                            </div>";
+                            }
+                            ?>
+                            <?php
+                            if(isset($_GET['notsuccess'])) {
+                                echo"<div class='alert alert-danger background-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>The code or the e-mail already exists.Please try again</strong> 
                             </div>";
                             }
                             ?>

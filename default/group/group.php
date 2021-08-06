@@ -13,21 +13,41 @@ public $group_date;
 
 
 
+ 
+
 
 function __construct(){
     $this->db=new mysqli(host,un,pw,db1);
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-function insert_group(){
-
-    $sql="INSERT INTO product_group(group_code,group_name) VALUES ('$this->group_code','$this->group_name');";
-    //echo $sql;
-    $this->db->query($sql);
     return true;
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+// function insert_group(){
 
+//         $sql="INSERT INTO product_group(group_code,group_name) VALUES ($this->group_code,'$this->group_name');";
+//         echo $sql;
+//         $this->db->query($sql);
+//         return true;
+   
+// }
+
+function insert_group2(){
+    $CODE=$_POST["groupcode"];
+    $NAME=$_POST["groupname"];
+    $sql1="SELECT * FROM product_group WHERE group_status='ACTIVE' AND group_code='$CODE' OR group_name='$NAME'";
+    $res_code=$this->db->query($sql1);
+   
+    if($res_code->num_rows==0){
+        $sql="INSERT INTO product_group(group_code,group_name) VALUES ('$this->group_code','$this->group_name');";
+        echo $sql;
+        $this->db->query($sql);
+        return true;
+
+    }else {
+       return false;
+    }
+
+}
 // -----------------------------------------------------------------------------------------------------------------------------------
 function get_all_group(){
     $sql="SELECT * FROM product_group WHERE group_status='ACTIVE' ";
@@ -74,11 +94,22 @@ function get_group_by_id($groupid){
 }
 
 function edit_group($groupid){
-    $sql="UPDATE product_group SET group_name='$this->group_name' WHERE group_id=$groupid";
-    //echo $sql;
-    $this->db->query($sql);
-    return true;
-    
+
+    $NAME=$_POST["groupname"];
+    $slq1="SELECT * FROM product_group WHERE group_status='ACTIVE' AND group_name='$NAME'";
+
+    $res_code=$this->db->query($slq1);
+    echo $slq1;
+    if($res_code->num_rows==0){
+        $sql="UPDATE product_group SET group_name='$this->group_name' WHERE group_id=$groupid";
+        echo $sql;
+        $this->db->query($sql);
+        return true;
+
+    }else {
+       return false;
+    }
+
 }
 
 //cannot delete a group if the group ID is available in the type table
