@@ -23,23 +23,28 @@ function __construct(){
 //..............................insert funtion..................
 
 function insert_uom(){
-
+    $CODE=$_POST["unitcode"];
+    $NAME=$_POST["unitname"];
+    $sql1="SELECT * FROM  product_uom WHERE uom_status = 'ACTIVE' AND uom_code='$CODE' OR uom_code='$NAME'";
+    $res_code=$this->db->query($sql1);
+   
+    if($res_code->num_rows==0){
 
     $sql = "INSERT INTO product_uom (uom_code, uom_name) VALUES ('$this->uom_code', '$this->uom_name')";
-
     $this->db->query($sql);
-
-
-        echo $sql;
-
-        return true;
+     echo $sql;
+     return true;
+   }else {
+    return false;
+ }
+   
 
 }
 //........................get all function........................
 
 function get_all_uom(){
     $sql = "SELECT * FROM product_uom WHERE uom_status = 'ACTIVE' ";
-    echo $sql;
+    //echo $sql;
     $result = $this->db->query($sql);   
 
     $uom_array = array();
@@ -64,9 +69,9 @@ function get_all_uom(){
 //...........................gat by ID..........
 
 function get_uom_by_id($uom_id){
-    $sql = "SELECT * FROM product_uom WHERE uom_id = '$uom_id'";
+    $sql = "SELECT * FROM product_uom WHERE uom_id =$uom_id";
 
-    echo $sql;
+   // echo $sql;
     $result=$this->db->query($sql);
 
     // $group_array=array();
@@ -86,10 +91,23 @@ function get_uom_by_id($uom_id){
 //.............................Edit...........
 
 function edit_uom($uom_id){
-    $sql = "UPDATE product_uom SET uom_code = '$this->uom_code', uom_name = '$this->uom_name' WHERE uom_id = '$uom_id'";
+   
+    $NAME=$_POST["unitname"];
+    $sql1="SELECT * FROM  product_uom WHERE uom_status = 'ACTIVE' AND uom_name='$NAME'";
+    echo $sql1;
+    $res_code=$this->db->query($sql1);
+   
+    if($res_code->num_rows==0){
 
-    $this->db->query($sql);
-    return true;
+        $sql = "UPDATE product_uom SET  uom_name = '$this->uom_name' WHERE uom_id = '$uom_id'";
+        echo $sql;
+        $this->db->query($sql);
+        return true;
+   }else {
+    return false;
+ }
+   
+    
     
 }
 //............................Delete.............
@@ -99,6 +117,35 @@ function delete_uom($uom_id){
 }
 
 
+
+
+function get_uom_by_code($uom_code){
+    $sql = "SELECT * FROM product_uom WHERE uom_code ='$uom_code'";
+
+   // echo $sql;
+    $result=$this->db->query($sql);
+    $row=$result->fetch_array();
+        $uom_item=new uom(); //object
+        $uom_item->uom_id=$row["uom_id"];
+        $uom_item->uom_code=$row["uom_code"];
+        $uom_item->uom_name=$row["uom_name"];
+        return $uom_item;
+
+}
+
+function get_uom_by_name($uom_name){
+    $sql = "SELECT * FROM product_uom WHERE uom_name ='$uom_name'";
+
+   // echo $sql;
+    $result=$this->db->query($sql);
+    $row=$result->fetch_array();
+        $uom_item=new uom(); //object
+        $uom_item->uom_id=$row["uom_id"];
+        $uom_item->uom_code=$row["uom_code"];
+        $uom_item->uom_name=$row["uom_name"];
+        return $uom_item;
+
+}
 
 
 

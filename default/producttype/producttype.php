@@ -21,19 +21,41 @@
         //insert a new producttype 
         function add_type()
         {
+            $CODE=$_POST["typecode"];
+            $NAME=$_POST["typename"];
+
+            $sql1="SELECT * FROM  product_type WHERE ptype_status = 'ACTIVE' AND ptype_code='$CODE' OR ptype_name='$NAME'";
+            $res_code=$this->db->query($sql1);
+    
+        if($res_code->num_rows==0){
             $SQL="INSERT INTO product_type(ptype_name,ptype_code,ptype_group_id) VALUES ('$this->ptype_name','$this->ptype_code','$this->ptype_group_id')";
             $this->db->query($SQL);
             // echo $SQL;
-            return true;
+            return true;}else {
+                return false;
+             }
         }
 
         //edit a new producttype 
         function edit_type($typeid)
         {
-            $SQL="UPDATE product_type SET ptype_name='$this->ptype_name',ptype_code='$this->ptype_code',ptype_group_id='$this->ptype_group_id' WHERE ptype_id=$typeid";
+            
+            
+            $NAME=$_POST["typename"];
+
+            $sql1="SELECT * FROM  product_type WHERE ptype_status = 'ACTIVE' AND  ptype_name='$NAME'";
+            $res_code=$this->db->query($sql1);
+            echo $sql1;
+    
+        if($res_code->num_rows==0){
+            $SQL="UPDATE product_type SET ptype_name='$this->ptype_name',ptype_group_id='$this->ptype_group_id' WHERE ptype_id=$typeid";
             $this->db->query($SQL);
             // echo $SQL;
             return true;
+        }else {
+                return false;
+             }
+           
 
         }
         
@@ -80,10 +102,14 @@
 
 
         function get_type_by_id($typeid){
-            $SQL="SELECT * FROM product_type WHERE ptype_id=$typeid";
+            $SQL="SELECT * FROM product_type WHERE ptype_id=$typeid AND ptype_status='ACTIVE'";
             // echo $SQL;
             $result=$this->db->query($SQL);
+
+        
+
             $type_group1=new group();
+
         
             // $group_array=array();
         
@@ -93,18 +119,17 @@
                 $ptype_item->ptype_code=$row["ptype_code"];
                 $ptype_item->ptype_name=$row["ptype_name"];
                 $ptype_item->ptype_status=$row["ptype_status"];
-                // $ptype->ptype_group_id=$type_group1->get_group_by_id($row["ptype_group_id"]);
-        
-               
+                $ptype_item->ptype_group_id=$type_group1->get_group_by_id($row["ptype_group_id"]);
             return $ptype_item;
         }
 
 
+
         function getbyid($id)
         {
-            $SQL="SELECT * FROM product_type WHERE ptype_id=$id";
+            $SQL="SELECT * FROM product_type WHERE ptype_id=$id AND ptype_status='ACTIVE'";
             $r=$this->db->query($SQL);
-            $row=$r->fetch_array();
+            $row=$r->fetch_array(); 
 
             $this->ptype_id=$row["ptype_id"];
             $this->ptype_code=$row["ptype_code"];
@@ -114,9 +139,10 @@
             return $this;
         }
 
+
         function get_type_by_code($typecode)
         {
-            $SQL="SELECT * FROM product_type WHERE ptype_code='$typecode'";
+            $SQL="SELECT * FROM product_type WHERE ptype_code='$typecode' AND ptype_status='ACTIVE'";
             //echo $SQL;
             $result=$this->db->query($SQL);
 
@@ -133,7 +159,7 @@
 
         function get_type_by_name($typename)
         {
-            $SQL="SELECT * FROM product_type WHERE ptype_name='$typename'";
+            $SQL="SELECT * FROM product_type WHERE ptype_name='$typename' AND ptype_status='ACTIVE'";
            // echo $SQL;
             $result=$this->db->query($SQL);
 
@@ -146,6 +172,29 @@
             $ptype->ptype_status=$row["ptype_status"];
 
             return $ptype;
+        }
+
+        function get_type_by_group($group)
+        {
+            $SQL="SELECT * FROM product_type WHERE ptype_group_id='$group' AND ptype_status='ACTIVE'";
+            $result=$this->db->query($SQL);
+            $type_array=array();
+            $type_group1=new group();
+
+            while($row=$result->fetch_array())
+            
+            {
+                $ptype= new producttype();
+                $ptype->ptype_id=$row["ptype_id"];
+                $ptype->ptype_name=$row["ptype_name"];
+                $ptype->ptype_code=$row["ptype_code"];
+                $ptype->ptype_group_id=$type_group1->get_group_by_id($row["ptype_group_id"]);
+                $ptype->ptype_group_id=$row["ptype_group_id"];
+                $ptype->ptype_status=$row["ptype_status"];
+                $ptype->ptype_date=$row["ptype_date"];
+                $type_array[]=$ptype;
+            }
+            return $type_array;
         }
 
 

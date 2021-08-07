@@ -417,7 +417,7 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../supplier_group/manage_suppilier_group.php " target="_blank" >
+                                        <a href="../supplier_group/manage_supplier_group.php " target="_blank" >
                                             <span class="pcoded-mtext">Manage Supplier Group</span>
                                         </a>
                                     </li>
@@ -459,8 +459,18 @@
 
                             <li class="">
                                 <a href="../city/manage_city.php" target="_blank">
-                                    <span class="pcoded-micon"><i class="fa fa-user"></i></span>
+                                    <span class="pcoded-micon"><i class="ti-map-alt"></i></span>
                                     <span class="pcoded-mtext">Add City</span>
+                               
+                                </a>
+                             
+                            </li>
+
+
+                            <li class="">
+                                <a href="../salesrep/manage_salesrep.php" target="_blank">
+                                    <span class="pcoded-micon"><i class="ti-user"></i></span>
+                                    <span class="pcoded-mtext">Sales Rep</span>
                                
                                 </a>
                              

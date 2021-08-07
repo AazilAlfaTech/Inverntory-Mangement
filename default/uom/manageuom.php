@@ -1,36 +1,59 @@
 <?php
-include_once "uom.php";
+
+    include_once "uom.php";
+    $uom1 = new uom();
 
 
-
-     $uom1 = new uom();
-
-     if(isset($_POST["unitcode"])){
-
+    //code to insert and update data............................................................... 
+    if(isset($_POST["unitcode"]))
+    {
         $uom1->uom_code = $_POST["unitcode"];
         $uom1->uom_name = $_POST["unitname"];
-     
-
-
-        if(isset($_POST["edit_uom"])){
-            $uom1->edit_uom ($_POST["edit_uom"]);
+        //....................................................
+        if(isset($_POST["edit_uom"]))
+        {
+            $res_edit=$uom1->edit_uom($_POST["edit_uom"]);
+                //code for insert validation
+                if($res_edit==true){
+                   
+                    header("location:../uom/manageuom.php?success_edit=1");
+                }elseif($res_edit==false){
+                    header("location:../uom/manageuom.php?notsuccess=1");
+                }
+        }else
+        {
+            $res_insert=$uom1->insert_uom();
+                //code for insert validation
+                if($res_insert==true){
+                    
+                    header("location:../uom/manageuom.php?success=1");
+                }elseif($res_insert==false){
+                    header("location:../uom/manageuom.php?notsuccess=1");
+                }
         }
-else{
-        $uom1->insert_uom();
+    
+    
     }
-    }
-
+//code to get uom details  into datatable........................................................................
     
     $result_uom = $uom1->get_all_uom();
-
+//code to view uom................................................................
     if(isset($_GET['edit_uom'])){
         $uom1=$uom1->get_uom_by_id($_GET['edit_uom']);
     }
 
-
-
+    //code to delete location..................................................................................
+    $msg_2="";//alert message for delete
     if(isset($_GET['d_id'])){
-        $uom1->delete_uom ($_GET['d_id']);
+        $res_del=$uom1->delete_uom ($_GET['d_id']);
+        //code for delete validations
+        if($res_del==true){
+            
+            header("location:../uom/manageuom.php?delete_success=1");
+        }else{
+        
+            $msg_2="Unit of measure already exists therefore cannot delete";
+        }
     }
 
 
@@ -77,7 +100,17 @@ else{
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Product UOM</h5>
+                                    <h5>
+                                    <?php
+                                   
+                                   if(isset($_GET["edit_uom"])){
+                                    echo"Edit Product";
+                                   }
+                                   else
+                                   echo "Add New Product UOM";
+                                    
+
+                                   ?></h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -107,19 +140,35 @@ else{
 
 
                                         <div class="form-group row">
+
+                                            <?php
+                                   
+                                   if(isset($_GET["edit_uom"])){
+                                    echo"  <input type='hidden'  class='form-control' value='".$_GET['edit_uom'] ."' name='edit_uom' required readonly>";
+                                   }
+                                    
+
+                                   ?>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Code</label>
-                                                <input type="text" value="<?= $uom1->uom_code ?>" class="form-control" placeholder="" name="unitcode"
-                                                    id="unit_code">
+
+                                                <input type="text" class="form-control" pattern="^[A-Z0-9]*$" placeholder="" name="unitcode" id="unit_code" onkeyup="check_uomcode()" onblur="check_uomcode()" value="<?=$uom1->uom_code ?>"<?php if($uom1->uom_code){echo "readonly=\"readonly\"";} ?> required> 
+                                                <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Name</label>
-                                                <input type="text" value =  "<?= $uom1->uom_name ?>" class="form-control" placeholder="" name="unitname"
-                                                    id="unit_name">
+                                                <input type="text" class="form-control" placeholder="" name="unitname" value="<?=$uom1->uom_name ?>" id="unit_name" onblur="check_uomname()" onkeyup="check_uomname()" required>
+                                                <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
+                                                            another?
+                                                </div>
+
+
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary">ADD</button>
-                                        <button class="btn btn-inverse">CLEAR</button>
+                                        <button type="reset" class="btn btn-inverse">CLEAR</button>
                                     </form>
 
                     </div>
@@ -128,6 +177,58 @@ else{
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
+                             <!-- //ALERT MESSAGES START................... -->
+            <?php
+            if(isset($_GET['success'])) {
+                echo"<div class='alert alert-success background-success'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>New Unit of measure added successfully</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['success_edit'])) {
+                echo"<div class='alert alert-info background-info'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Unit of measure details updated successfully</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['d_id'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>$msg_2</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['notsuccess'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>The code or the name already exists.Please try again</strong> 
+            </div>";
+            }
+            ?>
+             <?php
+            if(isset($_GET['delete_success'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Deleted successful</strong> 
+            </div>";
+            }
+            ?>
+              <!-- //ALERT MESSAGES END................... -->
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
@@ -146,6 +247,7 @@ else{
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
+                                                    <th>#</th>
                                                     <th>UOM Code</th>
                                                     <th>UOM Name</th>
                                                     <th>Action</th>
@@ -158,25 +260,28 @@ else{
                                                         echo"
                                                                 <tbody>
                                                                     <tr>
+                                                                        <td>$item->uom_id</td>
                                                                         <td>$item->uom_code </td>
                                                                         <td>$item->uom_name </td>
                                                                         <td> <div class='btn-group btn-group-sm' style='float: none;'>
-      <a href='manageuom.php?edit_uom=$item->uom_id'><button type='button'   class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
-                 <button type='button'  onclick='delete_uom($item->uom_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
-                                             
 
-                                           </div></td>
-                                          
-                                               
-                                                                       
-                                                                       
+                                                                        
+                                                                        <button type='button'  onclick='edit_uom($item->uom_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                                        <button type='button'  onclick='delete_uom($item->uom_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+                                                                        
+                                                                    </div></td>
+
                                                                     </tr>
                                                                     ";
   }
                                            ?>
                                            
 
-                                                                 </tfoot>
+                                                               
+";}
+                                                                ?>
+                                            </tfoot>
+
                                         </table>
                                     </div>
                                 </div>
@@ -210,7 +315,9 @@ include_once "../../files/foot.php";
 
 ?>
                             <!-- ----------------------------------------------------------------------------------------------------------- -->
-
+                           
+                            <script type="text/javascript" src="../javascript/masterfile.js"></script>
+                           
                             <script>
                             function delete_uom(d_id) {
 
@@ -220,4 +327,17 @@ include_once "../../files/foot.php";
 
 
                             }
+
+                            function edit_uom(edit_uom_id) {
+
+                   
+                                    window.location.href = "manageuom.php?edit_uom=" + edit_uom_id;
+                         
+
+
+                            }
+                            
+                            $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
                             </script>
+                     
+                        

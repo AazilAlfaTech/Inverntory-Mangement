@@ -3,32 +3,60 @@
 include_once "group.php";
 $group1=new group();//create a new object 
 
-if(isset($_POST["groupcode"])){
+//code to insert and update data............................................................... 
+
+if(isset($_POST["groupcode"]))
+{
     $group1->group_code=$_POST["groupcode"];
     $group1->group_name=$_POST["groupname"];
-
-    if(isset($_POST['groupid'])){
-        $group1->edit_group($_POST['groupid']);
-        echo"<div class='alert alert-success background-success'>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <i class='icofont icofont-close-line-circled text-white'></i>
-        </button>
-        <strong>Success!</strong> Add Class <code> background-success</code>
-    </div>";
-        //header("location:../group/manageproductgroup.php");
+    //.....................................................
+    if(isset($_POST['groupid']))
+    {
+        $res_edit=$group1->edit_group($_POST['groupid']);
+            //code for edit valaidation
+            if($res_edit==true){
+                "EDITING DONE";
+                header("location:../group/manageproductgroup.php?success_edit=1");
+            }elseif($res_edit==false){
+                echo "FALSE";
+                header("location:../group/manageproductgroup.php?notsuccess=1");
+            }
     }else
-    $group1->insert_group();
-   // header("location:../group/manageproductgroup.php");
+    {
+        $res_insert=$group1->insert_group2();
+            //code for insert alert validations
+                if($res_insert==true){
+                    echo "insert done";
+                    header("location:../group/manageproductgroup.php?success=1");
+                }elseif($res_insert==false){
+                    echo"false";
+                    header("location:../group/manageproductgroup.php?notsuccess=1");
+                }
+
+    }
+
 }
 
+//code to view group................................................................
 if(isset($_GET['view'])){
     $group1=$group1->get_group_by_id($_GET['view']);
 }
+//code to delete group..................................................................................
 
-if(isset($_GET['delete'])){
-    $group1->delete_group($_GET['delete']);
+$msg_2="";//alert message for delete
+
+if(isset($_GET['delete_g'])){
+    $res_del=$group1->delete_group($_GET['delete_g']);
+    //code for delete validations
+    if($res_del==true){
+        header("location:../group/manageproductgroup.php?delete_success=1");
+       
+    }else{
+       
+        $msg_2="Group already exists therefore cannot delete";
+    }
 }
-
+//code to get group details  into datatable........................................................................
 $result_group=$group1->get_all_group();
 
 
@@ -72,7 +100,15 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Product Group</h5>
+                                    <h5>
+                                        <?php
+                                    if(isset($_GET["view"])){
+                                    echo"Edit Group";
+                                   }
+                                   else 
+                                   echo "Add New Group"
+                                   ?>
+                                    </h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -93,22 +129,23 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Code</label>
 
-                                                <input type="text" name="groupcode" pattern="^[A-Z0-9]*$" class="form-control" id="gr_code" onblur="check_groupcode()" onkeyup="check_groupcode()" value="<?=$group1->group_code ?>" placeholder="" required>
+                                                <input type="text" name="groupcode" pattern="^[A-Z0-9]*$" class="form-control" id="gr_code" onkeyup="check_groupcode()" onblur="check_groupcode()"value="<?=$group1->group_code?>"<?php if($group1->group_code){echo "readonly=\"readonly\"";} ?> placeholder="" required>
                                                 <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
                                                             another?
                                                 </div>
-                                                <?php
-                                   
-                                    if(isset($_GET["view"])){
-                                     echo"  <input type='hidden'  class='form-control' value='".$_GET['view'] ."' name='groupid' required>";
-                                    }
-                                     
-
-                                    ?>
                                             </div>
+                                            <?php
+                                   
+                                   if(isset($_GET["view"])){
+                                    echo"  <input type='hidden'  class='form-control' value='".$_GET['view'] ."' name='groupid' required>";
+                                   }
+
+                                    
+
+                                   ?>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Name</label>
-                                                <input type="text" name="groupname" class="form-control" id="gr_name" value="<?=$group1->group_name ?>" onblur="check_groupname()" onkeyup="check_groupname()" placeholder="" required>
+                                                <input type="text" name="groupname" class="form-control" id="gr_name" value="<?=$group1->group_name ?>" onblur="check_groupname()"  placeholder="" required>
                                                 <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
                                                             another?
                                                 </div>
@@ -137,6 +174,58 @@ include_once "../../files/head.php";
     <div class="page-body">
     <div class="row">
         <div class="col-sm-12">
+            <!-- //ALERT MESSAGES START................... -->
+            <?php
+            if(isset($_GET['success'])) {
+                echo"<div class='alert alert-success background-success'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>New group added successfully</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['success_edit'])) {
+                echo"<div class='alert alert-info background-info'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Group details updated successfully</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['delete_success'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Deleted successful</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['delete_g'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>$msg_2</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['notsuccess'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>The code or the name already exists.Please try again</strong> 
+            </div>";
+            }
+            ?>
+              <!-- //ALERT MESSAGES END................... -->
             <!-- Autofill table start -->
             <div class="card">
                 <div class="card-header">
@@ -173,7 +262,7 @@ include_once "../../files/head.php";
 
                                             <td><div class='btn-group btn-group-sm' style='float: none;'>
                                             <button type='button' id='$item->group_id'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
-                                               <button type='button'  id='$item->group_id' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+                                               <button type='button'  onclick='del_group($item->group_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group_name'></span></button>
                                                
                                            </div></td>
                                         </tr>
@@ -202,6 +291,20 @@ include_once "../../files/foot.php";
 <script type="text/javascript" src="../javascript/masterfile.js"></script>
 
 
-<!-- <script>
+<script>
+  
+
+    function del_group(del_id){
+        console.log("hi");
+        console.log(del_id);
+        if(confirm("Do you want to delete id"+""+del_id))
+      { window.location.href="../group/manageproductgroup.php?delete_g="+del_id;
+     }
+
+    }
+
     
-</script> -->
+$( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
+
+    
+</script>
