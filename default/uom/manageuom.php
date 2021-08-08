@@ -1,6 +1,8 @@
 <?php
+
     include_once "uom.php";
     $uom1 = new uom();
+
 
     //code to insert and update data............................................................... 
     if(isset($_POST["unitcode"]))
@@ -58,8 +60,10 @@
 
 
     include_once "../../files/head.php";
+
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
+
 
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
@@ -119,7 +123,19 @@
 
                                 <div class="card-block">
 
+
+
                                     <form method="POST" avtion="manageuom.php">
+
+
+            <?php
+                                   
+                  if(isset($_GET["edit_uom"])){
+                  echo"  <input type='text'  class='form-control' value='".$_GET['edit_uom'] ."' name='edit_uom' required readonly>";
+                 }
+                         
+
+            ?>
 
 
 
@@ -135,6 +151,7 @@
                                    ?>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">UOM Code</label>
+
                                                 <input type="text" class="form-control" pattern="^[A-Z0-9]*$" placeholder="" name="unitcode" id="unit_code" onkeyup="check_uomcode()" onblur="check_uomcode()" value="<?=$uom1->uom_code ?>"<?php if($uom1->uom_code){echo "readonly=\"readonly\"";} ?> required> 
                                                 <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
                                                             another?
@@ -147,25 +164,15 @@
                                                             another?
                                                 </div>
 
+
                                             </div>
                                         </div>
-
                                         <button type="submit" class="btn btn-primary">ADD</button>
                                         <button type="reset" class="btn btn-inverse">CLEAR</button>
                                     </form>
-                                </div>
 
-                            </div>
-                        </div>
                     </div>
-
-
-                </div>
-
-                <!-- ----------------------------------------------------------------------------------------------------------------------------- -->
-
-
-
+            </div>
                 <!-- Page-body start -->
                 <div class="page-body">
                     <div class="row">
@@ -257,21 +264,29 @@
                                                                         <td>$item->uom_code </td>
                                                                         <td>$item->uom_name </td>
                                                                         <td> <div class='btn-group btn-group-sm' style='float: none;'>
+
                                                                         
                                                                         <button type='button'  onclick='edit_uom($item->uom_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                                         <button type='button'  onclick='delete_uom($item->uom_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
                                                                         
                                                                     </div></td>
+
                                                                     </tr>
+                                                                    ";
+  }
+                                           ?>
                                            
+
                                                                
 ";}
                                                                 ?>
                                             </tfoot>
+
                                         </table>
                                     </div>
                                 </div>
                             </div>
+
 
 
 

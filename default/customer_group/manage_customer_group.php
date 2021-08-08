@@ -130,6 +130,7 @@ include_once "../../files/head.php";
                                    ?>
 
                                             <div class="col-sm-6">
+
                                                 <label class=" col-form-label">Customer Group Code</label>
                                                 <input type="text" class="form-control" placeholder="" pattern="^[A-Z0-9]*$"
                                                     value="<?=$customergroup1->customergroup_code ?>" <?php if($customergroup1->customergroup_code ){echo "readonly=\"readonly\"";} ?> name="cust_grcode"
@@ -147,6 +148,7 @@ include_once "../../files/head.php";
                                                             another?
                                                     </div>
                                                 
+
                                             </div>
                                         </div>
 

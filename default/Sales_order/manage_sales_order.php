@@ -16,7 +16,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Salaes Order</h4>
+                                    <h4>Manage Sales Order</h4>
 
                                 </div>
                             </div>
@@ -56,7 +56,7 @@ include_once "../../files/head.php";
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Salaes Order</h5>
+                                    <h5>Sales Order</h5>
                                     <span></span>
                                     <div class="card-header-right" >
                                         <ul class="list-unstyled card-option">
