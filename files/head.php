@@ -381,7 +381,7 @@
                                     </li>
                                 </ul>
                             </li>
-                          <!-- ---------------------------------------------------------------------- -->
+                          <!-- ------Purchases---------------------------------------------------------------- -->
                             <li class="pcoded-hasmenu">
                                 <a href="javascript:void(0)">
                                     <span class="pcoded-micon"><i class="feather icon-layers"></i></span>
@@ -407,8 +407,31 @@
 
                                 </ul>
                             </li>
-<!-- ------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- ------Sales------------------------------------------------------------------------------------------------------------------------------- -->
                              
+<li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)">
+                                    <span class="pcoded-micon"><i class="feather icon-layers"></i></span>
+                                    <span class="pcoded-mtext">Sales</span>
+                               
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class="">
+                                        <a href="../sales_quotation/manage_sales_quotation.php" target="_blank">
+                                            <span class="pcoded-mtext">Sales Quatation</span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="../sales_order/manage_sales_order.php" target="_blank" >
+                                            <span class="pcoded-mtext">Sales Order </span>
+                                        </a>
+                                    </li>
+                                
+
+                                </ul>
+                            </li>
+
+<!-- ----------------------------------------------------------------------------------------------------------------------- -->
                             <li class="pcoded-hasmenu">
                                 <a href="javascript:void(0)">
                                     <span class="pcoded-micon"><i class="fa fa-male"></i></span>
