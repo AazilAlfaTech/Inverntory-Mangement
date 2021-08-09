@@ -1,12 +1,19 @@
 <?php
 include_once "salesrep.php";
 include_once "../city/city.php";
+include_once "../province/province.php";
+include_once "../district/district.php";
 
     $salesrep1 = new salesrep();
 
     $city1 = new city();
-
     $result_city=$city1->get_all_city();
+
+    $province1= new province();
+    $result_province=$province1->get_all_province();
+
+    $district1= new district();
+    $result_district=$district1->get_all_district();
     
 
 //code to insert and update data............................................................... 
@@ -144,48 +151,60 @@ include_once "../../files/head.php";
 
                                           
 
-                                                <label class=" col-form-label">City</label>
-                                                <select class="js-example-basic-single col-sm-12" name="custcity"
+                                                <label class=" col-form-label">Province</label>
+                                                <select class="js-example-basic-single col-sm-12 selectprovince" name="custcity"
                                                     id="cust_city">
 
                                                     <!-- location not done -->
-                                                    <option value="-1">Select City</option>
+                                                    <option value="-1">Select Province</option>
                                                    <?php
-                                                        foreach($result_city as $item)
+                                                        foreach($result_province as $item)
                                                       
-                                                        if($item->city_id==$customer1->city_id)   
-			                                        echo "<option value='$item->city_id' selected='selected'>$item->customercity_namegroup_name</option>";
-                                                    else
-                                                    echo"<option value='$item->city_id'>$item->city_name</option>";
+                                                    //     if($item->city_id==$customer1->city_id)   
+			                                        // echo "<option value='$item->city_id' selected='selected'>$item->customercity_namegroup_name</option>";
+                                                    // else
+                                                    echo"<option value='$item->province_id'>$item->province_name</option>";
                                                     ?>
 
                                                 </select>
                                             </div>
-                                           
+                                            <div class="col-sm-6">
+
+                                          
+
+                                                <label class=" col-form-label">District</label>
+                                                <select class="js-example-basic-single col-sm-12" name="srepdistrict"
+                                                    id="srep_district">
+
+                                                    <!-- location not done -->
+                                                    <option value="-1">Select district</option>
+                                                <?php
+                                                        foreach($result_district as $item)
+                                                    
+                                                    //     if($item->city_id==$customer1->city_id)   
+                                                    // echo "<option value='$item->city_id' selected='selected'>$item->customercity_namegroup_name</option>";
+                                                    // else
+                                                    echo"<option value='$item->district_id'>$item->district_name</option>";
+                                                    ?>
+
+                                                </select>
+                                            </div>
 
                                        
                                         </div>
 
 
-                                        <div class="table-responsive">
+                                        <div class="table-responsive" style="width:50%; float:right;">
                                             <table class="table">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
                                                         <th>City</th>
-                                                      
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Mark</td>
-                                                     
-                                                      
-                                                    </tr>
-                                                
-                                               
-                                                </tbody>
+                                                <tbody id="city_table">
+                                            </tbody>   
                                             </table>
                                         </div>
 
@@ -310,7 +329,8 @@ include_once "../../files/foot.php";
 
                             <!-- ------------------------------------------------------------------------------------------------- -->
 
-                          
+                            <script type="text/javascript" src="../javascript/map.js"></script>
+
                             <script>
                             function delete_salesrep(d_id) {
 
