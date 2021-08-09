@@ -3,8 +3,10 @@ include_once "salesrep.php";
 include_once "../city/city.php";
 include_once "../province/province.php";
 include_once "../district/district.php";
+include_once "salesrep_city.php";
 
     $salesrep1 = new salesrep();
+    $salesrep_city1=new salesrep_city();
 
     $city1 = new city();
     $result_city=$city1->get_all_city();
@@ -15,20 +17,25 @@ include_once "../district/district.php";
     $district1= new district();
     $result_district=$district1->get_all_district();
     
+    
+
 
 //code to insert and update data............................................................... 
 
-    if(isset($_POST["locname"])){
+    if(isset($_POST["salesrepname"])){
 
-        $salesrep1->salesrep_code = $_POST["loccode"];
-        $salesrep1->salesrep_name = $_POST["locname"];
+        $salesrep1->salesrep_code = $_POST["salesrepcode"];
+        $salesrep1->salesrep_name = $_POST["salesrepname"];
 
 
      if(isset($_POST["edit_salesrep"])){
         $res_edit=$salesrep1->edit_salesrep ($_POST["edit_salesrep"]);
         }
-    else{
-        $res_insert=$salesrep1->insert_salesrep();}
+    else
+    {
+        $res_insert=$salesrep1->insert_salesrep();
+        $salesrep_city1->insert_salesrepcity($res_insert);
+    }
         //code for alert validations
             // if($res_insert==true){
                
@@ -131,7 +138,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">salesrep Code</label>
                                                 <input type="text" value="<?=$salesrep1->salesrep_code?>" <?php if($salesrep1->salesrep_code){echo "readonly=\"readonly\"";} ?>
-                                                    class="form-control" placeholder="" name="loccode" pattern="^[A-Z0-9]*$" id="loc_code" onkeyup="check_salesrepcode()" onblur="check_salesrepcode()" required>
+                                                    class="form-control" placeholder="" name="salesrepcode" pattern="^[A-Z0-9]*$" id="salesrep_code" onkeyup="check_salesrepcode()" onblur="check_salesrepcode()" required>
                                                     <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that name is taken. Try
                                                             another?
                                                 </div>
@@ -139,7 +146,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">salesrep Name</label>
                                                 <input type="text" value="<?= $salesrep1->salesrep_name ?>"
-                                                    class="form-control" placeholder="" name="locname" id="loc_name" required>
+                                                    class="form-control" placeholder="" name="salesrepname" id="salesrep_name" required>
                                             </div>
 
                                        
@@ -152,8 +159,8 @@ include_once "../../files/head.php";
                                           
 
                                                 <label class=" col-form-label">Province</label>
-                                                <select class="js-example-basic-single col-sm-12 selectprovince" name="custcity"
-                                                    id="cust_city">
+                                                <select class="js-example-basic-single col-sm-12 selectprovince" name="salesrepcity"
+                                                    id="salesrep_city">
 
                                                     <!-- location not done -->
                                                     <option value="-1">Select Province</option>
@@ -208,6 +215,20 @@ include_once "../../files/head.php";
                                             </table>
                                         </div>
 
+                                        <!-- Table for selected city -->
+
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>City</th>
+                                                       
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="selected_city">
+                                            </tbody>   
+                                            </table>
+                                        </div>
                                 
                     
 
@@ -349,4 +370,5 @@ include_once "../../files/foot.php";
 
 
                             }
+                            
                             </script>
