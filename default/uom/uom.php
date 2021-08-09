@@ -78,7 +78,6 @@ function get_uom_by_id($uom_id){
 
     $row=$result->fetch_array();
         $uom_item=new uom(); //object
-
         $uom_item->uom_id=$row["uom_id"];
         $uom_item->uom_code=$row["uom_code"];
         $uom_item->uom_name=$row["uom_name"];
@@ -115,12 +114,10 @@ function edit_uom($uom_id){
 function delete_uom($uom_id){
 
     $sql = "UPDATE product_uom set uom_status = 'INACTIVE' WHERE uom_id='$uom_id'";
-
-    echo $sql;
-    $this->db->query($sql);
-    return true;
 }
-//.....................
+
+
+
 
 function get_uom_by_code($uom_code){
     $sql = "SELECT * FROM product_uom WHERE uom_code ='$uom_code'";
