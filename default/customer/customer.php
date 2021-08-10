@@ -2,6 +2,7 @@
 
 include_once "../../files/config.php";
 include_once "../customer_group/customer_group.php";
+include_once "../city/city.php";
 
 class customer{
  
