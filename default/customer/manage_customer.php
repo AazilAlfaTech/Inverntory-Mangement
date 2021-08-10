@@ -3,22 +3,24 @@
 include_once "customer.php";
 include_once "../customer_group/customer_group.php";
 include_once "../city/city.php";
+include_once "../salesrep/salesrep.php";
 
-
+//get list of cities for a dropdown.....................................................
     $city1 = new city();
-
-   $result_city=$city1->get_all_city();
-
+    $result_city=$city1->get_all_city();
+//get a list customer group for drown...................................................
     $customer_grp = new customergroup();
-
     $result_cus_group=$customer_grp->get_all_customer_group();
+//get a list sales rep..................................................................... 
+    $salesrep2=new salesrep();
+    $result_salesrep=$salesrep2->get_all_salesrep();
 
+    //object of customer class
     $customer1 = new customer();
 
-
-    if(isset($_POST["custcode"])){
-
-
+//insert/edit a new cutomer..................................................................
+if (isset($_POST["custcode"]))
+{
         $customer1->customer_code = $_POST["custcode"];
         $customer1->customer_name  = $_POST["custname"];
         $customer1->customer_add = $_POST["custadd"];
@@ -29,33 +31,51 @@ include_once "../city/city.php";
         $customer1->customer_salesrep = $_POST["custsrep"];
         $customer1->customer_creditdays = $_POST["custcdays"];
         $customer1->customer_creditlimit = $_POST["custclimit"];
-        
-       
-
-        
-        if(isset($_POST["edit_cus_grp"])){
-            
-            $customer1->edit_customer ($_POST["edit_cus_grp"]);
-            header("location:../customer/manage_customer.php ");
-        }
-else{
-        $customer1->insert_customer();
-        header("location:../customer/manage_customer.php ");
+    //....................................................
+    if(isset($_POST["edit_cus"]))
+    {
+            $res_edit= $customer1->edit_customer($_POST["edit_cus"]);
+            //code for insert validation
+            if($res_edit==true){
+               echo "edited";
+                header("location:../customer/manage_customer.php?success_edit=1");
+            }
+    }else
+    {
+            $res_insert=$customer1->insert_customer();;  
+            //code for insert validation
+            if($res_insert==true){
+                
+                header("location:../customer/manage_customer.php?success=1");
+            }elseif($res_insert==false){
+                header("location:../customer/manage_customer.php?notsuccess=1");
+            }
     }
-    }
 
-    
+
+}
+
+ // get customer details into datatable.....................................................   
     $result_customer=$customer1->get_all_customer();
 
+// view customer details for edit......................................................
     if(isset($_GET['edit_cus'])){
         $customer1=$customer1->get_customer_by_id($_GET['edit_cus']);
     }
 
 
-
+//delete customer.........................................................................
+$msg_2="";//alert message for delete
     if(isset($_GET['d_id'])){
-        $customer1->delete_customer ($_GET['d_id']);
-        header("location:../customer/manage_customer.php ");
+        $res_del=$customer1->delete_customer ($_GET['d_id']);
+       
+        if($res_del==true){
+                
+            header("location:../customer/manage_customer.php?delete_success=1");
+        }else{
+        
+            $msg_2="Customer already exists therefore cannot delete";
+        }
     }
 
 include_once "../../files/head.php";
@@ -127,19 +147,22 @@ include_once "../../files/head.php";
                                    ?>
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label">Customer Code</label>
-                                                <input type="text" class="form-control" placeholder="" name="custcode"
-                                                    id="cust_code" value="<?=$customer1->customer_code ?>">
+                                                <input type="text" class="form-control" placeholder="" name="custcode" pattern="^[A-Z0-9]*$" onkeyup="check_customer_code()"  onblur="check_customer_code()"
+                                                    id="cust_code" value="<?=$customer1->customer_code ?>"  <?php if($customer1->customer_code){echo "readonly=\"readonly\"";} ?> required>
+                                                    <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that name is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label">Customer Group</label>
                                                 <select class="js-example-basic-single col-sm-12" name="custgroup"
-                                                    id="cust_group">
+                                                    id="cust_group" required>
 
-                                                    <option value="-1">Select Customer Group</option>
+                                                    <option value=" ">Select Customer Group</option>
                                                    <?php
                                                         foreach($result_cus_group as $item)
                                                       
-                                                        if($item->customergroup_id==$customer1->customergroup_id)   
+                                                        if($item->customergroup_id==$customer1->customer_group)   
 			                                        echo "<option value='$item->customergroup_id' selected='selected'>$item->customergroup_name</option>";
                                                     else
                                                     echo"<option value='$item->customergroup_id'>$item->customergroup_name</option>";
@@ -150,21 +173,27 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Customer Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="custname"
-                                                    id="cust_name" value="<?=$customer1->customer_name ?>">
+                                                <input type="text" class="form-control" placeholder="" name="custname" 
+                                                    id="cust_name" value="<?=$customer1->customer_name ?>" required>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Contact Number</label>
-                                                <input type="text" class="form-control" placeholder="" name="custno"
-                                                    id="cust_no" value="<?=$customer1->customer_contactno ?>">
+                                                <input type="text" class="form-control" placeholder="" name="custno" onblur="check_customer_contact()" onkeyup="check_customer_contact()" pattern="[0-9]{10}"
+                                                    id="cust_no" value="<?=$customer1->customer_contactno ?>" required>
+                                                    <div class="col-form-label" id="contactcheck_msg" style="display:none;">Sorry, that contact number is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">E-mail</label>
-                                                <input type="text" class="form-control" placeholder="" name="cust_email"
-                                                    id="cust_email" value="<?=$customer1->customer_email ?>">
+                                                <input type="email" class="form-control" placeholder="" name="cust_email" onkeyup="check_customer_mail()" onblur="check_customer_mail()"
+                                                    id="cust_email" value="<?=$customer1->customer_email ?>" required>
+                                                    <div class="col-form-label" id="mailcheck_msg" style="display:none;">Sorry, that e-mail is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
 
 
@@ -183,21 +212,21 @@ include_once "../../files/head.php";
                                             <div class="col-sm-9">
                                                 <label class=" col-form-label">Street</label>
                                                 <input type="text" class="form-control" placeholder="" name="custadd"
-                                                    id="cust_add" value="<?=$customer1->customer_add ?>">
+                                                    id="cust_add" value="<?=$customer1->customer_add ?>" required>
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label">City</label>
-                                                <select class="js-example-basic-single col-sm-12" name="custcity"
-                                                    id="cust_city">
+                                                <select class="js-example-basic-single col-sm-12 customercity" name="custcity"
+                                                    id="cust_city" required>
 
-                                                    <!-- location not done -->
-                                                    <option value="-1">Select City</option>
+                                                   
+                                                    <option value="">Select City</option>
                                                    <?php
                                                         foreach($result_city as $item)
                                                       
-                                                        if($item->city_id==$customer1->city_id)   
-			                                        echo "<option value='$item->city_id' selected='selected'>$item->customercity_namegroup_name</option>";
+                                                        if($item->city_id==$customer1->customer_city)   
+			                                        echo "<option value='$item->city_id' selected='selected'>$item->city_name</option>";
                                                     else
                                                     echo"<option value='$item->city_id'>$item->city_name</option>";
                                                     ?>
@@ -214,14 +243,18 @@ include_once "../../files/head.php";
                                         <div class="col-sm-4">
                                                 <label class=" col-form-label">Sales Rep</label>
                                                 <select class="js-example-basic-single col-sm-12" name="custsrep"
-                                                    id="cust_salesrep" value="<?=$customer1->customer_salesrep ?>">
+                                                    id="cust_salesrep" required >
+                                                    <option value=" ">Select Sales rep</option>
+                                                   <?php
+                                                        foreach($result_salesrep as $item)
+                                                      
+                                                        if($item->salesrep_id==$customer1->customer_salesrep)   
+			                                        echo "<option value='$item->salesrep_id' selected='selected'>$item->salesrep_name</option>";
+                                                    else
+                                                    echo"<option value='$item->salesrep_id'>$item->salesrep_name</option>";
+                                                    ?>
 
-                                                    <option value="1">Alabama</option>
-                                                    <option value="2">Wyoming</option>
-                                                    <option value="2">Peter</option>
-                                                    <option value="3">Hanry Die</option>
-                                                    <option value="4">John Doe</option>
-
+                                                   
                                                 </select>
                                             </div>
 
@@ -260,6 +293,58 @@ include_once "../../files/head.php";
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
+                            <!-- //ALERT MESSAGES START................... -->
+                            <?php
+                            if(isset($_GET['success'])) {
+                                echo"<div class='alert alert-success background-success'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>New location added successfully</strong> 
+                            </div>";
+                            }
+                            ?>
+                            <?php
+                            if(isset($_GET['success_edit'])) {
+                                echo"<div class='alert alert-info background-info'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>Location details updated successfully</strong> 
+                            </div>";
+                            }
+                            ?>
+                             <?php
+                                if(isset($_GET['delete_success'])) {
+                                    echo"<div class='alert alert-danger background-danger'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>Deleted successful</strong> 
+                                </div>";
+                                }
+                                ?>
+                            <?php
+                            if(isset($_GET['d_id'])) {
+                                echo"<div class='alert alert-danger background-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>$msg_2</strong> 
+                            </div>";
+                            }
+                            ?>
+                            <?php
+                            if(isset($_GET['notsuccess'])) {
+                                echo"<div class='alert alert-danger background-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>The code or the e-mail already exists.Please try again</strong> 
+                            </div>";
+                            }
+                            ?>
+                        <!-- //ALERT MESSAGES END................... -->
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
@@ -278,9 +363,11 @@ include_once "../../files/head.php";
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
+                                                    <th>#</th>
                                                     <th>Customer Code</th>
                                                     <th> Customer Name</th>
                                                     <th>Contact Number </th>
+                                                  
                                                
 
                                                     <th>Action</th>
@@ -289,29 +376,31 @@ include_once "../../files/head.php";
                                             </thead>
                                             <tbody>
                                                 <?php
-  foreach($result_customer as $item){
+                                                 foreach($result_customer as $item){
                                                                     echo"
                                                                     <tr>
-                                                                
+
+                                                                        <td>$item->customer_id</td>
                                                                         <td>$item->customer_code</td>
                                                                         <td>$item->customer_name  </td>
                                                                         <td>$item->customer_contactno </td>
+                                                                      
                                                                      
                                                                      
 
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
                                                                         <button type='button' onclick='edit_cus($item->customer_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
                                                                         <button type='button'  onclick='delete_cus($item->customer_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
-                                               </td> 
+                                                                        </td> 
                                                
                                                
                                                                        
                                                                        
                                                                     </tr>
                                                                     ";
-  }
+                                                                        }
 
-?>
+                                                ?>
 
                                                 </tfoot>
                                         </table>
@@ -345,25 +434,27 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
-                            <!-- ------------------------------------------------------------------------------------------------- -->
+<!-- ------------------------------------------------------------------------------------------------- -->
 
 
-                            <script type="text/javascript" src="../javascript/masterfile.js"></script>
-                            <script>
-                            function edit_cus(edit_cus) {
+<script type="text/javascript" src="../javascript/customer.js"></script>
+<script>
+$( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
+
+function edit_cus(edit_cus) {
 
 
-                                window.location.href = "manage_customer.php?edit_cus=" + edit_cus;
+    window.location.href = "manage_customer.php?edit_cus=" + edit_cus;
 
 
-                            }
+}
 
 
-                            function delete_cus(deleteid) {
+function delete_cus(deleteid) {
 
-                                if (confirm("Do you want to delete id" + " " + deleteid)) {
-                                    window.location.href = "manage_customer.php?d_id=" + deleteid;
-                                }
+    if (confirm("Do you want to delete id" + " " + deleteid)) {
+        window.location.href = "manage_customer.php?d_id=" + deleteid;
+    }
 
-                            }
-                            </script>
+}
+</script>

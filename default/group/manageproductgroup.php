@@ -129,7 +129,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Group Code</label>
 
-                                                <input type="text" name="groupcode" pattern="^[A-Z0-9]*$" class="form-control" id="gr_code" onkeyup="check_groupcode()" onblur="check_groupcode()"value="<?=$group1->group_code?>"<?php if($group1->group_code){echo "readonly=\"readonly\"";} ?> placeholder="" required>
+                                                <input type="text" name="groupcode" pattern="^[A-Z0-9]*$" class="form-control" id="gr_code" onkeyup="check_groupcode()" onblur="check_groupcode()"value="<?=$group1->group_code?>" <?php if($group1->group_code){echo "readonly=\"readonly\"";} ?> placeholder="" required>
                                                 <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
                                                             another?
                                                 </div>
