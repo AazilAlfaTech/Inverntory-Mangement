@@ -20,10 +20,18 @@ if (isset($_POST["productname"]))
 {
     $product1->product_name=$_POST["productname"];
     $product1->product_type=$_POST["prodtypeid"];
+    $product1->product_group=$_POST["productgroup"];
     $product1->product_uom=$_POST["unitid"];
     $product1->product_desc=$_POST["productdesc"];
     $product1->product_inventory_val=$_POST["productval"];
     $product1->product_batch=$_POST["productbatch"];
+
+    $product1->product_code = $product1->get_count($_POST["prodtypeid"],$_POST["productgroup"]);
+
+    // $product1->product_code= $codenumber;
+  
+
+
 
     //....................................................
     if(isset($_POST["product_id"]))
@@ -143,7 +151,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select Group</label>
-                                                <select class="js-example-basic-single col-sm-12 productgroup" name="" id="gr_id" onchange="autocode()">
+                                                <select class="js-example-basic-single col-sm-12 productgroup" name="productgroup" id="gr_id" onchange="autocode()">
                                                     <option value="-1">Select Group</option>
                                                     <?php
                                                         foreach($result_group as $item)
@@ -348,6 +356,7 @@ include_once "../../files/head.php";
                                                             <td>$item->product_typename</td>
                                                             <td>
                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                <button type='button' id='editprod' onclick='view_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></button>
                                                                     <button type='button' id='editprod' onclick='edit_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                                     <button type='button'  onclick='delete_product($item->product_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
                                                                 </div>
@@ -389,5 +398,17 @@ include_once "../../files/foot.php";
         window.location.href="manageproduct.php?view_product="+e;
     }
 
+    //View the product
+
+      // Editing the product
+      function view_product(v)
+    {
+        window.location.href="view_product.php?view_product="+v;
+    }
+
+
     $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
+
+
+
 </script>
