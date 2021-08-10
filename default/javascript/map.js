@@ -1,6 +1,6 @@
 // .............District..............
 
-// Filtering the city according to the slected province
+// Filtering the district according to the slected province
 $(".selectprovince").change(function()
   {
     var province_id=$(".selectprovince").val();
@@ -47,7 +47,7 @@ $(".selectprovince").change(function()
     // Adding the selected city to the table
     function add_city(salesrep_city_city,n1)
     {
-        console.log(salesrep_city_city);
+        // console.log(salesrep_city_city);
         $("#selected_city").append("<tr class='xyz"+salesrep_city_city+"'><td><input type='hidden' name='salesrep_city_city[]' value='"+salesrep_city_city+"'>"+salesrep_city_city+"</td></tr>");
         $(n1).parent().find(".btnadd").hide();
         $(n1).parent().find(".btndel").show();
