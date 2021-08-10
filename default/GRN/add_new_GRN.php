@@ -65,7 +65,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
 
                                             <div class="col-sm-6">
-                                                <label class=" col-form-label">Select Perchase Order</label>
+                                                <label class=" col-form-label">Select Purchase Order</label>
                                                 <select class="js-example-basic-single col-sm-12">
 
                                                     <option value="AL">Alabama</option>
@@ -78,14 +78,35 @@ include_once "../../files/head.php";
 
                                             </div>
 
-
-
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Supplier</label>
                                                 <input class="form-control" type="text" disabled >
                                             </div>
                                         </div>
+                                        <div class="form-group row">
 
+                                            
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">Date</label>
+                                                <input class="form-control" type="date">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">Received gto location</label>
+                                                <select class="js-example-basic-single col-sm-12">
+
+                                                    <option value="AL">Alabama</option>
+                                                    <option value="WY">Wyoming</option>
+                                                    <option value="WY">Peter</option>
+                                                    <option value="WY">Hanry Die</option>
+                                                    <option value="WY">John Doe</option>
+
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                       
+
+                                        <!-- </div> -->
                                         <br>
                                         <br>
 
@@ -98,9 +119,12 @@ include_once "../../files/head.php";
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
-                                                                <th>First</th>
-                                                                <th>Last</th>
-                                                                <th>Nickname</th>
+                                                                <th>Product Name</th>
+                                                                <th>Price</th>
+                                                                <th>Quantity</th>
+                                                                <th>Discount</th>
+                                                                <th>Total</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
