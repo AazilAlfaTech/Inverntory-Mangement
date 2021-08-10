@@ -2,48 +2,70 @@
 
 include_once "supplier.php";
 include_once "../supplier_group/supplier_group.php";
-
+//code to display supplier group in a drop down................................
     $supplier_grp = new supplier_group();
-
-     $result_sup_grp = $supplier_grp->get_all_supplier_group();
+    $result_sup_grp = $supplier_grp->get_all_supplier_group();
 
     $supplier1 = new supplier();
 
-
-    if(isset($_POST["supcode"])){
-
-        $supplier1->supplier_code =$_POST["supcode"];
-        $supplier1->supplier_name =$_POST["supname"];
-        $supplier1->supplier_group=$_POST["supgroup"];
-        // $supplier1->supplier_add=$_POST["supadd"];
-        $supplier1->supplier_contactno= $_POST["supno"];
-        $supplier1->supplier_email= $_POST["supemail"];
-        
-       
-        if(isset($_POST["edit_sup"])){
-            
-            $supplier1->edit_supplier ($_POST["edit_sup"]);
-            header("location:../supplier/manage_supplier.php ");
-        }
-else{
-        $supplier1->insert_suppier();
-          header("location:../supplier/manage_supplier.php ");
+//insert a new supplier.........................................................
+if (isset($_POST["supcode"]))
+{
+    $supplier1->supplier_code =$_POST["supcode"];
+    $supplier1->supplier_name =$_POST["supname"];
+    $supplier1->supplier_group=$_POST["supgroup"];
+    // $supplier1->supplier_add=$_POST["supadd"];
+    $supplier1->supplier_contactno= $_POST["supno"];
+    $supplier1->supplier_email= $_POST["supemail"];
+    //....................................................
+    if(isset($_POST["edit_sup"]))
+    {
+            $res_edit=$supplier1->edit_supplier ($_POST["edit_sup"]);
+            //code for insert validation
+            if($res_edit==true){
+               
+                header("location:../supplier/manage_supplier.php?success_edit=1");
+            }elseif($res_edit==false){
+                header("location:../supplier/manage_supplier.php?notsuccess=1");
+            }
+    }else
+    {
+            $res_insert=$supplier1->insert_suppier();  
+            //code for insert validation
+            if($res_insert==true){
+                
+                header("location:../supplier/manage_supplier.php?success=1");
+            }elseif($res_insert==false){
+                header("location:../supplier/manage_supplier.php?notsuccess=1");
+            }
     }
-    }
 
-    
+
+}
+
+
+ // get supplier details in to a datatable..............................................
     $result_supplier = $supplier1->get_all_supplier();
 
+// view supplier details for editing....................................................
     if(isset($_GET['edit_sup'])){
         $supplier1=$supplier1->get_supplier_by_id($_GET['edit_sup']);
 
     }
 
-
-
+//delete a supplier...................................................................
+$msg_2="";//alert message for delete
     if(isset($_GET['d_id'])){
-        $supplier1->delete_supplier ($_GET['d_id']);
-        header("location:../supplier/manage_supplier.php ");
+        $res_del=$supplier1->delete_supplier ($_GET['d_id']);
+        //code for delete validations
+        if($res_del==true){
+                
+            header("location:../supplier/manage_supplier.php?delete_success=1");
+        }else{
+        
+            $msg_2="Supllier already exists therefore cannot delete";
+        }
+ 
     }
 
 
@@ -121,13 +143,16 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label">Supplier  Code</label>
-                                                <input type="text" class="form-control" placeholder="" name="supcode" id="code"
-                                                value="<?=$supplier1->supplier_code ?>">
+                                                <input type="text" class="form-control" placeholder="" name="supcode" id="sup_code" pattern="^[A-Z0-9]*$" onkeyup="check_supplier_code()" onblur="check_supplier_code()"
+                                                value="<?=$supplier1->supplier_code ?>" <?php if($supplier1->supplier_code){echo "readonly=\"readonly\"";} ?> required>
+                                                <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that name is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label">Supplier Group </label>
-                                                <select name="supgroup" class="form-control" id="sup_group">
-                                                <option value="-1">Select Supplier Group</option>
+                                                <select name="supgroup" class="form-control" id="sup_group" required >
+                                                <option value=" ">Select Supplier Group</option>
                                                    <?php
                                                         foreach($result_sup_grp as $item)
                                                       
@@ -144,20 +169,26 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label"> Name</label>
                                                 <input type="text" class="form-control" placeholder="" name="supname" id="sup_name"
-                                                value="<?=$supplier1->supplier_name ?>" >
+                                                value="<?=$supplier1->supplier_name ?>" required>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label"> E-mail</label>
-                                                <input type="email" class="form-control" placeholder="" name="supemail" id="sup_email"
-                                                 value="<?=$supplier1->supplier_email ?>" >
+                                                <input type="email" class="form-control" placeholder="" name="supemail" id="sup_email" onkeyup="check_supplier_mail()" onblur="check_supplier_mail()"
+                                                 value="<?=$supplier1->supplier_email ?>" required >
+                                                 <div class="col-form-label" id="mailcheck_msg" style="display:none;">Sorry, that e-mail is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label class=" col-form-label">Telliphone No </label>
-                                                <input type="text" class="form-control" placeholder="" name="supno" id="sup_no"
-                                                value="<?=$supplier1->supplier_contactno ?>">
+                                                <label class=" col-form-label">Contact No </label>
+                                                <input type="text" class="form-control" pattern="[0-9]{10}" placeholder="" name="supno" id="sup_no" onkeyup="check_supplier_contact()"  onblur="check_supplier_contact()"
+                                                value="<?=$supplier1->supplier_contactno ?>" required>
+                                                <div class="col-form-label" id="contactcheck_msg" style="display:none;">Sorry, that contact number is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                         </div>
 
@@ -181,6 +212,58 @@ include_once "../../files/head.php";
      <div class="page-body">
                                         <div class="row">
                                             <div class="col-sm-12">
+                            <!-- //ALERT MESSAGES START................... -->
+                            <?php
+                            if(isset($_GET['success'])) {
+                                echo"<div class='alert alert-success background-success'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>New location added successfully</strong> 
+                            </div>";
+                            }
+                            ?>
+                            <?php
+                            if(isset($_GET['success_edit'])) {
+                                echo"<div class='alert alert-info background-info'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>Location details updated successfully</strong> 
+                            </div>";
+                            }
+                            ?>
+                             <?php
+                                if(isset($_GET['delete_success'])) {
+                                    echo"<div class='alert alert-danger background-danger'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>Deleted successful</strong> 
+                                </div>";
+                                }
+                                ?>
+                            <?php
+                            if(isset($_GET['d_id'])) {
+                                echo"<div class='alert alert-danger background-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>$msg_2</strong> 
+                            </div>";
+                            }
+                            ?>
+                            <?php
+                            if(isset($_GET['notsuccess'])) {
+                                echo"<div class='alert alert-danger background-danger'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>The code or the e-mail already exists.Please try again</strong> 
+                            </div>";
+                            }
+                            ?>
+                        <!-- //ALERT MESSAGES END................... -->
                                                 <!-- Autofill table start -->
                                                 <div class="card">
                                                     <div class="card-header">
@@ -199,11 +282,12 @@ include_once "../../files/head.php";
                                                             <table id="autofill" class="table table-striped table-bordered nowrap">
                                                                 <thead>
                                                                     <tr>
-                                                                    <th>Code </th>
+                                                                        <th>#</th>
+                                                                        <th>Code </th>
                                                                         <th>Group </th>
                                                                         <th> Name</th>
                                                                         <th>E-mail </th>
-                                                                        <th> Tell-No</th>
+                                                                        <th> Contact No</th>
                                                                         <th>Action</th>
                                                                       
                                                                     </tr>
@@ -214,7 +298,7 @@ include_once "../../files/head.php";
            foreach($result_supplier as $item){
             echo"
             <tr>
-        
+                <td>$item->supplier_id </td>
                 <td>$item->supplier_code </td>
                 <td>$item->supplier_group </td>
                 <td>$item->supplier_name  </td>
@@ -225,8 +309,8 @@ include_once "../../files/head.php";
 
                 <td><div class='btn-group btn-group-sm' style='float: none;'>
                 <button type='button' onclick='edit_sup($item->supplier_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
-<button type='button'  onclick='delete_sup($item->supplier_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
-</td> 
+                <button type='button'  onclick='delete_sup($item->supplier_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                </td> 
 
 
                
@@ -278,23 +362,25 @@ include_once "../../files/foot.php";
 
 
 <!-- --------------------------------------------------------------------------------------------------------------------- -->
+<script type="text/javascript" src="../javascript/supplier.js"></script>
 
-<script type="text/javascript" src="../javascript/masterfile.js"></script>
-                            <script>
-                            function edit_sup(edit_sup) {
+<script>
+   
 
-
-                                window.location.href = "manage_supplier.php?edit_sup=" + edit_sup;
-
-
-                            }
+function edit_sup(edit_sup) {
 
 
-                            function delete_sup(deleteid) {
+    window.location.href = "manage_supplier.php?edit_sup=" + edit_sup;
 
-                                if (confirm("Do you want to delete id" + " " + deleteid)) {
-                                    window.location.href = "manage_supplier.php?d_id=" + deleteid;
-                                }
 
-                            }
-                            </script>
+}
+
+
+function delete_sup(deleteid) {
+
+    if (confirm("Do you want to delete id" + " " + deleteid)) {
+        window.location.href = "manage_supplier.php?d_id=" + deleteid;
+    }
+
+}
+</script>

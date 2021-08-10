@@ -39,16 +39,28 @@ function __construct(){
 
 function insert_customer(){
 
- $sql="INSERT INTO customer (customer_code,customer_name,customer_add,customer_contactno,customer_email,
+    $CODE=$_POST["custcode"];
+    $MAIL=$_POST["cust_email"];
+    $CONTACT=$_POST["custno"];
+    $sql1="SELECT * FROM customer WHERE customer_status='ACTIVE' AND customer_code='$CODE' OR customer_email='$MAIL' OR customer_contactno='$CONTACT'";
+    $result_sql1=$this->db->query($sql1);
+
+    if($result_sql1->num_rows==0){
+        $sql="INSERT INTO customer (customer_code,customer_name,customer_add,customer_contactno,customer_email,
  customer_city,customer_group,customer_salesrep,customer_creditdays,customer_creditlimit)
  VALUES('$this->customer_code','$this->customer_name','$this->customer_add','$this->customer_contactno','$this->customer_email',
- '$this->customer_city','$this->customer_group','$this->customer_salesrep','$this->customer_creditdays','$this->customer_creditlimit')
- ";
+ '$this->customer_city','$this->customer_group','$this->customer_salesrep','$this->customer_creditdays','$this->customer_creditlimit')  ";
 
     echo $sql;
     $this->db->query($sql);
     return true;
 
+
+    }else{
+        return false;
+    }
+
+ 
 }
 
 // ----EDIT CUSTOMER GROUP------------------------------------------------------------------------------------------------------------------
@@ -93,7 +105,7 @@ function get_all_customer(){
 function get_customer_by_id($cus_grp_id){
 
     $sql="SELECT * FROM customer WHERE customer_id = $cus_grp_id";
-    echo $sql;
+    //echo $sql;
     $result=$this->db->query($sql);
 
 
@@ -134,7 +146,7 @@ function get_customer_by_id($cus_grp_id){
 function edit_customer($cus_grp_id){
 
     $sql="UPDATE customer  SET 
-    customer_code='$this->customer_code', customer_name='$this->customer_name',location_add='$this->location_add',location_number='$this->location_number',location_email='$this->location_email'
+    customer_code='$this->customer_code', customer_name='$this->customer_name',customer_add='$this->customer_add',customer_contactno='$this->customer_contactno',customer_email='$this->customer_email', customer_city='$this->customer_city' , customer_group= '$this->customer_group', customer_salesrep= '$this->customer_salesrep',customer_creditdays='$this->customer_creditdays',customer_creditlimit='$this->customer_creditlimit'
     WHERE customer_id=$cus_grp_id ";
 
     echo $sql;
@@ -160,9 +172,9 @@ function delete_customer($customer_id){
 
 //----------------------------------------------------------------------------------------------------------------------------
 
-function get_customer_by_code($cus_grp_id){
+function get_customer_by_code($customer_code){
 
-    $sql="SELECT * FROM customer WHERE customer_code = '$cus_grp_id'";
+    $sql="SELECT * FROM customer WHERE customer_status='ACTIVE'AND customer_code = '$customer_code'";
     //echo $sql;
     $result=$this->db->query($sql);
     $row=$result->fetch_array();
@@ -179,6 +191,46 @@ function get_customer_by_code($cus_grp_id){
 }
 
 //.......................................................................................
+function get_customer_by_mail($customer_mail){
+
+    $sql="SELECT * FROM customer WHERE customer_status='ACTIVE' AND customer_email = '$customer_mail'";
+    //echo $sql;
+    $result=$this->db->query($sql);
+    $row=$result->fetch_array();
+
+    $customer_item = new customer();
+
+    $customer_item->customer_id=$row["customer_id"];
+    $customer_item->customer_code=$row["customer_code"];
+    $customer_item->customer_name=$row["customer_name"];
+    $customer_item->customer_contactno=$row["customer_contactno"];
+    $customer_item->customer_email=$row["customer_email"];
+    $customer_item->customer_status=$row["customer_status"];
+
+       
+    return $customer_item;
+}
+//.................................................................................................
+
+function get_customer_by_contact($customer_contact){
+
+    $sql="SELECT * FROM customer WHERE customer_status='ACTIVE' AND customer_contactno = '$customer_contact'";
+    //echo $sql;
+    $result=$this->db->query($sql);
+    $row=$result->fetch_array();
+
+    $customer_item = new customer();
+
+    $customer_item->customer_id=$row["customer_id"];
+    $customer_item->customer_code=$row["customer_code"];
+    $customer_item->customer_name=$row["customer_name"];
+    $customer_item->customer_contactno=$row["customer_contactno"];
+    $customer_item->customer_email=$row["customer_email"];
+    $customer_item->customer_status=$row["customer_status"];
+
+       
+    return $customer_item;
+}
 
 
 

@@ -34,3 +34,61 @@ function check_customer_groupcode(){
    }
 
    }
+
+
+  //.CUSTOMER JS..............................................................................................
+
+  function check_customer_code(){
+   
+    let code=$("#cust_code").val();
+    console.log(code);
+    var codelegnth=code.length
+   $("#codecheck_msg").hide();
+   if(codelegnth>1){
+     $.get("../ajax/ajaxcustomer.php?type=checkcustomercode&cus_code="+code+"",function(data){
+       console.log(data);
+      var tmp=JSON.parse(data);
+       
+         if(tmp.customer_id>0){
+         
+         $("#codecheck_msg").fadeIn().delay(1000).fadeOut();}
+     });
+   }
+
+}
+
+function check_customer_mail(){
+    let mail=$("#cust_email").val();
+    console.log(mail);
+    var maillegnth=mail.length;
+   $("#mailcheck_msg").hide();
+   if(maillegnth>1){
+     $.get("../ajax/ajaxcustomer.php?type=checkcustomermail&cus_mail="+mail+"",function(data){
+       console.log(data);
+      var tmp=JSON.parse(data);
+       
+         if(tmp.customer_id>0){
+        
+         $("#mailcheck_msg").fadeIn().delay(1000).fadeOut();}
+     });
+   }
+
+}
+
+function check_customer_contact(){
+    let contact=$("#cust_no").val();
+    console.log(contact);
+    var contactlegnth=contact.length
+   $("#contactcheck_msg").hide();
+   if(contactlegnth>1){
+     $.get("../ajax/ajaxcustomer.php?type=checkcustomercontact&cus_contact="+contact+"",function(data){
+       console.log(data);
+      var tmp=JSON.parse(data);
+       
+         if(tmp.customer_id>0){
+         
+         $("#contactcheck_msg").fadeIn().delay(1000).fadeOut();}
+     });
+   }
+
+}

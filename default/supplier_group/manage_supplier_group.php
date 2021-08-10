@@ -5,24 +5,35 @@ include_once "supplier_group.php";
     $suppliergroup1 = new supplier_group();
 
 
-    if(isset($_POST["sup_grcode"])){
-
+    if (isset($_POST["sup_grcode"]))
+    {
         $suppliergroup1->suppliergroup_code = $_POST["sup_grcode"];
         $suppliergroup1->suppliergroup_name = $_POST["sup_grname"];
-       
-
-
-        if(isset($_POST["edit_sup_grp"])){
-            
-            $suppliergroup1->edit_supplier_group ($_POST["edit_sup_grp"]);
-            header("location:../supplier_group/manage_supplier_group.php ");
+        //....................................................
+        if(isset($_POST["edit_sup_grp"]))
+        {
+                $res_edit=$suppliergroup1->edit_supplier_group ($_POST["edit_sup_grp"]);
+                //code for insert validation
+                if($res_edit==true){
+                   
+                    header("location:../supplier_group/manage_supplier_group.php?success_edit=1");
+                }elseif($res_edit==false){
+                    header("location:../supplier_group/manage_supplier_group.php?notsuccess=1");
+                }
+        }else
+        {
+                $res_insert=$suppliergroup1->insert_suppier_group();   
+                //code for insert validation
+                if($res_insert==true){
+                    
+                    header("location:../supplier_group/manage_supplier_group.php ?success=1");
+                }elseif($res_insert==false){
+                    header("location:../supplier_group/manage_supplier_group.php ?notsuccess=1");
+                }
         }
-else{
-        $suppliergroup1->insert_suppier_group();
-         header("location:../supplier_group/manage_supplier_group.php ");
+    
+    
     }
-    }
-
     
     $result_supplier_group = $suppliergroup1->get_all_supplier_group();
 
@@ -32,10 +43,18 @@ else{
     }
 
 
+    $msg_2="";//alert message for delete
 
     if(isset($_GET['d_id'])){
-        $suppliergroup1->delete_supplier_group ($_GET['d_id']);
-        header("location:../supplier_group/manage_supplier_group.php ");
+        $res_del=$suppliergroup1->delete_supplier_group ($_GET['d_id']);
+  
+        if($res_del==true){
+            header("location:../supplier_group/manage_supplier_group.php?delete_success=1");
+           
+        }else{
+           
+            $msg_2="Group already exists therefore cannot delete";
+        }
     }
 
 
@@ -82,7 +101,15 @@ else{
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Supplier Group</h5>
+                                <h5>
+                                        <?php
+                                    if(isset($_GET["edit_sup_grp"])){
+                                    echo"Edit Supplier Group";
+                                   }
+                                   else 
+                                   echo "Add New Supplier Group"
+                                   ?>
+                                    </h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -101,7 +128,7 @@ else{
                                     <?php
                                    
                                    if(isset($_GET["edit_sup_grp"])){
-                                    echo"  <input type='text'  class='form-control' value='".$_GET['edit_sup_grp'] ."' name='edit_sup_grp' required readonly>";
+                                    echo"  <input type='hidden'  class='form-control' value='".$_GET['edit_sup_grp'] ."' name='edit_sup_grp' required readonly>";
                                    }
                                     
 
@@ -111,13 +138,19 @@ else{
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Supplier Group  Code</label>
-                                                <input type="text" class="form-control" placeholder="" name="sup_grcode" 
-                                                value="<?=$suppliergroup1->suppliergroup_code ?>"id="sup_gr_code">
+                                                <input type="text" class="form-control" placeholder="" name="sup_grcode" onkeyup="check_groupcode()"  onblur="check_groupcode()" pattern="^[A-Z0-9]*$"
+                                                value="<?=$suppliergroup1->suppliergroup_code ?>" <?php if($suppliergroup1->suppliergroup_code){echo "readonly=\"readonly\"";} ?>id="sup_gr_code" required>
+                                                <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that code is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Supplier Group Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="sup_grname" 
-                                                value="<?=$suppliergroup1->suppliergroup_name ?>" id="sup_gr_name">
+                                                <input type="text" class="form-control" placeholder="" name="sup_grname" onkeyup="check_groupname()"  onblur="check_groupname()"
+                                                value="<?=$suppliergroup1->suppliergroup_name ?>" id="sup_gr_name" required>
+                                                <div class="col-form-label" id="namecheck_msg" style="display:none;">Sorry, that name is taken. Try
+                                                            another?
+                                                </div>
                                             </div>
                                         </div>
 
@@ -141,6 +174,57 @@ else{
      <div class="page-body">
                                         <div class="row">
                                             <div class="col-sm-12">
+                                                 <!-- //ALERT MESSAGES START................... -->
+            <?php
+            if(isset($_GET['success'])) {
+                echo"<div class='alert alert-success background-success'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>New group added successfully</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['success_edit'])) {
+                echo"<div class='alert alert-info background-info'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Group details updated successfully</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['delete_success'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Deleted successful</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['d_id'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>$msg_2</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['notsuccess'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>The code or the name already exists.Please try again</strong> 
+            </div>";
+            }
+            ?>
                                                 <!-- Autofill table start -->
                                                 <div class="card">
                                                     <div class="card-header">
@@ -222,7 +306,7 @@ include_once "../../files/foot.php";
 ?>
 <!-- ------------------------------------------------------------------------------------------------------------------- -->
 
-<script type="text/javascript" src="../javascript/masterfile.js"></script>
+<script type="text/javascript" src="../javascript/supplier.js"></script>
                             <script>
                             function edit_sup_grp(edit_sup_grp) {
 

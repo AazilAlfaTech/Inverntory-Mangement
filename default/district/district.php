@@ -36,7 +36,7 @@ function __construct(){
 
 function get_all_district(){
     $sql = "SELECT * FROM district  ";
-    echo $sql;
+    //echo $sql;
     $result = $this->db->query($sql);   
 
     $district_array = array();

@@ -18,8 +18,30 @@ function checkcustomergroupname(){
 
 }
 
-// function checkcustomercode(){
+function checkcustomercode(){
+    include_once "../customer/customer.php";
+    $customer3=new customer();
+    $customer_item=$customer3->get_customer_by_code($_GET['cus_code']);
+    echo json_encode($customer_item);
 
-// }
+}
+
+function checkcustomermail(){
+    include_once "../customer/customer.php";
+    $customer3=new customer();
+    $customer_item=$customer3->get_customer_by_mail($_GET['cus_mail']);
+    echo json_encode($customer_item);
+
+
+}
+
+function checkcustomercontact(){
+    include_once "../customer/customer.php";
+    $customer3=new customer();
+    $customer_item=$customer3->get_customer_by_contact($_GET['cus_contact']);
+    echo json_encode($customer_item);
+
+
+}
 
 ?>
