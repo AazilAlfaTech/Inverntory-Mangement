@@ -40,7 +40,7 @@ function insert_city(){
 
 function get_all_city(){
     $sql = "SELECT * FROM city WHERE city_status = 'ACTIVE' ";
-    echo $sql;
+    //echo $sql;
     $result = $this->db->query($sql);   
 
     $city_array = array();

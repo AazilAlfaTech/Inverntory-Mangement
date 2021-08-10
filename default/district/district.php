@@ -65,7 +65,7 @@ function get_all_district(){
 function get_district_by_id($district_id){
     $sql = "SELECT * FROM district WHERE district_id =$district_id";
 
-    echo $sql;
+   // echo $sql;
     $result=$this->db->query($sql);
 
     // $group_array=array();

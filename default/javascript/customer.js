@@ -92,3 +92,12 @@ function check_customer_contact(){
    }
 
 }
+
+//filter sales rep according to select city
+$(".customercity").change(function(){
+
+  var cityid=$(".customercity").val();
+  console.log(cityid);
+  $.get("../ajax/ajaxcustomer.php");
+
+});

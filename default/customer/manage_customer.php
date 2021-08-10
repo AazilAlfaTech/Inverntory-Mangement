@@ -3,6 +3,7 @@
 include_once "customer.php";
 include_once "../customer_group/customer_group.php";
 include_once "../city/city.php";
+include_once "../salesrep/salesrep.php";
 
 //get list of cities for a dropdown.....................................................
     $city1 = new city();
@@ -11,8 +12,10 @@ include_once "../city/city.php";
     $customer_grp = new customergroup();
     $result_cus_group=$customer_grp->get_all_customer_group();
 //get a list sales rep..................................................................... 
-    
+    $salesrep2=new salesrep();
+    $result_salesrep=$salesrep2->get_all_salesrep();
 
+    //object of customer class
     $customer1 = new customer();
 
 //insert/edit a new cutomer..................................................................
@@ -35,7 +38,7 @@ if (isset($_POST["custcode"]))
             //code for insert validation
             if($res_edit==true){
                echo "edited";
-                //header("location:../customer/manage_customer.php?success_edit=1");
+                header("location:../customer/manage_customer.php?success_edit=1");
             }
     }else
     {
@@ -43,9 +46,9 @@ if (isset($_POST["custcode"]))
             //code for insert validation
             if($res_insert==true){
                 
-                //header("location:../customer/manage_customer.php?success=1");
+                header("location:../customer/manage_customer.php?success=1");
             }elseif($res_insert==false){
-                //header("location:../customer/manage_customer.php?notsuccess=1");
+                header("location:../customer/manage_customer.php?notsuccess=1");
             }
     }
 
@@ -214,15 +217,15 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label">City</label>
-                                                <select class="js-example-basic-single col-sm-12" name="custcity"
+                                                <select class="js-example-basic-single col-sm-12 customercity" name="custcity"
                                                     id="cust_city">
 
-                                                    <!-- location not done -->
+                                                   
                                                     <option value="-1">Select City</option>
                                                    <?php
                                                         foreach($result_city as $item)
                                                       
-                                                        if($item->city_id==$customer1->city_id)   
+                                                        if($item->city_id==$customer1->customer_city)   
 			                                        echo "<option value='$item->city_id' selected='selected'>$item->city_name</option>";
                                                     else
                                                     echo"<option value='$item->city_id'>$item->city_name</option>";
@@ -240,14 +243,18 @@ include_once "../../files/head.php";
                                         <div class="col-sm-4">
                                                 <label class=" col-form-label">Sales Rep</label>
                                                 <select class="js-example-basic-single col-sm-12" name="custsrep"
-                                                    id="cust_salesrep" value="<?=$customer1->customer_salesrep ?>">
+                                                    id="cust_salesrep" >
+                                                    <option value=" ">Select Sales rep</option>
+                                                   <?php
+                                                        foreach($result_salesrep as $item)
+                                                      
+                                                        if($item->salesrep_id==$customer1->customer_salesrep)   
+			                                        echo "<option value='$item->salesrep_id' selected='selected'>$item->salesrep_name</option>";
+                                                    else
+                                                    echo"<option value='$item->salesrep_id'>$item->salesrep_name</option>";
+                                                    ?>
 
-                                                    <option value="1">Alabama</option>
-                                                    <option value="2">Wyoming</option>
-                                                    <option value="2">Peter</option>
-                                                    <option value="3">Hanry Die</option>
-                                                    <option value="4">John Doe</option>
-
+                                                   
                                                 </select>
                                             </div>
 
@@ -360,6 +367,7 @@ include_once "../../files/head.php";
                                                     <th>Customer Code</th>
                                                     <th> Customer Name</th>
                                                     <th>Contact Number </th>
+                                                    <th>Cust group</th>
                                                
 
                                                     <th>Action</th>
@@ -372,10 +380,11 @@ include_once "../../files/head.php";
                                                                     echo"
                                                                     <tr>
 
-                                                                    <td>$item->customer_id</td>
+                                                                        <td>$item->customer_id</td>
                                                                         <td>$item->customer_code</td>
                                                                         <td>$item->customer_name  </td>
                                                                         <td>$item->customer_contactno </td>
+                                                                        <td>$item->customer_group </td>
                                                                      
                                                                      
 

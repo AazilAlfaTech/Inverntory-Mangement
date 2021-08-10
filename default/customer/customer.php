@@ -7,7 +7,7 @@ class customer{
  
 
 
-  public  $customer_id;
+  public  $customer_id; 
   public  $customer_code;
   public  $customer_name;
   public  $customer_add;
@@ -125,7 +125,7 @@ function get_customer_by_id($cus_grp_id){
     $customer_item->customer_city=$row["customer_city"];
     $customer_item->customer_group=$row["customer_group"];
 
-    $customer_item->customer_group=$customer_group1->get_customer_group_by_id($row["customer_group"]);
+    $customer_item->customer_group_name=$customer_group1->get_customer_group_by_id($row["customer_group"]);
 
     $customer_item->customer_salesrep=$row["customer_salesrep"];
     $customer_item->customer_creditdays=$row["customer_creditdays"];
