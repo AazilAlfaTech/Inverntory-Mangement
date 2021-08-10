@@ -36,7 +36,7 @@ include_once "../../files/head.php";
                 <!-- Page-header end -->
 
                 <div class="d-flex flex-row-reverse">
-<a href="add_new_sales_quotation    .php">
+<a href="add_new_sales_quotation.php">
                     <button class="btn btn-mat btn-primary ">Manage sales Quotation</i></button>
 </a>
                 </div>
