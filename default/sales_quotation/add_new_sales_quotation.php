@@ -17,7 +17,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Add New Salaes Order</h4>
+                                    <h4>Add New Sales Quotation</h4>
 
                                 </div>
                             </div>
@@ -44,7 +44,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Salaes Order</h5>
+                                    <h5>Add New Sales Quotation</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -66,7 +66,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Customer</label>
-                                                <select class="js-example-basic-single col-sm-12" name="socustomer" id="so_customer">
+                                                <select class="js-example-basic-single col-sm-12" name="salesquotcustomer" id="sq_customer">
 
                                                     <option value="AL">Alabama</option>
                                                     <option value="WY">Wyoming</option>
@@ -82,7 +82,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="date" name="sodate" id="so_date">
+                                                <input class="form-control" type="date" name="salesquotdate" id="sq_date">
                                             </div>
                                         </div>
                                         <hr>
@@ -90,7 +90,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Product</label>
-                                                <select class="js-example-basic-single col-sm-12" name="soitemproductid" id="soitem_productid">
+                                                <select class="js-example-basic-single col-sm-12" name="sqitem_productid" id="sq_itemproductid">
 
                                                     <option value="AL">Alabama</option>
                                                     <option value="WY">Wyoming</option>
@@ -104,25 +104,25 @@ include_once "../../files/head.php";
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Price</label>
-                                                <input type="text" class="form-control" placeholder="" name="soitemprice" id="soitem_price">
+                                                <input type="text" class="form-control" placeholder="" name="sqitem_price" id="sq_itemprice">
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Qty</label>
-                                                <input type="text" class="form-control" placeholder="" name="soitemqty" id="soitem_qty">
+                                                <input type="text" class="form-control" placeholder="" name="sqitem_qty" id="sq_itemqty">
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Discount</label>
-                                                <input type="text" class="form-control" placeholder="" name="soitemdiscount" id="soitem_discount">
+                                                <input type="text" class="form-control" placeholder="" name="sqitem_discount" id="sq_itemdiscount">
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Total</label>
-                                                <input type="text" class="form-control" placeholder="" name="sofinalprice" id="sofinal_price" disabled>
+                                                <input type="text" class="form-control" placeholder="" name="sqitem_finalprice" id="sq_itemfinalprice" disabled>
                                             </div>
 
                                         </div>
