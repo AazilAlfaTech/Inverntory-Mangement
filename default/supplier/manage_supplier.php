@@ -365,7 +365,7 @@ include_once "../../files/foot.php";
 <script type="text/javascript" src="../javascript/supplier.js"></script>
 
 <script>
-   
+   $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
 
 function edit_sup(edit_sup) {
 

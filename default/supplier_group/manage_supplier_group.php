@@ -307,21 +307,22 @@ include_once "../../files/foot.php";
 <!-- ------------------------------------------------------------------------------------------------------------------- -->
 
 <script type="text/javascript" src="../javascript/supplier.js"></script>
-                            <script>
-                            function edit_sup_grp(edit_sup_grp) {
+<script>
+    $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
+function edit_sup_grp(edit_sup_grp) {
 
 
-                                window.location.href = "manage_supplier_group.php?edit_sup_grp=" + edit_sup_grp;
+    window.location.href = "manage_supplier_group.php?edit_sup_grp=" + edit_sup_grp;
 
 
-                            }
+}
 
 
-                            function delete_sup_grp(deleteid) {
+function delete_sup_grp(deleteid) {
 
-                                if (confirm("Do you want to delete id" + " " + deleteid)) {
-                                    window.location.href = "manage_supplier_group.php?d_id=" + deleteid;
-                                }
+    if (confirm("Do you want to delete id" + " " + deleteid)) {
+        window.location.href = "manage_supplier_group.php?d_id=" + deleteid;
+    }
 
-                            }
-                            </script>
+}
+</script>

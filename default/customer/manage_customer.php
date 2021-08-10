@@ -190,7 +190,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">E-mail</label>
                                                 <input type="email" class="form-control" placeholder="" name="cust_email" onkeyup="check_customer_mail()" onblur="check_customer_mail()"
-                                                    id="cust_email" value="<?=$customer1->customer_email ?>">
+                                                    id="cust_email" value="<?=$customer1->customer_email ?>" required>
                                                     <div class="col-form-label" id="mailcheck_msg" style="display:none;">Sorry, that e-mail is taken. Try
                                                             another?
                                                 </div>
@@ -212,16 +212,16 @@ include_once "../../files/head.php";
                                             <div class="col-sm-9">
                                                 <label class=" col-form-label">Street</label>
                                                 <input type="text" class="form-control" placeholder="" name="custadd"
-                                                    id="cust_add" value="<?=$customer1->customer_add ?>">
+                                                    id="cust_add" value="<?=$customer1->customer_add ?>" required>
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label">City</label>
                                                 <select class="js-example-basic-single col-sm-12 customercity" name="custcity"
-                                                    id="cust_city">
+                                                    id="cust_city" required>
 
                                                    
-                                                    <option value="-1">Select City</option>
+                                                    <option value="">Select City</option>
                                                    <?php
                                                         foreach($result_city as $item)
                                                       
@@ -243,7 +243,7 @@ include_once "../../files/head.php";
                                         <div class="col-sm-4">
                                                 <label class=" col-form-label">Sales Rep</label>
                                                 <select class="js-example-basic-single col-sm-12" name="custsrep"
-                                                    id="cust_salesrep" >
+                                                    id="cust_salesrep" required >
                                                     <option value=" ">Select Sales rep</option>
                                                    <?php
                                                         foreach($result_salesrep as $item)
@@ -367,7 +367,7 @@ include_once "../../files/head.php";
                                                     <th>Customer Code</th>
                                                     <th> Customer Name</th>
                                                     <th>Contact Number </th>
-                                                    <th>Cust group</th>
+                                                  
                                                
 
                                                     <th>Action</th>
@@ -376,7 +376,7 @@ include_once "../../files/head.php";
                                             </thead>
                                             <tbody>
                                                 <?php
-  foreach($result_customer as $item){
+                                                 foreach($result_customer as $item){
                                                                     echo"
                                                                     <tr>
 
@@ -384,23 +384,23 @@ include_once "../../files/head.php";
                                                                         <td>$item->customer_code</td>
                                                                         <td>$item->customer_name  </td>
                                                                         <td>$item->customer_contactno </td>
-                                                                        <td>$item->customer_group </td>
+                                                                      
                                                                      
                                                                      
 
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
                                                                         <button type='button' onclick='edit_cus($item->customer_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
                                                                         <button type='button'  onclick='delete_cus($item->customer_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
-                                               </td> 
+                                                                        </td> 
                                                
                                                
                                                                        
                                                                        
                                                                     </tr>
                                                                     ";
-  }
+                                                                        }
 
-?>
+                                                ?>
 
                                                 </tfoot>
                                         </table>
@@ -434,25 +434,27 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
-                            <!-- ------------------------------------------------------------------------------------------------- -->
+<!-- ------------------------------------------------------------------------------------------------- -->
 
 
-                            <script type="text/javascript" src="../javascript/customer.js"></script>
-                            <script>
-                            function edit_cus(edit_cus) {
+<script type="text/javascript" src="../javascript/customer.js"></script>
+<script>
+$( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
+
+function edit_cus(edit_cus) {
 
 
-                                window.location.href = "manage_customer.php?edit_cus=" + edit_cus;
+    window.location.href = "manage_customer.php?edit_cus=" + edit_cus;
 
 
-                            }
+}
 
 
-                            function delete_cus(deleteid) {
+function delete_cus(deleteid) {
 
-                                if (confirm("Do you want to delete id" + " " + deleteid)) {
-                                    window.location.href = "manage_customer.php?d_id=" + deleteid;
-                                }
+    if (confirm("Do you want to delete id" + " " + deleteid)) {
+        window.location.href = "manage_customer.php?d_id=" + deleteid;
+    }
 
-                            }
-                            </script>
+}
+</script>

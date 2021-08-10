@@ -73,7 +73,7 @@ function get_all_customer(){
     $result=$this->db->query($sql);
 
     $customer_array=array();
-
+    $customer_group1 = new customergroup();
     while($row=$result->fetch_array()){
 
          $customer_item = new customer();
@@ -86,6 +86,7 @@ function get_all_customer(){
          $customer_item->customer_email=$row["customer_email"];
          $customer_item->customer_city=$row["customer_city"];
          $customer_item-> customer_group=$row["customer_group"];
+         $customer_item->customer_group_name=$customer_group1->get_customer_group_by_id($row["customer_group"]);
          $customer_item-> customer_salesrep=$row["customer_salesrep"];
          $customer_item->customer_creditdays=$row["customer_creditdays"];
          $customer_item->customer_creditlimit=$row["customer_creditlimit"];

@@ -98,6 +98,6 @@ $(".customercity").change(function(){
 
   var cityid=$(".customercity").val();
   console.log(cityid);
-  $.get("../ajax/ajaxcustomer.php");
+  
 
 });
