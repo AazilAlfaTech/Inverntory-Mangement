@@ -163,7 +163,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label"> Province </label>
-                                                <select class="js-example-basic-single col-sm-12" name="cityprovince" id="city_province">
+                                                <select class="js-example-basic-single col-sm-12 selectprovince" name="cityprovince" id="city_province">
 
                                                 <?php
                                                         foreach($result_province as $item)
@@ -180,7 +180,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label"> District </label>
-                                                <select class="js-example-basic-single col-sm-12" name="citydistrict" id="city_district">
+                                                <select class="js-example-basic-single col-sm-12" name="citydistrict" id="srep_district">
 
                                                 <?php
                                                         foreach($result_district as $item)
@@ -308,6 +308,7 @@ include_once "../../files/foot.php";
 ?>
 
                             <!-- ------------------------------------------------------------------------------------------------- -->
+                            <script type="text/javascript" src="../javascript/map.js"></script>
 
                             <script>
                             function delete_city(d_id) {
