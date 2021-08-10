@@ -250,7 +250,7 @@ include_once "../../files/head.php";
                                             </thead>
                                             <tbody>
                                                 <?php
-  foreach($result_customer_group as $item){
+                                                    foreach($result_customer_group as $item){
                                                                     echo"
                                                                     <tr>
                                                                 
@@ -260,16 +260,16 @@ include_once "../../files/head.php";
 
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
                                                                         <button type='button' onclick='edit_cus_grp($item->customergroup_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
-                                               <button type='button'  onclick='delete_cus_grp($item->customergroup_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
-                                               </td> 
+                                                                        <button type='button'  onclick='delete_cus_grp($item->customergroup_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                                                        </td> 
                                                
                                                
                                                                        
                                                                        
                                                                     </tr>
                                                                     ";
-  }
-                                           ?>
+                                                                    }
+                                                ?>
 
 
 
@@ -314,6 +314,8 @@ include_once "../../files/foot.php";
 
     <script type="text/javascript" src="../javascript/customer.js"></script>
     <script>
+        $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
+
     function edit_cus_grp(edit_cus_grp) {
 
         console.log(edit_cus_grp);
