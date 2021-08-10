@@ -25,24 +25,15 @@ function __construct(){
 
 
 function insert_purchaserequest(){
-    $CODE=$_POST["loccode"];
-    $MAIL=$_POST["locmail"];
-    $sql1= "SELECT * FROM purchase_request WHERE purchaserequest_status='ACTIVE' AND purchaserequest_code='$CODE' OR purchaserequest_email='$MAIL' ";
-    echo($sql1);
-    $res_code=$this->db->query($sql1);
 
- 
-if($res_code->num_rows==0){
     $sql="INSERT INTO purchase_request (purchaserequest_code,purchaserequest_name,purchaserequest_add,purchaserequest_number,purchaserequest_email)
     VALUES('$this->purchaserequest_code','$this->purchaserequest_name','$this->purchaserequest_add','$this->purchaserequest_number','$this->purchaserequest_email')
     ";
        //echo $sql;
        $this->db->query($sql);
-       return true;
+    $id=$this->db->insert_id;
+    return $id;
 
-    }else {
-       return false;
-    }
 }
 
 // ----EDIT purchaserequest------------------------------------------------------------------------------------------------------------------
@@ -107,22 +98,14 @@ function get_purchaserequest_by_id($purchaserequestid){
 
 function edit_purchaserequest($purchaserequestid){
  
-    $MAIL=$_POST["locmail"];
-    $sql1= "SELECT * FROM purchase_request WHERE purchaserequest_status='ACTIVE' AND purchaserequest_email='$MAIL' ";
-        echo($sql1);
-    $res_code=$this->db->query($sql1);
 
- 
-if($res_code->num_rows==0){
     $sql="UPDATE purchase_request  SET 
      purchaserequest_name='$this->purchaserequest_name',purchaserequest_add='$this->purchaserequest_add',purchaserequest_number='$this->purchaserequest_number',purchaserequest_email='$this->purchaserequest_email'
     WHERE purchaserequest_id=$purchaserequestid ";
     //echo $sql;
     $this->db->query($sql);
     return true;
-    }else {
-       return false;
-    }
+
    
 
 

@@ -36,8 +36,8 @@ include_once "../../files/head.php";
                 <!-- Page-header end -->
 
                 <div class="d-flex flex-row-reverse">
-<a href="add_new_sales_order.php">
-                    <button class="btn btn-mat btn-primary ">Manage sales order</i></button>
+<a href="add_new_sales_quotation.php">
+                    <button class="btn btn-mat btn-primary ">Manage sales Quotation</i></button>
 </a>
                 </div>
 
@@ -56,7 +56,7 @@ include_once "../../files/head.php";
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Sales Order</h5>
+                                    <h5>Sales Quotation</h5>
                                     <span></span>
                                     <div class="card-header-right" >
                                         <ul class="list-unstyled card-option">

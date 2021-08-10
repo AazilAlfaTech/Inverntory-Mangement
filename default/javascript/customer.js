@@ -97,7 +97,7 @@ function check_customer_contact(){
 $(".customercity").change(function(){
 
   var cityid=$(".customercity").val();
-  console.log(cityid);
+ // console.log(cityid);
   
 
 });
