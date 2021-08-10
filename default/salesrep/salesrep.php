@@ -22,15 +22,14 @@ function __construct(){
 // ----INSERT NEW salesrep------------------------------------------------------------------------------------------------------------------
 
 
-function insert_salesrep(){
-
- $sql="INSERT INTO salesrep (salesrep_code,salesrep_name,salesrep_province)
- VALUES('$this->salesrep_code','$this->salesrep_name','$this->salesrep_province')
- ";
-
+function insert_salesrep()
+{
+    $sql="INSERT INTO salesrep (salesrep_code,salesrep_name,salesrep_province)
+    VALUES('$this->salesrep_code','$this->salesrep_name','$this->salesrep_province')";
     //echo $sql;
     $this->db->query($sql);
-    return true;
+    $srep_id=$this->db->insert_id;
+    return $srep_id;
 
 }
 

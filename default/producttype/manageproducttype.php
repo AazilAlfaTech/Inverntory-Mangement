@@ -261,7 +261,7 @@ include_once "../../files/head.php";
                                         <th>Type Code</th>
                                         <th>Type Name</th>
                                         <th>Type Group</th>
-                                        <th> </th>
+                                        <th> Action</th>
                                         
                                     </tr>
                                 </thead>
@@ -278,7 +278,7 @@ include_once "../../files/head.php";
                                                 <td>".$item->ptype_group_id->group_name."</td>
                                                 
 
-
+<td>
                                                 <div class='btn-group btn-group-sm' style='float: none;'>
                                                 <button type='button'  onclick='edit_type($item->ptype_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                 <button type='button'  onclick='delete_type($item->ptype_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
