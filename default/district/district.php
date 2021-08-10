@@ -1,7 +1,7 @@
 <?php 
 
 include_once "../../files/config.php";
-
+include_once "../province/province.php";
 class district {
 
 public $district_id;
@@ -9,6 +9,7 @@ public $district_code;
 public $district_name;
 public $district_status;
 public $district_date;
+public $district_province;
 
 private $db;
 
@@ -37,6 +38,8 @@ function __construct(){
 function get_all_district(){
     $sql = "SELECT * FROM district  ";
     //echo $sql;
+
+   
     $result = $this->db->query($sql);   
 
     $district_array = array();
@@ -83,6 +86,29 @@ function get_district_by_id($district_id){
 
 }
 
+function get_district_by_province($provinceid)
+{
+    $sql = "SELECT * FROM district WHERE district_province='$provinceid'";
+    // echo $sql;
+    $result = $this->db->query($sql);   
+    $district_array = array();
+    $district_province1=new province();
+    while($row=$result->fetch_array())
+    {
+
+        $district_item = new district(); 
+
+        $district_item->district_id=$row["district_id"];
+        $district_item->district_code=$row["district_code"];
+        $district_item->district_name=$row["district_name"];
+        $district_item->district_province=$district_province1->get_province_by_id($row["district_province"]);
+    $district_array[] = $district_item;
+
+    }
+
+    return $district_array;  
+}
+
 //.............................Edit...........
 
 // function edit_district($district_id){
@@ -100,7 +126,7 @@ function delete_district($district_id){
 
     $sql = "UPDATE district set district_status = 'INACTIVE' WHERE district_id='$district_id'";
 
-    echo $sql;
+    // echo $sql;
     $this->db->query($sql);
     return true;
 }

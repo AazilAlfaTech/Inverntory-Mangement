@@ -150,13 +150,13 @@ include_once "../../files/head.php";
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label"> Code</label>
                                                 <input type="text" value="<?= $city1->city_code ?>" class="form-control" placeholder=""
-                                                    name="citycode" id="" required>
+                                                    name="citycode" id="city_code" required>
 
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label">City Name</label>
                                                 <input type="text" value="<?= $city1->city_name ?>" class="form-control" placeholder="" name="cityname"
-                                                    id="city_code" required>
+                                                    id="city_name" required>
                                             </div>
 
                                
@@ -168,7 +168,7 @@ include_once "../../files/head.php";
                                                 <?php
                                                         foreach($result_province as $item)
                                                   
-                                                         if($item->province_id==$city1->city_province) 
+                                                         if($item->province_id==$city1->city_province->province_id) 
 
 			                                         echo "<option value='$item->province_id' selected='selected'>$item->province_name</option>";
                                                      else
@@ -185,7 +185,7 @@ include_once "../../files/head.php";
                                                 <?php
                                                         foreach($result_district as $item)
                                                      
-                                                         if($item->district_id==$city1->city_district)   
+                                                         if($item->district_id==$city1->city_district->district_id)   
 			                                         echo "<option value='$item->district_id' selected='selected'>$item->district_name</option>";
                                                      else
                                                     echo"<option value='$item->district_id'>$item->district_name</option>"

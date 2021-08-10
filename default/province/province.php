@@ -36,7 +36,10 @@ function __construct(){
 
 function get_all_province(){
     $sql = "SELECT * FROM province  ";
+
     //echo $sql;
+
+    
     $result = $this->db->query($sql);   
 
     $province_array = array();
@@ -66,6 +69,8 @@ function get_province_by_id($province_id){
     $sql = "SELECT * FROM province WHERE province_id =$province_id";
 
     //echo $sql;
+
+    
     $result=$this->db->query($sql);
 
     // $group_array=array();
@@ -101,6 +106,8 @@ function delete_province($province_id){
     $sql = "UPDATE province set province_status = 'INACTIVE' WHERE province_id='$province_id'";
 
     //echo $sql;
+
+ 
     $this->db->query($sql);
     return true;
 }

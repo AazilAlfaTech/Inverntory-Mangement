@@ -149,7 +149,31 @@ function get_city_by_name($city_name){
 
 }
 
+function get_city_by_district($city_district)
+{
+    $sql = "SELECT * FROM city WHERE city_district = '$city_district' ";
+    // echo $sql;
+    $result = $this->db->query($sql);   
 
+    $city_array = array();
+
+    
+    while($row = $result->fetch_array()){
+
+        $city_item = new city(); 
+        // $province1 = new province();
+        // $district1 = new district();
+
+        $city_item->city_id=$row["city_id"];
+        $city_item->city_code=$row["city_code"];
+        $city_item->city_name=$row["city_name"];
+
+    $city_array[] = $city_item;
+
+    }
+
+    return $city_array;  
+}
 
 }
 

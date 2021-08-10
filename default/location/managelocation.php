@@ -281,6 +281,7 @@ include_once "../../files/head.php";
                                             </thead>
                                             <tbody>
                                                 <?php
+
                                                     foreach($result_location as $item){
                                                         echo"
                                                         <tr>
@@ -300,6 +301,7 @@ include_once "../../files/head.php";
                                                         }
                                                 ?>
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
