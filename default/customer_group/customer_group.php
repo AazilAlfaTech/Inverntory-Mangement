@@ -26,7 +26,7 @@ function insert_customer_group(){
     $cus_groupcode=$_POST["cust_grcode"];
     $cus_groupname=$_POST["cust_grname"];
 
-    $sql_check="SELECT * FROM customer_group WHERE customergroup_code = '$cus_groupcode' OR customergroup_name=' $cus_groupname' ";
+    $sql_check="SELECT * FROM customer_group WHERE customergroup_code = '$cus_groupcode' OR customergroup_name='$cus_groupname' ";
     $res_code=$this->db->query($sql_check);
     //echo $sql_check;
         if($res_code->num_rows==0){
@@ -74,7 +74,7 @@ function get_all_customer_group(){
 function get_customer_group_by_id($cus_grp_id){
 
     $sql="SELECT * FROM customer_group WHERE customergroup_id = $cus_grp_id";
-    echo $sql;
+    //echo $sql;
     $result=$this->db->query($sql);
     $row=$result->fetch_array();
 
