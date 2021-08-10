@@ -1,6 +1,6 @@
 // .............District..............
 
-// Filtering the city according to the slected province
+// Filtering the district according to the slected province
 $(".selectprovince").change(function()
   {
     var province_id=$(".selectprovince").val();
