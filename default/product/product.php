@@ -9,6 +9,7 @@
             public $product_id;
             public $product_code;
             public $product_name;
+            public $product_group;
             public $product_type;
             public $product_uom;
             public $product_desc;
@@ -24,8 +25,8 @@
 
             function insert_product()
             {
-                $SQL="INSERT INTO product (product_name,product_type,product_uom,product_desc,product_inventory_val,product_batch )
-                VALUES ('$this->product_name','$this->product_type','$this->product_uom','$this->product_desc','$this->product_inventory_val',
+                $SQL="INSERT INTO product (product_name,product_group,product_code,product_type,product_uom,product_desc,product_inventory_val,product_batch )
+                VALUES ('$this->product_name','$this->product_group','$this->product_code','$this->product_type','$this->product_uom','$this->product_desc','$this->product_inventory_val',
                 '$this->product_batch')";
                 $this->db->query($SQL);
                 $product_id=$this->db->insert_id; //gets the id of the last insertion
@@ -33,6 +34,53 @@
                 // echo $SQL;
                 return true;
             }
+
+            // --------------------------------------------------------------------------------------
+
+
+            function get_count($typ_id,$grp_id){
+
+                $sql=" SELECT COUNT(*) AS count FROM product WHERE product_type = $typ_id AND product_group = $grp_id ";
+
+                $sql1=" SELECT group_name  FROM product_group  WHERE group_id = $grp_id ";
+                $sql2=" SELECT ptype_name  FROM product_type  WHERE ptype_id = $typ_id ";
+
+                $result = $this->db->query($sql);
+                $result1 = $this->db->query($sql1);
+                $result2 = $this->db->query($sql2);
+                
+
+                $count= 0;
+                $grp_name = "";
+
+                $type_name = "";
+                while($row=$result1->fetch_array()){
+
+                    $grp_name = $row["group_name"];
+                }
+       
+                while($row=$result2->fetch_array()){
+
+                    $type_name  = $row["ptype_name"];
+                }
+       
+
+
+                while($row=$result->fetch_array()){
+
+                    $count = $row["count"];
+                }
+                
+                $count = $count + 1 ;
+
+                $count = sprintf("%04d", $count); // PRDEFINED (TO ALLOCATE DIGITS)
+                
+                $code = substr($grp_name, 0, 1 ) . substr($type_name, 0, 1 ) . $count  ;
+                return  $code;
+            }
+
+        
+
 
             function edit_product($productid)
             {
