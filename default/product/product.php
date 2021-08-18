@@ -111,6 +111,7 @@
                 // return false;
             }
 
+            // --------------------------------------------------------------------------------------------------------------------------------------
             function getall_product(){
            
                 $SQL="SELECT * FROM product WHERE product_status='ACTIVE'";
@@ -124,7 +125,7 @@
                     $product->product_id=$row["product_id"];
                     $product->product_code=$row["product_code"];
                     $product->product_name=$row["product_name"];
-                    $product->product_type=$ptype1->get_type_by_id ($row["product_type"]);
+                     $product->product_type=$ptype1->get_type_by_id ($row["product_type"]);
                     $product->product_uom=$row["product_uom"];
                     $product->product_desc=$row["product_desc"];
                     $product->product_inventory_val=$row["product_inventory_val"];
@@ -135,6 +136,7 @@
                 return  $product_array;
             }
 
+    
             function getall_product2()
             {
                 $SQL="SELECT product.product_id,product.product_code,product.product_name,product.product_type,product.product_uom,product.product_inventory_val,
