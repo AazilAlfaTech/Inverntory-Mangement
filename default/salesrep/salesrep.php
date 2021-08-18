@@ -6,7 +6,7 @@ class salesrep{
  
 public $salesrep_code;
 public $salesrep_name;
-public $salesrep_province;
+// public $salesrep_province;
 public $salesrep_status;
 public $salesrep_date;
 
@@ -24,8 +24,8 @@ function __construct(){
 
 function insert_salesrep()
 {
-    $sql="INSERT INTO salesrep (salesrep_code,salesrep_name,salesrep_province)
-    VALUES('$this->salesrep_code','$this->salesrep_name','$this->salesrep_province')";
+    $sql="INSERT INTO salesrep (salesrep_code,salesrep_name)
+    VALUES('$this->salesrep_code','$this->salesrep_name')";
     //echo $sql;
     $this->db->query($sql);
     $srep_id=$this->db->insert_id;
@@ -51,7 +51,7 @@ function get_all_salesrep(){
         $salesrep_item->salesrep_id=$row["salesrep_id"];
         $salesrep_item->salesrep_code=$row["salesrep_code"];
         $salesrep_item->salesrep_name=$row["salesrep_name"];
-        $salesrep_item->salesrep_province=$row["salesrep_province"];
+        // $salesrep_item->salesrep_province=$row["salesrep_province"];
         $salesrep_item->salesrep_status=$row["salesrep_status"];
         $salesrep_item->salesrep_date=$row["salesrep_date"];
 
@@ -77,7 +77,7 @@ function get_salesrep_by_id($salesrepid){
     $salesrep_item->salesrep_id=$row["salesrep_id"];
     $salesrep_item->salesrep_code=$row["salesrep_code"];
     $salesrep_item->salesrep_name=$row["salesrep_name"];
-    $salesrep_item->salesrep_province=$row["salesrep_province"];              
+    // $salesrep_item->salesrep_province=$row["salesrep_province"];              
     $salesrep_item->salesrep_status=$row["salesrep_status"];
 
        
@@ -92,7 +92,7 @@ function get_salesrep_by_id($salesrepid){
 function edit_salesrep($salesrepid){
 
     $sql="UPDATE salesrep  SET 
-    salesrep_code='$this->salesrep_code', salesrep_name='$this->salesrep_name',salesrep_province='$this->salesrep_province'
+    salesrep_code='$this->salesrep_code', salesrep_name='$this->salesrep_name'
     WHERE salesrep_id=$salesrepid ";
     //echo $sql;
     $this->db->query($sql);
@@ -127,7 +127,7 @@ function get_salesrep_by_code($salesrepcode){
     $salesrep_item->salesrep_id=$row["salesrep_id"];
     $salesrep_item->salesrep_code=$row["salesrep_code"];
     $salesrep_item->salesrep_name=$row["salesrep_name"];
-    $salesrep_item->salesrep_province=$row["salesrep_province"];
+    // $salesrep_item->salesrep_province=$row["salesrep_province"];
     $salesrep_item->salesrep_status=$row["salesrep_status"];
 
        

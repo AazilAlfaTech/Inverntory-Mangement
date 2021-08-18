@@ -11,6 +11,7 @@ public $location_number;
 public $location_email;
 public $location_status;
 public $location_date;
+public $location_id;
 
 private $db;
 
@@ -60,7 +61,7 @@ function get_all_location(){
 
         $location_item = new location();
 
-        //$location_item->location_id=$row["location_id"];
+        $location_item->location_id=$row["location_id"];
         $location_item->location_code=$row["location_code"];
         $location_item->location_name=$row["location_name"];
         $location_item->location_add=$row["location_add"];
