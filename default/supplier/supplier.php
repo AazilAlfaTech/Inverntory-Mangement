@@ -84,7 +84,7 @@ function get_all_supplier(){
 // ----------------------------------------------------------------------------------------------------------------------
 function get_supplier_by_id($supplierid){
     $sql="SELECT * FROM supplier WHERE supplier_id=$supplierid";
-    echo $sql;
+    //echo $sql;
     $result=$this->db->query($sql);
 
    

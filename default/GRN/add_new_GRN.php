@@ -118,7 +118,7 @@ include_once "../../files/head.php";
                                                 <option value="2">@fat</option>
                                                 <option value="3">@twitter</option>
                                             </select>
-                                                                </td>
+                                                                </td> 
                                                             </tr>
                                                   
                                                        
