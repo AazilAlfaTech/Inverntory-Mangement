@@ -1,7 +1,7 @@
 <?php
     include_once "../../files/config.php";
-    include_once "../purchase_order/po.php";
-    include_once "../purchase_requisition/purchase_requisition1.php";
+    include_once "../purchase_order/purchaseorder.php";
+    include_once "../purchase_requisition/purchase_requisition.php";
 
     class GRN
     {
@@ -25,7 +25,7 @@
             $SQL="INSERT INTO grn (grn_puch_order_id,grn_received_loc,grn_date,grn_ref_no) VALUES
             ('$this->grn_puch_order_id','$this->grn_received_loc','$this->grn_date','$this->grn_ref_no')";
             $this->db->query($SQL);
-            echo $SQL;
+            // echo $SQL;
             $grnid=$this->db->insert_id;
             return $grnid;
         }
@@ -143,12 +143,12 @@
             FROM grn INNER JOIN purchase_order on grn.grn_puch_order_id=purchase_order.purchaseorder_id INNER JOIN purchase_order_item on purchase_order.purchaseorder_id=purchase_order_item.po_item_orderid inner join purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
             INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE  	purchaseorder_status='ACTIVE' AND  	purchaseorder_id='$id'";
             $result=$this->db->query($SQL);
-            echo ($SQL);
+            // echo ($SQL);
             $grn_po_array=array();
 
             while($row=$result->fetch_array())
             {
-                $grn_po=new po();
+                $grn_po=new purchaseorder();
                 // $grn_po->purchaseorder_id=$row["purchaseorder_id"];
                 // $grn_po->purchaseorder_requestid=$row["purchaseorder_requestid"];
                 $grn_po->purchaseorder_item_orderid=$row["po_item_orderid"];
@@ -175,7 +175,7 @@
             FROM grn INNER JOIN purchase_order on grn.grn_puch_order_id=purchase_order.purchaseorder_id INNER JOIN purchase_order_item on purchase_order.purchaseorder_id=purchase_order_item.po_item_orderid inner join purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
             INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE grn_status='ACTIVE' AND grn_id='$id'";
             $result=$this->db->query($SQL);
-            echo ($SQL);
+            // echo ($SQL);
             $row=$result->fetch_array();
         
                 $grn_po=new GRN();
@@ -204,7 +204,7 @@
 
             while($row=$result->fetch_array())
             {
-                $grn_po=new po();
+                $grn_po=new purchaseorder();
                 $grn_po->purchaseorder_item_orderid=$row["po_item_orderid"];
                 $grn_po->purchaseorder_itemid=$row["po_item_productid"];
                 $grn_po->purchaseorder_qty=$row["po_item_qty"];

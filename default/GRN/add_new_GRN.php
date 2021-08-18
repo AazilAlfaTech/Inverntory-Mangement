@@ -2,11 +2,11 @@
 
     include_once "GRN.php";
     include_once "grn_item.php";
-    include_once "../purchase_order/po.php";
+    include_once "../purchase_order/purchaseorder.php";
     include_once "../location/location.php";
 
-    $po1=new po();
-    $result_po=$po1->getall_purchaseorder();
+    $po1=new purchaseorder();
+    $result_po=$po1->get_all_purchaseorder();
     // $result_po2=$po1-> get_purch_byid($_GET["view"]);
     
     $grn1=new grn();
@@ -16,7 +16,7 @@
 
     if(isset($_GET["view"]))
     {
-        $result_po2=$po1-> get_purch_byid($_GET["view"]);
+        $result_po2=$po1-> get_purchaseorder_by_id($_GET["view"]);
         $result_grn1=$grn1-> get_purchsup_by_prid($_GET["view"]);
         $result_grn2=$grn1-> get_all_grn_by_poid($_GET["view"]);
     }
