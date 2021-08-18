@@ -2,6 +2,12 @@
 
 include_once "../../files/head.php";
 
+include_once "customer.php";
+
+$customer1 = new customer();
+
+
+
 ?>
 
 
@@ -19,7 +25,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4> Product Details</h4>
+                                    <h4> Customer Details</h4>
 
                                 </div>
                             </div>
@@ -52,11 +58,8 @@ include_once "../../files/head.php";
 
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-header-text">About Me</h5>
-                                        <button id="edit-btn" type="button"
-                                            class="btn btn-sm btn-primary waves-effect waves-light f-right">
-                                            <i class="icofont icofont-edit"></i>
-                                        </button>
+                                        <!-- <h5 class="card-header-text">About Me</h5> -->
+                                       
                                     </div>
                                     <div class="card-block">
                                         <div class="view-info">

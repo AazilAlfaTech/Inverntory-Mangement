@@ -46,6 +46,9 @@
     <link rel="stylesheet" type="text/css" href="..\..\files\assets\css\jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="..\..\files\assets\scss\partials\menu\_pcmenu.htm">
 
+        <!-- jquery file upload Frame work -->
+        <link href="..\..\files\assets\pages\jquery.filer\css\jquery.filer.css" type="text/css" rel="stylesheet">
+    <link href="..\..\files\assets\pages\jquery.filer\css\themes\jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet">
   
 
 </head>
