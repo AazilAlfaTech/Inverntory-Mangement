@@ -174,7 +174,7 @@ function check_typename(){
     $.get("../ajax/ajaxmaster.php?type=checktypegroup",{producttype_group:group_id},function(data)
     {
       console.log(data);
-      var d=JSON.parse(data);
+      var d=JSON.parse(data); 
       $("#type_id").html("");
       $.each(d,function(i,x)
       {

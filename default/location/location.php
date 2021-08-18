@@ -140,6 +140,47 @@ function delete_location($location_id){
 
 
 }
+function get_location_by_code($locationcode){
+
+    $sql="SELECT * FROM location WHERE location_code ='$locationcode'";
+    //echo $sql;
+    $result=$this->db->query($sql);
+    $row=$result->fetch_array();
+
+    $location_item = new location();
+
+    $location_item->location_id=$row["location_id"];
+    $location_item->location_code=$row["location_code"];
+    $location_item->location_name=$row["location_name"];
+    $location_item->location_add=$row["location_add"];
+    $location_item->location_number=$row["location_number"];
+    $location_item->location_email=$row["location_email"];
+    $location_item->location_status=$row["location_status"];
+
+       
+    return $location_item;
+}
+function get_location_by_mail($locationmail){
+
+    $sql="SELECT * FROM location WHERE location_email ='$locationmail)'";
+    //echo $sql;
+    $result=$this->db->query($sql);
+    $row=$result->fetch_array();
+
+    $location_item = new location();
+
+    $location_item->location_id=$row["location_id"];
+    $location_item->location_code=$row["location_code"];
+    $location_item->location_name=$row["location_name"];
+    $location_item->location_add=$row["location_add"];
+    $location_item->location_number=$row["location_number"];
+    $location_item->location_email=$row["location_email"];
+    $location_item->location_status=$row["location_status"];
+
+       
+    return $location_item;
+}
+
 
 
 }

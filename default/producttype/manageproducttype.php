@@ -266,7 +266,7 @@ include_once "../../files/head.php";
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
+                                <?php
                                         foreach ($result_ptype as $item)
                                         {
                                             echo

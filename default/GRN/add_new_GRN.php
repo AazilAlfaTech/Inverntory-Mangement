@@ -23,7 +23,7 @@
 
     $location1=new location();
     $result_location1=$location1->get_all_location();
-    
+
     // insert grn details
     if(isset($_POST["grnpurchorderid"]))
     {
@@ -221,10 +221,11 @@
                                                                         </td>
 
                                                                         <td>
-                                                                <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
-                                                                <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
-                                                                <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
-                                                                </td>
+                                                                            <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
+                                                                            <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
+                                                                            <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
+                                                                        </td>
+
         
                                                                     </tr>
                                                     

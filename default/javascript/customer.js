@@ -78,7 +78,7 @@ function check_customer_mail(){
 function check_customer_contact(){
     let contact=$("#cust_no").val();
     console.log(contact);
-    var contactlegnth=contact.length
+    var contactlegnth=contact.length 
    $("#contactcheck_msg").hide();
    if(contactlegnth>1){
      $.get("../ajax/ajaxcustomer.php?type=checkcustomercontact&cus_contact="+contact+"",function(data){

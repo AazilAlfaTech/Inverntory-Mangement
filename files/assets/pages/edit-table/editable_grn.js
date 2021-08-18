@@ -21,11 +21,12 @@
               identifier: [0, 'id'],
 
               editable: [
-                  [1, 'Product Name'],
+
+                  [1, 'Quantity'],
                   [2, 'Price'],
-                  [3, 'Quantity'],
-                  [4, 'Discount'],
-                  [5,'Total']
+                  [3 , 'Discount'],
+                  [4, 'Total']
+
               ]
 
           }
