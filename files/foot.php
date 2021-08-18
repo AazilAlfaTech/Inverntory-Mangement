@@ -49,6 +49,12 @@
 <script type="text/javascript" src="..\..\files\bower_components\jquery-i18next\js\jquery-i18next.min.js"></script>
 
 
+    <!-- jquery file upload js -->
+    <script src="..\..\files\assets\pages\jquery.filer\js\jquery.filer.min.js"></script>
+    <script src="..\..\files\assets\pages\filer\custom-filer.js" type="text/javascript"></script>
+    <script src="..\..\files\assets\pages\filer\jquery.fileuploads.init.js" type="text/javascript"></script>
+
+
 
 <!-- Custom js -->
 <!-- auto complete -->

@@ -151,7 +151,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select Group</label>
-                                                <select class="js-example-basic-single col-sm-12 productgroup" name="productgroup" id="gr_id" onchange="autocode()">
+                                                <select class="js-example-basic-single col-sm-12 productgroup" name="productgroup" id="gr_id" onchange="autocode()" required>
                                                     <option value="-1">Select Group</option>
                                                     <?php
                                                         foreach($result_group as $item)
@@ -164,7 +164,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Type </label>
-                                                <select class="js-example-basic-single col-sm-12 productitem" name="prodtypeid" id="type_id" onchange="autocode()">
+                                                <select class="js-example-basic-single col-sm-12 productitem" name="prodtypeid" id="type_id" onchange="autocode()" required>
                                                     <option value="-1">Select Type</option>
                                                     <?php
                                                         foreach($result_type as $item)
@@ -178,7 +178,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Select UOM </label>
-                                                <select class="js-example-basic-single col-sm-12" name="unitid" id="unit_id">
+                                                <select class="js-example-basic-single col-sm-12" name="unitid" id="unit_id" required>
                                                     <option value="-1">Select UOM</option>
                                                     <?php
                                                         foreach($result_uom as $item)
@@ -195,7 +195,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label"> Product Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="productname" id="prod_name" value="<?=$product1->product_name?>">
+                                                <input type="text" class="form-control" placeholder="" name="productname" id="prod_name" value="<?=$product1->product_name?>" required>
                                             </div>
 
                                             <div class="col-sm-4">
@@ -234,12 +234,17 @@ include_once "../../files/head.php";
                                             <!-- <div class="col-sm-6 row"> -->
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label"> Product image</label>
-                                                <input type="file" class="form-control" placeholder="" name="productimage" id="prod_image"   value="">
+                                                <input type="file" class="form-control" placeholder="" name="productimage" id="filer_input1"   value="">
                                             </div>
-                                                <div class="col-sm-3">
+                                                <!-- <div class="col-sm-3">
                                             <img src="/IMS/inventory/default/product/productimage/<?=$product1->product_id?>.jpg" style="height: 100px; width: 150px;">  
-                                            </div>
+                                            </div> -->
                                             <!-- </div> -->
+
+                                            <!-- <div class="card-block">
+                                                <div class="sub-title">Example 1</div>
+                                                <input type="file" name="productimage" id="filer_input1" >
+                                            </div> -->
                                             
                                         </div>
 
@@ -338,7 +343,7 @@ include_once "../../files/head.php";
                                                     <th>Product Name</th>
                                                     <th>Product Group</th>
                                                     <th>Product Type</th>
-                                                    <!-- <th>Product UOM</th> -->
+                                                   <th>Action</th> 
 
 
                                                 </tr>

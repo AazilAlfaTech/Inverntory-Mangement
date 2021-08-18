@@ -147,10 +147,15 @@ include_once "../../files/head.php";
                                    ?>
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label">Customer Code</label>
-                                                <input type="text" class="form-control" placeholder="" name="custcode" pattern="^[A-Z0-9]*$" onkeyup="check_customer_code()"  onblur="check_customer_code()"
-                                                    id="cust_code" value="<?=$customer1->customer_code ?>"  <?php if($customer1->customer_code){echo "readonly=\"readonly\"";} ?> required>
-                                                    <div class="col-form-label" id="codecheck_msg" style="display:none;">Sorry, that name is taken. Try
-                                                            another?
+                                                <input type="text" class="form-control" placeholder="" name="custcode"
+                                                    pattern="^[A-Z0-9]*$" onkeyup="check_customer_code()"
+                                                    onblur="check_customer_code()" id="cust_code"
+                                                    value="<?=$customer1->customer_code ?>"
+                                                    <?php if($customer1->customer_code){echo "readonly=\"readonly\"";} ?>
+                                                    required>
+                                                <div class="col-form-label" id="codecheck_msg" style="display:none;">
+                                                    Sorry, that name is taken. Try
+                                                    another?
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
@@ -159,7 +164,8 @@ include_once "../../files/head.php";
                                                     id="cust_group" required>
 
                                                     <option value=" ">Select Customer Group</option>
-                                                   <?php
+                                                    <?php
+
                                                         foreach($result_cus_group as $item)
                                                       
                                                         if($item->customergroup_id==$customer1->customer_group)   
@@ -173,7 +179,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Customer Name</label>
-                                                <input type="text" class="form-control" placeholder="" name="custname" 
+                                                <input type="text" class="form-control" placeholder="" name="custname"
                                                     id="cust_name" value="<?=$customer1->customer_name ?>" required>
                                             </div>
                                         </div>
@@ -181,18 +187,24 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Contact Number</label>
-                                                <input type="text" class="form-control" placeholder="" name="custno" onblur="check_customer_contact()" onkeyup="check_customer_contact()" pattern="[0-9]{10}"
-                                                    id="cust_no" value="<?=$customer1->customer_contactno ?>" required>
-                                                    <div class="col-form-label" id="contactcheck_msg" style="display:none;">Sorry, that contact number is taken. Try
-                                                            another?
+                                                <input type="text" class="form-control" placeholder="" name="custno"
+                                                    onblur="check_customer_contact()" onkeyup="check_customer_contact()"
+                                                    pattern="[0-9]{10}" id="cust_no"
+                                                    value="<?=$customer1->customer_contactno ?>" required>
+                                                <div class="col-form-label" id="contactcheck_msg" style="display:none;">
+                                                    Sorry, that contact number is taken. Try
+                                                    another?
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">E-mail</label>
-                                                <input type="email" class="form-control" placeholder="" name="cust_email" onkeyup="check_customer_mail()" onblur="check_customer_mail()"
-                                                    id="cust_email" value="<?=$customer1->customer_email ?>" required>
-                                                    <div class="col-form-label" id="mailcheck_msg" style="display:none;">Sorry, that e-mail is taken. Try
-                                                            another?
+                                                <input type="email" class="form-control" placeholder=""
+                                                    name="cust_email" onkeyup="check_customer_mail()"
+                                                    onblur="check_customer_mail()" id="cust_email"
+                                                    value="<?=$customer1->customer_email ?>" required>
+                                                <div class="col-form-label" id="mailcheck_msg" style="display:none;">
+                                                    Sorry, that e-mail is taken. Try
+                                                    another?
                                                 </div>
                                             </div>
 
@@ -217,12 +229,13 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-3">
                                                 <label class=" col-form-label">City</label>
-                                                <select class="js-example-basic-single col-sm-12 customercity" name="custcity"
-                                                    id="cust_city" required>
+                                                <select class="js-example-basic-single col-sm-12 customercity"
+                                                    name="custcity" id="cust_city" required>
 
-                                                   
-                                                    <option value="">Select City</option>
-                                                   <?php
+                                                    <!-- location not done -->
+                                                    <option value="-1">Select City</option>
+                                                    <?php
+
                                                         foreach($result_city as $item)
                                                       
                                                         if($item->city_id==$customer1->customer_city)   
@@ -240,12 +253,12 @@ include_once "../../files/head.php";
 
                                         <div class="form-group row">
 
-                                        <div class="col-sm-4">
+                                            <div class="col-sm-4">
                                                 <label class=" col-form-label">Sales Rep</label>
                                                 <select class="js-example-basic-single col-sm-12" name="custsrep"
-                                                    id="cust_salesrep" required >
+                                                    id="cust_salesrep" required>
                                                     <option value=" ">Select Sales rep</option>
-                                                   <?php
+                                                    <?php
                                                         foreach($result_salesrep as $item)
                                                       
                                                         if($item->salesrep_id==$customer1->customer_salesrep)   
@@ -254,7 +267,7 @@ include_once "../../files/head.php";
                                                     echo"<option value='$item->salesrep_id'>$item->salesrep_name</option>";
                                                     ?>
 
-                                                   
+
                                                 </select>
                                             </div>
 
@@ -267,10 +280,11 @@ include_once "../../files/head.php";
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Credit Limit</label>
                                                 <input type="text" class="form-control" placeholder="" name="custclimit"
-                                                    id="cust_creditlimit" value="<?=$customer1->customer_creditlimit ?>">
+                                                    id="cust_creditlimit"
+                                                    value="<?=$customer1->customer_creditlimit ?>">
                                             </div>
 
-                                         
+
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">ADD</button>
@@ -314,7 +328,7 @@ include_once "../../files/head.php";
                             </div>";
                             }
                             ?>
-                             <?php
+                            <?php
                                 if(isset($_GET['delete_success'])) {
                                     echo"<div class='alert alert-danger background-danger'>
                                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -344,7 +358,7 @@ include_once "../../files/head.php";
                             </div>";
                             }
                             ?>
-                        <!-- //ALERT MESSAGES END................... -->
+                            <!-- //ALERT MESSAGES END................... -->
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
@@ -367,8 +381,6 @@ include_once "../../files/head.php";
                                                     <th>Customer Code</th>
                                                     <th> Customer Name</th>
                                                     <th>Contact Number </th>
-                                                  
-                                               
 
                                                     <th>Action</th>
 
@@ -389,6 +401,7 @@ include_once "../../files/head.php";
                                                                      
 
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
+                                                                        <button type='button' id='editprod' onclick='view_cus($item->customer_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></button>
                                                                         <button type='button' onclick='edit_cus($item->customer_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
                                                                         <button type='button'  onclick='delete_cus($item->customer_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
                                                                         </td> 
@@ -434,27 +447,35 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
-<!-- ------------------------------------------------------------------------------------------------- -->
+                            <!-- ------------------------------------------------------------------------------------------------- -->
 
 
-<script type="text/javascript" src="../javascript/customer.js"></script>
-<script>
-$( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
+                            <script type="text/javascript" src="../javascript/customer.js"></script>
+                            <script>
+                            $(".alert").fadeIn(300).delay(3500).fadeOut(400);
 
-function edit_cus(edit_cus) {
-
-
-    window.location.href = "manage_customer.php?edit_cus=" + edit_cus;
+                            function edit_cus(edit_cus) {
 
 
-}
+                                window.location.href = "manage_customer.php?edit_cus=" + edit_cus;
 
 
-function delete_cus(deleteid) {
 
-    if (confirm("Do you want to delete id" + " " + deleteid)) {
-        window.location.href = "manage_customer.php?d_id=" + deleteid;
-    }
+                            }
 
-}
-</script>
+                            function view_cus(edit_cus) {
+
+
+                                window.location.href = "view_customer.php?edit_cus=" + edit_cus;
+
+
+                            }
+
+                            function delete_cus(deleteid) {
+
+                                if (confirm("Do you want to delete id" + " " + deleteid)) {
+                                    window.location.href = "manage_customer.php?d_id=" + deleteid;
+                                }
+
+                            }
+                            </script>

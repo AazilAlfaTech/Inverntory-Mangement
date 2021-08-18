@@ -1,6 +1,26 @@
 <?php
 
+
+include_once "purchase_requisition.php";
+
+    $purchasereq1 = new purchaserequest();
+
+    $result_pr=$purchasereq1->get_all_purchaserequest();
+
+    // print_r($result_pr);
+
+
+
+    if(isset($_GET['edit_pr'])){
+        $purchasereq1=$purchasereq1->get_purchaserequest_by_id($_GET['edit_pr']);
+    }
+
+
+
+
+
 include_once "../../files/head.php";
+
 
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
@@ -79,20 +99,34 @@ include_once "../../files/head.php";
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>At123</td>
-                                                    <td>Alfa grp</td>
-                                                    <td>At123</td>
+                                            <?php
 
-                                                    <td> <button class="btn btn-mat btn-danger "><i
-                                                                class="fa fa-trash"></i> </button>
-                                                        <button class="btn btn-mat btn-info "><i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <a href="view_puchase_requisition.php">   <button class="btn btn-mat btn-primary "><i
-                                                                class="icofont icofont-eye-alt"></i></button> </a>
-                                                    </td>
+                                                 foreach($result_pr as $item){
+                                                                    echo"
+                                                                    <tr>
 
-                                                </tr>
+                                                                        <td>$item->purchaserequest_ref   </td>
+                                                                        <td>$item->purchaserequest_date</td>
+                                                                        <td>$item->purchaserequest_supplier  </td>
+                                                                     
+                                                                      
+                                                                     
+                                                                     
+
+                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>
+                                                                        <button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></button>
+                                                                        <button type='button' onclick='edit_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
+                                                                        <button type='button'  onclick='delete_pr($item->purchaserequest_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                                                        </td> 
+                                               
+                                               
+                                                                       
+                                                                       
+                                                                    </tr>
+                                                                    ";
+                                                                        }
+
+                                                ?>
 
                                                 </tfoot>
                                         </table>
@@ -126,3 +160,35 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
+
+
+
+<script type="text/javascript" src="../javascript/customer.js"></script>
+                            <script>
+                            $(".alert").fadeIn(300).delay(3500).fadeOut(400);
+
+                            function edit_pr(edit_pr) {
+
+
+                                window.location.href = "add_new_purchase_requisition.php?edit_pr=" + edit_pr;
+
+
+
+                            }
+
+                            function view_pr(view_pr) {
+
+
+                                window.location.href = "view_puchase_requisition.php?view_pr=" + view_pr;
+
+
+                            }
+
+                            function delete_pr(deleteid) {
+
+                                if (confirm("Do you want to delete id" + " " + deleteid)) {
+                                    window.location.href = "manage_purchase_requisition.php?d_id=" + deleteid;
+                                }
+
+                            }
+                            </script>
