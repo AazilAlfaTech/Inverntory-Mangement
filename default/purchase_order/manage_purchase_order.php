@@ -58,6 +58,16 @@ include_once "../../files/head.php";
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
+                        <?php
+            if(isset($_GET['success'])) {
+                echo"<div class='alert alert-success background-success'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>New group added successfully</strong> 
+            </div>";
+            }
+            ?>
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">

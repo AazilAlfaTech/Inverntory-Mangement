@@ -32,11 +32,13 @@ if(isset($_POST['purchaseorderdate'])){
     $purchaseorder2->purchaserorder_requestid=$_POST['purchaseorderdate'];
     $purchaseorder2->purchaserorder_requestid=$_POST['purchaseorderrequest'];
     $purchaseorder2->purchaseorder_date=$_POST['purchaseorderdate'];
+    $purchaseorder2->purchaseorder_ref=$purchaseorder2->po_code($_POST['purchaseorderdate']);
 
     $Purch_reqid=$purchaseorder2->insert_purchaseorder();
     
     
    $purchaseorderitem2->insert_POitem1($Purch_reqid);
+   header("location:../purchase_order/manage_purchase_order.php?success=1");
 
 
 }
@@ -196,8 +198,9 @@ include_once "../../files/head.php";
                         <th>Product</th>
                         <th>Qty</th>
                         <th>Price</th>
-                        <!-- <th>Discount</th>
-                        <th>Total</th> -->
+                        <th>Discount</th>
+                        <th>Total</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
