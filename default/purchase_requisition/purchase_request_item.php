@@ -49,53 +49,27 @@ class purchase_request_item{
 
 
 
-// --------------------------------------------------------------------------------------------------------------------
-    function get_all_item_by_requestid($purch_req_id){
-        $sql="SELECT * FROM purchase_request_item WHERE pr_item_requestid=$purch_req_id";
-        $result=$this->db->query($sql);
-        $row=$result->fetch_array();
-
-        $PR_item1=new purchase_request_item();
-
-        $PR_item1->pr_item_id=$row['pr_item_id'];
-        $PR_item1->pr_item_requestid=$row['pr_item_requestid'];
-        $PR_item1->pr_item_productid=$row['pr_item_productid'];
-        $PR_item1->pr_item_qty=$row['pr_item_qty'];
-        $PR_item1->pr_item_price=$row['pr_item_price'];
-        $PR_item1->pr_item_discount=$row['pr_item_discount'];
-        $PR_item1->pr_item_finalprice=$row['pr_item_finalprice'];
-
-        return $PR_item1;
-        
-        
-
-    }
- //--------------------------------------------------------------------------------------------------------------------------- 
-
- function get_all_product_by_pr_id($purch_req_id){
-    $sql="SELECT * FROM purchase_request_item WHERE pr_item_requestid=$purch_req_id";
-
+function get_all_item_by_requestid($purch_req_id){
+    $sql="SELECT purchase_request_item.pr_item_id ,purchase_request_item.pr_item_requestid ,purchase_request_item.pr_item_productid , purchase_request_item.pr_item_qty , purchase_request_item.pr_item_price ,purchase_request_item.pr_item_discount ,product.product_name FROM purchase_request_item INNER JOIN product ON purchase_request_item.pr_item_productid=product.product_id WHERE pr_item_requestid=$purch_req_id";
     $result=$this->db->query($sql);
-
-    $product_array=array();
-
-
+    $item_array=array();
+    // echo $sql;
     while($row=$result->fetch_array()){
+
     $PR_item1=new purchase_request_item();
 
     $PR_item1->pr_item_id=$row['pr_item_id'];
     $PR_item1->pr_item_requestid=$row['pr_item_requestid'];
     $PR_item1->pr_item_productid=$row['pr_item_productid'];
+    $PR_item1->product_name=$row['product_name'];
     $PR_item1->pr_item_qty=$row['pr_item_qty'];
     $PR_item1->pr_item_price=$row['pr_item_price'];
     $PR_item1->pr_item_discount=$row['pr_item_discount'];
-    $PR_item1->pr_item_finalprice=$row['pr_item_finalprice'];
-
-
-    $product_array[]=$PR_item1;
-    return $product_array;
-
-                }
+    $PR_item1->item_discount=round($row['pr_item_price']-($row['pr_item_price']*$row['pr_item_discount']/100),2);
+   
+    $item_array[]= $PR_item1;
+    }
+    return $item_array;
     
 
 }
