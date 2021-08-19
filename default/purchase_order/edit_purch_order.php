@@ -141,7 +141,7 @@ include_once "../../files/head.php";
                                                                     </td>
                                                                 
                                                                 
-                                                                <td>
+                                                                <td>2
                                                                 <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
                                                                 <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
                                                                 <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>

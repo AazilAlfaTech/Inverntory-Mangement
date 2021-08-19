@@ -357,28 +357,28 @@
                                 <ul class="pcoded-submenu">
                         
                                     <li class=" ">
-                                        <a href="../group/manageproductgroup.php" target="_blank">
+                                        <a href="../group/manageproductgroup.php" target="">
                                             <span class="pcoded-mtext">  Group</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../producttype/manageproducttype.php" target="_blank">
+                                        <a href="../producttype/manageproducttype.php" target="">
                                             <span class="pcoded-mtext">Type</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../location/managelocation.php" target="_blank">
+                                        <a href="../location/managelocation.php" target="">
                                             <span class="pcoded-mtext">Location</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../uom/manageuom.php"  target="_blank">
+                                        <a href="../uom/manageuom.php"  target="">
                                             <span class="pcoded-mtext">UOM</span>
                                         </a>
                                     </li>
 
                                     <li class=" ">
-                                        <a href="../product/manageproduct.php" target="_blank">
+                                        <a href="../product/manageproduct.php" target="">
                                             <span class="pcoded-mtext">Products</span>
                                         </a>
                                     </li>
