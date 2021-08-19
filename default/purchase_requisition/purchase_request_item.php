@@ -42,6 +42,36 @@ class purchase_request_item{
 
 }
 
+// ====================================================================================================================
+
+function get_all_product_by_pr_id($purch_req_id){
+    $sql="SELECT * FROM purchase_request_item WHERE pr_item_requestid=$purch_req_id";
+
+    $result=$this->db->query($sql);
+
+    $product_array=array();
+
+
+    while($row=$result->fetch_array()){
+    $PR_item1=new purchase_request_item();
+
+    $PR_item1->pr_item_id=$row['pr_item_id'];
+    $PR_item1->pr_item_requestid=$row['pr_item_requestid'];
+    $PR_item1->pr_item_productid=$row['pr_item_productid'];
+    $PR_item1->pr_item_qty=$row['pr_item_qty'];
+    $PR_item1->pr_item_price=$row['pr_item_price'];
+    $PR_item1->pr_item_discount=$row['pr_item_discount'];
+    $PR_item1->pr_item_finalprice=$row['pr_item_finalprice'];
+
+
+    $product_array[]=$PR_item1;
+    return $product_array;
+
+                }
+    
+
+}
+
 
 
 
