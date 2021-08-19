@@ -5,7 +5,7 @@
 include_once ("../purchase_requisition/purchase_requisition.php");
 $purchase_request2=new purchaserequest();
 
-include_once ("../purchase_requisition/purchase_requestitem.php");
+include_once ("../purchase_requisition/purchase_request_item.php");
 $purchase_request_item2=new purchase_request_item();
 
 include_once ("../purchase_order/purchaseorder.php");
@@ -159,13 +159,11 @@ include_once "../../files/head.php";
 
 
 
-
+<?php if(isset($_GET['view'])):?>
 <div class='form-group row'>
-    <?php
-     if(isset($_GET["view"])){
-        echo"  <input type='hidden'  class='form-control' value='".$_GET['view'] ."' name='purchaseorderrequest' required>";
-       }
-    ?>
+    
+     <input type='hidden'  class='form-control' value=<?=$_GET['view'] ?> name='purchaseorderrequest' required>
+       
 
      <div class='col-sm-4'>
         <label class='col-form-label'> PR Reference No</label>
@@ -173,7 +171,7 @@ include_once "../../files/head.php";
     </div>
     <div class='col-sm-4'>
         <label class='col-form-label'>Supplier</label>
-        <input class='form-control' type='text'value=<?=$purchase_request2->supplier_name1 ?> <?php if($purchase_request2->supplier_name1){echo "readonly=\"readonly\"";} ?>>
+        <input class='form-control' type='text'value=<?=$purchase_request2->purchaserequest_supplier ?> <?php if($purchase_request2->purchaserequest_supplier){echo "readonly=\"readonly\"";} ?>>
     </div>
     <div class='col-sm-4'>
         <label class='col-form-label'>Date</label>
@@ -203,11 +201,11 @@ include_once "../../files/head.php";
                     </tr>
                 </thead>
                 <tbody>
-<?php if(isset($_GET['view'])):?>
+
     <?php foreach( $purchase_request_item2 as $item):  ?>
     <tr>
     <td class='table-edit-view'><span class=''><?= $item->product_name?></span>
-        <input class='form-control input-sm  '   type='hidden' name='Product[]' value='<?= $item->pr_item_id ?>'>
+        <input class='form-control input-sm  '   type='hidden' name='Product[]' value='<?= $item->pr_item_productid ?>'>
         </td>
     <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_qty ?></span>
     <input class='form-control input-sm row_data quantity'   type='hidden'  name='Quantity[]' value='<?=$item->pr_item_qty ?>'><div style="color: red; display: none" class="msg1">Digits only</div>
@@ -236,14 +234,16 @@ include_once "../../files/head.php";
     </tr>
 
 <?php endforeach ;  ?>
-<?php endif ;   ?>
+
 </tbody>
             </table>
         </div>
 <div class='d-flex flex-row-reverse'>
     <button type='submit' name='save' class='btn btn-primary'>Submit</button>
 </div>
+<?php endif ;   ?>
 </form>
+
 
                                 </div>
 

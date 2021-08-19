@@ -143,8 +143,8 @@ function insert_purchaserequest(){
 
 function get_all_purchaserequest(){
 
-    $sql="SELECT * FROM purchase_request WHERE purchaserequest_status='ACTIVE' ";
-    //echo $sql;
+    //$sql="SELECT * FROM purchase_request WHERE purchaserequest_status='ACTIVE' ";
+    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE' ";
     $result=$this->db->query($sql);
 
     $purchaserequest_array=array(); //array created
@@ -155,6 +155,7 @@ function get_all_purchaserequest(){
 
         $purchaserequest_item->purchaserequest_id=$row["purchaserequest_id"];
         $purchaserequest_item->purchaserequest_supplier=$row["purchaserequest_supplier"];
+        $purchaserequest_item->supplier_name=$row["supplier_name"]; //name of the supplier
         $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
         $purchaserequest_item->purchaserequest_ref=$row["purchaserequest_ref"];
         
@@ -170,14 +171,17 @@ function get_all_purchaserequest(){
 
 function get_purchaserequest_by_id($purchaserequestid){
 
-    $sql="SELECT * FROM purchase_request WHERE purchaserequest_id = $purchaserequestid";
-    echo $sql;
+    //$sql="SELECT * FROM purchase_request WHERE purchaserequest_id = $purchaserequestid";
+    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_id = $purchaserequestid";
+    //echo $sql;
     $result=$this->db->query($sql);
     $row=$result->fetch_array();
 
     $purchaserequest_item = new purchaserequest();
 
+    $purchaserequest_item->purchaserequest_id=$row['purchaserequest_id'];
     $purchaserequest_item->purchaserequest_supplier=$row["purchaserequest_supplier"];
+    $purchaserequest_item->supplier_name=$row["supplier_name"];
     $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
     $purchaserequest_item->purchaserequest_ref =$row["purchaserequest_ref"];
 
