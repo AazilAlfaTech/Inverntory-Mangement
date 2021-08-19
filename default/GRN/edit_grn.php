@@ -1,19 +1,26 @@
 <?php
     include_once "GRN.php";
-    include_once "grn_item.php";
-    include_once "../location/location.php";
-    include_once "../../files/head.php";
-
     $grn3=new grn();
+
+    include_once "grn_item.php";
+    $grn_item3= new grn_item();
+
+    include_once "../location/location.php";
+    $location2=new location();
+
     $result_grn3=$grn3->get_grn_byid($_GET["view"]);
     $result_grn4=$grn3->get_all_grn_by_grnid($_GET["view"]);
 
 
-    $grn_item3= new grn_item();
+   
     $result_grnitem3=$grn_item3->get_grnitem_byid($_GET["view"]);
 
-    $location2=new location();
+  
     $result_location2=$location2->get_all_location();
+    include_once "../../files/head.php";
+
+    
+    
 ?>
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
@@ -131,21 +138,21 @@
                                                                 <?php   foreach($result_grnitem3 as $item):?>
     
                                                                     <tr>
-                                                                        <td scope='row'><?=$item->grn_item_prodid->product_id?></td>
-                                                                        <td class='table-edit-view'><span class=''><?=$item->grn_item_prodid->product_name?></span>
+                                                                        <td scope='row'><?=$item->grn_item_prodid?></td>
+                                                                        <td class='table-edit-view'><span class=''><?=$item->grn_item_prodname?></span>
                                                                             <input class='form-control input-sm' type='hidden' name='grn_itemid[]' value='<?=$item->purchaseorder_itemid?>'>
                                                                         </td>
                                                                         <td class='table-edit-view'><span class='tabledit-span'><?=$item->grn_item_price?></span>
-                                                                            <input class='form-control input-sm row_data price' type='hidden' name='grn_itemprice[]' value='<?=$item->purchaseorder_itemprice?>'>
+                                                                            <input class='form-control input-sm row_data price' type='hidden' name='grn_itemprice[]' value='<?=$item->grn_item_price?>'>
                                                                         </td>
                                                                         <td class='table-edit-view'><span class='tabledit-span'><?=$item->grn_item_qty?></span>
-                                                                            <input class='form-control input-sm row_data quantity' type='hidden' name='grn_item_qty[]' value='<?=$item->purchaseorder_qty?>'>
+                                                                            <input class='form-control input-sm row_data quantity' type='hidden' name='grn_item_qty[]' value='<?=$item->grn_item_qty?>'>
                                                                         </td>
                                                                         <td class='table-edit-view'><span class='tabledit-span'><?=$item->grn_item_dis?></span>
-                                                                        <input class='form-control input-sm row_data discount' type='hidden' name='grn_item_discount[]' value='<?=$item->purchaseorder_itemdiscount?>'>
+                                                                        <input class='form-control input-sm row_data discount' type='hidden' name='grn_item_discount[]' value='<?=$item->grn_item_dis?>'>
                                                                          </td>
                                                                          <td class='table-edit-view'><span class='tabledit-span'><?=$item->grn_item_finalprice?></span>
-                                                                            <input class='form-control input-sm row_data finalprice' type='hidden' disabled="true" name='grn_item_finalprice[]' value='<?=$item->purchaseorder_itemfinalprice?>'>
+                                                                            <input class='form-control input-sm row_data finalprice' type='hidden' disabled="true" name='grn_item_finalprice[]' value='<?=$item->grn_item_finalprice?>'>
                                                                         </td>
 
                                                                         <td>
@@ -190,9 +197,116 @@
   <?php
     include_once "../../files/foot.php";
   ?>
+
 <script>
-     function po_details(po)
-    {
-        window.location.href="add_new_GRN.php?view="+po;
-    }
+
+    //hide buttons
+    $(".btn_save").hide();
+        $(".btn_cancel").hide();
+
+        //click on the edit button, row becomes editable
+        $(document).on('click', '.btn_edit', function(event) 
+            {
+               
+                event.preventDefault();
+                //get the closest row OR the particular row you chosen to edit
+                var tbl_row = $(this).closest('tr');
+
+                //show the save and cancel button
+
+                tbl_row.find('.btn_save').show();
+                tbl_row.find('.btn_cancel').show();
+
+                //hide edit button
+                tbl_row.find('.btn_edit').hide(); 
+                
+                //remove the text of the span
+                //tbl_row.find(".tabledit-span").text("");
+                
+
+                //type hidden changes to type text to make it editable
+                tbl_row.find('.row_data')
+                .attr('type', 'text')
+                
+              
+
+                //--->add the original entry data to attribute original_entry
+                //--->applicable only to input tag
+                tbl_row.find('.row_data').each(function(index, val) 
+                {  
+                    //this will help in case user decided to click on cancel button
+                    $(this).attr('original_entry', $(this).val());
+                }); 		
+              
+            });
+
+
+                    // once you edit the required fields ,save the changes  
+        $(document).on('click', '.btn_save', function(event) 
+            {
+               
+                event.preventDefault();
+                var tbl_row = $(this).closest('tr');
+
+                tbl_row.find('.btn_save').hide();
+                tbl_row.find('.btn_cancel').hide();
+
+                //hide edit button
+                tbl_row.find('.btn_edit').show(); 
+                tbl_row.find('.row_data')
+                //type text changes to type hidden
+                .attr('type', 'hidden')
+                
+                
+
+                
+                tbl_row.find('.row_data').each(function(index,val) 
+                {  
+                     //changes made het assigned to the value attribute
+                    $(this).attr('value', $(this).val());
+
+                    
+                }); 
+
+                var arr = {}; 
+                tbl_row.find('.row_data').each(function(index, val) 
+                {   
+                    var col_name = tbl_row.find('.tabledit-span').html();  
+                    var col_val  =  $(this).val();
+                    arr[col_val] = col_name;
+                    console.log(arr);
+                });
+
+                
+            });
+
+            $(document).on('click', '.btn_cancel', function(event) 
+        {
+        
+
+            var tbl_row = $(this).closest('tr');
+
+            
+
+            //hide save and cacel buttons
+            tbl_row.find('.btn_save').hide();
+            tbl_row.find('.btn_cancel').hide();
+
+            //show edit button
+            tbl_row.find('.btn_edit').show();
+            tbl_row.find('.row_data')
+                        
+            .attr('type', 'hidden')
+           
+
+
+            
+            tbl_row.find('.row_data').each(function(index, val) 
+            {   
+                $(this).val( $(this).attr('original_entry') ); 
+            });  
+        });
+        //--->button > cancel > end
+
+
 </script>
