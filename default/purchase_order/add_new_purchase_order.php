@@ -240,6 +240,7 @@ include_once "../../files/head.php";
 <?php endforeach ;  ?>
 
 </tbody>
+<div class="card">
  </table>
  <table class="table table-responsive invoice-table invoice-total">
                                 <tbody class="pricelist">
@@ -268,6 +269,7 @@ include_once "../../files/head.php";
                                     </tr>
                                 </tbody>
                             </table>
+    </div>
 
         </div>
 <div class='d-flex flex-row-reverse'>
