@@ -5,6 +5,20 @@ $purchaseorder2=new purchaseorder();
 
 $result_PO=$purchaseorder2->get_all_purchaseorder();
 
+$msg_2="";//alert message for delete
+
+if(isset($_GET['delete_PO'])){
+    $res_del=$group1->delete_group($_GET['delete_PO']);
+    //code for delete validations
+    if($res_del==true){
+        header("location:../purchase_order/manage_purchase_order.php?delete_success=1");
+       
+    }else{
+       
+        $msg_2="Purchase order already exists therefore cannot delete";
+    }
+}
+
 include_once "../../files/head.php";
 
 ?>
@@ -68,6 +82,46 @@ include_once "../../files/head.php";
             </div>";
             }
             ?>
+             <?php
+            if(isset($_GET['success_edit'])) {
+                echo"<div class='alert alert-info background-info'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Group details updated successfully</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['delete_success'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>Deleted successful</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['delete_PO'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>$msg_2</strong> 
+            </div>";
+            }
+            ?>
+            <?php
+            if(isset($_GET['notsuccess'])) {
+                echo"<div class='alert alert-danger background-danger'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>The code or the name already exists.Please try again</strong> 
+            </div>";
+            }
+            ?>
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
@@ -107,7 +161,7 @@ include_once "../../files/head.php";
                                                         <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
                                                             <div class='btn-group btn-group-sm' style='float: none;'>
                                                                 <a href='edit_purch_order.php?edit=$item->purchaseorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></a>
-                                                                <button type='button'  onclick='delu($item->purchaseorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                                                <button type='button'  onclick='delete($item->purchaseorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
                                                                 
                                                             </div>
                                                     </td>
@@ -153,3 +207,14 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
+
+<script>
+    function deleteorder(purchaseorderid){
+        console.log(del_id);
+        if(confirm("Do you want to delete purchase order"+""+del_id))
+      { window.location.href="../purchase_order/manage_purchase_order.php?delete_PO="+del_id;
+     }
+
+
+    }
+</script>

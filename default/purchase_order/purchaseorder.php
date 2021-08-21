@@ -116,7 +116,20 @@ class purchaseorder{
         return $puchasorder1;
 
     }
+    function delete_purchase_order($orderid){
+        $sql="SELECT * FROM grn WHERE grn_puch_order_id=$orderid";
+        $result=$this->db->query($sql);
+        
+        if($result->num_rows==0){
+            $sql1="UPDATE purchase_order SET purchaseorder_status='INACTIVE' WHERE purchaseorder_id=$orderid ";
+            $this->db->query($sql1);
+            
+            return true;
+        }else
+        return false;
+    
 
+    }
 
 }
 
