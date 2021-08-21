@@ -150,7 +150,7 @@ include_once "../../files/head.php";
                                                 <label class=" col-form-label">Reference Code</label>
                                                 <input class="form-control" type="text" name="purchaserequest_ref" id="" value="<?=$purchase1->purchaserequest_ref ?>" readonly>
 
-                                                <input class="form-control" type="text" name="req_id" id="" value="<?=$purchase1->purchaserequest_id ?>" readonly >
+                                                <input class="form-control" type="text" name="req_id" id="" value="<?=$purchase1->purchaserequest_id ?>" readonly hidden>
                                             </div>
 
                                             <div class="col-sm-4">
