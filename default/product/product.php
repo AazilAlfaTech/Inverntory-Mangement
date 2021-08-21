@@ -183,6 +183,7 @@
                 $product->product_id=$row["product_id"];
                 $product->product_code=$row["product_code"];
                 $product->product_name=$row["product_name"];
+                $product->product_group=$row["product_group"];
                 $product->product_type=$ptype1->get_type_by_id ($row["product_type"]);
                 $product->product_uom=$uom1->get_uom_by_id($row["product_uom"]);
                 $product->product_desc=$row["product_desc"];

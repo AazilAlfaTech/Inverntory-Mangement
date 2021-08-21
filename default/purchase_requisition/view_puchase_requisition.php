@@ -15,7 +15,7 @@ $purchase_request1 = new purchaserequest();
 
 
 
-print_r($result_pr_products)
+// print_r($result_pr_products)
 
 
 ?>
@@ -50,7 +50,7 @@ print_r($result_pr_products)
                                 <div class="card-block">
                                     <div class="row invoive-info">
                                         <div class="col-md-4 col-xs-12 invoice-client-info">
-                                            <h6>Supplier: <?=$result_pr->purchaserequest_supplier ?> </h6>
+                                            <h6>Supplier: <?=$result_pr->supplier_name ?> </h6>
                                             <table
                                                 class="table table-responsive invoice-table invoice-order table-borderless">
                                                 <tbody>
@@ -97,7 +97,7 @@ print_r($result_pr_products)
                                                         echo
                                                         "
                                                         <tr>
-                                                            <td>$item->pr_item_productid  </td>
+                                                            <td>$item->product_name  </td>
                                                             <td>$item->pr_item_qty  </td>
                                                             <td>$item->pr_item_price</td>
                                                             <td>$item->pr_item_discount</td>
@@ -163,9 +163,7 @@ print_r($result_pr_products)
         </div>
         <!-- Warning Section Starts -->
 
-        <div id="styleSelector">
-
-        </div>
+        
     </div>
 </div>
 

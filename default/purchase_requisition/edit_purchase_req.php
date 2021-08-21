@@ -20,35 +20,46 @@
  
 // --------------------------------------------------------------------------------------------------------------------
 
-
-    $purchase1 = new purchaserequest(); 
-
-    if(isset($_POST["purchaserequestsupplier"]))
-{
-    $purchase1->purchaserequest_supplier=$_POST["purchaserequestsupplier"];
-    $purchase1->purchaserequest_date=$_POST["purchaserequestdate"];
-    $purchase1->purchaserequest_ref= $purchase1->pr_code1($_POST["purchaserequestdate"]);
-
-    $pr_id=$purchase1->insert_purchaserequest();
-
-    $product_item1->insert_purchaserequest_item($pr_id );
-
-
-}
+$purchase1 = new purchaserequest(); 
 
 if(isset($_GET['edit_pr'])){
-  $purchase1= $purchase1->get_purchaserequest_by_id($_GET['edit_pr']);
+    $purchase1= $purchase1->get_purchaserequest_by_id($_GET['edit_pr']);
+    $purchase_req_item = $product_item1->get_all_product_by_pr_id($_GET['edit_pr']);
+  
+  
+  //   print_r($purchase_req_item);
+  }
+
+  
+
+    if(isset($_POST['save'])){
+
+        $purchase1->purchaserequest_supplier=$_POST["purchaserequestsupplier"];
+       
+
+        $product_item1->insert_purchaserequest_item($_POST['req_id'] );
+
+        $purchase1-> edit_purchaserequest($_POST['req_id']);
+        // header("location:edit_purchase_req.php");
+  
+
+        $product_item1->edit_PR_item(); //edit item
+    
+    }else{
+        
+                        
+
+        
+    }
 
 
-}
 
 
 // ------------------------------------------------------------------------------------------------------------
-        // $pr_coe = $purchase1->pr_code();
-        
 
 
-        // echo $pr_coe;
+
+ 
 
 
 include_once "../../files/head.php";
@@ -68,7 +79,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Add New Purchase Requisition</h4>
+                                    <h4>Edit Purchase Requisition</h4>
 
                                 </div>
                             </div>
@@ -95,7 +106,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Purchase Requisition</h5>
+                                    <h5>Edit Purchase Requisition</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -108,14 +119,14 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form action="add_new_purchase_requisition.php" method="POST">
+                                    <form action="edit_purchase_req.php" method="POST">
 
 
 
 
                                         <div class="form-group row">
 
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Supplier</label>
                                                 <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier">
 
@@ -124,6 +135,7 @@ include_once "../../files/head.php";
                                                         foreach($sup as $item)
                                                       
                                                         if($item->supplier_id ==$purchase1->purchaserequest_supplier )   
+
 			                                        echo "<option value='$item->supplier_id' selected='selected'>$item->supplier_name</option>";
                                                     else
                                                     echo"<option value='$item->supplier_id'>$item->supplier_name</option>";
@@ -134,9 +146,14 @@ include_once "../../files/head.php";
 
                                             </div>
 
+                                            <div class="col-sm-4">
+                                                <label class=" col-form-label">Reference Code</label>
+                                                <input class="form-control" type="text" name="purchaserequest_ref" id="" value="<?=$purchase1->purchaserequest_ref ?>" readonly>
 
+                                                <input class="form-control" type="text" name="req_id" id="" value="<?=$purchase1->purchaserequest_id ?>" readonly hidden>
+                                            </div>
 
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label class=" col-form-label">Date</label>
                                                 <input class="form-control" type="date" name="purchaserequestdate" id="" value="<?=$purchase1->purchaserequest_date ?>">
                                             </div>
@@ -216,14 +233,54 @@ include_once "../../files/head.php";
                                                 </thead>
                                                 <tbody id="tbody">
 
-                                                
+                                                <?php if(isset($_GET['edit_pr'])):?>
+                                                            <?php foreach($purchase_req_item as $item):  ?>
+                                                        <tr>   
+                                                        
+
+                                                        <td></td>
+                                                        <td class='table-edit-view'><span class=''><?= $item->product_name?></span>
+                                                                    <input class='form-control input-sm  '   type='hidden' name='Product[]' value='<?= $item->pr_item_productid ?>'>
+                                                                    <input class='form-control input-sm  '   type='hidden' name='pr_item_id[]' value='<?= $item->pr_item_id ?>'>
+                                                          
+                                                                    </td>
+                                  
+                                                                <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_price ?></span>
+                                                                    <input class='form-control input-sm row_data price'   type='hidden' name='Price[]' value='<?= $item->pr_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
+                                                                    </td>
+                                                                    <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_qty ?></span>
+                                                                <input class='form-control input-sm row_data quantity'   type='hidden'  name='Quantity[]' value='<?=$item->pr_item_qty ?>'><div style="color: red; display: none" class="msg1">Digits only</div>
+                                                            </td>
+
+                                                                    <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_discount ?></span>
+                                                                    <input class='form-control input-sm row_data discount'   type='hidden' name='Discount[]' value='<?= $item->pr_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
+                                                                    <td class='table-edit-view'><span class='tabledit-span'><?=$item->pr_item_finalprice ?></span>
+                                                                    <input class='form-control input-sm row_data'   type='hidden' disabled="true" value='<?=$item->pr_item_finalprice ?>'>
+                                                                    
+                                                                    </td>
+
+
+                                                                
+                                                                
+                                                                <td>
+                                                                <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
+                                                                <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
+                                                                <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
+                                                                </td>
+        
+       
+                                                                 
+                                                        </tr>
+
+                                                            <?php endforeach ;  ?>
+                                                        <?php endif ;   ?>
                                              
                 
                                                                                             </tbody>
                                             </table>
                                         </div>
                                         <div class="d-flex flex-row-reverse">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" name="save" class="btn btn-primary">Submit</button>
                                         </div>
                                     </form>
 

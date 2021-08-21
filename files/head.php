@@ -22,8 +22,10 @@
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="..\..\files\assets\icon\icofont\css\icofont.css">
     <!-- feather Awesome -->
-    <link rel="stylesheet" type="text/css" href="..\..\files\assets\icon\feather\css\feather.css">
-
+    <link rel="stylesheet" type="text/css" href="..\..\files\assets\icon\feather\css\feather.css">  
+    <!-- customized css -->
+    <link rel="stylesheet" type="text/css" href="..\..\files\bower_components\customized\editabletable.css">
+    <!-- C:\xampp\htdocs\shahee\Inventory1\files\bower_components\customized\editabletable.css -->
 
 <!-- Data Table Css -->
 <link rel="stylesheet" type="text/css" href="..\..\files\bower_components\datatables.net-bs4\css\dataTables.bootstrap4.min.css">

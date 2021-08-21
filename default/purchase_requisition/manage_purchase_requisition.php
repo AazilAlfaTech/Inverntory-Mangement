@@ -91,6 +91,7 @@ include_once "../../files/head.php";
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
+                                                    <th>#</th>
                                                     <th>Reference No</th>
                                                     <th>Date </th>
                                                     <th>Supplier</th>
@@ -104,7 +105,7 @@ include_once "../../files/head.php";
                                                  foreach($result_pr as $item){
                                                                     echo"
                                                                     <tr>
-
+                                                                    <td>$item->purchaserequest_id   </td>
                                                                         <td>$item->purchaserequest_ref   </td>
                                                                         <td>$item->purchaserequest_date</td>
                                                                         <td>$item->purchaserequest_supplier  </td>
@@ -170,7 +171,7 @@ include_once "../../files/foot.php";
                             function edit_pr(edit_pr) {
 
 
-                                window.location.href = "add_new_purchase_requisition.php?edit_pr=" + edit_pr;
+                                window.location.href = "edit_purchase_req.php?edit_pr=" + edit_pr;
 
 
 
