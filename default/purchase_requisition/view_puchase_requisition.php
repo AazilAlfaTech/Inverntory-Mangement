@@ -15,7 +15,7 @@ $purchase_request1 = new purchaserequest();
 
 
 
-print_r($result_pr_products)
+// print_r($result_pr_products)
 
 
 ?>
@@ -163,9 +163,7 @@ print_r($result_pr_products)
         </div>
         <!-- Warning Section Starts -->
 
-        <div id="styleSelector">
-
-        </div>
+        
     </div>
 </div>
 
