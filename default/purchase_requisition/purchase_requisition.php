@@ -29,7 +29,7 @@ function insert_purchaserequest(){
     $sql="INSERT INTO purchase_request (purchaserequest_supplier,purchaserequest_date,purchaserequest_ref)
     VALUES('$this->purchaserequest_supplier','$this->purchaserequest_date','$this->purchaserequest_ref')
     ";
-       //echo $sql;
+       echo $sql;
        $this->db->query($sql);
     $pr_id=$this->db->insert_id;
     return $pr_id;
@@ -198,10 +198,10 @@ function edit_purchaserequest($purchaserequestid){
  
 
     $sql="UPDATE purchase_request  SET 
-     purchaserequest_supplier='$this->purchaserequest_supplier',purchaserequest_date='$this->purchaserequest_date'
+     purchaserequest_supplier='$this->purchaserequest_supplier'
      
      WHERE purchaserequest_id ='$purchaserequestid' ";
-    //echo $sql;
+    echo $sql;
     $this->db->query($sql);
     return true;
 
