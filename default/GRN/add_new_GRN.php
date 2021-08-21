@@ -135,25 +135,25 @@
                                        
                                         <div class='form-group row'>
                                             <?php
-                                                if(isset($_GET['view']))
-                                                {
-                                                    echo"
-                                                    <input type='hidden' class='form-control' value='".$_GET['view']."' name='grnpurchorderid' required>
+                                                if(isset($_GET['view'])):?>
+                                                
+                                                    
+                                                    <input type='hidden' class='form-control' value=<?=$_GET['view']?> name='grnpurchorderid' required>
                           
 
                                                     <div class='col-sm-6'>
                                                         <label class='col-form-label' >PO ref no</label>
-                                                        <input class='form-control' id='po' type='text' name='purch_order' disabled='true' value='$result_po2->purchaseorder_ref'>
+                                                        <input class='form-control' id='po' type='text' name='purch_order' disabled='true' value=<?=$result_po2->purchaseorder_ref?>>
                                                     </div>
 
                                                     <div class='col-sm-6'>
                                                         <label class='col-form-label' >Supplier</label>
-                                                        <input class='form-control' id='po_supp' type='text' disabled='true' value='$result_grn1->purchaserequest_suppname'>
+                                                        <input class='form-control' id='po_supp' type='text' disabled='true' value=<?=$result_grn1->purchaserequest_suppname?>>
                                                     </div>
                                        
-                                                ";
-                                                }
-                                            ?>
+                                                <?php endif ;?>
+                                                
+                                            
                                         </div>         
                                         <div class='form-group row'>
 
@@ -217,7 +217,7 @@
                                                                         <input class='form-control input-sm row_data discount' type='hidden' name='grn_item_discount[]' value='<?=$item->purchaseorder_itemdiscount?>'>
                                                                          </td>
                                                                          <td class='table-edit-view'><span class='tabledit-span'><?=$item->purchaseorder_itemfinalprice?></span>
-                                                                            <input class='form-control input-sm row_data finalprice' type='hidden' disabled="true" name='grn_item_finalprice[]' value='<?=$item->purchaseorder_itemfinalprice?>'>
+                                                                            <!-- <input class='form-control input-sm row_data finalprice' type='hiddden' disabled="true" value=''> -->
                                                                         </td>
 
                                                                         <td>
@@ -286,14 +286,16 @@ var tbl_row = $(this).closest('tr');
         $(".btn_save").hide();
         $(".btn_cancel").hide();
    
+        //click on the edit button, row becomes editable
         $(document).on('click', '.btn_edit', function(event) 
             {
                 console.log("hi");
                 event.preventDefault();
+                //get the closest row OR the particular row you chosen to edit
                 var tbl_row = $(this).closest('tr');
 
                 
-
+                //show the save and cancel button
                 tbl_row.find('.btn_save').show();
                 tbl_row.find('.btn_cancel').show();
 
@@ -301,20 +303,19 @@ var tbl_row = $(this).closest('tr');
                 tbl_row.find('.btn_edit').hide(); 
                 // tbl_row.find('tabledit-span').hide();
                 
+                //remove the text of the span
                 tbl_row.find(".tabledit-span").text("");
                 
 
-                //make the whole row editable
+                //type hidden changes to type text to make it editable
                 tbl_row.find('.row_data')
                 .attr('type', 'text')
-               
-                // checknum();
-            });
 
+            });
 
             // when save button is clicked
             
-$(document).on('click', '.btn_save', function(event) 
+			$(document).on('click', '.btn_save', function(event) 
             {
                 console.log("hello");
                 event.preventDefault();
@@ -326,7 +327,6 @@ $(document).on('click', '.btn_save', function(event)
                 //hide edit button
                 tbl_row.find('.btn_edit').show(); 
                 tbl_row.find('.row_data')
-                
                 .attr('type', 'hidden')
 
 
@@ -339,106 +339,35 @@ $(document).on('click', '.btn_save', function(event)
                   arr=[$(this).val()];
                   console.log(arr);
                   tbl_row.find(".tabledit-span").text(arr);
-
                 });  
 
-                //   tbl_row.find('.row_data').each(function (i, v) {
-                //        // var valArr = ['Now!', 'This', 'is', 'placed', 'better'];
-                //        tbl_row.find(".tabledit-span").text(arr[i]);
-                //         });
-                    // tbl_row.find('span.tabledit-span').replaceWith(function(){
-                    //     var val1= tbl_row.find('.row_data').value;
-                    //     console.log(val1);
-                    // });
-                    
-                //    tbl_row.find(".tabledit-span").each(function(i,v){
-                //        var arr2=[ tbl_row.find('.row_data').val()];
-                //        console.log(arr2);
-                //     // tbl_row.find('.tabledit-span').text(tbl_row.find('.row_data').val());
-                //     // var w =tbl_row.find('.tabledit-span').text();
-                //     // console.log(w);
-                // });
-                
-                  
-                    
-
-               
             });
 
-            // function cellvalue(){
-            //         var table = document.getElementById('mytable'), 
-            //                     rows = table.getElementsByTagName('tr'),
-            //                     i, j, cells, customerId;
+        $(document).on('click', '.btn_cancel', function(event) 
+        {
+        
 
-            //                 for (i = 0, j = rows.length; i < j; ++i) {
-            //                     cells = rows[i].getElementsByTagName('input');
-            //                     if (!cells.length) {
-            //                         continue;
-            //                     }
-            //                     customerId = cells[0].value;
-            //                     console.log(customerId);
-            //                     var tbl_row = $(this).closest('tr');
+            var tbl_row = $(this).closest('tr');
 
-            //                     tbl_row.find('.tabledit-span').text(customerId);
-            //                 }
-            //     }
+            
 
-                
-                $(document).on('click', '.btn_cancel', function(event) 
-                {
-                    console.log("shahee");
-                    event.preventDefault();
+            //hide save and cacel buttons
+            tbl_row.find('.btn_save').hide();
+            tbl_row.find('.btn_cancel').hide();
 
-                    var tbl_row = $(this).closest('tr');
+            //show edit button
+            tbl_row.find('.btn_edit').show();
+            tbl_row.find('.row_data')
+                        
+            .attr('type', 'hidden')
+           
 
-                    //var row_id = tbl_row.attr('row_id');
 
-                    //hide save and cacel buttons
-                    tbl_row.find('.btn_save').hide();
-                    tbl_row.find('.btn_cancel').hide();
-
-                    //show edit button
-                    tbl_row.find('.btn_edit').show();
-
-                    
-                    tbl_row.find('.row_data').each(function(index, val) 
-                    {   
-                        $(this).html( $(this).attr('original_entry') ); 
-                    });  
-                });
-                //--->button > cancel > end
-
-                // Calculating the total when qty,price or discount chaanges.
-                $(document).on('click', '.btn_edit', function(event)
-                {
-                    console.log("totalvalidation");
-                    event.preventDefault();
-
-                    var tbl_row=$(this).closest('tr');
-                    tbl_row.find('.btn_save').on("click", function(e)
-                    {
-                        console.log("sumi");
-                        var pprice = tbl_row.find(".price").val();
-                        var pqty = tbl_row.find(".quantity").val();
-                        var pdis = tbl_row.find(".discount").val();
-                        console.log(pprice);
-                        console.log(pqty);
-                        console.log(pdis);
-                        // var pqty =$(".quantity").val();
-                        // var pdis = $(".discount").val(); 
-                        var dis_amount = parseFloat(pprice)*parseFloat(pqty)*parseFloat(pdis)/100
-                        console.log(dis_amount);
-                        ftot =  parseFloat(pprice)*parseFloat(pqty) - parseFloat(dis_amount)
-                        console.log(ftot);
-                        tbl_row.find(".finalprice").val(ftot);
-
-                        // tbl_row.find('.tabledit-span').each(function(index,val)
-                        // {
-                        //     console.log("Su");
-                        //      tbl_row.find(".tabledit-span").text("");
-                        //     // console.log();
-                        // });
-
-                    });
-                });
+            
+            tbl_row.find('.row_data').each(function(index, val) 
+            {   
+                $(this).val( $(this).attr('original_entry') ); 
+            });  
+        });
+        //--->button > cancel > end
 </script>
