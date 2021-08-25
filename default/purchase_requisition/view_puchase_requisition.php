@@ -10,7 +10,9 @@ $purchase_request1 = new purchaserequest();
 
 
    $result_pr = $purchase_request1->get_purchaserequest_by_id ($_GET["view_pr"]); 
+
    $purchase_request_item = new purchase_request_item();
+   
       $result_pr_products= $purchase_request_item->get_all_product_by_pr_id($_GET["view_pr"]);
 
 
