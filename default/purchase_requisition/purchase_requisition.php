@@ -32,6 +32,7 @@ function insert_purchaserequest(){
        echo $sql;
        $this->db->query($sql);
     $pr_id=$this->db->insert_id;
+    
     return $pr_id;
 
 }
