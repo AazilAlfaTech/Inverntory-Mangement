@@ -108,7 +108,7 @@ include_once "../../files/head.php";
                                                                     <td>$item->purchaserequest_id   </td>
                                                                         <td>$item->purchaserequest_ref   </td>
                                                                         <td>$item->purchaserequest_date</td>
-                                                                        <td>$item->purchaserequest_supplier  </td>
+                                                                        <td>$item->supplier_name  </td>
                                                                      
                                                                       
                                                                      

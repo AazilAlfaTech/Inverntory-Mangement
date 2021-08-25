@@ -291,6 +291,7 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
+
 <script type="text/javascript" src="../javascript/editabletable.js"></script>
 <script>
     function edit_purchorder(PR_id)
