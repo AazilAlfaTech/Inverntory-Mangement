@@ -103,7 +103,10 @@
         // view all the grn.................................................................................................
         function get_all_grn()
         {
-            $SQL="SELECT * FROM grn WHERE grn_status='ACTIVE'";
+            // $SQL="SELECT * FROM grn WHERE grn_status='ACTIVE'";
+            $SQL="SELECT grn.grn_id,grn.grn_puch_order_id,grn.grn_ref_no,grn.grn_received_loc,grn.grn_status,grn.grn_date,supplier.supplier_name
+            FROM grn INNER JOIN purchase_order on grn.grn_puch_order_id=purchase_order.purchaseorder_id INNER JOIN purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
+            INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE grn_status='ACTIVE'";
             // echo $SQL;
             $result=$this->db->query($SQL);
             $grn_array=array();
@@ -117,6 +120,7 @@
                 $grn->grn_received_loc=$row["grn_received_loc"];
                 $grn->grn_status=$row["grn_status"];
                 $grn->grn_date=$row["grn_date"];
+                $grn->grn_supplier=$row["supplier_name"];
 
                 $grn_array[]=$grn;
             }
