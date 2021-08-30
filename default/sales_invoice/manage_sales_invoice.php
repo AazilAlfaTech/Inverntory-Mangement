@@ -1,29 +1,8 @@
 <?php
 
-
-include_once "purchase_requisition.php";
-
-    $purchasereq1 = new purchaserequest();
-
-    $result_pr=$purchasereq1->get_all_purchaserequest();
-
-    // print_r($result_pr);
-
-
-
-    if(isset($_GET['edit_pr'])){
-        $purchasereq1=$purchasereq1->get_purchaserequest_by_id($_GET['edit_pr']);
-    }
-
-
-
-
-
 include_once "../../files/head.php";
 
-
 ?>
-<!-- --------------------------------------------------------------------------------------------------- -->
 
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
@@ -36,7 +15,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Manage Purchase Requisition</h4>
+                                    <h4>Manage Sales Invoice</h4>
 
                                 </div>
                             </div>
@@ -56,8 +35,8 @@ include_once "../../files/head.php";
                 <!-- Page-header end -->
 
                 <div class="d-flex flex-row-reverse">
-<a href="add_new_purchase_requisition.php">
-                    <button class="btn btn-mat btn-primary ">Add New Purchas Requisition</i></button>
+<a href="add_new_salesinvoice.php">
+                    <button class="btn btn-mat btn-primary ">Add New Sales Invoice</i></button>
 </a>
                 </div>
 
@@ -76,7 +55,7 @@ include_once "../../files/head.php";
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Purchase Requisition</h5>
+                                    <h5>Sales Invoice</h5>
                                     <span></span>
                                     <div class="card-header-right" >
                                         <ul class="list-unstyled card-option">
@@ -155,41 +134,8 @@ include_once "../../files/head.php";
 
 
 
-                            <!-- ----------------------------------------------------------------------------------------------------------------- -->
-                            <?php
+<?php
 
 include_once "../../files/foot.php";
 
 ?>
-
-
-
-<script type="text/javascript" src="../javascript/customer.js"></script>
-                            <script>
-                            $(".alert").fadeIn(300).delay(3500).fadeOut(400);
-
-                            function edit_pr(edit_pr) {
-
-
-                                window.location.href = "edit_purchase_req.php?edit_pr=" + edit_pr;
-
-
-
-                            }
-
-                            function view_pr(view_pr) {
-
-
-                                window.location.href = "view_puchase_requisition.php?view_pr=" + view_pr;
-
-
-                            }
-
-                            function delete_pr(deleteid) {
-
-                                if (confirm("Do you want to delete id" + " " + deleteid)) {
-                                    window.location.href = "manage_purchase_requisition.php?d_id=" + deleteid;
-                                }
-
-                            }
-                            </script>

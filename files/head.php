@@ -432,6 +432,12 @@
                                             <span class="pcoded-mtext">Sales Order </span>
                                         </a>
                                     </li>
+
+                                    <li class=" ">
+                                        <a href="../sales_invoice/manage_sales_invoice.php" target="_blank" >
+                                            <span class="pcoded-mtext">Sales Invoice </span>
+                                        </a>
+                                    </li>
                                 
 
                                 </ul>

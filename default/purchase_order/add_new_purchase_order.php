@@ -350,6 +350,7 @@ include_once "../../files/foot.php";
 
 ?>
 
+
 <script>
     function edit_purchorder(PR_id)
     {
