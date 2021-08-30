@@ -205,7 +205,7 @@ include_once "../../files/head.php";
                                                 <input type="radio" name="productval" id="prod_valf" value="FIFO" <?php if($product1->product_inventory_val=="FIFO"){ ?> checked="checked"<?php } ?>>
                                                 <i class="helper"></i>FIFO
                                                 <input type="radio" name="productval" id="prod_vala" value="AVCO"<?php if($product1->product_inventory_val=="AVCO"){ ?> checked="checked"<?php } ?>>
-                                                 <i class="helper"></i>AVCO
+                                                <i class="helper"></i>AVCO
                                                                        
 
 
@@ -232,9 +232,9 @@ include_once "../../files/head.php";
                                             </div> -->
 
                                             <!-- <div class="col-sm-6 row"> -->
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-6">
                                                 <label class=" col-form-label"> Product image</label>
-                                                <input type="file" class="form-control" placeholder="" name="productimage" id="filer_input1"   value="">
+                                                <input type="file"  class="form-control" placeholder="" name="productimage" id="filer_input1"   value="">
                                             </div>
                                                 <!-- <div class="col-sm-3">
                                             <img src="/IMS/inventory/default/product/productimage/<?=$product1->product_id?>.jpg" style="height: 100px; width: 150px;">  
@@ -246,6 +246,39 @@ include_once "../../files/head.php";
                                                 <input type="file" name="productimage" id="filer_input1" >
                                             </div> -->
                                             
+                                        </div>
+                                        <div class="card-block border ">
+                                            <div class="table-responsive" style="width:100%;">
+                                                <table>
+                                                    <thead class="table table-bordered ">
+                                                        <th>Level</th>
+                                                        <th>Price</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td><input type="text" class="form-control" id=" " value=""></td>
+                                                            <td>
+                                                                <input type="radio" name="" id="prod_valf" value="ACTIVE " >
+                                                                <i class="helper"></i>ACTIVE
+                                                                <input type="radio" name="" id="prod_vala" value="INACTIVE">
+                                                                <i class="helper"></i>INACTIVE
+                                                            </td>
+                                                            <td>
+                                                                <span class="btn_add"><button class='btn btn-mini btn-success' type='button'>Add</button></span>
+                                                                <span class="btn_delete"><button class='btn btn-mini btn-danger' type='button'>Delete</button></span>
+                                                                <span class="btn_edit"><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
+                                                                <span class="btn_save"><button class='btn btn-mini btn-success' type='button'>Save</button></span>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
                                         </div>
 
                                         <button class="btn btn-primary" type="submit">ADD</button>

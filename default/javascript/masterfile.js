@@ -210,4 +210,7 @@ function check_typename(){
   {    
     $("#pbatch").hide();   
   }
+  /////////////price level///////////////////////////////////////////
+
+  //hide buttons
   
