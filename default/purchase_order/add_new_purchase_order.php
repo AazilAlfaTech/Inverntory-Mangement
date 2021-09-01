@@ -14,7 +14,9 @@ $purchaseorder2=new purchaseorder();
 include_once ("../purchase_order/purchaseorderitem.php");
 $purchaseorderitem2=new purchaseorderitem();
 
-
+include_once "../product/product.php";
+$product1 = new product();     
+$productlist=$product1->getall_product2();
 
 
 //view PR details
@@ -142,107 +144,163 @@ include_once "../../files/head.php";
                             </div>    
 
    <!-- ...................................................................................................                     -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Add New Purchase Order</h5>
+        <div class="card">
+                <div class="card-header">
+                    <h5>Add New Purchase Order</h5>
 
-                                    <div class="card-header-right">
-                                        <ul class="list-unstyled card-option">
-                                            <li><i class="feather icon-maximize full-card"></i></li>
-                                            <li><i class="feather icon-minus minimize-card"></i></li>
-                                            <!-- <li><i class="feather icon-trash-2 close-card"></i></li> -->
-                                        </ul>
-                                    </div>
-                                </div>
+                    <div class="card-header-right">
+                        <ul class="list-unstyled card-option">
+                            <li><i class="feather icon-maximize full-card"></i></li>
+                            <li><i class="feather icon-minus minimize-card"></i></li>
+                            <!-- <li><i class="feather icon-trash-2 close-card"></i></li> -->
+                        </ul>
+                    </div>
+                </div>
 
-                                <div class='card-block'>
+            <div class='card-block'>
 
-                                <form action='add_new_purchase_order.php' method='POST'>
-
-
-
-<?php if(isset($_GET['view'])):?>
-<div class='form-group row'>
-    
-     <input type='hidden'  class='form-control' value=<?=$_GET['view'] ?> name='purchaseorderrequest' required>
-       
-
-     <div class='col-sm-4'>
-        <label class='col-form-label'> PR Reference No</label>
-        <input class='form-control'  type='text' value=<?=$purchase_request2->purchaserequest_ref ?> <?php if($purchase_request2->purchaserequest_ref){echo "readonly=\"readonly\"";} ?>>
-    </div>
-    <div class='col-sm-4'>
-        <label class='col-form-label'>Supplier</label>
-        <input class='form-control' type='text'value=<?=$purchase_request2->purchaserequest_supplier ?> <?php if($purchase_request2->purchaserequest_supplier){echo "readonly=\"readonly\"";} ?>>
-    </div>
-    <div class='col-sm-4'>
-        <label class='col-form-label'>Date</label>
-        <input class='form-control' type='date' name='purchaseorderdate'  value='<?php echo date('Y-m-d');?>' required>
-    </div>
-    
-</div>
-</div>
-
-<br>
-<br>
+                <form action='add_new_purchase_order.php' method='POST'>
 
 
-<!-- Edit With Button card start -->
 
-        <div class='table-responsive'>
+                    <?php if(isset($_GET['view'])):?>
+                        <div class='form-group row'>
+                            <!-- top form start -->
+                            <!-- purchase request id -->
+                            <input type='hidden'  class='form-control' value=<?=$_GET['view'] ?> name='purchaseorderrequest' required>
+                            
 
-            <table class='table  table-bordered'  id='example-2'  >
-                <thead class='table-primary'>
-                    <tr>
-                     
-                        <th>Product</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                        <th>Discount</th>
-                        <th>Total</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
+                            <div class='col-sm-4'>
+                                <label class='col-form-label'> PR Reference No</label>
+                                <input class='form-control'  type='text' value=<?=$purchase_request2->purchaserequest_ref ?> <?php if($purchase_request2->purchaserequest_ref){echo "readonly=\"readonly\"";} ?>>
+                            </div>
+                            <div class='col-sm-4'>
+                                <label class='col-form-label'>Supplier</label>
+                                <input class='form-control' type='text'value=<?=$purchase_request2->purchaserequest_supplier ?> <?php if($purchase_request2->purchaserequest_supplier){echo "readonly=\"readonly\"";} ?>>
+                            </div>
+                            <div class='col-sm-4'>
+                                <label class='col-form-label'>Date</label>
+                                <input class='form-control' type='date' name='purchaseorderdate'  value='<?php echo date('Y-m-d');?>' required>
+                            </div>
+                            <!-- top form end            -->
+                        </div>
+                            <br>
+                            <br>
 
-    <?php foreach( $purchase_request_item2 as $item):  ?>
-    <tr>
-    <td class='table-edit-view'><span class=''><?= $item->product_name?></span>
-        <input class='form-control input-sm  '   type='hidden' name='Product[]' value='<?= $item->pr_item_productid ?>'>
-        </td>
-    <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_qty ?></span>
-    <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='<?=$item->pr_item_qty ?>'><div style="color: red; display: none" class="msg1">Digits only</div>
-</td>
-    <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_price ?></span>
-        <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value='<?= $item->pr_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
-        </td>
-        <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_discount ?></span>
-        <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='<?= $item->pr_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
-        
-        <td class='table-edit-view'><span class='tabledit-span'><?=$item->item_discount ?></span>
-        <input class='input-borderless input-sm row_data total'   type='text' readonly value='<?=$item->item_discount ?>'>
-        
-        </td>
-    
-    
-    <td>
-    <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
-    <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
-    <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
-    </td>
-        
-</td>
-        
-       
-                                                                 
-    </tr>
+                        <!-- add product from -->
+                        <div class="form-group row additemform">
 
-<?php endforeach ;  ?>
+                            <div class="col-sm-4">
+                                <label class=" col-form-label">Select Product</label>
+                                <select class="form-control "  id="porder_itemproductid" > 
 
-</tbody>
-<div class="card">
- </table>
- <table class="table table-responsive invoice-table invoice-total">
+                                    <option value="-1 ">Select product</option>
+                                    <?php
+                                    foreach($productlist as $item)
+
+                                    if($item->product_id ==$product1->product_id)   
+                                        echo "<option value='$item->product_id' selected='selected'>$item->product_name</option>";
+                                    else
+                                    echo"<option value='$item->product_id'> $item->product_name</option>";
+                                    ?>
+
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-sm-2">
+
+                                <label class=" col-form-label">Price</label>
+                                <input type="text" class="form-control" placeholder="" name="pr_itemprice" value='0.00' id="porder_itemprice" onkeyup="cal_prd_total()" >
+                            </div>
+
+                            <div class="col-sm-2">
+
+                                <label class=" col-form-label">Qty</label>
+                                <input type="number" class="form-control" placeholder="" name="pr_itemqty" id="porder_itemqty" value='0.00' onkeyup="cal_prd_total()" >
+                            </div>
+
+                            <div class="col-sm-2">
+
+                                <label class=" col-form-label">Discount</label>
+                                <input type="text" class="form-control" placeholder="" name="pr_itemdiscount" Id="porder_itemdiscount" value='0.00' onkeyup="cal_prd_total()" >
+                            </div>
+
+                            <div class="col-sm-2">
+
+                                <label class=" col-form-label">Total</label>
+                                <input type="text" class="form-control" placeholder="" name="pr_itemfinalprice" value='0.00' id="porder_itemfinalprice" disabled>
+                            </div>
+
+                        </div>
+                                <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
+                                <button class="btn btn-inverse">CLEAR</button>
+                        <!-- add product form end -->
+
+                            <br>
+                            <br>
+
+
+                        <!-- Edit With Button card start -->
+
+                        <div class='table-responsive'>
+
+                            <table class='table  table-bordered'  id='example-2'  >
+                                <thead class='table-primary'>
+                                    <tr>
+                                    
+                                        <th>Product</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class='itembody'>
+
+                                        <?php foreach( $purchase_request_item2 as $item):  ?>
+                                        <tr>
+                                        <td class='table-edit-view'><span class=''><?= $item->product_name?></span>
+                                            <input class='form-control input-sm productid '   type='hidden' name='Product[]' value='<?= $item->pr_item_productid ?>'>
+                                            </td>
+                                        <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_qty ?></span>
+                                        <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='<?=$item->pr_item_qty ?>'><div style="color: red; display: none" class="msg1">Digits only</div>
+                                        </td>
+                                        <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_price ?></span>
+                                            <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value='<?= $item->pr_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
+                                            </td>
+                                            <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_discount ?></span>
+                                            <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='<?= $item->pr_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
+                                            
+                                            <td class='table-edit-view'><span class='tabledit-span'><?=$item->item_discount ?></span>
+                                            <input class='input-borderless input-sm row_data total'   type='text' readonly value='<?=$item->item_discount ?>'>
+                                            
+                                            </td>
+                                        
+                                        
+                                        <td>
+                                        <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
+                                        <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
+                                        <span class='btn_cancel'><btn_deleterowutton class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
+                                        <span class=''><button    class='btn btn-mini btn-danger'>Delete</button></span>
+                                        </td>
+                                            
+                                    </td>
+                                            
+                                        
+                                                                                                    
+                                        </tr>
+
+                                    <?php endforeach ;  ?>
+
+                                </tbody>
+                            </table>    
+                        </div>
+                        <div class="card">
+
+                            <table class="table table-responsive invoice-table invoice-total">
                                 <tbody class="pricelist">
                                     <tr>
                                         <th> Total Quantity :</th>
@@ -269,22 +327,22 @@ include_once "../../files/head.php";
                                     </tr>
                                 </tbody>
                             </table>
-    </div>
+                        </div>
+
+                            <!-- </div> -->
+                        <div class='d-flex flex-row-reverse'>
+                            <button type='submit' name='save' class='btn btn-primary'>Submit</button>
+                        </div>
+                    <?php endif ;   ?>
+                </form>
+
+
+            </div>
 
         </div>
-<div class='d-flex flex-row-reverse'>
-    <button type='submit' name='save' class='btn btn-primary'>Submit</button>
-</div>
-<?php endif ;   ?>
-</form>
-
-
-                                </div>
-
-                            </div>
-                        </div>
+                        <!-- </div>
                     </div>
-                </div>
+                </div> -->
 
 <?php
 
@@ -292,7 +350,7 @@ include_once "../../files/foot.php";
 
 ?>
 
-<script type="text/javascript" src="../javascript/editabletable.js"></script>
+
 <script>
     function edit_purchorder(PR_id)
     {
@@ -300,153 +358,81 @@ include_once "../../files/foot.php";
     }
 </script>
 <script>
-
-        // //hide buttons
-        // $(".btn_save").hide();
-        // $(".btn_cancel").hide();
-
-        // //click on the edit button, row becomes editable
-        // $(document).on('click', '.btn_edit', function(event) 
-        //     {
-               
-        //         event.preventDefault();
-        //         //get the closest row OR the particular row you chosen to edit
-        //         var tbl_row = $(this).closest('tr');
-
-        //         //show the save and cancel button
-
-        //         tbl_row.find('.btn_save').show();
-        //         tbl_row.find('.btn_cancel').show();
-
-        //         //hide edit button
-        //         tbl_row.find('.btn_edit').hide(); 
-                
-        //         //remove the text of the span
-        //         tbl_row.find(".tabledit-span").text("");
-                
-
-        //         //type hidden changes to type text to make it editable
-        //         tbl_row.find('.row_data')
-        //         .attr('type', 'text')
-                
-              
-
-        //         //--->add the original entry data to attribute original_entry
-        //         //--->applicable only to input tag
-        //         tbl_row.find('.row_data').each(function(index, val) 
-        //         {  
-        //             //this will help in case user decided to click on cancel button
-        //             $(this).attr('original_entry', $(this).val());
-        //         }); 		
-              
-        //     });
-
-        // // once you edit the required fields ,save the changes  
-        // $(document).on('click', '.btn_save', function(event) 
-        //     {
-               
-        //         event.preventDefault();
-        //         var tbl_row = $(this).closest('tr');
-
-        //         tbl_row.find('.btn_save').hide();
-        //         tbl_row.find('.btn_cancel').hide();
-
-        //         //hide edit button
-        //         tbl_row.find('.btn_edit').show(); 
-        //         tbl_row.find('.row_data')
-        //         //type text changes to type hidden
-        //         .attr('type', 'hidden')
-
-                
-        //         tbl_row.find('.row_data').each(function(index,val) 
-        //         {  
-        //              //changes made het assigned to the value attribute
-        //             $(this).attr('value', $(this).val());
-
-                    
-        //         }); 
-        //     });
-
-            
-           
-        // $(document).on('click', '.btn_cancel', function(event) 
-        // {
-        
-
-        //     var tbl_row = $(this).closest('tr');
-
-            
-
-        //     //hide save and cacel buttons
-        //     tbl_row.find('.btn_save').hide();
-        //     tbl_row.find('.btn_cancel').hide();
-
-        //     //show edit button
-        //     tbl_row.find('.btn_edit').show();
-        //     tbl_row.find('.row_data')
-                        
-        //     .attr('type', 'hidden')
+    function cal_prd_total(){
+        var pprice = $("#porder_itemprice").val();
+        var pqty =$("#porder_itemqty").val();
+        var pdis = $("#porder_itemdiscount").val(); 
 
 
-            
-        //     tbl_row.find('.row_data').each(function(index, val) 
-        //     {   
-        //         $(this).val( $(this).attr('original_entry') ); 
-        //     });  
-        // });
-        // //--->button > cancel > end
+        var tot = parseFloat(pprice)*parseFloat(pqty)*parseFloat(pdis)/100
+
+        ftot =  parseFloat(pprice)*parseFloat(pqty) - parseFloat(tot)
+        $("#porder_itemfinalprice").val(ftot);
+    }
+
+// -------------------------------------------------------------------------------------------------------------------------
+
+$("#add_prbtn").click(function(){
+
+add_products();
+clear_products();
+cal_totquantity();
+cal_totprice();
+cal_totdiscount();
+final_total();
+
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+function add_products()
+{
+
+   
+    
+    var pr_prod=$("#porder_itemproductid option:selected").val();
+    var pr_prod_name=$("#porder_itemproductid option:selected").text(); //dropdown
+    var p_price=$("#porder_itemprice").val();
+    var p_qty=$("#porder_itemqty").val();
+    var p_dis=$("#porder_itemdiscount").val();
+    var p_tot= $("#porder_itemfinalprice").val();
+    productsubtotal=parseFloat(p_price*p_qty);
+    if($("#porder_itemproductid").val()=='' || $("#porder_itemprice").val()==''|| $("#porder_itemqty").val()==''  || $("#porder_itemdiscount").val()==''){
+         alert("Fill all the fields in item info");
+     } else{
+   
+    $(".itembody").append("<tr><td><input  class='form-control input-sm  ' type='hidden' name='Product[]' value='"+pr_prod+"'> <span class='tabledit-span'>"+ pr_prod_name +" </span></td><td><input class='input-borderless input-sm row_data quantity' type='text' readonly name='Quantity[]' value='"+p_qty+"'><div style='color: red; display: none' class='msg1'>Digits only</div><input class='form-control input-sm subtotal'   type='hidden'  value='"+productsubtotal+"'></td><td><input class='input-borderless input-sm row_data price'  type='text' readonly name='Price[]' value='"+p_price+"'><div style='color: red; display: none' class='msg2'>Digits only</div>  </td><td><input class='input-borderless input-sm row_data discount' type='text' readonly name='Discount[]' value='"+p_dis+"'><div style='color: red; display: none' class='msg1'>Digits only</div></td> <td><input  class='input-borderless input-sm row_data total ' type='text' readonly  value='"+p_tot+"'></td><td><span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span><span class='btn_deleterow'><button  class='btn btn-mini btn-danger' type='button'>Delete</button></span><span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span><span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Reset</button></span></td> </tr>");
+     
+
+     $(".btn_save").hide();
+    $(".btn_cancel").hide();
+     }
+}
+
+// ----------------------------------------------------------------------------------------------------------------
+
+
+function clear_products()
+{
 
    
 
+    $("#porder_itemproductid option:selected").text(""); //dropdown
+    $("#porder_itemprice").val("");
+    $("#porder_itemqty").val("");
+    $("#porder_itemdiscount").val("");
+    $("#porder_itemfinalprice").val("");
+    
+  
 
 
+}
+
+// function delete_row(row){
+//         $(row).parent().parent().parent().remove();
+//         console.log("rowww");    }
 
 
-        // $(document).on('click', '.btn_edit', function(event){
-       
-        // var row=$(this).closest('tr');
-        // //validate only numbers for quantity
-        // row.find(".quantity").on("keypress",function(e)
-        // {
-        
-        //     var charCode = (e.which) ? e.which : event.keyCode    
-            
-        //     if(String.fromCharCode(charCode).match(/[^0-9]/g))
-        //     {  
-        //         row.find(".msg1").css("display", "inline"); 
-        //         return false;  
-        //     }else
-        //     {row.find(".msg1").css("display", "none");}
-        //     });
-        // //validate only numbers for price
-        // row.find(".price").on("keypress",function(e)
-        // {
-               
-        //     var charCode = (e.which) ? e.which : event.keyCode    
-            
-        //     if(String.fromCharCode(charCode).match(/[^0-9]/g)){  
-        //         row.find(".msg2").css("display", "inline"); 
-        //         return false;  
-        //     }else
-        //     {row.find(".msg2").css("display", "none");}
-        
-        // });
-        // //validate only numbers for discount
-        // row.find(".discount").on("keypress",function(e)
-        // {
-        
-        //     var charCode = (e.which) ? e.which : event.keyCode    
-            
-        //     if(String.fromCharCode(charCode).match(/[^0-9]/g)){  
-        //         row.find(".msg3").css("display", "inline"); 
-        //         return false;  
-        //     }else
-        //     {row.find(".msg3").css("display", "none");}
-        //  });
-
-
-
-        // });
 
 
 </script>
+<script type="text/javascript" src="../javascript/editabletable.js"></script>

@@ -1,5 +1,9 @@
 
-
+$(document).ready(function(){
+  
+  $(".btn_save").hide();
+  console.log("starrt");
+});
 //.......PRODUCT GROUP JS.............................
 
 function check_groupcode()
@@ -210,4 +214,8 @@ function check_typename(){
   {    
     $("#pbatch").hide();   
   }
+  /////////////price level///////////////////////////////////////////
+
+  //hide buttons
+  
   

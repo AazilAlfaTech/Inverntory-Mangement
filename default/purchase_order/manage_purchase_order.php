@@ -8,7 +8,7 @@ $result_PO=$purchaseorder2->get_all_purchaseorder();
 $msg_2="";//alert message for delete
 
 if(isset($_GET['delete_PO'])){
-    $res_del=$group1->delete_group($_GET['delete_PO']);
+    $res_del=$purchaseorder2->delete_purchase_order($_GET['delete_PO']);
     //code for delete validations
     if($res_del==true){
         header("location:../purchase_order/manage_purchase_order.php?delete_success=1");
@@ -160,8 +160,9 @@ include_once "../../files/head.php";
                                                         <td style='white-space: nowrap, width: 1%;'>
                                                         <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
                                                             <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                <a href='viewpurchaseorder.php?view=$item->purchaseorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></a>
                                                                 <a href='edit_purch_order.php?edit=$item->purchaseorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></a>
-                                                                <button type='button'  onclick='delete($item->purchaseorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                                                <button type='button'  onclick='deleteorder($item->purchaseorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
                                                                 
                                                             </div>
                                                     </td>
@@ -188,22 +189,8 @@ include_once "../../files/head.php";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <!-- ----------------------------------------------------------------------------------------------------------------- -->
-                            <?php
-
+<?php
+ 
 include_once "../../files/foot.php";
 
 ?>
