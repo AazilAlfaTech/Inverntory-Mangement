@@ -1,12 +1,14 @@
     
      //function to be called when the page loads
      $( document ).ready(function() {
-        console.log( "ready!" );
-            $(".btn_save").hide();
+        console.log( "hello!" );
+           
             $(".btn_cancel").hide();
+             $(".btn_save").hide();
+            
          
             $(".tabledit-span").hide();
-            cal_totquantity();
+                cal_totquantity();
                     cal_totprice();
                     cal_totdiscount();
                     final_total();
@@ -72,6 +74,11 @@ $(document).on('click', '.btn_save', function(event)
         event.preventDefault();
         var tbl_row = $(this).closest('tr');
 
+        if(tbl_row.find(".quantity").val() == '' || tbl_row.find(".price").val() == '' || tbl_row.find(".discount").val() == '' ){
+            alert("Please fill all the fields");
+
+        }else{
+                
         tbl_row.find('.btn_save').hide();
         tbl_row.find('.btn_cancel').hide();
 
@@ -101,11 +108,10 @@ $(document).on('click', '.btn_save', function(event)
         cal_totprice();
         cal_totdiscount();
         final_total();
+        }
 
-        // if(tbl_row.find(".quantity").val() == '' || tbl_row.find(".price").val() == '' || tbl_row.find(".discount").val() == '' ){
-        //     alert("Please fill all the fields");
 
-        // }
+        
 
         
     });
@@ -141,6 +147,53 @@ $(document).on('click', '.btn_cancel', function(event)
     });  
 });
 //--->button > cancel > end
+$(document).on('click', '.btn_deleterow', function(event) {
+    var tbl_row = $(this).closest('tr');
+    console.log ("shiiii");
+    tbl_row.remove();
+    cal_totquantity();
+    cal_totprice();
+    cal_totdiscount();
+    final_total();
+
+});
+// st
+$(document).on('click', '.deletedata', function(event) {
+    var tbl_row = $(this).closest('tr');
+    console.log ("deletedata");
+
+    var deleteitemid= tbl_row.find(".productid").val();
+    console.log (deleteitemid);
+
+    var confirm_msg=confirm("Are you sure you want delete the item?");
+        if(confirm_msg==true){
+            //ajax request
+            $.ajax({
+                url:'../purchase_order/handle_delete.php',
+                type:'POST',
+                data:{id:deleteitemid},
+                success:function(response){
+                    if(response==true){
+                        console.log('Item deleted successfully');
+                        tbl_row.css('background','tomato');
+                        tbl_row.fadeOut(800,function(){
+                            tbl_row.remove();
+                            cal_totquantity();
+                            cal_totprice();
+                            cal_totdiscount();
+                            final_total();
+                        });
+                    }else{
+                        console.log('Invalid ID.');
+                    }
+                }
+                 
+            });
+        }
+   
+
+});
+
 
 
 
@@ -208,10 +261,10 @@ function cal_totquantity(){
 }
 
 function cal_totprice(){
-    console.log("price");
+    console.log("subtotal");
     tot_price=0;
 
-    var price=$(".price");
+    var price=$(".subtotal");
     $.each(price,function(i,item){
         tot_price=tot_price+ parseFloat($( price[i]).val());
     })
@@ -219,7 +272,7 @@ function cal_totprice(){
 }
 
 function cal_totdiscount(){
-    console.log("discount");
+    console.log("discount total");
     tot_discount=0;
 
     var discount=$(".discount");
@@ -239,3 +292,5 @@ function final_total(){
     })
     $("#total_final").val(tot_final);
     }
+
+   
