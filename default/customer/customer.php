@@ -74,6 +74,7 @@ function get_all_customer(){
     $result=$this->db->query($sql);
 
     $customer_array=array();
+    
     $customer_group1 = new customergroup();
     while($row=$result->fetch_array()){
 
