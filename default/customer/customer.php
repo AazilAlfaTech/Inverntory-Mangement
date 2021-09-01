@@ -79,8 +79,8 @@ function get_all_customer(){
 
          $customer_item = new customer();
 
-         $customer_item-> customer_id=$row["customer_id"];
-         $customer_item-> customer_code=$row["customer_code"];
+         $customer_item->customer_id=$row["customer_id"];
+         $customer_item->customer_code=$row["customer_code"];
          $customer_item->customer_name=$row["customer_name"];
          $customer_item->customer_add=$row["customer_add"];
          $customer_item->customer_contactno=$row["customer_contactno"];

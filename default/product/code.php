@@ -39,3 +39,28 @@ if (isset($_POST["custcode"]))
 }
 
 ?>
+
+
+<tr>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <input class='form-control input-sm productid '   type='hidden' name='' value=''>\
+        </td>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value=''><div style='color: red; display: none' class='msg1'>Digits only</div>\
+        </td>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value=''> <div style='color:red; display: none' class='msg2'>Digits only</div>\
+        </td>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value=''> <div style='color: red; display: none' class='msg3'>Digits only</div>\
+        </td>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <input class='input-borderless input-sm row_data total'   type='text' readonly value=''>\
+        </td>\
+        <td>\
+            <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
+            <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
+            <span class='btn_cancel'><bbtn_deleterowutton class='btn btn-mini btn-danger' type='button'>Cancel</button></span>\
+            <span class=''><button    class='btn btn-mini btn-danger'>Delete</button></span>\
+        </td>\
+</tr>\

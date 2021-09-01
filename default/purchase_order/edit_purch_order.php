@@ -195,7 +195,7 @@ include_once "../../files/head.php";
                                                             </td>
                                                             <td class='table-edit-view'><span class='tabledit-span'><?= $item->po_item_price ?></span>
                                                                 <input class=' input-borderless input-sm row_data price'   type='text' name='Price_edit[]' readonly  value='<?= $item->po_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
-                                                                <input class='form-control input-sm subtotal'   type='hidden'  value='<?= $item->po_totalprice ?>'>
+                                                                 
                                                             </td>
                                                             <td class='table-edit-view'><span class='tabledit-span'><?= $item->po_item_discount ?></span>
                                                                 <input class=' input-borderless input-sm row_data discount'   type='text' name='Discount_edit[]' readonly  value='<?= $item->po_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
@@ -241,9 +241,7 @@ include_once "../../files/head.php";
                                                         <td>
                                                             <hr>
                                                             <h5 class="text-primary">Total :</h5>
-                                                        </td>
-                                                        <td>
-                                                            <hr>
+                                                        </td> 
                                                             <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control"></h5>
                                                         </td>
                                                     </tr>

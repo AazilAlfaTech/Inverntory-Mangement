@@ -2,8 +2,9 @@
      //function to be called when the page loads
      $( document ).ready(function() {
         console.log( "hello!" );
-            $(".btn_save").hide();
+           
             $(".btn_cancel").hide();
+             $(".btn_save").hide();
             
          
             $(".tabledit-span").hide();
@@ -156,7 +157,7 @@ $(document).on('click', '.btn_deleterow', function(event) {
     final_total();
 
 });
-
+// st
 $(document).on('click', '.deletedata', function(event) {
     var tbl_row = $(this).closest('tr');
     console.log ("deletedata");
@@ -164,7 +165,7 @@ $(document).on('click', '.deletedata', function(event) {
     var deleteitemid= tbl_row.find(".productid").val();
     console.log (deleteitemid);
 
-    var confirm_msg=confirm("Are yousure you want delete the item?");
+    var confirm_msg=confirm("Are you sure you want delete the item?");
         if(confirm_msg==true){
             //ajax request
             $.ajax({

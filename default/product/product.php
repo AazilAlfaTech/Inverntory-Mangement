@@ -32,7 +32,7 @@
                 $product_id=$this->db->insert_id; //gets the id of the last insertion
                 move_uploaded_file($_FILES["productimage"]["tmp_name"],"../product/productimage/$product_id.jpg");
                 // echo $SQL;
-                return true;
+                return $product_id;
             }
 
             // --------------------------------------------------------------------------------------
