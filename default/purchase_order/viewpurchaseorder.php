@@ -1,20 +1,18 @@
 <?php
 
 include_once "../../files/head.php";
-include_once "../purchase_requisition/purchase_requisition.php";
-include_once "../purchase_requisition/purchase_request_item.php";
-
-$purchase_request1 = new purchaserequest();
+include_once "../purchase_order/purchaseorder.php";
+include_once "../purchase_order/purchaseorderitem.php";
 
 
+$purchaseorder3=new purchaseorder();
 
 
-   $result_pr = $purchase_request1->get_purchaserequest_by_id ($_GET["view_pr"]); 
+$purchaseorderitem3=new purchaseorderitem();
 
-   $purchase_request_item = new purchase_request_item();
-   
-      $result_pr_products= $purchase_request_item->get_all_product_by_pr_id($_GET["view_pr"]);
-
+$purchaseorder3=$purchaseorder3->get_purchaseorder_by_id($_GET['view']);
+$result_item=$purchaseorderitem3->get_all_POitem($_GET['view']);
+$result_total=$purchaseorderitem3->get_total_values($_GET['view']);
 
 
 // print_r($result_pr_products)
@@ -52,7 +50,7 @@ $purchase_request1 = new purchaserequest();
                                 <div class="card-block">
                                     <div class="row invoive-info">
                                         <div class="col-md-4 col-xs-12 invoice-client-info">
-                                            <h6>Supplier: <?=$result_pr->supplier_name ?> </h6>
+                                            <h6>Supplier: <?=$purchaseorder3->supplier_name1 ?> </h6>
                                             <table
                                                 class="table table-responsive invoice-table invoice-order table-borderless">
                                                 <tbody>
@@ -69,11 +67,11 @@ $purchase_request1 = new purchaserequest();
                                           
                                         </div>
                                         <div class="col-md-4 col-sm-6">
-                                            <h6>Date : <?=$result_pr->purchaserequest_date ?> </h6>
+                                            <h6>Date : <?=$purchaseorder3->purchaseorder_date ?> </h6>
                                  
                                         </div>
                                         <div class="col-md-4 col-sm-6">
-                                            <h6 class="m-b-20">Refference Number: <span><?=$result_pr->purchaserequest_ref ?></span></h6>
+                                            <h6 class="m-b-20">Refference Number: <span><?=$purchaseorder3->purchaseorder_ref ?></span></h6>
                                        
                                           
                                         </div>
@@ -94,16 +92,16 @@ $purchase_request1 = new purchaserequest();
                                                     <tbody>
 
                                                     <?php
-                                                foreach ($result_pr_products as $item)
+                                                foreach ($result_item as $item)
                                                     {
                                                         echo
                                                         "
                                                         <tr>
                                                             <td>$item->product_name  </td>
-                                                            <td>$item->pr_item_qty  </td>
-                                                            <td>$item->pr_item_price</td>
-                                                            <td>$item->pr_item_discount</td>
-                                                            <td>$item->pr_item_finalprice</td>
+                                                            <td>$item->po_item_qty  </td>
+                                                            <td>$item->po_item_price</td>
+                                                            <td>$item->po_item_discount</td>
+                                                            <td>$item->po_item_finalprice</td>
                                                         </tr>
                                                  
                                                   ";
@@ -119,16 +117,16 @@ $purchase_request1 = new purchaserequest();
                                             <table class="table table-responsive invoice-table invoice-total">
                                                 <tbody>
                                                     <tr>
+                                                        <th>Total quantity :</th>
+                                                        <td><?=$result_total->totalquantity ?></td>
+                                                    </tr>
+                                                    <tr>
                                                         <th>Sub Total :</th>
-                                                        <td>$4725.00</td>
+                                                        <td><?=$result_total->totalprice ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <th>Taxes (10%) :</th>
-                                                        <td>$57.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Discount (5%) :</th>
-                                                        <td>$45.00</td>
+                                                        <th>Discount :</th>
+                                                        <td><?=$result_total->totaldiscount ?></td>
                                                     </tr>
                                                     <tr class="text-info">
                                                         <td>
@@ -137,7 +135,7 @@ $purchase_request1 = new purchaserequest();
                                                         </td>
                                                         <td>
                                                             <hr>
-                                                            <h5 class="text-primary">$4827.00</h5>
+                                                            <h5 class="text-primary"><?=$result_total->net_total ?></h5>
                                                         </td>
                                                     </tr>
                                                 </tbody>

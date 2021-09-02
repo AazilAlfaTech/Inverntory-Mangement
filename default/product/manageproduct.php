@@ -4,6 +4,7 @@ include_once "product.php";
 include_once "../group/group.php";
 include_once "../producttype/producttype.php";
 include_once "../uom/uom.php";
+include_once "../product/pricelevel.php";
 
 $group1=new group();
 $result_group=$group1->get_all_group();
@@ -13,6 +14,9 @@ $result_type=$ptype1->getall_type();
 
 $uom1=new uom();
 $result_uom=$uom1->get_all_uom();
+
+$pricelevel1=new pricelevel();
+
 
 $product1=new product();
 
@@ -36,24 +40,29 @@ if (isset($_POST["productname"]))
     //....................................................
     if(isset($_POST["product_id"]))
     {
-        $res_edit= $product1->edit_product($_POST['product_id']); 
+        $res_edit= $product1->edit_product($_POST['product_id']);
+        $pricelevel1-> insert_pricelevel($_POST['product_id']);
+        $pricelevel1->update_pricelevel(); 
+     
             //code for insert validation
-            if($res_edit==true){
+            // if($res_edit==true){
                
-                header("location:../product/manageproduct.php?success_edit=1");
-            }elseif($res_edit==false){
-                header("location:../product/manageproduct.php?notsuccess=1");
-            }
+            //     header("location:../product/manageproduct.php?success_edit=1");
+            // }elseif($res_edit==false){
+            //     header("location:../product/manageproduct.php?notsuccess=1");
+            // }
     }else
     {
             $res_insert=$product1->insert_product();   
+            $pricelevel1-> insert_pricelevel( $res_insert);
+            echo $res_insert;
             //code for insert validation
-            if($res_insert==true){
+            // if($res_insert==true){
                 
-                header("location:../product/manageproduct.php?success=1");
-            }elseif($res_insert==false){
-                header("location:../product/manageproduct.php?notsuccess=1");
-            }
+              //  header("location:../product/manageproduct.php?success=1");
+            // }elseif($res_insert==false){
+            //     header("location:../product/manageproduct.php?notsuccess=1");
+            // }
     }
 
 
@@ -62,6 +71,7 @@ if (isset($_POST["productname"]))
 if(isset($_GET["view_product"]))
 {
     $product1=$product1->get_product_by_id2($_GET["view_product"]);
+    $pricelevel1=$pricelevel1->getall_pricelevel_id($_GET["view_product"]);
 }
 
 if(isset($_GET["d_id"]))
@@ -205,7 +215,7 @@ include_once "../../files/head.php";
                                                 <input type="radio" name="productval" id="prod_valf" value="FIFO" <?php if($product1->product_inventory_val=="FIFO"){ ?> checked="checked"<?php } ?>>
                                                 <i class="helper"></i>FIFO
                                                 <input type="radio" name="productval" id="prod_vala" value="AVCO"<?php if($product1->product_inventory_val=="AVCO"){ ?> checked="checked"<?php } ?>>
-                                                 <i class="helper"></i>AVCO
+                                                <i class="helper"></i>AVCO
                                                                        
 
 
@@ -232,9 +242,9 @@ include_once "../../files/head.php";
                                             </div> -->
 
                                             <!-- <div class="col-sm-6 row"> -->
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-6">
                                                 <label class=" col-form-label"> Product image</label>
-                                                <input type="file" class="form-control" placeholder="" name="productimage" id="filer_input1"   value="">
+                                                <input type="file"  class="form-control" placeholder="" name="productimage" id="filer_input1"   value="">
                                             </div>
                                                 <!-- <div class="col-sm-3">
                                             <img src="/IMS/inventory/default/product/productimage/<?=$product1->product_id?>.jpg" style="height: 100px; width: 150px;">  
@@ -247,9 +257,112 @@ include_once "../../files/head.php";
                                             </div> -->
                                             
                                         </div>
+                                        <div class="card-block border ">
+                                        <div class="form-group row">
+                                                    <div class="row col-sm-4">
+                                                        <div class="col-sm-4"><label for="">Price</label></div>
+                                                        <div class="col-sm-8">
+                                                        <input type='text' name='' class='form-control levelpricetext' id='levelprice' value=''>
+                                                        <div style="color: red; display: none" class="msg">Digits only</div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="row col-sm-4">
+                                                        <div class="col-sm-3"><label for="">Status</label></div>
+                                                        <div class="col-sm-9">
+                                                            <div class="radio ">
+                                                                
+                                                                    <input type="radio" name="levelstatus[]" value="active"  >
+                                                                    ACTIVE
+                                                               
+                                                            </div>
+                                                            <div class="radio ">
+                                                                
+                                                                    <input type="radio" name="levelstatus[]" value="inactive"  >
+                                                                        INACTIVE
+                                                               
+                                                            </div>
+                            
 
+                                                        </div>
+                                                    
+                                                    
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <!-- <label for=""></label><br> -->
+                                                        <div class="d-flex justify-content-center">
+                                                        <div class="p-2">
+                                                        <span class='btn_add'>
+                                                            <button type="button"  class=" btn  btn-success"   >
+                                                            <i class="icofont icofont-plus"></i>
+                                                            Add 
+                                                            </button>
+                                                            </span>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="col-sm-3"></div> -->
+
+                                               
+
+                                        </div>
+                                            <div class="table-responsive" >
+                                                <table class="table table-bordered " >
+                                                    <thead >
+                                                        <th>Level</th>
+                                                        <th>Price</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+
+                                                    </thead>
+                                                   
+
+                                                    <tbody class="itembody">
+                                                        <!-- <tr>
+                                                            <td><div class="col-md-4">1</div></td>
+                                                            <td><input type='text' name='' class='form-control levelprice' id='' ></td>
+                                                            <td>
+                                                                <input type='radio' name='levelstatus' id='status_active ' value='ACTIVE' >
+                                                                <i class='helper'></i>ACTIVE
+                                                               
+                                                                <input type="radio" name="levelstatus" id=status_inactive value='INACTIVE'>
+                                                                <i class='helper'></i>INACTIVE
+                                                            </td>
+                                                            <td>
+                                                                <span class='btn_add'><button class='btn btn-sm btn-success' type='button'>Add</button></span>
+                                                                
+                                                            </td>
+                                                        </tr>B   -->
+                                                        <?php if(isset($_GET['view_product'])):?>
+                                                            <?php foreach($pricelevel1 as $item):  ?>
+                                                                <tr>
+                                                                <td><input type='text' class='level_no input-borderless' name='level_no_edit[]' readonly  value=<?=$item->pricelevel_level_no ?>>
+                                                                <input type='text' class='level_id input-borderless' name='level_id_edit[]' readonly  value=<?=$item->pricelevel_id ?>>
+                                                            </td>
+                                                                <td><input type='text'  readonly name='level_price_edit[]' class='input-borderless input-sm row_data levelprice' id='' value=<?=$item->pricelevel_price ?>><div style="color: red; display: none" class="msg1">Digits only</div></td>
+                                                                <td><input type='radio' name='level_status_edit[]'  value='ACTIVE' <?php if($item->pricelevel_status=="ACTIVE"){ ?> checked="checked"<?php } ?> >
+                                                                    <i class='helper'></i>ACTIVE<input type='radio' name='level_status_edit[]'  value='INACTIVE' <?php if($item->pricelevel_status=="INACTIVE"){ ?> checked="checked"<?php } ?> >
+                                                                    <i class='helper'></i>INACTIVE</td>
+                                                                <td>
+                                                                    <span class='btn_delete '><button class='btn btn-mini btn-danger deletedata' type='button'>Delete</button></span>
+                                                                    <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
+                                                                    <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
+                                                                </td>
+                                                                </tr>
+                                                            
+                                                            
+                                                            <?php endforeach ;  ?>
+
+                                                        <?php endif ;   ?>
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
                                         <button class="btn btn-primary" type="submit">ADD</button>
                                         <button class="btn btn-inverse" type="reset">CLEAR</button>
+                                       
                                     </form>
                                 </div>
 
@@ -413,6 +526,226 @@ include_once "../../files/foot.php";
 
 
     $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
+
+    
+  //btn add
+$(document).on('click', '.btn_add', function(event) 
+{
+  console.log("add");
+  addlevelrows();
+//hide save button
+  $(".btn_save").hide();
+//update row number
+  updateRowOrder();
+  clearrow();
+
+});
+
+//btn edit
+
+
+
+//btn_edit
+$(document).on('click', '.btn_delete', function(event) 
+{
+
+});
+var counter=0;
+
+function addlevelrows(){
+
+  //counterinccreamnet
+  
+  counter++;
+  
+  //get values
+
+  var price=$("#levelprice").val();
+  var status= $("input[name='levelstatus']:checked").val();
+
+  console.log(price);
+  console.log(status);
+
+  if(status=='ACTIVE'){
+    row="<input type='radio' name='level_status[]'  value='ACTIVE'  checked='checked'>\
+    <i class='helper'></i>ACTIVE<input type='radio' name=''  value='INACTIVE'  >\
+    <i class='helper'></i>INACTIVE";
+  }else{
+    row="<input type='radio' name='level_status []'  value='ACTIVE'  >\
+    <i class='helper'></i>ACTIVE<input type='radio' name=''  value='INACTIVE'  checked='checked'>\
+    <i class='helper'></i>INACTIVE";
+  }
+  
+  //append table rows
+  $(".itembody").append("<tr>\
+  <td><input type='text' class='level_no input-borderless' name='level_no[]' readonly  value='"+counter+"'></td>\
+  <td><input type='text'  readonly name='level_price[]' class='input-borderless input-sm row_data levelprice' id='' value='"+price+"' required></td>\
+  <td><input type='radio' name='level_status[]'  value='ACTIVE' >\
+    <i class='helper'></i>ACTIVE<input type='radio' name='level_status[]'  value='INACTIVE' >\
+    <i class='helper'></i>INACTIVE</td>\
+  <td>\
+      <span class='btn_delete'><button class='btn btn-mini btn-danger' type='button'>Delete</button></span>\
+      <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
+      <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
+  </td>\
+</tr>");
+
+}
+// $(document).ready(function(){
+//   $(".btn_delete").hide();
+//   $(".btn_edit").hide();
+
+  
+// });
+function  clearrow(){
+   $("#levelprice").val("");
+$("input[name='levelstatus']:checked").html("");
+}
+
+$(document).on('click', '.btn_delete', function(event) 
+{
+  var tbl_row = $(this).closest('tr');
+  
+  tbl_row.remove();
+  updateRowOrder();
+ 
+
+});
+var i=0;
+function updateRowOrder(){
+  console.log("update");
+   $('.level_no').each(function(i){
+     $(this).val(i+1);
+   });
+}
+
+$(document).on('click', '.btn_edit', function(event) 
+{
+    var tbl_row = $(this).closest('tr');
+    tbl_row.find('.btn_save').show();
+    tbl_row.find('.btn_edit').hide(); 
+    tbl_row.find('.btn_delete').hide(); 
+    //remove readonly attribute
+    tbl_row.find('.row_data')
+        .attr('readonly', false)
+        console.log(tbl_row.find('.row_data').val());
+
+    //display textbox border
+    tbl_row.find('input').removeClass('input-borderless');
+       tbl_row.find('input').addClass('input-border');
+
+});
+
+//btn save
+$(document).on('click', '.btn_save', function(event) 
+{
+    event.preventDefault();
+        var tbl_row = $(this).closest('tr');
+        tbl_row.find('.btn_save').hide();
+        tbl_row.find('.btn_cancel').hide();
+
+        //hide edit button
+        tbl_row.find('.btn_edit').show(); 
+        tbl_row.find('.btn_delete').show(); 
+        tbl_row.find('.row_data')
+        //type text changes to type hidden
+        .attr('readonly', true)
+        
+        
+
+        
+        tbl_row.find('.row_data').each(function(index,val) 
+        {  
+             //changes made het assigned to the value attribute
+            $(this).attr('value', $(this).val());
+
+            
+        }); 
+
+            //remove textbox border
+        tbl_row.find('input').addClass('input-borderless');
+        tbl_row.find('input').removeClass('input-border');
+
+
+
+});
+
+$(document).on('click', '.deletedata', function(event) {
+    var tbl_row = $(this).closest('tr');
+    console.log ("deletedata");
+
+    var deleteitemid= tbl_row.find(".level_id").val();
+    console.log (deleteitemid);
+
+    var confirm_msg=confirm("Are yousure you want delete the item?");
+        if(confirm_msg==true){
+            //ajax request
+            $.ajax({
+                url:'../product/deletepricelevel.php',
+                type:'POST',
+                data:{id:deleteitemid},
+                success:function(response){
+                    if(response==true){
+                        console.log('Item deleted successfully');
+                        tbl_row.css('background','tomato');
+                        tbl_row.fadeOut(800,function(){
+                            tbl_row.remove();
+                            
+                        });
+                    }else{
+                        console.log('Invalid ID.');
+                    }
+                }
+                 
+            });
+        }
+   
+
+});
+
+$(document).on('click', '.btn_edit', function(event){
+
+var row=$(this).closest('tr');
+
+console.log("edit"); 
+//validate only numbers for quantity
+row.find(".levelprice").on("keypress",function(e)
+{
+
+    var charCode = (e.which) ? e.which : event.keyCode    
+    
+    if(String.fromCharCode(charCode).match(/[^0-9]/g))
+    {  
+        row.find(".msg1").css("display", "inline"); 
+        return false;  
+    }else
+    {row.find(".msg1").css("display", "none");}
+    });
+
+
+
+
+});
+
+$(".levelpricetext").on("keypress",function(e)
+{
+
+    var charCode = (e.which) ? e.which : event.keyCode    
+    
+    if(String.fromCharCode(charCode).match(/[^0-9]/g))
+    {  
+        $(".msg").css("display", "inline"); 
+        return false;  
+    }else
+    {$(".msg").css("display", "none");}
+    });
+
+
+
+
+
+
+
 
 
 

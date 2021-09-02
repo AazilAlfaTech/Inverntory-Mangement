@@ -28,15 +28,19 @@ function __construct(){
 // ----INSERT NEW sales_orderitem------------------------------------------------------------------------------------------------------------------
 
 
-function insert_sales_orderitem(){
+function insert_sales_orderitem($orderid){
 
-    $sql="INSERT INTO sales_orderitem (so_salesorderid,so_itemproductid,so_itemprice,so_itemqty,so_itemdiscount,so_finalprice)
-    VALUES('$this->so_salesorderid','$this->so_itemproductid','$this->so_itemprice','$this->so_itemqty','$this->so_itemdiscount','$this->so_finalprice')
-    ";
-       echo $sql;
-       $this->db->query($sql);
-    $so_id=$this->db->insert_id;
-    return $so_id;
+   $list=0;
+    
+   foreach($_POST['Quantity'] as $item){
+    $sql="INSERT INTO sales_orderitem (so_itemqty,so_itemproductid,so_itemdiscount,so_itemprice,so_salesorderid) VALUES 
+    ('".$_POST['Quantity'][$list]."','".$_POST['Product'][$list]."','".$_POST['Discount'][$list]."','".$_POST['Price'][$list]."',$orderid)";
+   
+    echo $sql;
+        $this->db->query($sql);
+       $list++;
+}
+return true;
 
 }
 

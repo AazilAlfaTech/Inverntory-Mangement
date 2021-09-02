@@ -106,6 +106,9 @@ include_once "../../files/head.php";
                                         
 
                                             </tbody>
+
+                                                <tr>
+                               
                                         </table>
                                     </div>
                                 </div>
