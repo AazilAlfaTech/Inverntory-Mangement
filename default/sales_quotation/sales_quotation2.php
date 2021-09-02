@@ -1,7 +1,7 @@
 <?php
 include_once "../../files/config.php";
 
-class sales_quotation{ 
+class sales_quotation2{ 
 
     public $salesquot_id;
     public $salesquot_customer;
@@ -69,7 +69,8 @@ function delete_sales_quotation($salesquotation_id){
 
 function get_all_sales_quotation(){
 
-    $sql="SELECT * FROM sales_quotation WHERE salesquot_status='ACTIVE' ";
+    //$sql="SELECT * FROM sales_quotation WHERE salesquot_status='ACTIVE' ";
+    $sql="SELECT sales_quotation.salesquot_id,sales_quotation.salesquot_customer,sales_quotation.salesquot_ref,sales_quotation.salesquot_date,customer.customer_name FROM sales_quotation JOIN customer ON sales_quotation.salesquot_id=customer.customer_id WHERE sales_quotation.salesquot_status='ACTIVE'";
   
     $result=$this->db->query($sql);
 
@@ -81,9 +82,10 @@ function get_all_sales_quotation(){
 
         $sales_quotation_item->salesquot_id=$row["salesquot_id"];
         $sales_quotation_item->salesquot_customer=$row["salesquot_customer"];
+        $sales_quotation_item->salesquot_customer_name=$row["customer_name"];
         $sales_quotation_item->salesquot_ref=$row["salesquot_ref"];
         $sales_quotation_item->salesquot_date=$row["salesquot_date"];
-        $sales_quotation_item->salesquot_status=$row["salesquot_status"];
+        
 
         
         
@@ -93,6 +95,39 @@ function get_all_sales_quotation(){
     return $sales_quotation_array;
 }
 
+function get_all_sales_quotationitem($itemid){
+
+    //$sql="SELECT * FROM sales_quotationitem WHERE sq_item_status='ACTIVE' ";
+    $sql="SELECT sales_quotationitem.sq_item_id,sales_quotationitem.sq_item_quotid,sales_quotationitem.sq_item_productid,
+    sales_quotationitem.sq_item_price,sales_quotationitem.sq_item_qty,sales_quotationitem.sq_item_qty,sales_quotationitem.sq_item_discount,
+    product.product_name FROM sales_quotationitem JOIN product ON sales_quotationitem.sq_item_productid=product.product_id WHERE sales_quotationitem.sq_item_quotid=$itemid AND sales_quotationitem.sq_item_status='ACTIVE'";
+  
+    $result=$this->db->query($sql);
+
+    $sales_quotationitem_array=array(); //array created
+
+    while($row=$result->fetch_array()){
+
+        $sales_quotationitem = new sales_quotationitem();
+
+        $sales_quotationitem->so_itemid=$row["so_itemid"];
+        $sales_quotationitem->sq_item_quotid=$row["sq_item_quotid"];
+        $sales_quotationitem->sq_item_productid=$row["sq_item_productid"];
+        $sales_quotationitem->sq_item_productname=$row["product_name"];
+        $sales_quotationitem->sq_item_price=$row["sq_item_price"];
+        $sales_quotationitem->sq_item_qty=$row["sq_item_qty"];
+        $sales_quotationitem->sq_item_discount=$row["sq_item_discount"];
+        $sales_quotationitem->sq_item_finalprice=$row["sq_item_finalprice"];
+        
+
+        
+        
+        $sales_quotationitem_array[]=$sales_quotationitem;
+    }
+
+    return $sales_quotationitem_array;
+}
+
 
 
 
@@ -100,9 +135,10 @@ function get_all_sales_quotation(){
 // ----------------------------------------------------------------------------------------------------------------------------
 
 
-function get_purchaserequest_by_id($sales_quotationid){
+function get_salesquotation_by_id($salesquotationid){
 
-    $sql="SELECT * FROM sales_quotation WHERE purchaserequest_id = $sales_quotationid";
+    //$sql="SELECT * FROM sales_quotation WHERE purchaserequest_id = $sales_quotationid";
+    $sql="SELECT sales_quotation.salesquot_id,sales_quotation.salesquot_customer,sales_quotation.salesquot_ref,sales_quotation.salesquot_date,customer.customer_name FROM sales_quotation JOIN customer ON sales_quotation.salesquot_id=customer.customer_id WHERE sales_quotation.salesquot_status='ACTIVE' AND salesquot_id=$salesquotationid ";
 
     //echo $sql;
     $result=$this->db->query($sql);
@@ -129,14 +165,3 @@ function get_purchaserequest_by_id($sales_quotationid){
 
 // ========================================================================================================================================
 }
-
-
-
-
-
-
-
-
-
-
-?>
