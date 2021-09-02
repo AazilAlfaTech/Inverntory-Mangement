@@ -6,6 +6,12 @@ include_once "customer.php";
 
 $customer1 = new customer();
 
+if(isset($_GET['edit_cus'])){
+
+$result_customer = $customer1->get_customer_by_id($_GET['edit_cus']);
+//print_r($result_customer);
+
+}
 
 
 ?>
@@ -72,25 +78,29 @@ $customer1 = new customer();
                                                                     <table class="table m-0">
                                                                         <tbody>
                                                                             <tr>
-                                                                                <th scope="row">Full Name</th>
-                                                                                <td>Josephine Villa</td>
+                                                                                <th scope="row">Customer Code</th>
+                                                                                <td><?= $result_customer->customer_code ?></td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <th scope="row">Gender</th>
-                                                                                <td>Female</td>
+                                                                                <th scope="row">Customer Group</th>
+                                                                                <td> <?= $result_customer->customer_group ?> </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <th scope="row">Birth Date</th>
-                                                                                <td>October 25th, 1990</td>
+                                                                                <th scope="row">E-mail</th>
+                                                                                <td><?= $result_customer->customer_email ?></td>
                                                                             </tr>
                                                                             <tr>
+                                                                                <th scope="row">City</th>
+                                                                                <td><?= $result_customer->customer_city ?></td>
+                                                                            </tr>
+                                                                       <!--     <tr>
                                                                                 <th scope="row">Marital Status</th>
                                                                                 <td>Single</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th scope="row">Location</th>
                                                                                 <td>New York, USA</td>
-                                                                            </tr>
+                                                                            </tr> -->
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -100,29 +110,29 @@ $customer1 = new customer();
                                                                 <div class="table-responsive">
                                                                     <table class="table">
                                                                         <tbody>
-                                                                            <tr>
+                                                                       <!--     <tr>
                                                                                 <th scope="row">Email</th>
                                                                                 <td><a href="#!"><span
                                                                                             class="__cf_email__"
                                                                                             data-cfemail="4206272f2d02273a232f322e276c212d2f">[email&#160;protected]</span></a>
                                                                                 </td>
+                                                                            </tr> -->
+                                                                            <tr>
+                                                                                <th scope="row">Customer Name</th>
+                                                                                <td><?= $result_customer->customer_name ?></td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <th scope="row">Mobile Number</th>
-                                                                                <td>(0123) - 4567891</td>
+                                                                                <th scope="row">Address</th>
+                                                                                <td><?= $result_customer->customer_add ?></td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <th scope="row">Twitter</th>
-                                                                                <td>@xyz</td>
+                                                                           <tr>
+                                                                                <th scope="row">Contact Number</th>
+                                                                                <td><?= $result_customer->customer_contactno ?></td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <th scope="row">Skype</th>
-                                                                                <td>demo.skype</td>
-                                                                            </tr>
-                                                                            <tr>
+                                                                   <!--          <tr>
                                                                                 <th scope="row">Website</th>
                                                                                 <td><a href="#!">www.demo.com</a></td>
-                                                                            </tr>
+                                                                            </tr> -->
                                                                         </tbody>
                                                                     </table>
                                                                 </div>

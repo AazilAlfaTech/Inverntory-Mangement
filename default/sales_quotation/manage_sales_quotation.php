@@ -71,7 +71,7 @@ include_once "../../files/head.php";
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Reference No</th>
+                                                    <th>Reference No</th>-
                                                     <th>Date </th>
                                                     <th>Supplier</th>
                                                     <th>Action</th>
