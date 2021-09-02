@@ -14,15 +14,19 @@
     include_once "sales_quatation_item.php";
     $sales_quot_item1=new sales_quotationitem();
 
+    if(isset($_GET["edit_sq"]))
+    {
+        $sales_quot1=$sales_quot1->get_salesquotation_by_id($_GET["edit_sq"]);
+        $sales_quot_item1=$sales_quot_item1->get_all_item_bysquotid($_GET["edit_sq"]);
+    }
     if(isset($_POST["salesquotcustomer"]))
     {
         $sales_quot1->salesquot_customer=$_POST["salesquotcustomer"];
-        $sales_quot1->salesquot_date=$_POST["salesquotdate"];
-        $sales_quot1->salesquot_ref=$sales_quot1->salesquot_code($_POST["salesquotdate"]);
-
-       $pr_id=$sales_quot1->insert_sales_quotation();
+        // // $sales_quot1->salesquot_ref=$_POST[""];
+        // $sales_quot1->salesquot_date=$_POST["salesquotdate"];
+        $sales_quot1->edit_sales_quotation($_POST["sq_id"]);
         // print_r($a);
-        $sales_quot_item1->insert_sales_quotationitem($pr_id);
+        $sales_quot_item1->edit_sq_item();
     }
     
     include_once "../../files/head.php";
@@ -69,7 +73,7 @@
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Sales Quotation</h5>
+                                    <h5>Edit Sales Quotation</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -82,32 +86,36 @@
 
                                 <div class="card-block">
 
-                                    <form action="add_new_sales_quotation.php" method="POST">
-
-
-
+                                    <form action="edit_sales_quotation.php" method="POST">
 
                                         <div class="form-group row">
 
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Customer</label>
                                                 <select class="js-example-basic-single col-sm-12" name="salesquotcustomer" id="sq_customer">
                                                     <option value=" ">Select customer</option>
 
                                                     <?php
                                                         foreach($res_cust1 as $item)
-                                                        
-                                                        echo"<option value='$item->customer_id'>$item->customer_name</option>";
+                                                        if($item->customer_id==$sales_quot1->salesquot_customer)
+                                                            echo"<option value='$item->customer_id' selected='selected'>$item->customer_name</option>";
+                                                        else
+                                                            echo"<option value='$item->customer_id'>$item->customer_name</option>";
                                                     ?>
                                                 </select>
 
                                             </div>
 
+                                            <div class="col-sm-4">
+                                                <label class=" col-form-label">Reference Code</label>
+                                                <input class="form-control" type="text" name="salesquot_ref" id="" value="<?=$sales_quot1->salesquot_ref?>" readonly>
 
+                                                <input class="form-control" type="text" name="sq_id" id="" value="<?=$sales_quot1->salesquot_id ?>" readonly hidden>
+                                            </div>
 
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="date" name="salesquotdate" id="sq_date">
+                                                <input class="form-control" type="date" name="salesquotdate" id="sq_date" value="<?=$sales_quot1->salesquot_date?>">
                                             </div>
                                         </div>
                                         <hr>
@@ -164,7 +172,7 @@
 
 
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-bordered" id="example-2">
+                                            <table class="table table-bordered" id="mytable">
                                                 <thead class='table-primary'>
                                                     <tr>
                                                         <th>#</th>
@@ -176,8 +184,50 @@
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="tbody">
-                                                   
+                                                <tbody id="itembody">
+                                                    <?php if(isset($_GET['edit_sq'])):?>
+                                                            <?php foreach($sales_quot_item1 as $item):  ?>
+                                                        <tr>   
+                                                        
+
+                                                        <td></td>
+                                                        <td class='table-edit-view'><span class=''><?= $item->product_name?></span>
+                                                                    <input class='form-control input-sm  '   type='hidden' name='sq_item_productid[]' value='<?= $item->sq_item_productid ?>'>
+                                                                    <input class='form-control input-sm  '   type='hidden' name='pr_item_id[]' value='<?= $item->sq_item_id ?>'>
+                                                          
+                                                                    </td>
+                                  
+                                                                <td class='table-edit-view'><span class='tabledit-span'><?=  $item->sq_item_price ?></span>
+                                                                    <input class='input-borderless input-sm row_data price'   type='text' name='sq_item_price[]' value='<?= $item->sq_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
+                                                                    </td>
+                                                                    <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_qty?></span>
+                                                                <input class='input-borderless input-sm row_data quantity'   type='text'  name='sq_item_qty[]' value='<?=$item->sq_item_qty ?>'><div style="color: red; display: none" class="msg1">Digits only</div>
+                                                            </td>
+
+                                                                    <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_discount ?></span>
+                                                                    <input class='input-borderless input-sm row_data discount'   type='text' name='sq_item_discount[]' value='<?= $item->sq_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
+
+                                                                    <td class='table-edit-view'><span class='tabledit-span'><?=$item->sq_item_finalprice?></span>
+                                                                    <input class='input-borderless input-sm row_data total'   type='text' disabled="true" value='<?=$item->sq_item_finalprice ?>'>
+                                                                    
+                                                                    </td>
+
+
+                                                                
+                                                                
+                                                                <td>
+                                                                <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
+                                                                <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
+                                                                <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
+                                                                </td>
+        
+       
+                                                                 
+                                                        </tr>
+
+                                                            <?php endforeach ;  ?>
+                                                        <?php endif ;   ?>
+                                             
                                                  
                                                 </tbody>
                                             </table>
@@ -211,7 +261,7 @@
                                                     </table>
                                         </div>
                                         <div class="d-flex flex-row-reverse">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" name="save" class="btn btn-primary">Submit</button>
                                         </div>
                                     </form>
 
@@ -269,7 +319,7 @@
         var sq_dis=$("#sq_itemdiscount").val();
         var sq_fprice=$("#sq_itemfinalprice").val();
         
-         $("#tbody").append("<tr><td >"+1+"</td><td><input  class='form-control input-sm  ' type='text' name='sq_item_productid[]' value='"+sq_prod+"'> <span class='tabledit-span'>"+ sq_prod_name +" </span></td><td><input class='input-borderless input-sm row_data price'  type='text' readonly name='sq_item_price[]' value='"+sq_price+"'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> </td><td><input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='"+sq_qty+"'> <div style='color: red; display: none' class='msg1'>'Digits only'</div></td><td><input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='"+sq_dis+"'><div style='color: red; display: none' class='msg3'>'Digits only'</div></td><td>"+sq_fprice+"</td><td><span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span> <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span><span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span></td> </tr>");
+         $("#itembody").append("<tr><td >"+1+"</td><td><input  class='form-control input-sm  ' type='text' name='sq_item_productid[]' value='"+sq_prod+"'> <span class='tabledit-span'>"+ sq_prod_name +" </span></td><td><input class='input-borderless input-sm row_data price'  type='text' readonly name='sq_item_price[]' value='"+sq_price+"'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> </td><td><input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='"+sq_qty+"'> <div style='color: red; display: none' class='msg1'>'Digits only'</div></td><td><input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='"+sq_dis+"'><div style='color: red; display: none' class='msg3'>'Digits only'</div></td><td>"+sq_fprice+"</td><td><span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span> <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span><span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span></td> </tr>");
          
  
          $(".btn_save").hide();

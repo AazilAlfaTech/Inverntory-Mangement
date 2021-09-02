@@ -234,7 +234,7 @@
                                                     <?php endif ;?>        
                                                 </tbody>
                                             </table>
-                                                <div class="card">  
+                                                <!-- <div class="card">   -->
                                                     
                                                     
                                                     <table class="table table-responsive invoice-table invoice-total">

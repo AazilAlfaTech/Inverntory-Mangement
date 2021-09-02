@@ -1,7 +1,8 @@
 <?php
 include_once "../../files/config.php";
 
-class sales_quotation{ 
+class sales_quotation
+{ 
 
     public $salesquot_id;
     public $salesquot_customer;
@@ -14,9 +15,11 @@ class sales_quotation{
     private $db;
 
 // --------------------------------------------------------------------------------------------------------------------
-function __construct(){
+function __construct()
+{
           
     $this->db=new mysqli(host,un,pw,db1);
+    return true;
 }
 
 // ----INSERT NEW sales_quotation------------------------------------------------------------------------------------------------------------------
@@ -28,12 +31,67 @@ function insert_sales_quotation (){
     VALUES('$this->salesquot_customer','$this->salesquot_ref','$this->salesquot_date')
     ";
        echo $sql;
-       $this->db->query($sql);
+    $this->db->query($sql);
     $sq_id=$this->db->insert_id;
     return $sq_id;
 
 }
 
+// Sales quotation code
+// Genearte the grn code.............................................................................................. 
+    function salesquot_code($squot_date)
+    {
+        $sql="SELECT COUNT(*) AS count FROM `sales_quotation` WHERE MONTH(salesquot_date)= EXTRACT(MONTH FROM '$squot_date') ";
+
+            $sql1="SELECT  EXTRACT(MONTH FROM '$squot_date') AS squot_month ";
+            $sql2="SELECT  EXTRACT(YEAR FROM '$squot_date') AS squot_year ";
+
+            $result = $this->db->query($sql);
+            $result1 = $this->db->query($sql1);
+            $result2 = $this->db->query($sql2);
+
+            $count= 0;
+
+
+            while($row=$result->fetch_array()){
+
+                $count = $row["count"];
+            }
+
+            
+            $month = "";
+
+            while($row=$result1->fetch_array()){
+
+                $month = $row["squot_month"];
+            }
+
+            $month =sprintf("%02d", $month);
+
+            $year = "";
+
+            while($row=$result2->fetch_array()){
+
+                $year = $row["squot_year"];
+            }
+
+    
+            
+
+            $count = $count + 1 ;
+            $count = sprintf("%04d", $count);
+
+
+            //  $year = date("Y");
+
+
+            $code = "SQ".  substr($year, 2, 2 ) . $month . $count;  
+
+
+            return $code;
+
+
+        }
 //-------------------------------------------------------------------------------------------------------------------
 function edit_sales_quotation($salesquotation_id){
  
@@ -45,10 +103,6 @@ function edit_sales_quotation($salesquotation_id){
     echo $sql;
     $this->db->query($sql);
     return true;
-
-   
-
-
 }
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -101,11 +155,11 @@ function get_all_sales_quotation(){
 // ----------------------------------------------------------------------------------------------------------------------------
 
 
-function get_purchaserequest_by_id($sales_quotationid){
+function get_salesquotation_by_id($sales_quotationid){
 
-    $sql="SELECT * FROM sales_quotation WHERE purchaserequest_id = $sales_quotationid";
+    $sql="SELECT * FROM sales_quotation WHERE salesquot_id = $sales_quotationid";
 
-    //echo $sql;
+    echo $sql;
     $result=$this->db->query($sql);
     $row=$result->fetch_array();
 

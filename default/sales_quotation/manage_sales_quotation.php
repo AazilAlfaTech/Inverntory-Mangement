@@ -1,5 +1,8 @@
 <?php
 
+include_once "sales_quatation.php";
+$sales_quot1=new sales_quotation();
+$result_sales=$sales_quot1->get_all_sales_quotation();
 include_once "../../files/head.php";
 
 ?>
@@ -73,56 +76,67 @@ include_once "../../files/head.php";
                                                 <tr>
                                                     <th>Reference No</th>
                                                     <th>Date </th>
-                                                    <th>Supplier</th>
+                                                    <th>Customer</th>
                                                     <th>Action</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>At123</td>
-                                                    <td>Alfa grp</td>
-                                                    <td>At123</td>
+                                                <?php
+                                                        foreach ($result_sales as $item)
+                                                        {
+                                                            echo
+                                                            "<tr>
+                                                           
+                                                                <td>$item->salesquot_ref</td>
+                                                                <td>$item->salesquot_date</td>
+                                                                <td>$item->salesquot_customer</td>
 
-                                                    <td> <button class="btn btn-mat btn-danger "><i
-                                                                class="fa fa-trash"></i> </button>
-                                                        <button class="btn btn-mat btn-info "><i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <a href="view_puchase_requisition.php">   <button class="btn btn-mat btn-primary "><i
-                                                                class="icofont icofont-eye-alt"></i></button> </a>
-                                                    </td>
+                                                                <td>
+                                                                    <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                    <button type='button' id='edit_pr' onclick='view_sq($item->salesquot_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></button>
+                                                                        <button type='button' onclick='edit_sq($item->salesquot_id)'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                                        <button type='button'  onclick='delete_sq($item->salesquot_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group_name'></span></button>
+                                               
+                                                                    </div>
+                                                                </td>
+                                                            </tr> ";
+                                                        }
+                                                    ?>
+                                        
 
-                                                </tr>
-
-                                                </tfoot>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             <!-- ----------------------------------------------------------------------------------------------------------------- -->
-                            <?php
-
-include_once "../../files/foot.php";
-
+<?php
+    include_once "../../files/foot.php";
 ?>
+
+<script>
+
+    $(".alert").fadeIn(300).delay(3500).fadeOut(400);
+
+    function edit_sq(edit_sq) 
+    {
+        window.location.href = "edit_sales_quotation.php?edit_sq=" + edit_sq;
+    }
+
+    function view_sq(view_sq)
+    {
+        window.location.href = "view_sales_quotation.php?view_sq=" + view_sq;
+    }
+
+    function delete_sq(deleteid) 
+    {
+        if (confirm("Do you want to delete id" + " " + deleteid)) 
+        {
+            window.location.href = "manage_sales_quotation.php?d_id=" + deleteid;
+        }
+
+    }
+</script>
