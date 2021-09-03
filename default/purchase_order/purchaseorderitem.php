@@ -105,7 +105,8 @@ function get_all_POitem($purch_order_id){
      $PO_item->totalquantity=$row['tot_qty'];
      $PO_item->totalprice=$row['tot_price'];
      $PO_item->totaldiscount=$row['tot_discount'];
-     $PO_item->net_total=round(($row['tot_qty']*$row['tot_price'])-($row['tot_qty']*$row['tot_price']*$row['tot_discount']/100),2);
+     
+    // $PO_item->net_total=round(($row['tot_qty']*$row['tot_price'])-($row['tot_qty']*$row['tot_price']*$row['tot_discount']/100),2);
 
      return $PO_item;
 

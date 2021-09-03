@@ -165,7 +165,7 @@ include_once "../../files/head.php";
                                                                 <button type='button'  onclick='deleteorder($item->purchaseorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
                                                                 
                                                             </div>
-                                                    </td>
+                                                        </td>
                                                         
                                                         </tr>
                                                         
