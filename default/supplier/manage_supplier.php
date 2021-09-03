@@ -308,8 +308,9 @@ include_once "../../files/head.php";
              
 
                 <td><div class='btn-group btn-group-sm' style='float: none;'>
-                <button type='button' onclick='edit_sup($item->supplier_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
+             <button type='button' onclick='edit_sup($item->supplier_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
                 <button type='button'  onclick='delete_sup($item->supplier_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                <button type='button' id='editprod' onclick='view_cus($item->supplier_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></button>
                 </td> 
 
 
@@ -381,6 +382,14 @@ function delete_sup(deleteid) {
     if (confirm("Do you want to delete id" + " " + deleteid)) {
         window.location.href = "manage_supplier.php?d_id=" + deleteid;
     }
+
+}
+//added afaz
+function view_cus(edit_sup) {
+
+
+window.location.href = "view_supplier.php?edit_sup=" + edit_sup;
+
 
 }
 </script>
