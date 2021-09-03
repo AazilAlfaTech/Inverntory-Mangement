@@ -1,10 +1,16 @@
 <?php
 
 include_once "../customer/customer.php";
+include_once "../Sales_order/sales_order.php";
 
 $customer1 = new customer();
 
 $all_cus = $customer1->get_all_customer();
+
+
+$sales_order1 =  new sales_order();
+
+// $result_sales_order = $sales_order1->get_sales_order_by_customer();
 
 //    print_r( $all_cus);
 
@@ -79,14 +85,13 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Customer</label>
-                                                <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier">
-
-                                                    <option value=" ">Select Customer</option>
+                                                <select class="js-example-basic-single col-sm-12 selectcustomer" name="sinvcustomer" id="sinv_customer">
+<option value="-1">Select Customer</option>
                                                     <?php
                                                     foreach ($all_cus as $item)
 
                                                        
-                                                            echo "<option value='$item->Customer_id'>$item->customer_name</option>";
+                                                            echo "<option value='$item->customer_id'> $item->customer_name</option>";
                                                     ?>
 
 
@@ -122,8 +127,11 @@ include_once "../../files/head.php";
                                                 </thead>
                                                 <tbody id="tbody">
 
+                                            
 
 
+
+                                                
 
                                                 </tbody>
                                             </table>
@@ -195,7 +203,7 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form action="add_new_purchase_requisition.php" method="POST">
+                                    <form action="add_new_salesinvoice.php" method="POST">
 
 
 
@@ -204,7 +212,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Payment Methord</label>
-                                                <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier">
+                                                <select class="js-example-basic-single col-sm-12" name="sinvpaymethod" id="sinv_paymethod">
 
                                                     <option value=" ">Cash </option>
                                                     <option value=" ">Credit </option>
@@ -301,6 +309,45 @@ include_once "../../files/head.php";
 
 
 
+<!-- <script type="text/javascript" src="../javascript/sales.js "></script> -->
+
+<script>
+$("#sinv_customer").change(function() {
+    var customer_id = $("#sinv_customer").val();
+    console.log(customer_id);
+     $.get("../ajax/ajaxsales.php?type=get_sales_order_of_customer", { customerselect: customer_id }, function(data) {
+         console.log(data);
+
+         $("#tbody").html("");
+         var txt = '';
+     
+         var i_data = JSON.parse(data);
+        $.each(i_data, function(i, x) {
+
+            txt = ' <tr>' +
+              
+                '<td id="P_invoice">' + i_data[i].salesorder_id +'</td>' +
+                 '<td id="P_date">' + i_data[i].salesorder_ref + '</td>' +
+                 '<td id="P_duedate">' + i_data[i].salesorder_date + '</td>' +
+                // '<td id="P_amount">' + i_data[i].Purchase_gtot + '</td>' +
+                // '<td id="P_dueamount">' + i_data[i].Purchase_due + '</td>' +
+                // '<td><input type="text" name="Pay_ind_amnt[]" class="total" id="tot"></td>' +
+                 '<td><button type="button" class="btn btn-success btnadd" onclick="add(this)" ><i class="fas fa-plus-square"></i> </button>&nbsp;&nbsp;<button type="button" class="btn btn-success btndel" onclick="delete_allocation(this)"><i class="far fa-times-circle"></i> </button></td>' +
+                '</tr>';
+            $("#tbody").append(txt);
+            $(".btndel").hide();
+
+         });
 
 
-                </script>
+
+
+
+     });
+});
+
+
+</script>
+
+
+      
