@@ -11,4 +11,15 @@ function get_sales_order_of_customer()
 }
 
 
+
+function get_sales_order_item()
+{
+    include_once "../Sales_order/sales_order_item.php ";
+    $sales_order_item1=new sales_orderitem();
+    $sales_order_item1_list=$sales_order_item1->get_sales_orderitem_by_id ($_GET['sales_item']);
+    echo json_encode($sales_order_item1_list);
+}
+
+
+
 ?>

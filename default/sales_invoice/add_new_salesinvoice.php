@@ -260,7 +260,7 @@ include_once "../../files/head.php";
 
                                                     </tr>
                                                 </thead>
-                                                <tbody id="tbody">
+                                                <tbody id="tbodybuilder">
 
 
 
@@ -329,12 +329,10 @@ $("#sinv_customer").change(function() {
                 '<td id="P_invoice">' + i_data[i].salesorder_id +'</td>' +
                  '<td id="P_date">' + i_data[i].salesorder_ref + '</td>' +
                  '<td id="P_duedate">' + i_data[i].salesorder_date + '</td>' +
-                // '<td id="P_amount">' + i_data[i].Purchase_gtot + '</td>' +
-                // '<td id="P_dueamount">' + i_data[i].Purchase_due + '</td>' +
-                // '<td><input type="text" name="Pay_ind_amnt[]" class="total" id="tot"></td>' +
-                 '<td><button type="button" class="btn btn-success btnadd" onclick="add(this)" ><i class="fas fa-plus-square"></i> </button>&nbsp;&nbsp;<button type="button" class="btn btn-success btndel" onclick="delete_allocation(this)"><i class="far fa-times-circle"></i> </button></td>' +
+      
+                 '<td><button type="button" class="btn btn-success btnadd" onclick="add_to_list(' + i_data[i].salesorder_id +')" ><i class="fas fa-plus-square"></i> </button>&nbsp;&nbsp;<button type="button" class="btn btn-success btndel" onclick="delete_allocation(this)"><i class="far fa-times-circle"></i> </button></td>' +
                 '</tr>';
-            $("#tbody").append(txt);
+            $("#tbodybuilder").append(txt);
             $(".btndel").hide();
 
          });
@@ -347,6 +345,46 @@ $("#sinv_customer").change(function() {
 });
 
 
+
+
+
+
+
+
+function add_to_list(i){
+
+console.log(i);
+
+
+$.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, function(data) {
+         console.log(data);
+
+         $("#tbody").html("");
+         var txt = '';
+     
+         var i_data = JSON.parse(data);
+        $.each(i_data, function(i, x) {
+
+            txt = ' <tr>' +
+              
+                '<td id="P_invoice">' + i_data[i].salesorder_id +'</td>' +
+                 '<td id="P_date">' + i_data[i].salesorder_ref + '</td>' +
+                 '<td id="P_duedate">' + i_data[i].salesorder_date + '</td>' +
+      
+                 '<td><button type="button" class="btn btn-success btnadd" onclick="add_to_list(' + i_data[i].salesorder_id +')" ><i class="fas fa-plus-square"></i> </button>&nbsp;&nbsp;<button type="button" class="btn btn-success btndel" onclick="delete_allocation(this)"><i class="far fa-times-circle"></i> </button></td>' +
+                '</tr>';
+            $("#tbody").append(txt);
+            $(".btndel").hide();
+
+         });
+
+
+
+
+
+     });
+
+}
 </script>
 
 
