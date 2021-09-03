@@ -141,7 +141,7 @@ function get_all_sales_order(){
         $sales_order_item->salesorder_customer_name=$row["customer_name"];
         $sales_order_item->salesorder_ref=$row["salesorder_ref"];
         $sales_order_item->salesorder_date=$row["salesorder_date"];
-        $sales_order_item->salesorder_status=$row["salesorder_status"];
+       // $sales_order_item->salesorder_status=$row["salesorder_status"];
 
         
         
@@ -174,7 +174,7 @@ function get_salesorder_by_id($orderid){
         $sales_order_item->salesorder_customer_name=$row["customer_name"];
         $sales_order_item->salesorder_ref=$row["salesorder_ref"];
         $sales_order_item->salesorder_date=$row["salesorder_date"];
-        $sales_order_item->salesorder_status=$row["salesorder_status"];
+       // $sales_order_item->salesorder_status=$row["salesorder_status"];
 
        
     return $sales_order_item;
