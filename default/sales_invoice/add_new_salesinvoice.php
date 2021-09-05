@@ -1,18 +1,38 @@
 <?php
 
 include_once "../customer/customer.php";
-include_once "../Sales_order/sales_order.php";
-
 $customer1 = new customer();
+include_once "../Sales_order/sales_order.php";
+$sales_order1 =  new sales_order();
+include_once "../sales_invoice/sales_invoice.php";
+$sales_invoice1 = new sales_invoice();
+
 
 $all_cus = $customer1->get_all_customer();
 
 
-$sales_order1 =  new sales_order();
+
 
 // $result_sales_order = $sales_order1->get_sales_order_by_customer();
 
 //    print_r( $all_cus);
+
+// ------------------------------------------------------------------------------------------------------------
+
+
+if(isset($_POST[""]))
+{
+
+
+
+
+
+}
+
+
+
+
+
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -86,7 +106,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Customer</label>
                                                 <select class="js-example-basic-single col-sm-12 selectcustomer" name="sinvcustomer" id="sinv_customer">
-<option value="-1">Select Customer</option>
+<option value="-1" disable selected>Select Customer</option>
                                                     <?php
                                                     foreach ($all_cus as $item)
 
@@ -254,8 +274,12 @@ include_once "../../files/head.php";
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Sales Order Ref NO</th>
-                                                        <th> Date</th>
+                                                        <th>Ref NO</th>
+                                                        <th> Product</th>
+                                                        <th>Qty</th>
+                                                        <th>Price</th>
+                                                        <th>Discount</th>
+                                                        <th>Total</th>
                                                         <th></th>
 
                                                     </tr>
@@ -326,14 +350,14 @@ $("#sinv_customer").change(function() {
 
             txt = ' <tr>' +
               
-                '<td id="P_invoice">' + i_data[i].salesorder_id +'</td>' +
-                 '<td id="P_date">' + i_data[i].salesorder_ref + '</td>' +
-                 '<td id="P_duedate">' + i_data[i].salesorder_date + '</td>' +
+                '<td >' + i_data[i].salesorder_id +'</td>' +
+                 '<td >' + i_data[i].salesorder_ref + '</td>' +
+                 '<td >' + i_data[i].salesorder_date + '</td>' +
       
                  '<td><button type="button" class="btn btn-success btnadd" onclick="add_to_list(' + i_data[i].salesorder_id +')" ><i class="fas fa-plus-square"></i> </button>&nbsp;&nbsp;<button type="button" class="btn btn-success btndel" onclick="delete_allocation(this)"><i class="far fa-times-circle"></i> </button></td>' +
                 '</tr>';
-            $("#tbodybuilder").append(txt);
-            $(".btndel").hide();
+            $("#tbody").append(txt);
+            // $(".btndel").hide();
 
          });
 
@@ -359,22 +383,35 @@ console.log(i);
 $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, function(data) {
          console.log(data);
 
-         $("#tbody").html("");
-         var txt = '';
-     
-         var i_data = JSON.parse(data);
-        $.each(i_data, function(i, x) {
+        //  $("#tbodybuilder").html("");
 
-            txt = ' <tr>' +
+        //  var txt1 = '';
+     
+         var item_data = JSON.parse(data);
+
+         console.log(item_data);
+        $.each(item_data, function(o, p) {
+
+            console.log(o);
+            console.log(p);
+
+            txt1 = ' <tr>' +
               
-                '<td id="P_invoice">' + i_data[i].salesorder_id +'</td>' +
-                 '<td id="P_date">' + i_data[i].salesorder_ref + '</td>' +
-                 '<td id="P_duedate">' + i_data[i].salesorder_date + '</td>' +
+                '<td>' + 1 +'</td>' +
+                '<td>' + item_data[o].so_itemprice +'</td>' +
+                '<td>' + item_data[o].so_itemproductid+'</td>' +
+                '<td>' + item_data[o].so_itemqty +'</td>' +
+                '<td>' + item_data[o].so_itemprice +'</td>' +
+                '<td>' + item_data[o].so_itemdiscount+'</td>' +
+                '<td>' + item_data[o].so_itemprice +'</td>' +
+            
+          
+             
       
-                 '<td><button type="button" class="btn btn-success btnadd" onclick="add_to_list(' + i_data[i].salesorder_id +')" ><i class="fas fa-plus-square"></i> </button>&nbsp;&nbsp;<button type="button" class="btn btn-success btndel" onclick="delete_allocation(this)"><i class="far fa-times-circle"></i> </button></td>' +
+                 '<td><button type="button" class="btn btn-success btnadd" ><i class="fas fa-plus-square"></i> </button>&nbsp;&nbsp;<button type="button" class="btn btn-success btndel" onclick="delete_allocation(this)"><i class="far fa-times-circle"></i> </button></td>' +
                 '</tr>';
-            $("#tbody").append(txt);
-            $(".btndel").hide();
+            $("#tbodybuilder").append(txt1);
+            // $(".btndel").hide();
 
          });
 
