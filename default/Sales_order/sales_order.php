@@ -30,7 +30,7 @@ function insert_sales_order(){
     $sql="INSERT INTO sales_order (salesorder_quotid,salesorder_customer,salesorder_ref,salesorder_date)
     VALUES('$this->salesorder_quotid','$this->salesorder_customer','$this->salesorder_ref','$this->salesorder_date')
     ";
-       echo $sql;
+    //    echo $sql;
        $this->db->query($sql);
     $so_id=$this->db->insert_id;
     return $so_id;
@@ -98,7 +98,7 @@ function edit_sales_order($salesorder_id){
      salesorder_customer='$this->salesorder_customer'
      
      WHERE salesorder_id ='$salesorder_id' ";
-    echo $sql;
+    // echo $sql;
     $this->db->query($sql);
     return true;
 
@@ -111,10 +111,16 @@ function edit_sales_order($salesorder_id){
 
 function delete_sales_order($salesorder_id){
 
+    $sql1="";
+    $result=$this->db->query($sql1);
+
+    if($result->num_rows==0){
     $sql="UPDATE sales_order SET salesorder_status='INACTIVE' WHERE salesorder_id=$salesorder_id ";
     //echo $sql;
     $this->db->query($sql);
     return true;
+}else
+return false;
 
 
 }
@@ -141,7 +147,7 @@ function get_all_sales_order(){
         $sales_order_item->salesorder_customer_name=$row["customer_name"];
         $sales_order_item->salesorder_ref=$row["salesorder_ref"];
         $sales_order_item->salesorder_date=$row["salesorder_date"];
-        $sales_order_item->salesorder_status=$row["salesorder_status"];
+       // $sales_order_item->salesorder_status=$row["salesorder_status"];
 
         
         
@@ -175,7 +181,7 @@ function get_salesorder_by_id($orderid){
         $sales_order_item->salesorder_customer_name=$row["customer_name"];
         $sales_order_item->salesorder_ref=$row["salesorder_ref"];
         $sales_order_item->salesorder_date=$row["salesorder_date"];
-        $sales_order_item->salesorder_status=$row["salesorder_status"];
+       // $sales_order_item->salesorder_status=$row["salesorder_status"];
 
        
     return $sales_order_item;
@@ -185,25 +191,31 @@ function get_salesorder_by_id($orderid){
 
 function get_sales_order_by_customer($x){
 
-    $sql="SELECT * FROM sales_order WHERE salesorder_customer = $x";
+    $sql="SELECT sales_order.salesorder_id,sales_order.salesorder_quotid,sales_order.salesorder_customer,sales_order.salesorder_ref,sales_order.salesorder_date,customer.customer_name FROM sales_order JOIN customer ON sales_order.salesorder_customer=customer.customer_id WHERE sales_order.salesorder_status='ACTIVE' AND salesorder_customer = $x";
 
     //echo $sql;
     $result=$this->db->query($sql);
-    $row=$result->fetch_array();
+    $sales_order_array=array(); 
 
-    $sales_order_item = new sales_order();
+    while($row=$result->fetch_array()){
 
-    $sales_order_item->salesorder_id=$row["salesorder_id"];
+        $sales_order_item = new sales_order();
+
+        $sales_order_item->salesorder_id=$row["salesorder_id"];
         $sales_order_item->salesorder_quotid=$row["salesorder_quotid"];
-        $sales_order_item->salesorder_customer=$row["salesorder_customer"];
+         $sales_order_item->salesorder_customer=$row["salesorder_customer"];
+        $sales_order_item->salesorder_customer_name=$row["customer_name"];
         $sales_order_item->salesorder_ref=$row["salesorder_ref"];
         $sales_order_item->salesorder_date=$row["salesorder_date"];
-        $sales_order_item->salesorder_status=$row["salesorder_status"];
+        // $sales_order_item->salesorder_status=$row["salesorder_status"];
 
-       
-    return $sales_order_item;
+        
+        
+        $sales_order_array[]=$sales_order_item;
+    }
+
+    return $sales_order_array;
 }
-
 
 
 

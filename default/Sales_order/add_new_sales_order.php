@@ -29,10 +29,10 @@ $productlist=$product1->getall_product2();
 $result_customer=$customer2->get_all_customer();
 
 //insert salesorder
-if(isset($_POST['save'])){
+if(isset($_POST['sodate'])){
     $sales_order2->salesorder_customer=$_POST['socustomer'];
     $sales_order2->salesorder_date=$_POST['sodate'];
-    //$sales_order2->salesorder_quotid=$_POST[''];
+    $sales_order2->salesorder_quotid=$_POST['soquoteid'];
     $sales_order2->salesorder_ref=$sales_order2->so_code($_POST['sodate']);
     $salesorderid=$sales_order2->insert_sales_order();
     $sales_orderitem2->insert_sales_orderitem($salesorderid);
@@ -48,6 +48,7 @@ if(isset($_POST['save'])){
   if(isset($_GET['view'])){
     $sales_quotation3=$sales_quotation3->get_salesquotation_by_id($_GET['view']);
     $resultitem=$sales_quotation5->get_all_sales_quotationitem($_GET['view']);
+    //print_r( $resultitem);
 
   }
   
@@ -167,38 +168,48 @@ include_once "../../files/head.php";
                                 <div class="card-block">
 
                                     <form  action="add_new_sales_order.php"  method="POST">
+                                        
 
-
-
-
-                                        <div class="form-group row">
-
+                                        <?php if(isset($_GET['view'])):?>
+                                            <div class="form-group row">
+                                                <div class="col-sm-4">
+                                                    <label for="" class="col-form-label">Customer</label>
+                                                    <input type="text" class="form-control" readonly  value="<?=$sales_quotation3->salesquot_customer_name?>">
+                                                   
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="" class="col-form-label">Referenec NO</label>
+                                                    <input type="text" class="form-control" readonly value="<?=$sales_quotation3->salesquot_ref ?>">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label class=" col-form-label">Date</label>
+                                                    <input class="form-control" type="date" value='<?php echo date('Y-m-d');?>' name="sodate" id="so_date">
+                                                </div>
+                                                <input type="hidden" class="form-control" name='soquoteid' readonly value="<?=$sales_quotation3->salesquot_id ?>">
+                                                <input type="hidden" class="form-control" name='socustomer' readonly value="<?=$sales_quotation3->salesquot_customer ?>">
+                                            </div>
+                                            
+                                        <?php else: ?>
+                                            <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Customer</label>
                                                 <select class="js-example-basic-single col-sm-12" name="socustomer" id="so_customer">
-
                                                     <option value="">Select customer</option>
                                                     <?php
                                                     foreach($result_customer as $item){
-                                                        echo"
-                                                        <option value='$item->customer_id'>$item->customer_name</option>
-                                                        ";
-                                                    }
-
+                                                        echo"<option value='$item->customer_id'>$item->customer_name</option>";
+                                                        }   
                                                     ?>
-                                                    
-
                                                 </select>
-
                                             </div>
-
-
-
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Date</label>
                                                 <input class="form-control" type="date" value='<?php echo date('Y-m-d');?>' name="sodate" id="so_date">
                                             </div>
                                         </div>
+
+                                        <?php endif ;   ?>
+
                                         <hr>
                                         <div class="form-group row productform">
 
@@ -265,9 +276,36 @@ include_once "../../files/head.php";
                                                     </tr>
                                                 </thead>
                                                 <tbody class="itembody">
-                                                    <tr>
-                                                       
-                                                    </tr>
+                                                    <?php if(isset($_GET['view'])):?>
+                                                        <?php foreach($resultitem as $item):  ?>
+                                                            <tr>    
+                                                                <td class='table-edit-view'><span class=''><?= $item->sq_item_productname?></span>
+                                                                    <input class='form-control input-sm  '   type='hidden' name='Product[]' value='<?= $item->sq_item_productid ?>'>
+                                                                    
+                                                                </td>
+                                                                <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_qty ?></span>
+                                                                    <input class=' input-borderless  input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='<?=$item->sq_item_qty ?>'><div style="color: red; display: none" class="msg1">Digits only</div>
+                                                                </td>
+                                                                <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_price ?></span>
+                                                                    <input class=' input-borderless input-sm row_data price'   type='text' name='Price[]' readonly  value='<?= $item->sq_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
+                                                                    <input class='form-control input-sm subtotal'   type='text'  value='<?=$item->sq_item_subtotal?>'>
+                                                                </td>
+                                                                <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_discount ?></span>
+                                                                    <input class=' input-borderless input-sm row_data discount'   type='text' name='Discount[]' readonly  value='<?= $item->sq_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
+                                                                <td class='table-edit-view'><span class='tabledit-span'><?=$item->sq_item_finaltotal ?></span>
+                                                                    <input class=' input-borderless input-sm  total'   type='text' readonly value='<?=$item->sq_item_finaltotal ?>'>
+                                                                </td>
+                                                                <td>
+                                                                <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
+                                                                <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
+                                                                <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
+                                                                <span class='deletedata'><button  class='btn btn-mini btn-danger ' type='button'>Delete</button></span>
+                                                                </td>
+        
+                                                            </tr>
+
+                                                            <?php endforeach ;  ?>
+                                                    <?php endif ;   ?>
                                                  
                                                 </tbody>
                                             </table>

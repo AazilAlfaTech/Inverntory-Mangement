@@ -1,4 +1,8 @@
 <?php
+include_once "../sales_order/sales_order.php";
+$sales_order2=new sales_order();
+
+$result_salesorder=$sales_order2->get_all_sales_order();
 
 include_once "../../files/head.php";
 
@@ -36,9 +40,9 @@ include_once "../../files/head.php";
                 <!-- Page-header end -->
 
                 <div class="d-flex flex-row-reverse">
-<a href="add_new_sales_order.php">
-                    <button class="btn btn-mat btn-primary ">Add New Sales Order</i></button>
-</a>
+                    <a href="add_new_sales_order.php">
+                        <button class="btn btn-mat btn-primary ">Add New Sales Order</i></button>
+                    </a>
                 </div>
 
 
@@ -70,32 +74,45 @@ include_once "../../files/head.php";
                                     <div class="dt-responsive table-responsive">
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
-                                                <tr>
-                                                    <th>Reference No</th>
-                                                    <th>Date </th>
-                                                    <th>Supplier</th>
+                                            <tr>
+                                                    <th>#</th>
+                                                    <th>Reference</th>
+                                                    <th>Date</th>
+                                                    <th>Customer</th>
                                                     <th>Action</th>
 
                                                 </tr>
+                                            
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>At123</td>
-                                                    <td>Alfa grp</td>
-                                                    <td>At123</td>
 
-                                                    <td> <button class="btn btn-mat btn-danger "><i
-                                                                class="fa fa-trash"></i> </button>
-                                                        <button class="btn btn-mat btn-info "><i class="fa fa-edit"></i>
-                                                        </button>
-                                                        <a href="view_sales_order.php">   <button class="btn btn-mat btn-primary "><i
-                                                                class="icofont icofont-eye-alt"></i></button> </a>
-                                                    </td>
+                                            <?php
+                                                    foreach($result_salesorder as $item)
+                                                    {echo"
+                                                        <tr>
+                                                            <td id='gr_id_td'>$item->salesorder_id</td>
+                                                            <td>$item->salesorder_ref</td>
+                                                            <td>$item->salesorder_date</td>
+                                                            <td>$item->salesorder_customer_name</td>
 
-                                                </tr>
+                                                            <td style='white-space: nowrap, width: 1%;'>
+                                                                <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
+                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                <a href='viewsalesorder.php?view=$item->salesorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></a>
+                                                                <a href='edit_sales_order.php?edit=$item->salesorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></a>
+                                                                <button type='button'  onclick='deleteorder($item->salesorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                                                
+                                                            </div>
+                                                        </td>
+                                                        </tr>
+                                                        
+                                                        ";
 
-                                                </tfoot>
-                                        </table>
+                                                    }
+                                                ?>
+
+                                            </tbody>
+                       </table>
                                     </div>
                                 </div>
                             </div>

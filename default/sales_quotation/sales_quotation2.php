@@ -110,15 +110,16 @@ function get_all_sales_quotationitem($itemid){
 
         $sales_quotationitem = new sales_quotationitem();
 
-        $sales_quotationitem->so_itemid=$row["so_itemid"];
+
         $sales_quotationitem->sq_item_quotid=$row["sq_item_quotid"];
         $sales_quotationitem->sq_item_productid=$row["sq_item_productid"];
         $sales_quotationitem->sq_item_productname=$row["product_name"];
         $sales_quotationitem->sq_item_price=$row["sq_item_price"];
         $sales_quotationitem->sq_item_qty=$row["sq_item_qty"];
         $sales_quotationitem->sq_item_discount=$row["sq_item_discount"];
-        $sales_quotationitem->sq_item_finalprice=$row["sq_item_finalprice"];
-        
+        $sales_quotationitem->sq_item_subtotal=round(($row["sq_item_qty"]*$row["sq_item_price"]),2);
+        $sales_quotationitem->sq_item_finaltotal=round(($row['sq_item_qty']*$row['sq_item_price'])-($row['sq_item_qty']*$row['sq_item_price']*$row['sq_item_discount']/100),2);
+       
 
         
         
@@ -149,9 +150,10 @@ function get_salesquotation_by_id($salesquotationid){
     $sales_quotation_item->salesquot_id=$row["salesquot_id"];
 
     $sales_quotation_item->salesquot_customer=$row["salesquot_customer"];
+    $sales_quotation_item->salesquot_customer_name=$row["customer_name"];
     $sales_quotation_item->salesquot_ref=$row["salesquot_ref"];
     $sales_quotation_item->salesquot_date=$row["salesquot_date"];
-    $sales_quotation_item->salesquot_status=$row["salesquot_status"];
+   
 
        
     return $sales_quotation_item;

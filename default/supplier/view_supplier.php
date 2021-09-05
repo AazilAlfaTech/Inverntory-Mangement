@@ -2,17 +2,18 @@
 
 include_once "../../files/head.php";
 
-include_once "customer.php";
+include_once "supplier.php";
 
-$customer1 = new customer();
+$supplier1 = new supplier();
 
-if(isset($_GET['edit_cus'])){
 
-$result_customer = $customer1->get_customer_by_id($_GET['edit_cus']);
-//print_r($result_customer);
+if(isset($_GET['edit_sup'])){
+   $result_supplier = $supplier1->get_supplier_by_id($_GET['edit_sup']);
+   
+   //print_r($result_supplier);
+
 
 }
-
 
 ?>
 
@@ -31,7 +32,7 @@ $result_customer = $customer1->get_customer_by_id($_GET['edit_cus']);
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4> Customer Details</h4>
+                                    <h4> Supplier Details</h4>
 
                                 </div>
                             </div>
@@ -78,22 +79,22 @@ $result_customer = $customer1->get_customer_by_id($_GET['edit_cus']);
                                                                     <table class="table m-0">
                                                                         <tbody>
                                                                             <tr>
-                                                                                <th scope="row">Customer Code</th>
-                                                                                <td><?= $result_customer->customer_code ?></td>
+                                                                                <th scope="row">Supplier Code</th>
+                                                                                <td><?= $result_supplier->supplier_code ?></td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <th scope="row">Customer Group</th>
-                                                                                <td> <?= $result_customer->customer_group ?> </td>
+                                                                                <th scope="row">Supplier Group</th>
+                                                                                <td> <?= allow ?> </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th scope="row">E-mail</th>
-                                                                                <td><?= $result_customer->customer_email ?></td>
+                                                                                <td><?= $result_supplier->supplier_email ?></td>
                                                                             </tr>
-                                                                            <tr>
+                                                                    <!--         <tr>
                                                                                 <th scope="row">City</th>
-                                                                                <td><?= $result_customer->customer_city ?></td>
+                                                                                <td></td>
                                                                             </tr>
-                                                                       <!--     <tr>
+                                                                           <tr>
                                                                                 <th scope="row">Marital Status</th>
                                                                                 <td>Single</td>
                                                                             </tr>
@@ -118,16 +119,13 @@ $result_customer = $customer1->get_customer_by_id($_GET['edit_cus']);
                                                                                 </td>
                                                                             </tr> -->
                                                                             <tr>
-                                                                                <th scope="row">Customer Name</th>
-                                                                                <td><?= $result_customer->customer_name ?></td>
+                                                                                <th scope="row">Supplier Name</th>
+                                                                                <td><?= $result_supplier->supplier_name ?></td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <th scope="row">Address</th>
-                                                                                <td><?= $result_customer->customer_add ?></td>
-                                                                            </tr>
+                                                                          
                                                                            <tr>
-                                                                                <th scope="row">Contact Number</th>
-                                                                                <td><?= $result_customer->customer_contactno ?></td>
+                                                                                <th scope="row">Supplier Number</th>
+                                                                                <td><?= $result_supplier->supplier_contactno ?></td>
                                                                             </tr>
                                                                    <!--          <tr>
                                                                                 <th scope="row">Website</th>
