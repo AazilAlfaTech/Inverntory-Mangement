@@ -85,6 +85,7 @@ include_once "../../files/head.php";
                                             
                                             </thead>
                                             <tbody>
+
                                             <?php
                                                     foreach($result_salesorder as $item)
                                                     {echo"
@@ -111,7 +112,7 @@ include_once "../../files/head.php";
                                                 ?>
 
                                             </tbody>
-                                        </table>
+                       </table>
                                     </div>
                                 </div>
                             </div>

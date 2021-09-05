@@ -71,7 +71,7 @@ include_once "../../files/head.php";
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Reference No</th>
+                                                    <th>Reference No</th>-
                                                     <th>Date </th>
                                                     <th>Supplier</th>
                                                     <th>Action</th>
@@ -88,7 +88,7 @@ include_once "../../files/head.php";
                                                                 class="fa fa-trash"></i> </button>
                                                         <button class="btn btn-mat btn-info "><i class="fa fa-edit"></i>
                                                         </button>
-                                                        <a href="view_puchase_requisition.php">   <button class="btn btn-mat btn-primary "><i
+                                                        <a href="view_sales_quotation.php">   <button class="btn btn-mat btn-primary "><i
                                                                 class="icofont icofont-eye-alt"></i></button> </a>
                                                     </td>
 

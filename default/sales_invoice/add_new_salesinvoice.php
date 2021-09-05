@@ -1,7 +1,13 @@
 <?php
 
-   
- 
+include_once "../customer/customer.php";
+
+$customer1 = new customer();
+
+$all_cus = $customer1->get_all_customer();
+
+//    print_r( $all_cus);
+
 // --------------------------------------------------------------------------------------------------------------------
 
 
@@ -77,12 +83,10 @@ include_once "../../files/head.php";
 
                                                     <option value=" ">Select Customer</option>
                                                     <?php
-                                                        foreach($sup as $item)
-                                                      
-                                                        if($item->supplier_id ==$purchase1->purchaserequest_supplier )   
-			                                        echo "<option value='$item->supplier_id' selected='selected'>$item->supplier_name</option>";
-                                                    else
-                                                    echo"<option value='$item->supplier_id'>$item->supplier_name</option>";
+                                                    foreach ($all_cus as $item)
+
+                                                       
+                                                            echo "<option value='$item->Customer_id'>$item->customer_name</option>";
                                                     ?>
 
 
@@ -94,14 +98,14 @@ include_once "../../files/head.php";
 
                                             <!-- <div class="col-sm-6">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="date" name="purchaserequestdate" id="" value="<?=$purchase1->purchaserequest_date ?>">
+                                                <input class="form-control" type="date" name="purchaserequestdate" id="" value="<?= $purchase1->purchaserequest_date ?>">
                                             </div> -->
 
                                         </div>
                                         <hr>
-                                      
 
-                                      
+
+
 
 
                                         <div class="table-responsive">
@@ -113,22 +117,154 @@ include_once "../../files/head.php";
                                                         <th>Sales Order Ref NO</th>
                                                         <th> Date</th>
                                                         <th></th>
-                                                    
+
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbody">
 
-                                                
-                                             
-                
-                                                                                            </tbody>
+
+
+
+                                                </tbody>
                                             </table>
-                                       
+
                                         </div>
 
 
 
-                                          
+
+                                        <div class="d-flex flex-row-reverse">
+                                            <button type="submit" class="btn btn-primary">ADD</button>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+
+
+
+
+            </div>
+
+</div>
+</div>
+
+
+<!-- ------------------------------------------------------------------------------------------------ -->
+
+
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- Main-body start -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- Page-header start -->
+
+                <!-- Page-header end -->
+
+
+
+
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Items</h5>
+
+                                    <div class="card-header-right">
+                                        <ul class="list-unstyled card-option">
+                                            <li><i class="feather icon-maximize full-card"></i></li>
+                                            <li><i class="feather icon-minus minimize-card"></i></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="card-block">
+
+                                    <form action="add_new_purchase_requisition.php" method="POST">
+
+
+
+
+                                        <div class="form-group row">
+
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">Payment Methord</label>
+                                                <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier">
+
+                                                    <option value=" ">Cash </option>
+                                                    <option value=" ">Credit </option>
+                           
+
+
+                                                </select>
+
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">Payment type</label>
+                                                <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier">
+
+                                                    <option value=" ">Cash </option>
+                                                    <option value=" "> Card</option>
+                                                    <option value=" ">Bank Tranfer </option>
+                                                    <option value=" "> Cheque</option>
+                           
+
+
+                                                </select>
+
+                                            </div>
+
+
+
+                                        
+
+                                        </div>
+                                        <hr>
+
+
+
+
+
+                                        <div class="table-responsive">
+
+                                            <table class="table table-striped table-bordered" id="example-2">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Sales Order Ref NO</th>
+                                                        <th> Date</th>
+                                                        <th></th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbody">
+
+
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+
+
+
                                         <div class="d-flex flex-row-reverse">
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
@@ -146,17 +282,25 @@ include_once "../../files/head.php";
 
                 </div>
 
+            </div>
 
 
+
+
+            </div>
+
+</div>
+</div>
+                <!-- -------------------------------------------------------------------------------------------------------------------- -->
                 <?php
 
-include_once "../../files/foot.php";
+                include_once "../../files/foot.php";
 
-?>
-
-
+                ?>
 
 
 
 
-</script>
+
+
+                </script>
