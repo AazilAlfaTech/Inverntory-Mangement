@@ -111,10 +111,16 @@ function edit_sales_order($salesorder_id){
 
 function delete_sales_order($salesorder_id){
 
+    $sql1="";
+    $result=$this->db->query($sql1);
+
+    if($result->num_rows==0){
     $sql="UPDATE sales_order SET salesorder_status='INACTIVE' WHERE salesorder_id=$salesorder_id ";
     //echo $sql;
     $this->db->query($sql);
     return true;
+}else
+return false;
 
 
 }

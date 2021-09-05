@@ -100,7 +100,7 @@ include_once "../../files/head.php";
                                             <input class="form-control" type="hidden" readonly='true' name="salesorderid" value=<?=$sales_order2->salesorder_id ?>>
 
                                             <div class="col-sm-4">
-                                                <label class=" col-form-label">Supplier</label>
+                                                <label class=" col-form-label">Customer</label>
                                                 <input class="form-control" type="text" readonly='true' value="<?=$sales_order2->salesorder_customer_name ?>">
                                             </div>
                                             <div class="col-sm-4">
