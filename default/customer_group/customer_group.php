@@ -84,6 +84,7 @@ function get_customer_group_by_id($cus_grp_id){
     $cus_grp_item->customergroup_code=$row["customergroup_code"];
     $cus_grp_item->customergroup_name=$row["customergroup_name"];
     $cus_grp_item->customergroup_status=$row["customergroup_status"];
+    
     return $cus_grp_item;
 }
 
