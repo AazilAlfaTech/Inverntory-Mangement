@@ -133,13 +133,13 @@
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Price</label>
-                                                <input type="text" class="form-control price" placeholder="" name="sqitem_price" id="sq_itemprice" onkeyup="cal_prd_total()">
+                                                <input type="text" class="form-control" placeholder="" name="sqitem_price" id="sq_itemprice" onkeyup="cal_prd_total()">
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Qty</label>
-                                                <input type="text" class="form-control quantity" placeholder="" name="sqitem_qty" id="sq_itemqty" onkeyup="cal_prd_total()">
+                                                <input type="text" class="form-control" placeholder="" name="sqitem_qty" id="sq_itemqty" onkeyup="cal_prd_total()">
                                             </div>
 
                                             <div class="col-sm-2">
@@ -157,7 +157,7 @@
                                         </div>
 
                                         <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
-                                        <button class="btn btn-inverse">CLEAR</button>
+                                        <button type="button" class="btn btn-inverse reset">CLEAR</button>
 
                                         <br>
                                         <br>
@@ -167,7 +167,6 @@
                                             <table class="table table-striped table-bordered" id="example-2">
                                                 <thead class='table-primary'>
                                                     <tr>
-                                                        <th>#</th>
                                                         <th>Product</th>
                                                         <th>Price</th>
                                                         <th>Qty</th>
@@ -234,7 +233,7 @@
     include_once "../../files/foot.php";
 
 ?>
-<script type="text/javascript" src="../javascript/editabletable.js"></script>
+<!-- <script type="text/javascript" src="../javascript/editabletable.js"></script> -->
 <script>
     
     function cal_prd_total()
@@ -257,6 +256,15 @@
     {
         add_products();
         clear_products();
+        cal_totquantity();
+        cal_totprice();
+        cal_totdiscount();
+        final_total();
+    });
+
+    $(".reset").click(function()
+    {
+        clear_products();
     });
 
     // ................................function to append the products..............................
@@ -268,8 +276,31 @@
         var sq_qty=$("#sq_itemqty").val();
         var sq_dis=$("#sq_itemdiscount").val();
         var sq_fprice=$("#sq_itemfinalprice").val();
+        sq_subtotal=parseFloat(sq_price * sq_qty)
         
-         $("#tbody").append("<tr><td >"+1+"</td><td><input  class='form-control input-sm  ' type='text' name='sq_item_productid[]' value='"+sq_prod+"'> <span class='tabledit-span'>"+ sq_prod_name +" </span></td><td><input class='input-borderless input-sm row_data price'  type='text' readonly name='sq_item_price[]' value='"+sq_price+"'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> </td><td><input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='"+sq_qty+"'> <div style='color: red; display: none' class='msg1'>'Digits only'</div></td><td><input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='"+sq_dis+"'><div style='color: red; display: none' class='msg3'>'Digits only'</div></td><td>"+sq_fprice+"</td><td><span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span> <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span><span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span></td> </tr>");
+         $("#tbody").append("<tr>\
+            <td class='table-edit-view' >"+ sq_prod_name +"\
+                <input  class='form-control input-sm productid  ' type='hidden' name='sq_item_productid[]' value='"+sq_prod+"'>\
+            </td>\
+            <td class='table-edit-view'>\
+                <input class='input-borderless input-sm row_data price'  type='text' readonly name='sq_item_price[]' value='"+sq_price+"'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> \
+                <input class='form-control input-sm subtotal'   type='hidden'  value='"+sq_subtotal+"'>\
+            </td>\
+            <td class='table-edit-view'>\
+                <input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='"+sq_qty+"'> <div style='color: red; display: none' class='msg1'>'Digits only'</div>\
+            </td>\
+            <td class='table-edit-view'>\
+                <input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='"+sq_dis+"'><div style='color: red; display: none' class='msg3'>'Digits only'</div>\
+            </td>\
+            <td class='table-edit-view'>\
+                <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+sq_fprice+"'>\
+            </td>\
+            <td>\
+                <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
+                <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
+                <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>\
+            </td>\
+             </tr>");
          
  
          $(".btn_save").hide();
@@ -289,3 +320,4 @@
     }
 
 </script>
+<script type="text/javascript" src="../javascript/editabletable.js"></script>

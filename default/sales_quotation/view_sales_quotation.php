@@ -1,23 +1,15 @@
 <?php
 
 include_once "../../files/head.php";
-include_once "../purchase_requisition/purchase_requisition.php";
-include_once "../purchase_requisition/purchase_request_item.php";
+include_once "sales_quatation.php";
+include_once "sales_quatation_item.php";
 
-$purchase_request1 = new purchaserequest();
+$sales_quot3=new sales_quotation();
 
+$sales_quot_item3=new sales_quotationitem();
 
-
-
-   $result_pr = $purchase_request1->get_purchaserequest_by_id ($_GET["view_pr"]); 
-
-   $purchase_request_item = new purchase_request_item();
-   
-      $result_pr_products= $purchase_request_item->get_all_product_by_pr_id($_GET["view_pr"]);
-
-
-
-// print_r($result_pr_products)
+$sales_quot3=$sales_quot3->get_salesquotation_by_id($_GET["view_sq"]);
+$sales_quot_item3=$sales_quot_item3->get_all_item_bysquotid($_GET["view_sq"]);
 
 
 ?>
@@ -52,7 +44,7 @@ $purchase_request1 = new purchaserequest();
                                 <div class="card-block">
                                     <div class="row invoive-info">
                                         <div class="col-md-4 col-xs-12 invoice-client-info">
-                                            <h6>Supplier: <?=$result_pr->supplier_name ?> </h6>
+                                            <h6>Customer: <?=$sales_quot3->salesquot_customer->customer_name ?> </h6>
                                             <table
                                                 class="table table-responsive invoice-table invoice-order table-borderless">
                                                 <tbody>
@@ -69,11 +61,11 @@ $purchase_request1 = new purchaserequest();
                                           
                                         </div>
                                         <div class="col-md-4 col-sm-6">
-                                            <h6>Date : <?=$result_pr->purchaserequest_date ?> </h6>
+                                            <h6>Date : <?=$sales_quot3->salesquot_date ?> </h6>
                                  
                                         </div>
                                         <div class="col-md-4 col-sm-6">
-                                            <h6 class="m-b-20">Refference Number: <span><?=$result_pr->purchaserequest_ref ?></span></h6>
+                                            <h6 class="m-b-20">Refference Number: <span><?=$sales_quot3->salesquot_ref ?></span></h6>
                                        
                                           
                                         </div>
@@ -94,16 +86,16 @@ $purchase_request1 = new purchaserequest();
                                                     <tbody>
 
                                                     <?php
-                                                foreach ($result_pr_products as $item)
+                                                foreach ($sales_quot_item3 as $item)
                                                     {
                                                         echo
                                                         "
                                                         <tr>
                                                             <td>$item->product_name  </td>
-                                                            <td>$item->pr_item_qty  </td>
-                                                            <td>$item->pr_item_price</td>
-                                                            <td>$item->pr_item_discount</td>
-                                                            <td>$item->pr_item_finalprice</td>
+                                                            <td>$item->sq_item_qty  </td>
+                                                            <td>$item->sq_item_price</td>
+                                                            <td>$item->sq_item_discount</td>
+                                                            <td>$item->sq_item_finalprice</td>
                                                         </tr>
                                                  
                                                   ";
