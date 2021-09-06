@@ -13,7 +13,7 @@
     $result_grnitem3=$grn_item3->get_grnitem_byid($_GET["view"]);
 
     // $result_location2=$location2->get_all_location();
-    include_once "../../files/head.php";
+    include_once "../../files/print_head.php";
 
     
     
@@ -147,12 +147,12 @@
                                 </div>
                             </div>
                             <!-- Invoice card end -->
-                            <div class="row text-center">
+                            <div class="row text-center" id="print-btn">
                                 <div class="col-sm-12 invoice-btn-group text-center">
                                     <button type="button"
-                                        class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20" onclick="printby()">Print</button>
-                                    <button type="button"
-                                        class="btn btn-danger waves-effect m-b-10 btn-sm waves-light">Cancel</button>
+                                        class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20"  onclick="window.print()">Print</button>
+                                    <a href="manage_GRN.php"
+                                        class="btn btn-danger waves-effect m-b-10 btn-sm waves-light">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -170,19 +170,19 @@
 
 <?php
 
-        include_once "../../files/foot.php";
+        include_once "../../files/print_foot.php";
 
         ?>
         <script type="text/javascript" src="../javascript/editabletable.js"></script>
 <script>
-    function printby()
-    {
-    var prtContent = document.getElementById("print");
-var WinPrint = window.open('', '', '');
-WinPrint.document.write(prtContent.innerHTML);
-WinPrint.document.close();
-WinPrint.focus();
-WinPrint.print();
-WinPrint.close();
-    }
+//     function printby()
+//     {
+//     var prtContent = document.getElementById("print");
+// var WinPrint = window.open('', '', '');
+// WinPrint.document.write(prtContent.innerHTML);
+// WinPrint.document.close();
+// WinPrint.focus();
+// WinPrint.print();
+// WinPrint.close();
+    // }
 </script>

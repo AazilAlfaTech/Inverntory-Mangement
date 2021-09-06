@@ -35,7 +35,7 @@ function insert_sales_quotationitem($id)
     {
         $sql="INSERT INTO sales_quotationitem (sq_item_quotid,sq_item_productid,sq_item_price,sq_item_qty,sq_item_discount)
         VALUES($id,'".$_POST['sq_item_productid'][$product_list]."','".$_POST['sq_item_price'][$product_list]."','".$_POST['sq_item_qty'][$product_list]."','".$_POST['sq_item_discount'][$product_list]."')";
-        echo $sql;
+        // echo $sql;
         $this->db->query($sql);
         $product_list++;
     }
@@ -53,11 +53,11 @@ function insert_sales_quotationitem($id)
 function edit_sq_item()
 {
     $product_list=0;
-    foreach($_POST['sq_item_price_edit'] as $item)
+    foreach($_POST['sq_item_qty_edit'] as $item)
     {
         $sql="UPDATE sales_quotationitem SET sq_item_price='".$_POST['sq_item_price_edit'][$product_list]."',sq_item_qty='".$_POST['sq_item_qty_edit'][$product_list]."',sq_item_discount='".$_POST['sq_item_discount_edit'][$product_list]."'
-        WHERE sq_item_productid='".$_POST['sq_item_productid_edit'][$product_list]."' ";
-        echo $sql;
+        WHERE sq_item_id='".$_POST['sq_item_id_edit'][$product_list]."' ";
+        // echo $sql;
         $this->db->query($sql);
         $product_list++;
     }

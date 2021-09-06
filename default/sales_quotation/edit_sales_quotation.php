@@ -111,7 +111,7 @@
                                             </div> -->
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Customer</label>
-                                                <input class="form-control" type="text" readonly='true' value="<?=$sales_quot1->salesquot_customer?>">
+                                                <input class="form-control" type="text" readonly='true' value="<?=$sales_quot1->salesquot_customer->customer_name?>">
                                             </div>
 
                                             <div class="col-sm-4">
@@ -200,7 +200,7 @@
 
                 
                                                         <td class='table-edit-view'><span class=''><?= $item->product_name?></span>
-                                                                    <input class='form-control input-sm  '   type='hidden' name='sq_item_productid[]' value='<?= $item->sq_item_productid ?>'>
+                                                                    <input class='form-control input-sm  '   type='hidden' name='' value='<?= $item->sq_item_productid ?>'>
                                                                     <input class='form-control input-sm  productid'   type='hidden' name='sq_item_id_edit[]' value='<?= $item->sq_item_id ?>'>
                                                           
                                                                     </td>
@@ -211,7 +211,8 @@
                                                                     </td>
                                                                     <td class='table-edit-view'><span class='tabledit-span'><?=  $item->sq_item_price ?></span>
                                                                         <input class='input-borderless input-sm row_data price'   type='text' name='sq_item_price_edit[]' readonly  value='<?= $item->sq_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
-                                                                        
+                                                                        <input class='form-control input-sm subtotal'   type='hidden'  value='<?=$item->sq_item_subtotal?>'>
+
 
                                                                     </td>
                                                                     <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_discount ?></span>
@@ -336,7 +337,30 @@
         sq_subtotal=parseFloat(sq_price*sq_qty);
 
         
-         $(".itembody").append("<tr><td><input  class='form-control input-sm  ' type='hidden' name='sq_item_productid[]' value='"+sq_prod+"'> <span class='tabledit-span'>"+ sq_prod_name +" </span></td><td><input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='"+sq_qty+"'> <div style='color: red; display: none' class='msg1'>'Digits only'</div><input class='form-control input-sm subtotal'   type='hidden'  value='"+sq_subtotal+"'></td></td><td><input class='input-borderless input-sm row_data price'  type='text' readonly name='sq_item_price[]' value='"+sq_price+"'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> </td><td><input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='"+sq_dis+"'><div style='color: red; display: none' class='msg3'>'Digits only'</div></td><td><input  class='input-borderless input-sm row_data total ' type='text' readonly  value='"+sq_fprice+"'></td><td><span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span> <span class='btn_deleterow'><button type='button'  class='badge badge-danger' style='float: none;margin: 5px;'>Delete</button></span><span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span><span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span></td> </tr>");
+         $(".itembody").append("<tr>\
+         <td class='table-edit-view'>"+ sq_prod_name +"\
+            <input  class='form-control input-sm productid ' type='hidden' name='sq_item_productid[]' value='"+sq_prod+"'>\
+        </td>\
+        <td class='table-edit-view'>\
+            <input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='"+sq_qty+"'> <div style='color: red; display: none' class='msg1'>'Digits only'</div>\
+        </td>\
+        <td class='table-edit-view'>\
+            <input class='input-borderless input-sm row_data price'  type='text' readonly name='sq_item_price[]' value='"+sq_price+"'> <div style='color: red; display: none' class='msg2'>'Digits only'</div>\
+            <input class='form-control input-sm subtotal'   type='hidden'  value='"+sq_subtotal+"'>\
+        </td> \
+        <td class='table-edit-view'>\
+            <input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='"+sq_dis+"'><div style='color: red; display: none' class='msg3'>'Digits only'</div>\
+        </td>\
+        <td class='table-edit-view'>\
+            <input  class='input-borderless input-sm row_data total ' type='text' readonly  value='"+sq_fprice+"'>\
+        </td>\
+        <td>\
+            <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
+            <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
+            <span class='btn_cancel'><button class='btn btn-mini btn-danger ' type='button'>Cancel</button></span>\
+            <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>\
+        </td>\
+        </tr>");
          
  
          $(".btn_save").hide();

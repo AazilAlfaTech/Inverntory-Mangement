@@ -3,6 +3,23 @@
 include_once "sales_quatation.php";
 $sales_quot1=new sales_quotation();
 $result_sales=$sales_quot1->get_all_sales_quotation();
+
+if(isset($_GET['d_id']))
+{
+    $res_delete=$sales_quot1->delete_sales_quotation($_GET['d_id']);
+    
+    //code for delete validations
+    if($res_delete==true){
+        header("location:../sales_quotation/manage_sales_quotation.php?delete_success=1");
+       
+    }
+    else
+    {
+       
+        $msg_2="Sales order already in use therefore cannot delete";
+    }
+}
+
 include_once "../../files/head.php";
 
 ?>
@@ -90,7 +107,7 @@ include_once "../../files/head.php";
                                                            
                                                                 <td>$item->salesquot_ref</td>
                                                                 <td>$item->salesquot_date</td>
-                                                                <td>$item->salesquot_customer</td>
+                                                                <td>".$item->salesquot_customer->customer_name."</td>
 
                                                                 <td>
                                                                     <div class='btn-group btn-group-sm' style='float: none;'>

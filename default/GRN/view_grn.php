@@ -150,7 +150,7 @@
                             <div class="row text-center">
                                 <div class="col-sm-12 invoice-btn-group text-center">
                                     <a href="print_grn.php"
-                                        class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20" onclick="printby()">Print</a>
+                                        class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20">Print</a>
                                     <button type="button"
                                         class="btn btn-danger waves-effect m-b-10 btn-sm waves-light">Cancel</button>
                                 </div>
@@ -175,14 +175,14 @@
         ?>
         <script type="text/javascript" src="../javascript/editabletable.js"></script>
 <script>
-    function printby()
-    {
-    var prtContent = document.getElementById("print");
-var WinPrint = window.open('', '', '');
-WinPrint.document.write(prtContent.innerHTML);
-WinPrint.document.close();
-WinPrint.focus();
-WinPrint.print();
-WinPrint.close();
-    }
+//     function printby()
+//     {
+//     var prtContent = document.getElementById("print");
+// var WinPrint = window.open('', '', '');
+// WinPrint.document.write(prtContent.innerHTML);
+// WinPrint.document.close();
+// WinPrint.focus();
+// WinPrint.print();
+// WinPrint.close();
+//     }
 </script>
