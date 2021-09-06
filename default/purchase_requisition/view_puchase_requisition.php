@@ -1,24 +1,28 @@
 <?php
 
-include_once "../../files/head.php";
+
 include_once "../purchase_requisition/purchase_requisition.php";
 include_once "../purchase_requisition/purchase_request_item.php";
 
-$purchase_request1 = new purchaserequest();
+$purchaserequest1 = new purchaserequest();
+$purchaserequestitem1 = new purchase_request_item();
+
+if(isset($_GET['view_pr'])){
+
+   $purchase_request = $purchaserequest1->get_purchaserequest_by_id($_GET['view_pr']);
+    
+   $purchasereq_item = $purchaserequestitem1->get_all_item_by_requestid($_GET['view_pr']);
+
+   //print_r($purchasereq_item);
+
+}
+
+
+//$purchaserequestitem1 = new purchase_request_item();
 
 
 
-
-   $result_pr = $purchase_request1->get_purchaserequest_by_id ($_GET["view_pr"]); 
-
-   $purchase_request_item = new purchase_request_item();
-   
-      $result_pr_products= $purchase_request_item->get_all_product_by_pr_id($_GET["view_pr"]);
-
-
-
-// print_r($result_pr_products)
-
+include_once "../../files/head.php";
 
 ?>
 
@@ -52,7 +56,7 @@ $purchase_request1 = new purchaserequest();
                                 <div class="card-block">
                                     <div class="row invoive-info">
                                         <div class="col-md-4 col-xs-12 invoice-client-info">
-                                            <h6>Supplier: <?=$result_pr->supplier_name ?> </h6>
+                                            <h6>Supplier: <?=$purchase_request->supplier_name ?> </h6>
                                             <table
                                                 class="table table-responsive invoice-table invoice-order table-borderless">
                                                 <tbody>
@@ -69,11 +73,11 @@ $purchase_request1 = new purchaserequest();
                                           
                                         </div>
                                         <div class="col-md-4 col-sm-6">
-                                            <h6>Date : <?=$result_pr->purchaserequest_date ?> </h6>
+                                            <h6>Date : <?=$purchase_request->purchaserequest_date ?> </h6>
                                  
                                         </div>
                                         <div class="col-md-4 col-sm-6">
-                                            <h6 class="m-b-20">Refference Number: <span><?=$result_pr->purchaserequest_ref ?></span></h6>
+                                            <h6 class="m-b-20">Refference Number: <span><?=$purchase_request->purchaserequest_ref ?></span></h6>
                                        
                                           
                                         </div>
@@ -94,16 +98,18 @@ $purchase_request1 = new purchaserequest();
                                                     <tbody>
 
                                                     <?php
-                                                foreach ($result_pr_products as $item)
+                                                foreach ($purchasereq_item as $item)
                                                     {
                                                         echo
                                                         "
                                                         <tr>
-                                                            <td>$item->product_name  </td>
-                                                            <td>$item->pr_item_qty  </td>
-                                                            <td>$item->pr_item_price</td>
-                                                            <td>$item->pr_item_discount</td>
-                                                            <td>$item->pr_item_finalprice</td>
+                                                            <td>$item->product_name </td>
+                                                            <td><input class='input-borderless quantity' readonly type='text' value='$item->pr_item_qty'> </td>
+                                                            <td><input class='input-borderless price' readonly type='text' value='$item->pr_item_price'></td>
+                                                            <td><input class='input-borderless discount ' readonly type='text' value='$item->pr_item_discount'></td>
+                                                            <td><input class='input-borderless subtotal' readonly type='hidden' value='$item->pr_item_subtotal'></td>
+                                                            <td><input class='input-borderless total' readonly type='text' value='$item->item_discount'></td>
+
                                                         </tr>
                                                  
                                                   ";
@@ -117,18 +123,18 @@ $purchase_request1 = new purchaserequest();
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <table class="table table-responsive invoice-table invoice-total">
-                                                <tbody>
+                                            <tbody>
+                                                    <tr>
+                                                        <th>Total quantity :</th>
+                                                        <td><span></span><input class='input-borderless autonumber' id="total_quan" readonly type='text' value=''></td>
+                                                    </tr>
                                                     <tr>
                                                         <th>Sub Total :</th>
-                                                        <td>$4725.00</td>
+                                                        <td><span>Rs.</span><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' data-a-sign="Rs. "></td>
                                                     </tr>
                                                     <tr>
-                                                        <th>Taxes (10%) :</th>
-                                                        <td>$57.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Discount (5%) :</th>
-                                                        <td>$45.00</td>
+                                                        <th>Discount :</th>
+                                                        <td><span></span><input class='input-borderless autonumber' id="total_discount" readonly type='text' value=''></td>
                                                     </tr>
                                                     <tr class="text-info">
                                                         <td>
@@ -137,7 +143,7 @@ $purchase_request1 = new purchaserequest();
                                                         </td>
                                                         <td>
                                                             <hr>
-                                                            <h5 class="text-primary">$4827.00</h5>
+                                                            <h5 class="text-primary"><span>Rs.</span><input class='input-borderless' id="total_final" readonly type='text' value='$item->so_itemqty'></h5>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -174,3 +180,5 @@ $purchase_request1 = new purchaserequest();
         include_once "../../files/foot.php";
 
         ?>
+
+<script type="text/javascript" src="../javascript/editabletable.js"></script>
