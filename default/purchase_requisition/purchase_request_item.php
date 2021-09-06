@@ -85,7 +85,7 @@ function get_all_item_by_requestid($purch_req_id){
     $sql="SELECT purchase_request_item.pr_item_id ,purchase_request_item.pr_item_requestid ,purchase_request_item.pr_item_productid , purchase_request_item.pr_item_qty , purchase_request_item.pr_item_price ,purchase_request_item.pr_item_discount ,product.product_name FROM purchase_request_item INNER JOIN product ON purchase_request_item.pr_item_productid=product.product_id WHERE pr_item_requestid=$purch_req_id";
     $result=$this->db->query($sql);
     $item_array=array();
-    // echo $sql;
+    //echo $sql;
     while($row=$result->fetch_array()){
 
     $PR_item1=new purchase_request_item();
@@ -97,6 +97,7 @@ function get_all_item_by_requestid($purch_req_id){
     $PR_item1->pr_item_qty=$row['pr_item_qty'];
     $PR_item1->pr_item_price=$row['pr_item_price'];
     $PR_item1->pr_item_discount=$row['pr_item_discount'];
+    $PR_item1->pr_item_subtotal=round(($row['pr_item_qty']*$row['pr_item_price']),2);
     $PR_item1->item_discount=round($row['pr_item_price']-($row['pr_item_price']*$row['pr_item_discount']/100),2);
    
     $item_array[]= $PR_item1;
