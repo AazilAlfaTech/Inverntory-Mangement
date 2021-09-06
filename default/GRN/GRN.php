@@ -86,9 +86,12 @@
     
 
         // Edit a grn...............................................................................................................
-        function edit_grn()
+        function edit_grn($id)
         {
-
+            $SQL="UPDATE grn SET grn_received_loc='$this->grn_received_loc' WHERE grn_id='$id'";
+            echo $SQL;
+            $this->db->query($SQL);
+            return true;
         }
 
         // Delete a grn...................................................................................................
@@ -100,7 +103,10 @@
         // view all the grn.................................................................................................
         function get_all_grn()
         {
-            $SQL="SELECT * FROM grn WHERE grn_status='ACTIVE'";
+            // $SQL="SELECT * FROM grn WHERE grn_status='ACTIVE'";
+            $SQL="SELECT grn.grn_id,grn.grn_puch_order_id,grn.grn_ref_no,grn.grn_received_loc,grn.grn_status,grn.grn_date,supplier.supplier_name
+            FROM grn INNER JOIN purchase_order on grn.grn_puch_order_id=purchase_order.purchaseorder_id INNER JOIN purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
+            INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE grn_status='ACTIVE'";
             // echo $SQL;
             $result=$this->db->query($SQL);
             $grn_array=array();
@@ -111,8 +117,10 @@
                 $grn->grn_id=$row["grn_id"];
                 $grn->grn_puch_order_id=$row["grn_puch_order_id"];
                 $grn->grn_ref_no=$row["grn_ref_no"];
+                $grn->grn_received_loc=$row["grn_received_loc"];
                 $grn->grn_status=$row["grn_status"];
                 $grn->grn_date=$row["grn_date"];
+                $grn->grn_supplier=$row["supplier_name"];
 
                 $grn_array[]=$grn;
             }
@@ -130,6 +138,7 @@
             $grn->grn_id=$row["grn_id"];
             $grn->grn_puch_order_id=$row["grn_puch_order_id"];
             $grn->grn_ref_no=$row["grn_ref_no"];
+            $grn->grn_received_loc=$row["grn_received_loc"];
             $grn->grn_status=$row["grn_status"];
             $grn->grn_date=$row["grn_date"];
             return $grn;
@@ -156,7 +165,10 @@
                 $grn_po->purchaseorder_qty=$row["po_item_qty"];
                 $grn_po->purchaseorder_itemprice=$row["po_item_price"];
                 $grn_po->purchaseorder_itemdiscount=$row["po_item_discount"];
-                $grn_po->purchaseorder_itemfinalprice=$row["po_item_finalprice"];
+                // $grn_po->purchaseorder_itemfinalprice=$row["po_item_finalprice"];
+                // $grn_po->purchaseorder_itemfinalprice=round(($row["po_item_price"] * $row["po_item_qty"]) - ($row["po_item_price"] *$row["po_item_qty"]* $row["po_item_discount"]/100),2);
+                $grn_po->purchaseorder_itemfinalprice=round(($row['po_item_qty']*$row['po_item_price'])-($row['po_item_qty']*$row['po_item_price']*$row['po_item_discount']/100),2);
+
                 $grn_po->purchaseorder_supid=$row["purchaserequest_supplier"];
                 $grn_po->purchaseorder_supplier=$row["supplier_name"];
 
@@ -186,7 +198,8 @@
                 $grn_po->purchaseorder_qty=$row["po_item_qty"];
                 $grn_po->purchaseorder_itemprice=$row["po_item_price"];
                 $grn_po->purchaseorder_itemdiscount=$row["po_item_discount"];
-                $grn_po->purchaseorder_itemfinalprice=$row["po_item_finalprice"];
+                // $grn_po->purchaseorder_itemfinalprice=$row["po_item_finalprice"];
+                $grn_po->purchaseorder_itemfinalprice=round(($row['po_item_qty']*$row['po_item_price'])-($row['po_item_qty']*$row['po_item_price']*$row['po_item_discount']/100),2);
                 $grn_po->purchaseorder_supid=$row["purchaserequest_supplier"];
                 $grn_po->purchaseorder_supplier=$row["supplier_name"];
 
@@ -210,7 +223,8 @@
                 $grn_po->purchaseorder_qty=$row["po_item_qty"];
                 $grn_po->purchaseorder_itemprice=$row["po_item_price"];
                 $grn_po->purchaseorder_itemdiscount=$row["po_item_discount"];
-                $grn_po->purchaseorder_itemfinalprice=$row["po_item_finalprice"];
+                // $grn_po->purchaseorder_itemfinalprice=$row["po_item_finalprice"];
+                $grn_po->purchaseorder_itemfinalprice=round(($row['po_item_qty']*$row['po_item_price'])-($row['po_item_qty']*$row['po_item_price']*$row['po_item_discount']/100),2);
                 $grn_po->purchaseorder_itemname=$row["product_name"];
 
                 $grn_po_array[]=$grn_po;
