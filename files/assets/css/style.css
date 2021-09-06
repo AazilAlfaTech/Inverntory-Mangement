@@ -17565,7 +17565,14 @@ table.fixedHeader-locked {
     table.fixedHeader-floating {
         display: none
     }
+
+    #print-btn
+{
+    display: none;
+    visibility: hidden;
 }
+}
+
 
 table.dataTable th.focus,
 table.dataTable td.focus {

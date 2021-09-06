@@ -39,9 +39,9 @@
                 <!-- Page-header end -->
 
                 <div class="d-flex flex-row-reverse">
-<a href="add_new_GRN.php">
+                <a href="add_new_GRN.php">
                     <button class="btn btn-mat btn-primary ">Add New GRN</i></button>
-</a>
+                </a>
                 </div>
 
 
@@ -59,17 +59,17 @@
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Purchase Order</h5>
+                                    <h5>Good Received Note</h5>
                                     <span></span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
                                             <li><i class="feather icon-maximize full-card"></i></li>
-                                            <li><i class="feather icon-minus minimize-card"></i></li>
+                                            <li><i class="feather icon-plus minimize-card"></i></li>
 
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-block">
+                                <div class="card-block" style="display: none;">
                                     <div class="dt-responsive table-responsive">
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
@@ -91,10 +91,11 @@
                                                            
                                                                 <td>$item->grn_ref_no</td>
                                                                 <td>$item->grn_date</td>
-                                                                <td>supplier</td>
+                                                                <td>$item->grn_supplier</td>
 
                                                                 <td>
                                                                     <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                    <button type='button' id='edit_pr' onclick='view_grn($item->grn_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></button>
                                                                         <button type='button' onclick='GRN_details($item->grn_id)'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                                         <button type='button'  onclick='del_group($item->grn_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group_name'></span></button>
                                                
@@ -120,5 +121,11 @@ include_once "../../files/foot.php";
      function GRN_details(grn)
     {
         window.location.href="edit_grn.php?view="+grn;
+    }
+
+    function view_grn(grn)
+    {
+        window.location.href="view_grn.php?view="+grn;
+        window.location.href="print_grn.php?view="+grn;
     }
 </script>
