@@ -13,9 +13,6 @@ class sales_invoice{
     
     
  
-  
-
-
 
     private $db;
 
@@ -30,8 +27,8 @@ function __construct(){
 
 function insert_sales_invoice(){
 
-    $sql="INSERT INTO sales_invoice (salesinvoice_so_id,salesinvoice_customer,salesinvoice_ref,salesinvoice_paymethod,sq_item_discount)
-    VALUES('$this->salesinvoice_so_id','$this->salesinvoice_customer','$this->salesinvoice_ref','$this->salesinvoice_paymethod','$this->sq_item_discount')
+    $sql="INSERT INTO sales_invoice (salesinvoice_so_id,salesinvoice_customer,salesinvoice_ref,salesinvoice_paymethod)
+    VALUES('$this->salesinvoice_so_id','$this->salesinvoice_customer','$this->salesinvoice_ref','$this->salesinvoice_paymethod')
     ";
        echo $sql;
        $this->db->query($sql);
@@ -64,7 +61,7 @@ function edit_sales_invoice($salesinvoice_id){
 
 function delete_sales_invoice($salesinvoice_id){
 
-    $sql="UPDATE sales_invoice SET sq_item_status='INACTIVE' WHERE salesinvoice_id = $salesinvoice_id ";
+    $sql="UPDATE sales_invoice SET salesinvoice_status='INACTIVE' WHERE salesinvoice_id = $salesinvoice_id ";
     //echo $sql;
     $this->db->query($sql);
     return true;
@@ -78,7 +75,7 @@ function delete_sales_invoice($salesinvoice_id){
 
 function get_all_sales_invoice(){
 
-    $sql="SELECT * FROM sales_invoice WHERE sq_item_status='ACTIVE' ";
+    $sql="SELECT * FROM sales_invoice WHERE salesinvoice_status='ACTIVE' ";
   
     $result=$this->db->query($sql);
 
@@ -93,9 +90,7 @@ function get_all_sales_invoice(){
         $sales_invoice_item->salesinvoice_customer=$row["salesinvoice_customer"];
         $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
         $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
-        $sales_invoice_item->sq_item_discount=$row["sq_item_discount"];
-        $sales_invoice_item->sq_item_finalprice=$row["sq_item_finalprice"];
-        $sales_invoice_item->sq_item_status=$row["sq_item_status"];
+        $sales_invoice_item->salesinvoice_status=$row["salesinvoice_status"];
 
         
         
@@ -127,9 +122,8 @@ function get_sales_invoice_by_id($salesinvoice_id){
     $sales_invoice_item->salesinvoice_customer=$row["salesinvoice_customer"];
     $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
     $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
-    $sales_invoice_item->sq_item_discount=$row["sq_item_discount"];
-    $sales_invoice_item->sq_item_finalprice=$row["sq_item_finalprice"];
-    $sales_invoice_item->sq_item_status=$row["sq_item_status"];
+
+    $sales_invoice_item->salesinvoice_status=$row["salesinvoice_status"];
        
     return $sales_invoice_item;
 }
