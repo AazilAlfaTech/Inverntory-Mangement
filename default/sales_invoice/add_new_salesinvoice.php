@@ -106,7 +106,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Customer</label>
                                                 <select class="js-example-basic-single col-sm-12 selectcustomer" name="sinvcustomer" id="sinv_customer">
-<option value="-1" disable selected>Select Customer</option>
+                                                    <option value="-1" disable selected>Select Customer</option>
                                                     <?php
                                                     foreach ($all_cus as $item)
 
