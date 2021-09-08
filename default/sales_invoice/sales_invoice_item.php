@@ -40,6 +40,54 @@ function insert_sales_invoice_item(){
     return $so_id;
 
 }
+// ----------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+function insert_sales_invoice_item1($so_id){
+
+
+
+    $product_list=0;
+    
+    foreach($_POST['si_item_qty']as $item)
+    
+    {
+    $sql="INSERT INTO sales_invoice_item (si_item_qty,si_item_productid,si_item_price,si_item_discount,si_item_soprice)
+    VALUES('".$_POST['si_item_qty'][$product_list]."','".$_POST['si_item_productid'][$product_list]."','".$_POST['si_item_price'][$product_list]."',
+    '".$_POST['si_item_discount'][$product_list]."','".$_POST['si_item_soprice'][$product_list]."',$so_id)
+    ";
+       echo $sql;
+       $this->db->query($sql);
+       $product_list++;
+    }
+    return true;
+
+}
+
+
+
+// function insert_sales_invoice_item1($so_id){
+
+
+
+//     $product_list=0;
+//     echo $_POST['si_item_productid1'];
+    
+//     foreach($_POST['si_item_productid1'] as $item)
+    
+//     {
+//     $sql="INSERT INTO sales_invoice_item (si_item_productid,si_item_soprice)
+//     VALUES('".$_POST['si_item_productid1'][$product_list]."',$so_id)
+//     ";
+//        echo $sql;
+//        $this->db->query($sql);
+//        $product_list++;
+//     }
+//     return true;
+
+// }
 
 // ---------------------------------------------------------------------------------------------------------------------
 

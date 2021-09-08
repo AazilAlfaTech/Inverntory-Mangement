@@ -6,6 +6,8 @@ include_once "../Sales_order/sales_order.php";
 $sales_order1 =  new sales_order();
 include_once "../sales_invoice/sales_invoice.php";
 $sales_invoice1 = new sales_invoice();
+include_once "../sales_invoice/sales_invoice_item.php";
+$sales_invoice_item1 = new sales_invoice_item();
 
 
 $all_cus = $customer1->get_all_customer();
@@ -20,8 +22,19 @@ $all_cus = $customer1->get_all_customer();
 // ------------------------------------------------------------------------------------------------------------
 
 
-if(isset($_POST[""]))
+if(isset($_POST["save"]))
 {
+
+
+    $sales_invoice1->salesinvoice_customer=$_POST["sinvcustomer"];
+    $sales_invoice1->salesinvoice_paymethod =$_POST["sinvpaymethod"];
+    $so_id= $sales_invoice1->insert_sales_invoice();
+
+     $sales_invoice_item1->insert_sales_invoice_item1($so_id);
+
+
+        echo $_POST['si_item_productid'];
+
 
 
 
@@ -96,7 +109,7 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form action="add_new_purchase_requisition.php" method="POST">
+                                    <form action="add_new_salesinvoice.php" method="POST">
 
 
 
@@ -162,9 +175,9 @@ include_once "../../files/head.php";
 
 
                                         <div class="d-flex flex-row-reverse">
-                                            <button type="submit" class="btn btn-primary">ADD</button>
+                                        
                                         </div>
-                                    </form>
+                                  
 
 
                                 </div>
@@ -223,7 +236,7 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form action="add_new_salesinvoice.php" method="POST">
+                                
 
 
 
@@ -234,8 +247,8 @@ include_once "../../files/head.php";
                                                 <label class=" col-form-label">Payment Methord</label>
                                                 <select class="js-example-basic-single col-sm-12" name="sinvpaymethod" id="sinv_paymethod">
 
-                                                    <option value=" ">Cash </option>
-                                                    <option value=" ">Credit </option>
+                                                    <option value="cash ">Cash </option>
+                                                    <option value="credit ">Credit </option>
                            
 
 
@@ -298,9 +311,9 @@ include_once "../../files/head.php";
 
 
                                         <div class="d-flex flex-row-reverse">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" name="save" class="btn btn-primary">Submit</button>
                                         </div>
-                                    </form>
+                            </form>
 
 
                                 </div>
@@ -395,22 +408,48 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
             console.log(o);
             console.log(p);
 
-            txt1 = ' <tr>' +
+            // txt1 = ' <tr>' +
               
-                '<td>' + 1 +'</td>' +
-                '<td>' + item_data[o].so_itemprice +'</td>' +
-                '<td>' + item_data[o].so_itemproductid+'</td>' +
-                '<td>' + item_data[o].so_itemqty +'</td>' +
-                '<td>' + item_data[o].so_itemprice +'</td>' +
-                '<td>' + item_data[o].so_itemdiscount+'</td>' +
-                '<td>' + item_data[o].so_itemprice +'</td>' +
+            //     '<td>' + 1 +'</td>' +
+            //     '<td>'+'<input  class="form-control input-sm" type="text" name="si_item_productid1[]" value="'+ item_data[o].so_itemprice+'"> ' + item_data[o].so_itemprice +'</td>' +
+            //     '<td>' + item_data[o].so_itemproductid+'</td>' +
+            //     '<td>' + item_data[o].so_itemqty +'</td>' +
+            //     '<td>' + item_data[o].so_itemprice +'</td>' +
+            //     '<td>' + item_data[o].so_itemdiscount+'</td>' +
+            //     '<td>' + item_data[o].so_itemprice +'</td>' +
+
             
           
              
       
-                 '<td><button type="button" class="btn btn-success btnadd" ><i class="fas fa-plus-square"></i> </button>&nbsp;&nbsp;<button type="button" class="btn btn-success btndel" onclick="delete_allocation(this)"><i class="far fa-times-circle"></i> </button></td>' +
-                '</tr>';
-            $("#tbodybuilder").append(txt1);
+            //      '<td><button type="button" class="btn btn-success btnadd" ><i class="fas fa-plus-square"></i> </button>&nbsp;&nbsp;<button type="button" class="btn btn-success btndel" onclick="delete_allocation(this)"><i class="far fa-times-circle"></i> </button></td>' +
+            //     '</tr>';
+
+            $("#tbodybuilder").append(
+                "<tr>\
+                <td> 11 </td>\
+        <td class='table-edit-view'><span class='tabledit-span'>"+ item_data[o].so_itemproductid+"</span>\
+            <input class='form-control input-sm productid '   type='hidden' name='si_item_productid[]' value='"+ item_data[o].so_itemproductid+"'>\
+        </td>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='si_item_qty[]' value='"+ item_data[o].so_itemqty +"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
+        </td>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value=''> <div style='color:red; display: none' class='msg2'>Digits only</div>\
+        </td>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value=''> <div style='color: red; display: none' class='msg3'>Digits only</div>\
+        </td>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <input class='input-borderless input-sm row_data total'   type='text' readonly value=''>\
+        </td>\
+        <td>\
+            <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
+            <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
+            <span class='btn_cancel'><bbtn_deleterowutton class='btn btn-mini btn-danger' type='button'>Cancel</button></span>\
+            <span class=''><button    class='btn btn-mini btn-danger'>Delete</button></span>\
+        </td>\
+</tr>");
             // $(".btndel").hide();
 
          });
@@ -423,6 +462,8 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
 
 }
 </script>
+
+<script type="text/javascript" src="../javascript/editabletable.js"></script>
 
 
       

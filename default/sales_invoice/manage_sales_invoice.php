@@ -95,14 +95,11 @@ include_once "../sales_invoice/sales_invoice.php";
                                                                         <td>$item->salesinvoice_date </td>
                                                                         <td>$item->salesinvoice_customer </td>
                                                                      
-                                                                      
-                                                                     
-                                                                     
-
+                                                                                                                                                                 
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                                        <button type='button' id='edit_pr' onclick='view_pr($item->salesinvoice_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></button>
-                                                                        <button type='button' onclick='edit_pr($item->salesinvoice_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
-                                                                        <button type='button'  onclick='delete_pr($item->salesinvoice_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                                                        <button type='button' id='edit_pr' onclick='view_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></button>
+                                                                        <button type='button' onclick='edit_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
+                                                                        <button type='button'  onclick='delete_si($item->salesinvoice_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
                                                                         </td> 
                                                
                                                
@@ -121,27 +118,30 @@ include_once "../sales_invoice/sales_invoice.php";
                             </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php
 
 include_once "../../files/foot.php";
 
 ?>
+<!-- ---------------------------------------------------------------------------------------------------------- -->
+
+<script>
+function edit_si(edit_si) 
+    {
+        window.location.href = "edit_sales_invoice.php?edit_sq=" + edit_si;
+    }
+
+    function view_si(view_si)
+    {
+        window.location.href = "view_sales_invoice.php?view_si=" + view_si;
+    }
+
+    function delete_si(deleteid) 
+    {
+        if (confirm("Do you want to delete id" + " " + deleteid)) 
+        {
+            window.location.href = "manage_sales_invoice.php?d_id=" + deleteid;
+        }
+
+    }
+    </script>
