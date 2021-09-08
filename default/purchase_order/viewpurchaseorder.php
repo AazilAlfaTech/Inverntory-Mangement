@@ -1,6 +1,5 @@
 <?php
 
-include_once "../../files/head.php";
 include_once "../purchase_order/purchaseorder.php";
 include_once "../purchase_order/purchaseorderitem.php";
 
@@ -17,6 +16,8 @@ $result_total=$purchaseorderitem3->get_total_values($_GET['view']);
 
 // print_r($result_pr_products)
 
+
+include_once "../../files/head.php";
 
 ?>
 
@@ -93,19 +94,21 @@ $result_total=$purchaseorderitem3->get_total_values($_GET['view']);
 
                                                     <?php
                                                 foreach ($result_item as $item)
-                                                    {
-                                                        echo
-                                                        "
-                                                        <tr>
-                                                            <td>$item->product_name  </td>
-                                                            <td>$item->po_item_qty  </td>
-                                                            <td>$item->po_item_price</td>
-                                                            <td>$item->po_item_discount</td>
-                                                            <td>$item->po_item_finalprice</td>
-                                                        </tr>
-                                                 
-                                                  ";
-                                                    }
+                                                {
+                                                    echo
+                                                    "
+                                                    <tr>
+                                                        <td>$item->product_name </td>
+                                                        <td><input class='input-borderless quantity' readonly type='text' value='$item->po_item_qty'> </td>
+                                                        <td><input class='input-borderless price' readonly type='text' value='$item->po_item_price'></td>
+                                                        <td><input class='input-borderless discount ' readonly type='text' value='$item->po_item_discount'></td>
+                                                        <td><input class='input-borderless subtotal' readonly type='hidden' value='$item->po_totalprice'></td>
+                                                        <td><input class='input-borderless total' readonly type='text' value='$item->po_item_finalprice'></td>
+
+                                                    </tr>
+                                             
+                                              ";
+                                                }
                                                   ?>
                                                     </tbody>
                                                 </table>
@@ -115,18 +118,18 @@ $result_total=$purchaseorderitem3->get_total_values($_GET['view']);
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <table class="table table-responsive invoice-table invoice-total">
-                                                <tbody>
+                                            <tbody>
                                                     <tr>
                                                         <th>Total quantity :</th>
-                                                        <td><?=$result_total->totalquantity ?></td>
+                                                        <td><span></span><input class='input-borderless autonumber' id="total_quan" readonly type='text' value=''></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Sub Total :</th>
-                                                        <td><?=$result_total->totalprice ?></td>
+                                                        <td><span>Rs.</span><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' data-a-sign="Rs. "></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Discount :</th>
-                                                        <td><?=$result_total->totaldiscount ?></td>
+                                                        <td><span></span><input class='input-borderless autonumber' id="total_discount" readonly type='text' value=''></td>
                                                     </tr>
                                                     <tr class="text-info">
                                                         <td>
@@ -135,7 +138,7 @@ $result_total=$purchaseorderitem3->get_total_values($_GET['view']);
                                                         </td>
                                                         <td>
                                                             <hr>
-                                                            <h5 class="text-primary"><?=$result_total->net_total ?></h5>
+                                                            <h5 class="text-primary"><span>Rs.</span><input class='input-borderless' id="total_final" readonly type='text' value='$item->so_itemqty'></h5>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -172,3 +175,5 @@ $result_total=$purchaseorderitem3->get_total_values($_GET['view']);
         include_once "../../files/foot.php";
 
         ?>
+
+<script type="text/javascript" src="../javascript/editabletable.js"></script>
