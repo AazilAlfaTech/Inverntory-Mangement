@@ -15,6 +15,9 @@ include_once "../sales_quotation/sales_quotation2.php";
 $sales_quotation3=new sales_quotation2();
 $sales_quotation5=new sales_quotation2();
 
+include_once "../sales_invoice/sales_invoice_item.php";
+$sales_invoice_item1 = new sales_invoice_item();
+
 
 //------------------------------------------------------------------------------
 
@@ -35,8 +38,9 @@ if(isset($_POST['sodate'])){
     $sales_order2->salesorder_quotid=$_POST['soquoteid'];
     $sales_order2->salesorder_ref=$sales_order2->so_code($_POST['sodate']);
     $salesorderid=$sales_order2->insert_sales_order();
-    $sales_orderitem2->insert_sales_orderitem($salesorderid);
-    echo $_POST['socustomer'];
+   //$sales_orderitem2->insert_sales_orderitem($salesorderid);
+   $sales_invoice_item1->insert_sales_invoice_item1($salesorderid);
+    //echo $_POST['socustomer'];
 
 }
 
