@@ -64,7 +64,7 @@
 
 
 
-<div class="page-body">
+                <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card">
@@ -185,15 +185,15 @@
                                                         <tbody class="pricelist">
                                                             <tr>
                                                                 <th> Total Quantity :</th>
-                                                                <td ><input type="text" id="total_quan" name="totqty" class="form-control form-control-sm" ></td>
+                                                                <td ><input type="text" id="total_quan" name="totqty" class="form-control form-control-sm" readonly></td>
                                                             </tr>
                                                             <tr>
                                                                 <th> Sub Total :</th>
-                                                                <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber"></td>
+                                                                <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber" readonly></td>
                                                             </tr>
                                                             <tr>
                                                                 <th> Total Discount :</th>
-                                                                <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " ></td>
+                                                                <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " readonly></td>
                                                             </tr>
                                                         
                                                             <tr class="text-info">
@@ -203,7 +203,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <hr>
-                                                                    <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control"></h5>
+                                                                    <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control" readonly></h5>
                                                                 </td>
                                                             </tr>
                                                         </tbody>

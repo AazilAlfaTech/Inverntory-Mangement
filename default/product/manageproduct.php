@@ -20,6 +20,20 @@ $pricelevel1=new pricelevel();
 
 $product1=new product();
 
+if(isset($_POST["submit"]))
+{
+    $A=$product1->import_product();
+    if($A==true){
+        echo"Imported";
+        // header("location:../group/manageproductgroup.php?success_edit=1");
+    }elseif($A==false){
+        echo "Invalid Format";
+        // header("location:../group/manageproductgroup.php?notsuccess=1");
+    }
+}
+
+
+
 if (isset($_POST["productname"]))
 {
     $product1->product_name=$_POST["productname"];
@@ -125,6 +139,34 @@ include_once "../../files/head.php";
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Import products</h5>
+                                    <span></span>
+                                    <div class="card-header-right">
+                                        <ul class="list-unstyled card-option">
+                                            <li><i class="feather icon-maximize full-card"></i></li>
+                                            <li><i class="feather icon-plus minimize-card"></i></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <form action="" method="POST" enctype="multipart/form-data">
+                                        <div class="form-group row">
+                                            <div class="col-sm-10">
+                                                
+                                                <input type="file" name="doc" class="form-control">
+
+                                            </div>
+                                            <div class="col-sm-2">
+                                            <button type="submit" name="submit" class="btn btn-primary">submit</button>
+                                            </div>
+                                        </div>
+                            
+                                    </form>
+                                </div>
+                            </div>
                             <div class="card">
                                 <div class="card-header">
                                     <h5>

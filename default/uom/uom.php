@@ -40,6 +40,56 @@ function insert_uom(){
    
 
 }
+
+// Import uom--------------------------------------------------------------------------------------------------
+
+function import_uom()
+{
+    // Reads the file with name 'doc' and gives to the variable $file
+    $file=$_FILES['doc']['tmp_name'];
+
+    // Gets the extension of the file selected
+    $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
+    print_r($a);
+    if($a='xlsx')
+    {
+        // include the class excel libraray
+        require ("../import/import_excel/PHPExcel.php");
+        require ("../import/import_excel/PHPExcel/IOFactory.php");
+        
+        // create an object     
+        $obj=PHPExcel_IOFactory::load($file);
+        // this function gets the data one by one and iterates
+        foreach($obj->getWorksheetIterator() as $sheet)
+        {   
+            // echo '<pre>';
+            // print_r($sheet); 
+
+            // Get the highest row
+            $higest_row=$sheet->getHighestRow();
+            for($i=2;$i<=$higest_row;$i++)
+            {
+                // Get the column name and the value
+                $uom_code=$sheet->getCellByColumnAndRow(0,$i)->getValue();
+                $uom_name=$sheet->getCellByColumnAndRow(1,$i)->getValue();
+
+                // echo"$name";
+                if($uom_code!='')
+                {
+                    // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                    $sql="INSERT INTO product_uom (uom_code, uom_name) VALUES ('$uom_code','$uom_name')";
+                    $this->db->query($sql);
+                }
+            }
+        }      
+        return true;     
+    }
+    else 
+    {
+        return false;
+        // echo "Invalid file format";
+    }
+}
 //........................get all function........................
 
 function get_all_uom(){
