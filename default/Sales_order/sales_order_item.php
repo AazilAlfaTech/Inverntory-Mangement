@@ -36,7 +36,7 @@ function insert_sales_orderitem($orderid){
     $sql="INSERT INTO sales_orderitem (so_itemqty,so_itemproductid,so_itemdiscount,so_itemprice,so_salesorderid) VALUES 
     ('".$_POST['Quantity'][$list]."','".$_POST['Product'][$list]."','".$_POST['Discount'][$list]."','".$_POST['Price'][$list]."',$orderid)";
    
-    // echo $sql;
+    echo $sql;
         $this->db->query($sql);
        $list++;
 }
@@ -103,9 +103,7 @@ function get_all_sales_orderitem($so_itemid){
         $sales_orderitem_item->so_itemprice=$row["so_itemprice"];
         $sales_orderitem_item->so_itemqty=$row["so_itemqty"];
         $sales_orderitem_item->so_itemdiscount=$row["so_itemdiscount"];
-
-        
-         $sales_orderitem_item->so_subtotal=round(($row["so_itemqty"]*$row["so_itemprice"]),2);
+        $sales_orderitem_item->so_subtotal=round(($row["so_itemqty"]*$row["so_itemprice"]),2);
         $sales_orderitem_item->so_finaltotal=round(($row['so_itemqty']*$row['so_itemprice'])-($row['so_itemqty']*$row['so_itemprice']*$row['so_itemdiscount']/100),2);
         
         
