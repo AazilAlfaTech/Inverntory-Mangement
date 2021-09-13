@@ -280,6 +280,37 @@ include_once "../../files/head.php";
                                                                                             </tbody>
                                             </table>
                                         </div>
+                                        <div class="card">
+
+                                            <table class="table table-responsive invoice-table invoice-total">
+                                                <tbody class="pricelist">
+                                                    <tr>
+                                                        <th> Total Quantity :</th>
+                                                        <td ><input type="text" id="total_quan" name="totqty" class="form-control form-control-sm" ></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th> Sub Total :</th>
+                                                        <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th> Total Discount :</th>
+                                                        <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " ></td>
+                                                    </tr>
+                                                
+                                                    <tr class="text-info">
+                                                        <td>
+                                                            <hr>
+                                                            <h5 class="text-primary">Total :</h5>
+                                                        </td>
+                                                        <td>
+                                                            <hr>
+                                                            <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control"></h5>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         <div class="d-flex flex-row-reverse">
                                             <button type="submit" name="save" class="btn btn-primary">Submit</button>
                                         </div>

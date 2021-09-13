@@ -87,7 +87,7 @@ function get_all_sales_invoice(){
         $sales_invoice_item = new sales_invoice();
 
         $sales_invoice_item->salesinvoice_id=$row["salesinvoice_id"];
-        $sales_invoice_item->salesinvoice_so_id=$row["salesinvoice_so_id"];
+        
         $sales_invoice_item->salesinvoice_customer=$row["salesinvoice_customer"];
         $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
         $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
@@ -188,7 +188,31 @@ function si_code($salesinvoice_date){
 
     }
 
+    function get_all_sales_invoice_bycustomer($cusid){
 
+        $sql="SELECT * FROM  sales_invoice WHERE salesinvoice_customer=$cusid" ;     
+        $result=$this->db->query($sql);
+    
+        $sales_invoice_array=array(); //array created
+    
+        while($row=$result->fetch_array()){
+    
+            $sales_invoice_item = new sales_invoice();
+    
+            $sales_invoice_item->salesinvoice_id=$row["salesinvoice_id"];
+            $sales_invoice_item->salesinvoice_customer=$row["salesinvoice_customer"];
+            $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
+            $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
+            $sales_invoice_item->salesinvoice_cashmethod=$row["salesinvoice_cashmethod"];
+            $sales_invoice_item->salesinvoice_status=$row["salesinvoice_status"];
+    
+            
+            
+            $sales_invoice_array[]=$sales_invoice_item;
+        }
+    
+        return $sales_invoice_array;
+    }
 
 
 
