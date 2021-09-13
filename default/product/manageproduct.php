@@ -71,7 +71,7 @@ if (isset($_POST["productname"]))
 if(isset($_GET["view_product"]))
 {
     $product1=$product1->get_product_by_id2($_GET["view_product"]);
-    $pricelevel1=$pricelevel1->getall_pricelevel_id($_GET["view_product"]);
+    $pricelevel1=$pricelevel1->getall_pricelevel_id_product($_GET["view_product"]);
 }
 
 if(isset($_GET["d_id"]))
