@@ -57,7 +57,7 @@ include_once "../../files/head.php";
 
                 <div class="d-flex flex-row-reverse">
 <a href="add_new_purchase_requisition.php">
-                    <button class="btn btn-mat btn-primary ">Add New Purchas Requisition</i></button>
+                    <button class="btn btn-mat btn-primary ">Add New Purchase Requisition</i></button>
 </a>
                 </div>
 

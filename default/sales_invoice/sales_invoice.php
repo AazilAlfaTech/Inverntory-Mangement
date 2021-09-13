@@ -87,7 +87,7 @@ function get_all_sales_invoice(){
         $sales_invoice_item = new sales_invoice();
 
         $sales_invoice_item->salesinvoice_id=$row["salesinvoice_id"];
-        $sales_invoice_item->salesinvoice_so_id=$row["salesinvoice_so_id"];
+        // $sales_invoice_item->salesinvoice_so_id=$row["salesinvoice_so_id"];
         $sales_invoice_item->salesinvoice_customer=$row["salesinvoice_customer"];
         $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
         $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
