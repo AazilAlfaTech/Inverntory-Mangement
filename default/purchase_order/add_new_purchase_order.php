@@ -212,25 +212,25 @@ include_once "../../files/head.php";
                             <div class="col-sm-2">
 
                                 <label class=" col-form-label">Price</label>
-                                <input type="text" class="form-control" placeholder="" name="pr_itemprice" value='0.00' id="porder_itemprice" onkeyup="cal_prd_total()" >
+                                <input type="text" class="form-control" placeholder="0.00" name="pr_itemprice" id="porder_itemprice" onkeyup="cal_prd_total()" >
                             </div>
 
                             <div class="col-sm-2">
 
                                 <label class=" col-form-label">Qty</label>
-                                <input type="number" class="form-control" placeholder="" name="pr_itemqty" id="porder_itemqty" value='0.00' onkeyup="cal_prd_total()" >
+                                <input type="number" class="form-control" placeholder="0.00" name="pr_itemqty" id="porder_itemqty" onkeyup="cal_prd_total()" >
                             </div>
 
                             <div class="col-sm-2">
 
                                 <label class=" col-form-label">Discount</label>
-                                <input type="text" class="form-control" placeholder="" name="pr_itemdiscount" Id="porder_itemdiscount" value='0.00' onkeyup="cal_prd_total()" >
+                                <input type="text" class="form-control" placeholder="0.00" name="pr_itemdiscount" Id="porder_itemdiscount" value='0.00' onkeyup="cal_prd_total()" >
                             </div>
 
                             <div class="col-sm-2">
 
                                 <label class=" col-form-label">Total</label>
-                                <input type="text" class="form-control" placeholder="" name="pr_itemfinalprice" value='0.00' id="porder_itemfinalprice" disabled>
+                                <input type="text" class="form-control" placeholder="0.00" name="pr_itemfinalprice"  id="porder_itemfinalprice" disabled>
                             </div>
 
                         </div>

@@ -62,6 +62,7 @@ function get_all_product_by_pr_id($purch_req_id){
     $PR_item1->pr_item_qty=$row['pr_item_qty'];
     $PR_item1->pr_item_price=$row['pr_item_price'];
     $PR_item1->pr_item_discount=$row['pr_item_discount'];
+    
      $PR_item1->pr_item_finalprice=round(($row['pr_item_qty']*$row['pr_item_price'])-($row['pr_item_qty']*$row['pr_item_price']*$row['pr_item_discount']/100),2);
 
 

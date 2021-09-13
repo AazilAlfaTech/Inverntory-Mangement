@@ -15,9 +15,6 @@ include_once "../sales_quotation/sales_quotation2.php";
 $sales_quotation3=new sales_quotation2();
 $sales_quotation5=new sales_quotation2();
 
-include_once "../sales_invoice/sales_invoice_item.php";
-$sales_invoice_item1 = new sales_invoice_item();
-
 
 //------------------------------------------------------------------------------
 
@@ -38,9 +35,8 @@ if(isset($_POST['sodate'])){
     $sales_order2->salesorder_quotid=$_POST['soquoteid'];
     $sales_order2->salesorder_ref=$sales_order2->so_code($_POST['sodate']);
     $salesorderid=$sales_order2->insert_sales_order();
-   //$sales_orderitem2->insert_sales_orderitem($salesorderid);
-   $sales_invoice_item1->insert_sales_invoice_item1($salesorderid);
-    //echo $_POST['socustomer'];
+   $sales_orderitem2->insert_sales_orderitem($salesorderid);
+  
 
 }
 
@@ -236,7 +232,10 @@ include_once "../../files/head.php";
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Price</label>
-                                                <input type="text" class="form-control pricetext " placeholder="" name="soitemprice" id="soitem_price">
+                                                <select class="form-control" name="soitemprice" id="soitem_price">
+                                                    <option value=""> Pricelevel</option>
+                                                </select>
+                                                
                                             </div>
 
                                             <div class="col-sm-2">
@@ -284,15 +283,18 @@ include_once "../../files/head.php";
                                                         <?php foreach($resultitem as $item):  ?>
                                                             <tr>    
                                                                 <td class='table-edit-view'><span class=''><?= $item->sq_item_productname?></span>
-                                                                    <input class='form-control input-sm  '   type='hidden' name='Product[]' value='<?= $item->sq_item_productid ?>'>
+                                                                    <input class='form-control input-sm productid  '   type='hidden' name='Product[]' value='<?= $item->sq_item_productid ?>'>
                                                                     
                                                                 </td>
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_qty ?></span>
                                                                     <input class=' input-borderless  input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='<?=$item->sq_item_qty ?>'><div style="color: red; display: none" class="msg1">Digits only</div>
                                                                 </td>
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_price ?></span>
-                                                                    <input class=' input-borderless input-sm row_data price'   type='text' name='Price[]' readonly  value='<?= $item->sq_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
-                                                                    <input class='form-control input-sm subtotal'   type='text'  value='<?=$item->sq_item_subtotal?>'>
+                                                                    <!-- <input class=' input-borderless input-sm row_data price'   type='text' name='Price[]' readonly  value='<?= $item->sq_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div> -->
+                                                                    <input class='form-control input-sm subtotal'   type='hidden'  value='<?=$item->sq_item_subtotal?>'>
+                                                                    <select name="" id="productprice" class="input-borderless price">
+                                                                        <option value="<?=$item->sq_item_price?>"><?=$item->sq_item_price?></option>
+                                                                    </select>
                                                                 </td>
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_discount ?></span>
                                                                     <input class=' input-borderless input-sm row_data discount'   type='text' name='Discount[]' readonly  value='<?= $item->sq_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
@@ -368,92 +370,93 @@ include_once "../../files/head.php";
 
 include_once "../../files/foot.php";
 
-?>
 
+?>
+<script type="text/javascript" src="../javascript/sales.js"></script>
+<script type="text/javascript" src="../javascript/editabletable.js"></script>
 <script>
 
-function edit_purchorder(SQ_id)
-    {
-        window.location.href="add_new_sales_order.php?view="+SQ_id;
-    }
+// function edit_purchorder(SQ_id)
+//     {
+//         window.location.href="add_new_sales_order.php?view="+SQ_id;
+//     }
 
-$(".productform").on("keyup", ".quantitytext, .pricetext, .discounttext", function() {
-            console.log("hhiii");
-            var row = $(this).closest(" ");
+// $(".productform").on("keyup", ".quantitytext, .pricetext, .discounttext", function() {
+//             console.log("hhiii");
+//             var row = $(this).closest(" ");
            
-            var quants = row.find(".quantity").val();
-            var prc = row.find(".pricetext").val();
-           // var tot = quants * prc;
-           var disc= row.find(".discounttext").val();
-                        var subtot= parseFloat(quants * prc * disc/100);
-                        var tot = parseFloat(quants * prc - subtot);
-                        console.log(tot);
-            row.find(".totaltext").attr("value",tot);
-        });
+//             var quants = row.find(".quantity").val();
+//             var prc = row.find(".pricetext").val();
+//            // var tot = quants * prc;
+//            var disc= row.find(".discounttext").val();
+//                         var subtot= parseFloat(quants * prc * disc/100);
+//                         var tot = parseFloat(quants * prc - subtot);
+//                         console.log(tot);
+//             row.find(".totaltext").attr("value",tot);
+//         });
 
-$(".add").click(function(){
-    console.log("addrows");
-    addrows();
-    clearrows();
-    cal_totquantity();
-    cal_totprice();
-    cal_totdiscount();
-    final_total();
-});
+// $(".add").click(function(){
+//     console.log("addrows");
+//     addrows();
+//     clearrows();
+//     cal_totquantity();
+//     cal_totprice();
+//     cal_totdiscount();
+//     final_total();
+// });
 
-$(".reset").click(function(){
-    clearrows();
-});
+// $(".reset").click(function(){
+//     clearrows();
+// });
 
-function addrows(){
+// function addrows(){
 
-    //getvalues
-    productid=$("#soitem_productid option:selected").val();
-    productname=$("#soitem_productid option:selected").text();
-    productprice=$("#soitem_price").val();
-    productquantity=$("#soitem_qty").val();
-    productdiscount=$("#soitem_discount").val();
-    producttotal=$("#sofinal_price").val();
-    productsubtotal=parseFloat(productprice*productquantity);
-    console.log(productid);
+//     //getvalues
+//     productid=$("#soitem_productid option:selected").val();
+//     productname=$("#soitem_productid option:selected").text();
+//     productprice=$("#soitem_price").val();
+//     productquantity=$("#soitem_qty").val();
+//     productdiscount=$("#soitem_discount").val();
+//     producttotal=$("#sofinal_price").val();
+//     productsubtotal=parseFloat(productprice*productquantity);
+//     console.log(productid);
 
 
-    $(".itembody").append("<tr>\
-        <td class='table-edit-view'>"+productname+"\
-            <input class='form-control input-sm productid ' name='Product[]'   type='hidden' name='' value='"+productid+"'>\
-        </td>\
-        <td class='table-edit-view'>\
-            <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='"+productquantity+"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
-        </td>\
-        <td class='table-edit-view'>\
-            <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value='"+productprice+"'> <div style='color:red; display: none' class='msg2'>Digits only</div>\
-            <input class='form-control input-sm subtotal'   type='text'  value='"+productsubtotal+"'>\
-            </td>\
-        <td class='table-edit-view'>\
-            <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+productdiscount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
-        </td>\
-        <td class='table-edit-view'>\
-            <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+producttotal+"'>\
-        </td>\
-        <td>\
-            <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
-            <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
-            <span class='btn_cancel'><button class='btn btn-mini btn-danger ' type='button'>Cancel</button></span>\
-            <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>\
-        </td>\
-</tr>\
-    ");
+//     $(".itembody").append("<tr>\
+//         <td class='table-edit-view'>"+productname+"\
+//             <input class='form-control input-sm productid ' name='Product[]'   type='hidden' name='' value='"+productid+"'>\
+//         </td>\
+//         <td class='table-edit-view'>\
+//             <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='"+productquantity+"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
+//         </td>\
+//         <td class='table-edit-view'>\
+//             <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value='"+productprice+"'> <div style='color:red; display: none' class='msg2'>Digits only</div>\
+//             <input class='form-control input-sm subtotal'   type='text'  value='"+productsubtotal+"'>\
+//             </td>\
+//         <td class='table-edit-view'>\
+//             <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+productdiscount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
+//         </td>\
+//         <td class='table-edit-view'>\
+//             <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+producttotal+"'>\
+//         </td>\
+//         <td>\
+//             <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
+//             <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
+//             <span class='btn_cancel'><button class='btn btn-mini btn-danger ' type='button'>Cancel</button></span>\
+//             <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>\
+//         </td>\
+// </tr>\
+//     ");
 
-    $(".btn_cancel").hide();
-    $(".btn_save").hide();
-}
-function clearrows(){
-    $("#soitem_productid option:selected").text("");
-    $("#soitem_price").val("");
-    $("#soitem_qty").val("");
-    $("#soitem_discount").val("");
-    $("#sofinal_price").val("");
-}
+//     $(".btn_cancel").hide();
+//     $(".btn_save").hide();
+// }
+// function clearrows(){
+//     $("#soitem_productid option:selected").text("");
+//     $("#soitem_price").val("");
+//     $("#soitem_qty").val("");
+//     $("#soitem_discount").val("");
+//     $("#sofinal_price").val("");
+// }
 
-</script>
-<script type="text/javascript" src="../javascript/editabletable.js"></script>
+ </script> 
