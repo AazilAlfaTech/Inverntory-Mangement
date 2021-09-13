@@ -15,18 +15,61 @@
     
                   
         $("table").on("keyup", ".quantity, .price, .discount", function() {
-            console.log("hhiii");
+     
             var row = $(this).closest("tr");
            
             var quants = row.find(".quantity").val();
             var prc = row.find(".price").val();
+            
+            console.log(prc);
            // var tot = quants * prc;
            var disc= row.find(".discount").val();
                         var subtot= parseFloat(quants * prc * disc/100);
+                        console.log(subtot);
                         var tot = parseFloat(quants * prc - subtot);
                         console.log(tot);
             row.find(".total").attr("value",tot);
         });
+
+        $("table").on("change", ".price", function() {
+            console.log("onchange");
+            var row = $(this).closest("tr");
+           
+            var quants = row.find(".quantity").val();
+            var prc = row.find(".price").val();
+            
+            console.log(prc);
+           // var tot = quants * prc;
+           var disc= row.find(".discount").val();
+                        var subtot= parseFloat(quants * prc * disc/100);
+                        console.log(subtot);
+                        var tot = parseFloat(quants * prc - subtot);
+                        console.log(tot);
+            row.find(".total").attr("value",tot);
+        });
+
+
+        // $("#productprice").change(function(){
+        //     var priceval=$("#productprice").val();
+        //     console.log("onchange");
+        //     console.log(priceval);
+        //     $("table").on("keyup", ".quantity, .price, .discount", function() {
+     
+        //         var row = $(this).closest("tr");
+               
+        //         var quants = row.find(".quantity").val();
+        //         var prc = row.find(".price").val();
+                
+        //         console.log(prc);
+        //        // var tot = quants * prc;
+        //        var disc= row.find(".discount").val();
+        //                     var subtot= parseFloat(quants * prc * disc/100);
+        //                     console.log(subtot);
+        //                     var tot = parseFloat(quants * prc - subtot);
+        //                     console.log(tot);
+        //         row.find(".total").attr("value",tot);
+        //     });
+        // });
     
     });
     
@@ -49,12 +92,18 @@
        //display textbox border
        tbl_row.find('input').removeClass('input-borderless');
        tbl_row.find('input').addClass('input-border');
+       tbl_row.find('select').removeClass('input-borderless');
+       tbl_row.find('select').addClass('input-border');
         
        
         //type hidden changes to type text to make it editable
         tbl_row.find('.row_data')
         .attr('readonly', false)
+
+         var id1=tbl_row.find(".productid").val();;
+        console.log(id1);
         
+        getpricelevel(id1);
       
 
         //--->add the original entry data to attribute original_entry
@@ -67,10 +116,12 @@
       
     });
 
+    
+
 // once you edit the required fields ,save the changes  
 $(document).on('click', '.btn_save', function(event) 
+
     {
-       
         event.preventDefault();
         var tbl_row = $(this).closest('tr');
 
@@ -102,7 +153,11 @@ $(document).on('click', '.btn_save', function(event)
             //remove textbox border
         tbl_row.find('input').addClass('input-borderless');
         tbl_row.find('input').removeClass('input-border');
+        tbl_row.find('select').addClass('input-borderless');
+        tbl_row.find('select').removeClass('input-border');
 
+        //remove options that are not selected
+        tbl_row.find('.price').find('option').not(':selected').remove();
 
         cal_totquantity();
         cal_totprice();
@@ -248,6 +303,22 @@ row.find(".discount").on("keypress",function(e)
 
 
 });
+function getpricelevel(e){
+    console.log("getpricelevel");
+    console.log(e);
+    $.get("../ajax/ajaxsales.php?type=get_pricelevels",{productid:e},function(data)
+    {
+      console.log(data);
+      var d=JSON.parse(data); 
+      //$("#productprice").html("");
+      $.each(d,function(i,x)
+      {
+        console.log(i);
+        console.log(x);
+        $("#productprice").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
+      });
+    });
+}
 
 function cal_totquantity(){
     console.log("quantity");

@@ -438,6 +438,12 @@
                                             <span class="pcoded-mtext">Sales Invoice </span>
                                         </a>
                                     </li>
+
+                                    <li class=" ">
+                                        <a href="../sales_dispatch/manage_sales_dispatch.php" target="_blank" >
+                                            <span class="pcoded-mtext">Sales Dispatch </span>
+                                        </a>
+                                    </li>
                                 
 
                                 </ul>

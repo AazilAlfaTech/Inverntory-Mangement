@@ -106,8 +106,8 @@ include_once "../../files/head.php";
                                                             <td>$item->product_name </td>
                                                             <td><input class='input-borderless quantity' readonly type='text' value='$item->pr_item_qty'> </td>
                                                             <td><input class='input-borderless price' readonly type='text' value='$item->pr_item_price'></td>
-                                                            <td><input class='input-borderless discount ' readonly type='text' value='$item->pr_item_discount'></td>
-                                                            <td><input class='input-borderless subtotal' readonly type='hidden' value='$item->pr_item_subtotal'></td>
+                                                            <td><input class='input-borderless discount ' readonly type='text' value='$item->pr_item_discount'>
+                                                            <input class='input-borderless subtotal' readonly type='hidden' value='$item->pr_item_subtotal'></td>
                                                             <td><input class='input-borderless total' readonly type='text' value='$item->item_discount'></td>
 
                                                         </tr>
@@ -130,7 +130,7 @@ include_once "../../files/head.php";
                                                     </tr>
                                                     <tr>
                                                         <th>Sub Total :</th>
-                                                        <td><span>Rs.</span><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' data-a-sign="Rs. "></td>
+                                                        <td><span>Rs.</span><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' ></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Discount :</th>

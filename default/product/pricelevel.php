@@ -28,7 +28,7 @@ class pricelevel{
 return true;
     }
 
-    function getall_pricelevel_id($id){
+    function getall_pricelevel_id_product($id){
         $sql="SELECT * FROM pricelevel WHERE pricelevel_productid=$id ";
         $result=$this->db->query($sql);
         $array_pricelevel=array();
