@@ -3,6 +3,10 @@
 include_once "sales_invoice.php";
 $sales_invoice1 = new sales_invoice();
 
+include_once "sales_invoice_item.php";
+$sales_invoice_item1 = new sales_invoice_item();
+
+
 include_once "../purchase_order/purchaseorder.php";
 $result_sales_in=new purchaseorder();
 
@@ -31,6 +35,8 @@ if(isset($_POST['save'])){
     // $purchaseorderitem3=$purchaseorderitem3->get_all_POitem($_GET['edit']);
     
    $result_sales_in = $sales_invoice1->get_sales_invoice_by_id($_GET['edit_si']);
+   $result_item= $sales_invoice_item1->get_all_sales_invoice_invoiceid($_GET['edit_si']);
+
     
 }
 
@@ -102,15 +108,15 @@ include_once "../../files/head.php";
 
                                             </div>
 
-                                            <input class="form-control" type="hidden" readonly='true' name="puchorderid" value=<?=$result_sales_in->purchaseorder_id ?>>
+                                            <input class="form-control" type="hidden" readonly='true' name="puchorderid" value=<?=$result_sales_in->salesinvoice_id ?>>
 
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Customer</label>
-                                                <input class="form-control" type="text" readonly='true' value="<?=$result_sales_in->salesinvoice_customer ?>">
+                                                <input class="form-control" type="text" readonly='true' value="<?=$result_sales_in->salesinvoice_customer_name ?>">
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="text" readonly='true' value=<?=$result_sales_in->purchaseorder_date ?>>
+                                                <input class="form-control" type="text" readonly='true' value=<?=$result_sales_in->salesinvoice_date ?>>
                                             </div>
                                         </div>
 
@@ -187,10 +193,10 @@ include_once "../../files/head.php";
                                                     </thead>
                                                     <tbody class="itembody">
                                                     <?php if(isset($_GET['edit'])):?>
-                                                        <?php foreach($purchaseorderitem3 as $item):  ?>
+                                                        <?php foreach($result_item as $item):  ?>
                                                         <tr>    
                                                             <td class='table-edit-view'><span class=''><?= $item->product_name?></span>
-                                                                <input class='form-control input-sm  '   type='hidden' name='Product[]' value='<?= $item->po_item_productid ?>'>
+                                                                <input class='form-control input-sm  '   type='hidden' name='Product[]' value='<?= $item->si_item_productid ?>'>
                                                                 <input class='form-control input-sm productid '   type='hidden' name='Orderid[]' value='<?= $item->po_item_id ?>'>
                                                             </td>
                                                             <td class='table-edit-view'><span class='tabledit-span'><?= $item->po_item_qty ?></span>

@@ -122,6 +122,7 @@ function get_sales_invoice_by_id($salesinvoice_id){
     $sales_invoice_item->salesinvoice_id=$row["salesinvoice_id"];
     $sales_invoice_item->salesinvoice_date=$row["salesinvoice_date"];
     $sales_invoice_item->salesinvoice_customer=$row["salesinvoice_customer"];
+    $sales_invoice_item->salesinvoice_customer_name=$row["customer_name"];
     $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
     $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
     $sales_invoice_item->salesinvoice_cashmethod=$row["salesinvoice_cashmethod"];
