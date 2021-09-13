@@ -74,7 +74,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Sales Invoice</h5>
+                                    <h5>Add New Sales Dispatch</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -228,7 +228,7 @@ include_once "../../files/head.php";
 $("#sinv_customer").change(function() {
     var customer_id = $("#sinv_customer").val();
     console.log(customer_id);
-     $.get("../ajax/ajaxsales.php?type=get_sales_order_of_customer", { customerselect: customer_id }, function(data) {
+     $.get("../ajax/ajaxsales.php?type=get_sales_invoice_of_customer", { invoicecustomer: customer_id }, function(data) {
          console.log(data);
 
          $("#tbody").html("");
@@ -239,12 +239,12 @@ $("#sinv_customer").change(function() {
 
             txt = ' <tr>' +
               
-                '<td >' + i_data[i].salesorder_id +'</td>' +
-                 '<td >' + i_data[i].salesorder_ref + '</td>' +
-                 '<td >' + i_data[i].salesorder_date + '</td>' +
+                '<td >' + i_data[i].salesinvoice_id +'</td>' +
+                 '<td >' + i_data[i].salesinvoice_ref + '</td>' +
+                 '<td >' + i_data[i].salesinvoice_date + '</td>' +
       
-                 '<td><button type="button" class="btn btn-success btn-mini btnadd" onclick="add_to_list(' + i_data[i].salesorder_id +',this)" ><i class="icofont icofont-plus"></i></button>\
-                 <button type="button" class="btn btn-danger btn-mini btndel" onclick="removelist(' + i_data[i].salesorder_id +',this)"><i class="icofont icofont-ui-delete"></i> </button>'+
+                 '<td><button type="button" class="btn btn-success btn-mini btnadd" onclick="add_to_list(' + i_data[i].salesinvoice_id +',this)" ><i class="icofont icofont-plus"></i></button>\
+                 <button type="button" class="btn btn-danger btn-mini btndel" onclick="removelist(' + i_data[i].salesinvoice_id +',this)"><i class="icofont icofont-ui-delete"></i> </button>'+
                   '</td>'+
                 '</tr>';
             $("#tbody").append(txt);
@@ -274,13 +274,13 @@ $("#sinv_customer").change(function() {
 
 
 
-function add_to_list(i,btn){
+function add_to_list(invoice,btn){
 
-console.log(i);
+console.log(invoice);
 
 
-$.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, function(data) {
-         //console.log(data);
+$.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice }, function(data) {
+         console.log(data);
 
         //  $(".itembody").html("");
 
@@ -297,24 +297,24 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
 
             $(".itembody").append(
                 "<tr>\
-               <td class='table-edit-view'><span class='tabledit-span'>"+ item_data[o].so_salesorderid+"</span>\
-            <input class='form-control input-sm orderid'   type='hidden' name='Orderid[]' value='"+ item_data[o].so_salesorderid+"'>\
+               <td class='table-edit-view'><span class='tabledit-span'>"+ item_data[o].si_itemid+"</span>\
+            <input class='form-control input-sm orderid'   type='hidden' name='Orderid[]' value='"+ item_data[o].si_item_invoiceid+"'>\
         </td>\
-        <td class='table-edit-view'><span class='tabledit-span'>"+ item_data[o].so_itemproduct_name+"</span>\
-            <input class='form-control input-sm productid '   type='hidden' name='Product[]' value='"+ item_data[o].so_itemproductid+"'>\
-        </td>\
-        <td class='table-edit-view'><span class='tabledit-span'></span>\
-            <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].so_itemqty +"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
+        <td class='table-edit-view'><span class='tabledit-span'>"+ item_data[o].si_item_productname+"</span>\
+            <input class='form-control input-sm productid '   type='hidden' name='Product[]' value='"+ item_data[o].si_item_productid+"'>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
-            <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value='"+ item_data[o].so_itemprice +"'> <div style='color:red; display: none' class='msg2'>Digits only</div>\
-            <input class='form-control input-sm subtotal '   type='hidden' name='Orderid[]' value='"+ item_data[o].so_subtotal+"'>\
+            <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].si_item_qty +"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
-            <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+ item_data[o].so_itemdiscount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
+            <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value='"+ item_data[o].si_item_price +"'> <div style='color:red; display: none' class='msg2'>Digits only</div>\
+            <input class='form-control input-sm subtotal '   type='hidden' name='Orderid[]' value='"+ item_data[o].si_item_subtotal+"'>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
-            <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+item_data[o].so_finaltotal+"'>\
+            <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+ item_data[o].si_item_discount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
+        </td>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+item_data[o].si_item_finaltotal+"'>\
         </td>\
         <td>\
             <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
