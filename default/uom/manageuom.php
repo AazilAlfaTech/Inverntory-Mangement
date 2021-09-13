@@ -3,6 +3,40 @@
     include_once "uom.php";
     $uom1 = new uom();
 
+    // download the sample excel file
+    if(!empty($_GET['file_download']))
+    {
+        // Get the name of the file
+        $filename=basename($_GET['file_download']);
+        // Get the path of the file and concat with the name
+        $filepath='../import/excel/'.$filename;
+
+        // check whether the file name id not empty and the file exists in the given path
+        if(!empty($filename) && file_exists($filepath))
+        {
+            // Define the header
+            header("Cache-Control:public");
+            header("Content-Description:File Transfer");
+            header("Content-Disposition: attachment; filename=$filename");
+            header("Content-Type:File application/zip");
+            header("Content-Transfer-Emcoding: binary");
+
+            readfile($filepath);
+            exit;
+        }
+        else
+        {
+            echo "This file doesn't exist";
+
+        }
+    }
+
+
+        // code to import uom.................................................
+        if(isset($_POST["submit"]))
+    {
+        $uom1->import_uom();
+    }
 
     //code to insert and update data............................................................... 
     if(isset($_POST["unitcode"]))
@@ -41,6 +75,7 @@
     if(isset($_GET['edit_uom'])){
         $uom1=$uom1->get_uom_by_id($_GET['edit_uom']);
     }
+
 
     //code to delete location..................................................................................
     $msg_2="";//alert message for delete
@@ -101,7 +136,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Import UOM</h5>
-                                    <span></span>
+                                    <a href="manageuom.php?file_download=../Import/excel/uom_test.xlsx">Download sample file<a>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
                                             <li><i class="feather icon-maximize full-card"></i></li>
@@ -111,7 +146,7 @@
                                     </div>
                                 </div>
                                 <div class="card-block">
-                                    <form action="" method="POST" enctype="multipart/form-data">
+                                    <form action="manageuom.php" method="POST" enctype="multipart/form-data">
                                         <div class="form-group row">
                                             <div class="col-sm-10">
                                                 
@@ -282,11 +317,11 @@
 
                                                 </tr>
                                             </thead>
-
+                                            <tbody>
                                             <?php     
-                                                         foreach($result_uom as $item){ 
+                                                        foreach($result_uom as $item){ 
                                                         echo"
-                                                                <tbody>
+                                                                
                                                                     <tr>
                                                                         <td>$item->uom_id</td>
                                                                         <td>$item->uom_code </td>
@@ -303,11 +338,7 @@
                                                                     ";
   }
                                            ?>
-                                           
-
-                                                               
-";}
-                                                                ?>
+                                            </tbody>
                                             </tfoot>
 
                                         </table>

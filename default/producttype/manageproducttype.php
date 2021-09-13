@@ -5,6 +5,43 @@ include_once "../group/group.php";
 
 $producttype1=new producttype ();
 $group=new group();
+
+// download the sample excel file
+if(!empty($_GET['file_download']))
+{
+    // Get the name of the file
+    $filename=basename($_GET['file_download']);
+    // Get the path of the file and concat with the name
+    $filepath='../import/excel/'.$filename;
+
+    // check whether the file name id not empty and the file exists in the given path
+    if(!empty($filename) && file_exists($filepath))
+    {
+        // Define the header
+        header("Cache-Control:public");
+        header("Content-Description:File Transfer");
+        header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Type:File application/zip");
+        header("Content-Transfer-Emcoding: binary");
+
+        readfile($filepath);
+        exit;
+    }
+    else
+    {
+        echo "This file doesn't exist";
+
+    }
+}
+
+
+
+//code to insert and update data............................................................... 
+if(isset($_POST["submit"]))
+{
+    $producttype1->import_type();
+}
+
 //code to group names in the drop down list...................................................
 $result_group=$group->get_all_group();
 
@@ -107,7 +144,7 @@ include_once "../../files/head.php";
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Import Product Type</h5>
-                                    <span></span>
+                                    <a href="manageproducttype.php?file_download=../Import/excel/type_test.xlsx">Download sample file<a>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
                                             <li><i class="feather icon-maximize full-card"></i></li>
@@ -117,7 +154,7 @@ include_once "../../files/head.php";
                                     </div>
                                 </div>
                                 <div class="card-block">
-                                    <form action="" method="POST" enctype="multipart/form-data">
+                                    <form action="manageproducttype.php" method="POST" enctype="multipart/form-data">
                                         <div class="form-group row">
                                             <div class="col-sm-10">
                                                 

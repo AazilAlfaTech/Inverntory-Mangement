@@ -87,7 +87,7 @@
                 // Gets the extension of the file selected
                 $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
                 print_r($a);
-                if($a='xlsx')
+                if($a=='xlsx')
                 {
                     // include the class excel libraray
                     require ("../import/import_excel/PHPExcel.php");
@@ -124,10 +124,16 @@
                                 VALUES ('$product_name','$prod','$product_group','$product_type','$product_uom','$product_desc','$product_inventory_val',
                                 '$product_batch')";
                                 $this->db->query($sql);
+                                $msg=1;
                             }
                         }
                     }           
-                    return true;
+                    if(isset($msg))
+                    {
+                        // echo "Successful";
+                              header("location:../product/manageproduct.php?success=1");
+
+                    }
                 }
                 else 
                 {

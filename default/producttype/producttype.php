@@ -44,8 +44,8 @@
 
             // Gets the extension of the file selected
             $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
-            print_r($a);
-            if($a='xlsx')
+            // print_r($a);
+            if($a=='xlsx')
             {
                 // include the class excel libraray
                 require ("../import/import_excel/PHPExcel.php");
@@ -71,18 +71,41 @@
                         // echo"$name";
                         if($ptype_code!='')
                         {
-                            // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
-                            $sql="INSERT INTO product_type (ptype_name,ptype_code,ptype_group_id) VALUES ('$ptype_name','$ptype_code','$ptype_group_id')";
-                            $this->db->query($sql);
+                            $sql1="SELECT * FROM  product_type WHERE ptype_status = 'ACTIVE' AND ptype_code='ptype_code' OR ptype_name='$ptype_name'";
+                             $res_code=$this->db->query($sql1);
+
+                             if($res_code->num_rows==0)
+                            {
+                                // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                                $sql="INSERT INTO product_type (ptype_name,ptype_code,ptype_group_id) VALUES ('$ptype_name','$ptype_code','$ptype_group_id')";
+                                $this->db->query($sql);
+                                $msg=1;
+                            }
+                            else    
+                            {
+                                $msg1=2;
+                                // return false;
+                            }
                         }
                     }
+                    if(isset($msg))
+                        {
+                            // echo "Successful";
+                                header("location:../producttype/manageproducttype.php?success=1");
+
+                        }
+                        if(isset($msg1))
+                        {
+                        // echo "Unsuccessful";
+                            header("location:../producttype/manageproducttype.php?notsuccess=1");
+
+                        }
                 }      
-                return true;     
             }
+            
             else 
             {
-                return false;
-                // echo "Invalid file format";
+                echo "Invalid file format";
             }
         }
 

@@ -54,8 +54,8 @@ function import_location()
 
         // Gets the extension of the file selected
         $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
-        print_r($a);
-        if($a='xlsx')
+        // print_r($a);
+        if($a=='xlsx')
         {
             // include the class excel libraray
             require ("../import/import_excel/PHPExcel.php");
@@ -82,20 +82,43 @@ function import_location()
                     // echo"$name";
                     if($location_code!='')
                     {
-                        // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
-                        $sql="INSERT INTO location (location_code,location_name,location_add,location_number,location_email)
-                        VALUES ('$location_code','$location_name','$location_add','$supplier_add','$location_number',
-                        '$location_email')";
-                        $this->db->query($sql);
+                        $sql1= "SELECT * FROM location WHERE location_status='ACTIVE' AND location_code='$location_code' OR location_email='$location_email' ";
+                        $res_code=$this->db->query($sql1);
+
+                        if($res_code->num_rows==0)
+                        {
+                            // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                            $sql="INSERT INTO location (location_code,location_name,location_add,location_number,location_email)
+                            VALUES ('$location_code','$location_name','$location_add','$location_number',
+                            '$location_email')";
+                            $this->db->query($sql);
+                            $msg=1;
+                        }
+                        else    
+                        {
+                            $msg1=2;
+                            // return false;
+                        }
                     }
                 }
+                if(isset($msg))
+                {
+                    // echo "Successful";
+                          header("location:../location/managelocation.php?success=1");
+
+                }
+                if(isset($msg1))
+                {
+                    // echo "Unsuccessful";
+                            header("location:../location/managelocation.php?notsuccess=1");
+
+                }
             }      
-            return true;     
+               
         }
         else 
         {
-            return false;
-            // echo "Invalid file format";
+            echo "Invalid file format";
         }
     }
 

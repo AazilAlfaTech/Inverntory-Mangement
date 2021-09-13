@@ -174,8 +174,8 @@ function get_group_by_name($groupname){
 
         // Gets the extension of the file selected
         $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
-        print_r($a);
-        if($a='xlsx')
+        // print_r($a);
+        if($a=='xlsx')
         {
             // include the class excel libraray
             require ("../import/import_excel/PHPExcel.php");
@@ -200,18 +200,42 @@ function get_group_by_name($groupname){
                     // echo"$name";
                     if($group_code!='')
                     {
-                        // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
-                        $sql="INSERT INTO product_group (group_code,group_name) VALUES ('$group_code','$group_name')";
-                        $this->db->query($sql);
+                        $sql1="SELECT * FROM product_group WHERE group_status='ACTIVE' AND group_code='$group_code' OR group_name='$group_name'";
+                        $res_code=$this->db->query($sql1);
+                        
+                        if($res_code->num_rows==0)
+                        {
+                            // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                            $sql="INSERT INTO product_group (group_code,group_name) VALUES ('$group_code','$group_name')";
+                            $this->db->query($sql);
+                            $msg=1;
+                            // return true;
+                        }
+                        else    
+                        {
+                            $msg1=2;
+                            // return false;
+                        }
+                        
                     }
                 }
-            }      
-            return true;     
+                if(isset($msg))
+                    {
+                        // echo "Successful";
+                              header("location:../group/manageproductgroup.php?success=1");
+
+                    }
+                if(isset($msg1))
+                    {
+                        // echo "Unsuccessful";
+                                header("location:../group/manageproductgroup.php?notsuccess=1");
+
+                    }
+            }          
         }
         else 
         {
-            return false;
-            // echo "Invalid file format";
+            echo "Invalid file format";
         }
     }
 
