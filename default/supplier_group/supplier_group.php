@@ -41,6 +41,56 @@ function insert_suppier_group(){
 
 }
 
+// Import supplier group--------------------------------------------------------------------------------------------------
+
+function import_supplier_group()
+{
+    // Reads the file with name 'doc' and gives to the variable $file
+    $file=$_FILES['doc']['tmp_name'];
+
+    // Gets the extension of the file selected
+    $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
+    print_r($a);
+    if($a='xlsx')
+    {
+        // include the class excel libraray
+        require ("../import/import_excel/PHPExcel.php");
+        require ("../import/import_excel/PHPExcel/IOFactory.php");
+        
+        // create an object     
+        $obj=PHPExcel_IOFactory::load($file);
+        // this function gets the data one by one and iterates
+        foreach($obj->getWorksheetIterator() as $sheet)
+        {   
+            // echo '<pre>';
+            // print_r($sheet); 
+
+            // Get the highest row
+            $higest_row=$sheet->getHighestRow();
+            for($i=2;$i<=$higest_row;$i++)
+            {
+                // Get the column name and the value
+                $suppliergroup_code=$sheet->getCellByColumnAndRow(0,$i)->getValue();
+                $suppliergroup_name=$sheet->getCellByColumnAndRow(1,$i)->getValue();
+
+                // echo"$name";
+                if($suppliergroup_code!='')
+                {
+                    // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                    $sql="INSERT INTO supplier_group (suppliergroup_code,suppliergroup_name) VALUES ('$suppliergroup_code','$suppliergroup_name')";
+                    $this->db->query($sql);
+                }
+            }
+        }      
+        return true;     
+    }
+    else 
+    {
+        return false;
+        // echo "Invalid file format";
+    }
+}
+
 //---------------------------------------------------------------------------------------------------------------------
 
 function get_all_supplier_group(){

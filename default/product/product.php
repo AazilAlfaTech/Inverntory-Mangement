@@ -79,6 +79,69 @@
                 return  $code;
             }
 
+            function import_product()
+            {
+                // Reads the file with name 'doc' and gives to the variable $file
+                $file=$_FILES['doc']['tmp_name'];
+
+                // Gets the extension of the file selected
+                $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
+                print_r($a);
+                if($a=='xlsx')
+                {
+                    // include the class excel libraray
+                    require ("../import/import_excel/PHPExcel.php");
+                    require ("../import/import_excel/PHPExcel/IOFactory.php");
+                    
+                    // create an object     
+                    $obj=PHPExcel_IOFactory::load($file);
+                    // this function gets the data one by one and iterates
+                    foreach($obj->getWorksheetIterator() as $sheet)
+                    {   
+                        // echo '<pre>';
+                        // print_r($sheet); 
+
+                        // Get the highest row
+                        $higest_row=$sheet->getHighestRow();
+                        for($i=2;$i<=$higest_row;$i++)
+                        {
+                            // Get the column name and the value
+                            $product_name=$sheet->getCellByColumnAndRow(0,$i)->getValue();
+                            $product_group=$sheet->getCellByColumnAndRow(1,$i)->getValue();
+                            $product_type=$sheet->getCellByColumnAndRow(2,$i)->getValue();
+                            $product_uom=$sheet->getCellByColumnAndRow(3,$i)->getValue();
+                            $product_desc=$sheet->getCellByColumnAndRow(4,$i)->getValue();
+                            $product_inventory_val=$sheet->getCellByColumnAndRow(5,$i)->getValue();
+                            $product_batch=$sheet->getCellByColumnAndRow(6,$i)->getValue();
+
+                            $product_code=new product();
+                            $prod=$product_code->get_count($product_type,$product_group);
+                            // echo"$name";
+                            if($product_name!='')
+                            {
+                                // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                                $sql="INSERT INTO product (product_name,product_code,product_group,product_type,product_uom,product_desc,product_inventory_val,product_batch )
+                                VALUES ('$product_name','$prod','$product_group','$product_type','$product_uom','$product_desc','$product_inventory_val',
+                                '$product_batch')";
+                                $this->db->query($sql);
+                                $msg=1;
+                            }
+                        }
+                    }           
+                    if(isset($msg))
+                    {
+                        // echo "Successful";
+                              header("location:../product/manageproduct.php?success=1");
+
+                    }
+                }
+                else 
+                {
+                    
+                    echo "Invalid file format";
+                }
+            }
+
         
 
 
@@ -125,7 +188,7 @@
                     $product->product_id=$row["product_id"];
                     $product->product_code=$row["product_code"];
                     $product->product_name=$row["product_name"];
-                     $product->product_type=$ptype1->get_type_by_id ($row["product_type"]);
+                    $product->product_type=$ptype1->get_type_by_id ($row["product_type"]);
                     $product->product_uom=$row["product_uom"];
                     $product->product_desc=$row["product_desc"];
                     $product->product_inventory_val=$row["product_inventory_val"];

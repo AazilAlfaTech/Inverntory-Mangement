@@ -41,10 +41,66 @@ if($res_code->num_rows==0){
     echo $sql;
     $this->db->query($sql);
     return true;
-}else {
+}else 
+{
     return false;
  }
 }
+
+// Import supplier--------------------------------------------------------------------------------------------------------
+function import_supplier()
+    {
+        // Reads the file with name 'doc' and gives to the variable $file
+        $file=$_FILES['doc']['tmp_name'];
+
+        // Gets the extension of the file selected
+        $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
+        print_r($a);
+        if($a='xlsx')
+        {
+            // include the class excel libraray
+            require ("../import/import_excel/PHPExcel.php");
+            require ("../import/import_excel/PHPExcel/IOFactory.php");
+            
+            // create an object     
+            $obj=PHPExcel_IOFactory::load($file);
+            // this function gets the data one by one and iterates
+            foreach($obj->getWorksheetIterator() as $sheet)
+            {   
+                // echo '<pre>';
+                // print_r($sheet); 
+
+                // Get the highest row
+                $higest_row=$sheet->getHighestRow();
+                for($i=2;$i<=$higest_row;$i++)
+                {
+                    // Get the column name and the value
+                    $supplier_code=$sheet->getCellByColumnAndRow(0,$i)->getValue();
+                    $supplier_name=$sheet->getCellByColumnAndRow(1,$i)->getValue();
+                    $supplier_group=$sheet->getCellByColumnAndRow(2,$i)->getValue();
+                    $supplier_add=$sheet->getCellByColumnAndRow(3,$i)->getValue();
+                    $supplier_contactno=$sheet->getCellByColumnAndRow(4,$i)->getValue();
+                    $supplier_email=$sheet->getCellByColumnAndRow(5,$i)->getValue();
+
+                    // echo"$name";
+                    if($supplier_code!='')
+                    {
+                        // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                        $sql="INSERT INTO supplier (supplier_code,supplier_name,supplier_group,supplier_add,supplier_contactno,supplier_email)
+                        VALUES ('$supplier_code','$supplier_name','$supplier_group','$supplier_add','$supplier_contactno',
+                        '$supplier_email')";
+                        $this->db->query($sql);
+                    }
+                }
+            }      
+            return true;     
+        }
+        else 
+        {
+            return false;
+            // echo "Invalid file format";
+        }
+    }
 
 //---------------------------------------------------------------------------------------------------------------------
 

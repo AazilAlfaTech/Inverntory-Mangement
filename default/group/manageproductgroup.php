@@ -3,7 +3,40 @@
 include_once "group.php";
 $group1=new group();//create a new object 
 
+// download the sample excel file
+if(!empty($_GET['file_download']))
+{
+    // Get the name of the file
+    $filename=basename($_GET['file_download']);
+    // Get the path of the file and concat with the name
+    $filepath='../import/excel/'.$filename;
+
+    // check whether the file name id not empty and the file exists in the given path
+    if(!empty($filename) && file_exists($filepath))
+    {
+        // Define the header
+        header("Cache-Control:public");
+        header("Content-Description:File Transfer");
+        header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Type:File application/zip");
+        header("Content-Transfer-Emcoding: binary");
+
+        readfile($filepath);
+        exit;
+    }
+    else
+    {
+        echo "This file doesn't exist";
+
+    }
+}
+
 //code to insert and update data............................................................... 
+if(isset($_POST["submit"]))
+{
+    $group1->import_group();
+    
+}
 
 if(isset($_POST["groupcode"]))
 {
@@ -98,6 +131,39 @@ include_once "../../files/head.php";
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Import Group</h5>
+                                    <a href="manageproductgroup.php?file_download=../Import/excel/g_test.xlsx">Download sample file<a>
+                                    <div class="card-header-right">
+                                        <ul class="list-unstyled card-option">
+                                            <li><i class="feather icon-maximize full-card"></i></li>
+                                            <li><i class="feather icon-plus minimize-card"></i></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <form action="manageproductgroup.php" method="POST" enctype="multipart/form-data">
+                                        <div class="form-group row">
+                                            <div class="col-sm-10">
+                                                
+                                                <input type="file" name="doc" class="form-control" required>
+
+                                            </div>
+                                            <div class="col-sm-2">
+                                            <button type="submit" name="submit" class="btn btn-primary">submit</button>
+                                            </div>
+                                            <!-- <div class="col-sm-3">
+                                                
+                                                <a href="">Dowload sample file<a>
+
+                                            </div> -->
+                                        </div>
+                            
+                                    </form>
+                                </div>
+                            </div>
                             <div class="card">
                                 <div class="card-header">
                                     <h5>

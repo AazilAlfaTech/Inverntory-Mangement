@@ -92,6 +92,7 @@ function insert_sales_quotation (){
 
 
         }
+
 //-------------------------------------------------------------------------------------------------------------------
 function edit_sales_quotation($salesquotation_id){
  
