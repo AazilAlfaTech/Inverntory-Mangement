@@ -7,6 +7,7 @@ $sales_invoice1 = new sales_invoice();
 include_once "../sales_dispatch/sales_dispatch.php";
 $sales_dispatch2=new sales_dispatch();
 include_once "../sales_dispatch/sales_dispatch_item.php";
+$salesdispatchitem=new sales_dispatch_item();
 //customer dropdown
 $all_cus= $customer1->get_all_customer();
 
@@ -14,10 +15,12 @@ $all_cus= $customer1->get_all_customer();
 include_once "../product/product.php";
 $product1 = new product(); 
 
-//product dropdown
-$productlist=$product1->getall_product2();
-
-
+if(isset($_POST['sdis_date'])){
+    $sales_dispatch2->salesdispatch_date=$_POST['sdis_date'];
+    $sales_dispatch2->salesdispatch_ref=$sales_dispatch2->sd_code($_POST['sdis_date']);
+    $dispatchid=$sales_dispatch2->insert_sales_dispatch();
+    $salesdispatchitem->insert_sales_dispatch_item1($dispatchid);
+}
 
 
 
@@ -84,14 +87,14 @@ include_once "../../files/head.php";
                                         </ul>
                                     </div>
                                 </div>
-                                <form action="add_new_salesinvoice.php" method="POST">
+                                <form action="add_new_salesdispatch.php" method="POST">
 
                                 <div class="card-block">
                                         <div class="form-group row">
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Customer</label>
-                                                <select class="js-example-basic-single col-sm-12 selectcustomer" name="sinvcustomer" id="sinv_customer">
+                                                <select class="js-example-basic-single col-sm-12 selectcustomer"  id="sinv_customer">
                                                         <option value="-1" disable selected>Select Customer</option>
                                                     <?php
                                                     foreach ($all_cus as $item)
@@ -102,7 +105,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="date" name="sinvdate"  value="<?php echo date('Y-m-d');?>">
+                                                <input class="form-control" type="date" name="sdis_date"  value="<?php echo date('Y-m-d');?>">
                                             </div>
 
                                         </div>
@@ -131,7 +134,7 @@ include_once "../../files/head.php";
                                 <!-- </div> -->
                            
                                 <div class="card-block">
-                                    <div class="form-group row">
+                                    <!-- <div class="form-group row">
 
                                         <div class="col-sm-6">
                                             <label class=" col-form-label">Payment Methord</label>
@@ -159,7 +162,7 @@ include_once "../../files/head.php";
                                             </select>
 
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                     
                                 <div class="card-block">

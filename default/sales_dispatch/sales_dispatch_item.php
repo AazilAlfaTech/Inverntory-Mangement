@@ -5,6 +5,7 @@ class sales_dispatch_item{
 
     public $sd_item_id;
     public $sd_item_saledispatch_id;
+    public $sd_item_invoiceid;
     public $sd_item_productid;
     public $sd_item_price;
     public $sd_item_qty;
@@ -29,18 +30,23 @@ function __construct(){
 // ----INSERT NEW sales_dispatch_item------------------------------------------------------------------------------------------------------------------
 
 
-function insert_sales_dispatch_item(){
+function insert_sales_dispatch_item1($sd_id){
 
-    $sql="INSERT INTO sales_dispatch_item (sd_item_saledispatch_id,sd_item_productid,sd_item_price,sd_item_qty,sd_item_discount,sd_item_final_price)
-    VALUES('$this->sd_item_saledispatch_id','$this->sd_item_productid','$this->sd_item_price','$this->sd_item_qty','$this->sd_item_discount','$this->sd_item_final_price')
-    ";
+
+
+    $list=0;
+   
+    //include orderid
+    foreach($_POST['Quantity'] as $item){
+        $sql="INSERT INTO sales_invoice_item (sd_item_qty,sd_item_invoiceid,sd_item_productid,sd_item_price,sd_item_discount,sd_item_saledispatch_id)VALUES 
+        ('".$_POST['Quantity'][$list]."','".$_POST['Orderid'][$list]."','".$_POST['Product'][$list]."','".$_POST['Price'][$list]."','".$_POST['Discount'][$list]."',$sd_id)";
        echo $sql;
        $this->db->query($sql);
-    $so_id=$this->db->insert_id;
-    return $so_id;
+       $list++;
+    }
+    return true;
 
 }
-
 // ---------------------------------------------------------------------------------------------------------------------
 
 

@@ -31,13 +31,12 @@ function __construct(){
 
 function insert_sales_dispatch(){
 
-    $sql="INSERT INTO sales_dispatch (salesdispatch_si_id,salesdispatch_customer,salesdispatch_ref,salesdispatch_paymethod,salesdispatch_date)
-    VALUES('$this->salesdispatch_si_id','$this->salesdispatch_customer','$this->salesdispatch_ref','$this->salesdispatch_paymethod','$this->salesdispatch_date')
-    ";
+    $sql="INSERT INTO sales_dispatch (salesdispatch_ref,salesdispatch_date)
+    VALUES('$this->salesdispatch_ref','$this->salesdispatch_date')";
        echo $sql;
        $this->db->query($sql);
-    $so_id=$this->db->insert_id;
-    return $so_id;
+    $sd_id=$this->db->insert_id;
+    return $sd_id;
 
 }
 
@@ -60,6 +59,56 @@ function edit_sales_dispatch($salesdispatch_id){
 
 
 }
+//-------------------------------------------------------------------------------------------------------------------
+function sd_code($sd_date){
+
+    // SELECT * FROM `purchase_request` WHERE MONTH(purchaserequest_added_date)= MONTH(CURDATE())
+        $sql="SELECT COUNT(*) AS count FROM `sales_dispatch` WHERE MONTH(salesdispatch_date)= EXTRACT(MONTH FROM '$sd_date') ";
+
+        $sql1="SELECT  EXTRACT(MONTH FROM '$sd_date') AS sd_month ";
+        $sql2="SELECT  EXTRACT(YEAR FROM '$sd_date') AS sd_year ";
+
+        $result = $this->db->query($sql);
+        $result1 = $this->db->query($sql1);
+        $result2 = $this->db->query($sql2);
+
+        $count= 0;
+
+
+        while($row=$result->fetch_array()){
+
+            $count = $row["count"];
+        }
+
+        
+        $month = "";
+
+        while($row=$result1->fetch_array()){
+
+            $month = $row["sd_month"];
+        }
+
+        $month =sprintf("%02d", $month);
+
+        $year = "";
+
+        while($row=$result2->fetch_array()){
+
+            $year = $row["sd_year"];
+        }
+        $count = $count + 1 ;
+        $count = sprintf("%04d", $count);
+//  $year = date("Y");
+
+
+        $code = "SD".  substr($year, 2, 2 ) . $month . $count;  
+
+
+        return $code;
+
+
+    }
+
 
 //-------------------------------------------------------------------------------------------------------------------
 

@@ -22,7 +22,7 @@ function __construct(){
     $this->db=new mysqli(host,un,pw,db1);
 }
 
-// ----INSERT NEW sales_order------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------
 
 
 function insert_sales_order(){
@@ -30,12 +30,13 @@ function insert_sales_order(){
     $sql="INSERT INTO sales_order (salesorder_quotid,salesorder_customer,salesorder_ref,salesorder_date)
     VALUES('$this->salesorder_quotid','$this->salesorder_customer','$this->salesorder_ref','$this->salesorder_date')
     ";
-    //    echo $sql;
+     echo $sql;
        $this->db->query($sql);
     $so_id=$this->db->insert_id;
     return $so_id;
 
 }
+
 
 // ---------------------------------------------------------------------------------------------------------------------
 function so_code($so_date){
