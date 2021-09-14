@@ -128,7 +128,7 @@ include_once "../../files/foot.php";
 <script>
 function edit_si(edit_si) 
     {
-        window.location.href = "edit_sales_invoice.php?edit_sq=" + edit_si;
+        window.location.href = "edit_sales_invoice.php?edit_si=" + edit_si;
     }
 
     function view_si(view_si)

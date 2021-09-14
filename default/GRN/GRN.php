@@ -111,7 +111,7 @@
             $result=$this->db->query($SQL);
             $grn_array=array();
 
-            While($row=$result->fetch_array())
+            while($row=$result->fetch_array())
             {
                 $grn=new GRN();
                 $grn->grn_id=$row["grn_id"];
