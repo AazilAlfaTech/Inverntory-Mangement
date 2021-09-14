@@ -101,6 +101,34 @@ include_once "supplier_group.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
+                                    <h5>Import Supplier Group</h5>
+                                    <span></span>
+                                    <div class="card-header-right">
+                                        <ul class="list-unstyled card-option">
+                                            <li><i class="feather icon-maximize full-card"></i></li>
+                                            <li><i class="feather icon-plus minimize-card"></i></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <form action="" method="POST" enctype="multipart/form-data">
+                                        <div class="form-group row">
+                                            <div class="col-sm-10">
+                                                
+                                                <input type="file" name="doc" class="form-control">
+
+                                            </div>
+                                            <div class="col-sm-2">
+                                            <button type="submit" name="submit" class="btn btn-primary">submit</button>
+                                            </div>
+                                        </div>
+                            
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
                                 <h5>
                                         <?php
                                     if(isset($_GET["edit_sup_grp"])){

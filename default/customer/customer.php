@@ -64,6 +64,66 @@ function insert_customer(){
  
 }
 
+    function import_customer()
+    {
+        // Reads the file with name 'doc' and gives to the variable $file
+        $file=$_FILES['doc']['tmp_name'];
+
+        // Gets the extension of the file selected
+        $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
+        print_r($a);
+        if($a='xlsx')
+        {
+            // include the class excel libraray
+            require ("../import/import_excel/PHPExcel.php");
+            require ("../import/import_excel/PHPExcel/IOFactory.php");
+            
+            // create an object     
+            $obj=PHPExcel_IOFactory::load($file);
+            // this function gets the data one by one and iterates
+            foreach($obj->getWorksheetIterator() as $sheet)
+            {   
+                // echo '<pre>';
+                // print_r($sheet); 
+
+                // Get the highest row
+                $higest_row=$sheet->getHighestRow();
+                for($i=2;$i<=$higest_row;$i++)
+                {
+                    // Get the column name and the value
+                    $customer_code=$sheet->getCellByColumnAndRow(0,$i)->getValue();
+                    $customer_name=$sheet->getCellByColumnAndRow(1,$i)->getValue();
+                    $customer_add=$sheet->getCellByColumnAndRow(2,$i)->getValue();
+                    $customer_contactno=$sheet->getCellByColumnAndRow(3,$i)->getValue();
+                    $customer_email=$sheet->getCellByColumnAndRow(4,$i)->getValue();
+                    $customer_city=$sheet->getCellByColumnAndRow(5,$i)->getValue();
+                    $customer_group=$sheet->getCellByColumnAndRow(6,$i)->getValue();
+                    $customer_salesrep=$sheet->getCellByColumnAndRow(7,$i)->getValue();
+                    $customer_creditdays=$sheet->getCellByColumnAndRow(8,$i)->getValue();
+                    $customer_creditlimit=$sheet->getCellByColumnAndRow(9,$i)->getValue();
+
+                    // echo"$name";
+                    if($customer_code!='')
+                    {
+                        // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                        $sql="INSERT INTO customer (customer_code,customer_name,customer_add,customer_contactno,customer_email,
+                        customer_city,customer_group,customer_salesrep,customer_creditdays,customer_creditlimit) 
+                        VALUES ('$customer_code','$customer_name','$customer_add','$customer_contactno','$customer_email',
+                        '$customer_city','$customer_group','$customer_salesrep','$customer_creditdays','$customer_creditlimit')";
+                        $this->db->query($sql);
+                    }
+                }
+            }      
+            return true;     
+        }
+        else 
+        {
+            return false;
+            // echo "Invalid file format";
+        }
+    }
+
+
 // ----EDIT CUSTOMER GROUP------------------------------------------------------------------------------------------------------------------
 
 
