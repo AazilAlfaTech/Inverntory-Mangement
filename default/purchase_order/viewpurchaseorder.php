@@ -102,7 +102,7 @@ include_once "../../files/head.php";
                                                         <td><input class='input-borderless quantity' readonly type='text' value='$item->po_item_qty'> </td>
                                                         <td><input class='input-borderless price' readonly type='text' value='$item->po_item_price'></td>
                                                         <td><input class='input-borderless discount ' readonly type='text' value='$item->po_item_discount'></td>
-                                                        <td><input class='input-borderless subtotal' readonly type='hidden' value='$item->po_totalprice'></td>
+                                                      <input class='input-borderless subtotal' readonly type='hidden' value='$item->po_totalprice'>
                                                         <td><input class='input-borderless total' readonly type='text' value='$item->po_item_finalprice'></td>
 
                                                     </tr>

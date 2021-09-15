@@ -46,7 +46,7 @@ function edit_sales_invoice($salesinvoice_id){
  
 
     $sql="UPDATE sales_invoice  SET 
-     salesinvoice_customer='$this->salesinvoice_customer'
+     salesinvoice_paymethod='$this->salesinvoice_paymethod'
      
      WHERE salesinvoice_id ='$salesinvoice_id' ";
     echo $sql;
@@ -126,7 +126,7 @@ function get_sales_invoice_by_id($salesinvoice_id){
     $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
     $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
     $sales_invoice_item->salesinvoice_cashmethod=$row["salesinvoice_cashmethod"];
-    $sales_invoice_item->salesinvoice_status=$row["salesinvoice_status"];
+    // $sales_invoice_item->salesinvoice_status=$row["salesinvoice_status"];
        
     return $sales_invoice_item;
 }

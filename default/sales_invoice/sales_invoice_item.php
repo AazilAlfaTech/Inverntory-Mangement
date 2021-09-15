@@ -54,21 +54,41 @@ function insert_sales_invoice_item1($so_id){
 
 
 
-function edit_sales_invoice_item($si_itemid){
+// function edit_sales_invoice_item($si_itemid){
  
 
-    $sql="UPDATE sales_invoice_item  SET 
-     salesorder_customer='$this->salesorder_customer'
+//     $sql="UPDATE sales_invoice_item  SET 
+//      salesorder_customer='$this->salesorder_customer'
      
-     WHERE si_itemid ='$si_itemid' ";
-   // echo $sql;
-    $this->db->query($sql);
+//      WHERE si_itemid ='$si_itemid' ";
+//    // echo $sql;
+//     $this->db->query($sql);
+//     return true;
+
+   
+
+
+// }
+
+
+function edit_sales_invoice_item(){
+ 
+    $list2=0;
+
+    foreach($_POST['Quantity_edit'] as $item){
+        $sql="UPDATE sales_invoice_item SET si_item_qty='".$_POST['Quantity_edit'][$list2]."',si_item_price ='".$_POST['Price_edit'][$list2]."',si_item_discount='".$_POST['Discount_edit'][$list2]."' WHERE si_itemid='".$_POST['Orderid'][$list2]."' ";
+        // echo $sql;
+        $this->db->query($sql);
+       $list2++;
+    }
+
     return true;
 
    
 
 
 }
+
 
 //-------------------------------------------------------------------------------------------------------------------
 

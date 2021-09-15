@@ -96,7 +96,7 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                                             <td><input class='input-borderless quantity' readonly type='text' value='$item->so_itemqty'> </td>
                                                             <td><input class='input-borderless price' readonly type='text' value='$item->so_itemprice'></td>
                                                             <td><input class='input-borderless discount ' readonly type='text' value='$item->so_itemdiscount'></td>
-                                                            <td><input class='input-borderless subtotal' readonly type='hidden' value='$item->so_subtotal'></td>
+                                     <input class='input-borderless subtotal' readonly type='hidden' value='$item->so_subtotal'>
                                                             <td><input class='input-borderless total' readonly type='text' value='$item->so_finaltotal'></td>
 
                                                         </tr>
