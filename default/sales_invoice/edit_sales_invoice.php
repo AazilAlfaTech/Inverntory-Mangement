@@ -19,7 +19,7 @@ if (isset($_POST['save'])) {
  
     $sales_invoice1->salesinvoice_paymethod=$_POST["sinvpaymethod"];
     $sales_invoice1->edit_sales_invoice($_POST['salesinvoice_id']);
-    $sales_invoice_item1->edit_sales_invoice_item()
+    $sales_invoice_item1->edit_sales_invoice_item();
 
     // if($res_edit==true){
 

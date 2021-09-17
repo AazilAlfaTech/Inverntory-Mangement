@@ -483,12 +483,12 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../customer_group/manage_customer_group.php " target="_blank">
+                                        <a href="../customer_group/manage_customer_group.php " >
                                             <span class="pcoded-mtext">Manage Customer Group</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../customer/manage_customer.php" target="_blank" >
+                                        <a href="../customer/manage_customer.php"  >
                                             <span class="pcoded-mtext">Manage Customer </span>
                                         </a>
                                     </li>
@@ -499,7 +499,7 @@
 
 
                             <li class="">
-                                <a href="../city/manage_city.php" target="_blank">
+                                <a href="../city/manage_city.php" >
                                     <span class="pcoded-micon"><i class="ti-map-alt"></i></span>
                                     <span class="pcoded-mtext">Add City</span>
                                
@@ -509,7 +509,7 @@
 
 
                             <li class="">
-                                <a href="../salesrep/manage_salesrep.php" target="_blank">
+                                <a href="../salesrep/manage_salesrep.php" >
                                     <span class="pcoded-micon"><i class="ti-user"></i></span>
                                     <span class="pcoded-mtext">Sales Rep</span>
                                
@@ -517,7 +517,14 @@
                              
                             </li>
 
-
+                            <li class="">
+                                <a href="../interlocationtransfer/manage_interlocationtransfer.php" >
+                                    <span class="pcoded-micon"><i class="ti-map-alt"></i></span>
+                                    <span class="pcoded-mtext">Inter Location Transfer</span>
+                               
+                                </a>
+                             
+                            </li>
 
 
                         </ul>
