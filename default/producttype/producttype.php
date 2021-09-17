@@ -66,18 +66,25 @@
                         // Get the column name and the value
                         $ptype_code=$sheet->getCellByColumnAndRow(0,$i)->getValue();
                         $ptype_name=$sheet->getCellByColumnAndRow(1,$i)->getValue();
-                        $ptype_group_id=$sheet->getCellByColumnAndRow(2,$i)->getValue();
+                        $ptype_group_name=$sheet->getCellByColumnAndRow(2,$i)->getValue();
 
-                        // echo"$name";
+                        $group=new group();
+                        $ptype_groupid=$group->return_groupid($ptype_group_name);
+                        
+                        // print_r($ptype_groupid);
+                        // exit;
+
                         if($ptype_code!='')
                         {
                             $sql1="SELECT * FROM  product_type WHERE ptype_status = 'ACTIVE' AND ptype_code='ptype_code' OR ptype_name='$ptype_name'";
                              $res_code=$this->db->query($sql1);
 
+                            
+
                              if($res_code->num_rows==0)
                             {
                                 // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
-                                $sql="INSERT INTO product_type (ptype_name,ptype_code,ptype_group_id) VALUES ('$ptype_name','$ptype_code','$ptype_group_id')";
+                                $sql="INSERT INTO product_type (ptype_name,ptype_code,ptype_group_id) VALUES ('$ptype_name','$ptype_code','$ptype_groupid')";
                                 $this->db->query($sql);
                                 $msg=1;
                             }
@@ -269,6 +276,21 @@
                 $type_array[]=$ptype;
             }
             return $type_array;
+        }
+
+        function return_typeid($typename){
+            $sql="SELECT ptype_id FROM product_type WHERE ptype_name='$typename'";
+            $result=$this->db->query($sql);
+            // echo '<pre>';
+            // print_r($result);
+           
+            if ($result->num_rows > 0) 
+            {
+                // output data of each row
+                $row=$result->fetch_array();
+                $ptype_id=$row["ptype_id"];
+                return $ptype_id;
+            }
         }
 
 

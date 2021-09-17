@@ -167,6 +167,29 @@ function get_group_by_name($groupname){
     return $group_item;
 }
 
+function return_groupid($groupname){
+    $sql="SELECT group_id FROM product_group WHERE group_name='$groupname'";
+    $result=$this->db->query($sql);
+    echo '<pre>';
+    print_r($result);
+   
+    if ($result->num_rows > 0) 
+    {
+        // output data of each row
+        $row=$result->fetch_array();
+        $group_id=$row["group_id"]; 
+        return $group_id;
+        // print_r($group_id);
+    }
+    else
+    {
+        
+        echo "invalid group!";
+        // return false;
+    }
+}
+
+
     function import_group()
     {
         // Reads the file with name 'doc' and gives to the variable $file
@@ -202,7 +225,7 @@ function get_group_by_name($groupname){
                     {
                         $sql1="SELECT * FROM product_group WHERE group_status='ACTIVE' AND group_code='$group_code' OR group_name='$group_name'";
                         $res_code=$this->db->query($sql1);
-                        
+
                         if($res_code->num_rows==0)
                         {
                             // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
