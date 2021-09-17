@@ -48,7 +48,22 @@
             row.find(".total").attr("value",tot);
         });
 
-
+          $("table").on("change", ".price", function() {
+            console.log("onchange");
+            var row = $(this).closest("tr");
+           
+            var quants = row.find(".quantity").val();
+            var prc = row.find(".price").val();
+            
+            console.log(prc);
+           // var tot = quants * prc;
+           var disc= row.find(".discount").val();
+                        var subtot= parseFloat(quants * prc * disc/100);
+                        console.log(subtot);
+                        var tot = parseFloat(quants * prc - subtot);
+                        console.log(tot);
+            row.find(".total").attr("value",tot);
+        });
         // $("#productprice").change(function(){
         //     var priceval=$("#productprice").val();
         //     console.log("onchange");

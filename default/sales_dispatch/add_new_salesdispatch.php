@@ -7,6 +7,7 @@ $sales_invoice1 = new sales_invoice();
 include_once "../sales_dispatch/sales_dispatch.php";
 $sales_dispatch2=new sales_dispatch();
 include_once "../sales_dispatch/sales_dispatch_item.php";
+$salesdispatchitem=new sales_dispatch_item();
 //customer dropdown
 $all_cus= $customer1->get_all_customer();
 
@@ -14,10 +15,12 @@ $all_cus= $customer1->get_all_customer();
 include_once "../product/product.php";
 $product1 = new product(); 
 
-//product dropdown
-$productlist=$product1->getall_product2();
-
-
+if(isset($_POST['sdis_date'])){
+    $sales_dispatch2->salesdispatch_date=$_POST['sdis_date'];
+    $sales_dispatch2->salesdispatch_ref=$sales_dispatch2->sd_code($_POST['sdis_date']);
+    $dispatchid=$sales_dispatch2->insert_sales_dispatch();
+    $salesdispatchitem->insert_sales_dispatch_item1($dispatchid);
+}
 
 
 
@@ -47,7 +50,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Add New Sales Invoice</h4>
+                                    <h4>Add New Sales Dispatch</h4>
 
                                 </div>
                             </div>
@@ -74,7 +77,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Sales Dispatch</h5>
+                                    <h5>Select sales invoice</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -84,14 +87,14 @@ include_once "../../files/head.php";
                                         </ul>
                                     </div>
                                 </div>
-                                <form action="add_new_salesinvoice.php" method="POST">
+                                <form action="add_new_salesdispatch.php" method="POST">
 
                                 <div class="card-block">
                                         <div class="form-group row">
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Customer</label>
-                                                <select class="js-example-basic-single col-sm-12 selectcustomer" name="sinvcustomer" id="sinv_customer">
+                                                <select class="form-control js-example-basic-single col-sm-12 selectcustomer"  id="sinv_customer">
                                                         <option value="-1" disable selected>Select Customer</option>
                                                     <?php
                                                     foreach ($all_cus as $item)
@@ -102,7 +105,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="date" name="sinvdate"  value="<?php echo date('Y-m-d');?>">
+                                                <input class="form-control" type="date" id="txtDate" name="sdis_date"  value="<?php echo date('Y-m-d');?>">
                                             </div>
 
                                         </div>
@@ -130,8 +133,11 @@ include_once "../../files/head.php";
                                  <!-- end of card 1 -->
                                 <!-- </div> -->
                            
-                                <div class="card-block">
-                                    <div class="form-group row">
+                                <div class="card">
+                                    <div  class="card-header">
+                                        <h5>Sales dispatch items</h5>
+                                    </div>
+                                    <!-- <div class="form-group row">
 
                                         <div class="col-sm-6">
                                             <label class=" col-form-label">Payment Methord</label>
@@ -159,7 +165,7 @@ include_once "../../files/head.php";
                                             </select>
 
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                     
                                 <div class="card-block">
@@ -222,7 +228,7 @@ include_once "../../files/head.php";
 
 
 
-<!-- <script type="text/javascript" src="../javascript/sales.js "></script> -->
+<script type="text/javascript" src="../javascript/sales.js "></script>
 
 <script>
 $("#sinv_customer").change(function() {
@@ -232,6 +238,7 @@ $("#sinv_customer").change(function() {
          console.log(data);
 
          $("#tbody").html("");
+         $(".itembody").html("");
          var txt = '';
      
          var i_data = JSON.parse(data);
@@ -250,10 +257,7 @@ $("#sinv_customer").change(function() {
             $("#tbody").append(txt);
              $(".btndel").hide();
 
-        //      var tbl_row = $(this).closest('tr');
-        // tbl_row.find('.deleteroworder').show();
-
-
+        
          });
 
 
@@ -263,12 +267,6 @@ $("#sinv_customer").change(function() {
      });
 });
 
-
-// $(document).on('click', '.addrow', function(event) {
-
-//     var tbl_row = $(this).closest('tr');
-//     tbl_row.find('.deleteroworder').show();
-// });
 
 
 
@@ -297,20 +295,23 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
 
             $(".itembody").append(
                 "<tr>\
-               <td class='table-edit-view'><span class='tabledit-span'>"+ item_data[o].si_itemid+"</span>\
+               <td class='table-edit'><span class='salesorder'>"+ item_data[o].si_item_invoiceid+"</span>\
             <input class='form-control input-sm orderid'   type='hidden' name='Orderid[]' value='"+ item_data[o].si_item_invoiceid+"'>\
+            <input class='form-control input-sm orderid'   type='hidden' name='InvoiceItemid[]' value='"+ item_data[o].si_itemid+"'>\
         </td>\
-        <td class='table-edit-view'><span class='tabledit-span'>"+ item_data[o].si_item_productname+"</span>\
+        <td ><span class='tabledit-span'>"+ item_data[o].si_item_productname+"</span>\
             <input class='form-control input-sm productid '   type='hidden' name='Product[]' value='"+ item_data[o].si_item_productid+"'>\
         </td>\
-        <td class='table-edit-view'><span class='tabledit-span'></span>\
+        <td ><span class='tabledit-span'></span>\
             <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].si_item_qty +"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
         </td>\
-        <td class='table-edit-view'><span class='tabledit-span'></span>\
-            <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value='"+ item_data[o].si_item_price +"'> <div style='color:red; display: none' class='msg2'>Digits only</div>\
+        <td ><span class='tabledit-span'></span>\
+           <select name='Price[]' id='productprice' class='input-borderless price'>\
+            <option value='"+item_data[o].si_item_price +"'>"+item_data[o].si_item_price +"</option>\
+        </select>\
             <input class='form-control input-sm subtotal '   type='hidden' name='Orderid[]' value='"+ item_data[o].si_item_subtotal+"'>\
         </td>\
-        <td class='table-edit-view'><span class='tabledit-span'></span>\
+        <td ><span class='tabledit-span'></span>\
             <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+ item_data[o].si_item_discount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
@@ -319,8 +320,8 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
         <td>\
             <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
             <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
-            <span class='btn_cancel'><bbtn_deleterowutton class='btn btn-mini btn-danger' type='button'>Cancel</button></span>\
-            <span class=''><button   class='btn btn-mini btn-danger'>Delete</button></span>\
+            <span class='btn_cancel'><bbtn_deleterowutton class='btn btn-mini btn-danger' type='button'>Reset</button></span>\
+            <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>\
         </td>\
         </tr>");
 
@@ -328,8 +329,7 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
         $(".btn_cancel").hide();
 
         $(btn).parent().find(".btnadd").hide();
-      
-    $(btn).parent().find(".btndel").show();
+        $(btn).parent().find(".btndel").show();
      
          });
     });
@@ -338,26 +338,16 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
 
 function removelist(orderid,btn2){
     console.log("removelist");
-    // //var tbl_row = $(".itembody").closest('tr');
-    // $.each(function(){
-    //     var $id=$(".itembody").find(".orderid").val();
-    //     console.log($id);
-    //     if($id==orderid){
-    //         console.log("id is");
-           
-    //     }
+    $(".itembody .table-edit .salesorder").each(function() {
+        console.log($(this).text());
+        if($(this).text()==orderid){
+            $(this).parent().parent().remove();
+        }
+      
 
-    //     $(".itembody").html("");
-
-    // });
-    //$(".itembody").find("tr[value='8']").val();
-    
-      $a= $(".itembody").find("input[value='"+orderid[i]+"']").val();
-    
-
-  
-
-
+    });
+        $(btn2).parent().find(".btnadd").show();
+        $(btn2).parent().find(".btndel").hide();
 }
 </script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>

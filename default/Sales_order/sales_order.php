@@ -22,7 +22,7 @@ function __construct(){
     $this->db=new mysqli(host,un,pw,db1);
 }
 
-// ----INSERT NEW sales_order------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------
 
 
 function insert_sales_order(){
@@ -30,18 +30,20 @@ function insert_sales_order(){
     $sql="INSERT INTO sales_order (salesorder_quotid,salesorder_customer,salesorder_ref,salesorder_date)
     VALUES('$this->salesorder_quotid','$this->salesorder_customer','$this->salesorder_ref','$this->salesorder_date')
     ";
-    //    echo $sql;
+     echo $sql;
        $this->db->query($sql);
+     //  $sales_quotation3->update_salequote_status(salesorder_quotid);
     $so_id=$this->db->insert_id;
     return $so_id;
 
 }
 
+
 // ---------------------------------------------------------------------------------------------------------------------
 function so_code($so_date){
 
     // SELECT * FROM `purchase_request` WHERE MONTH(purchaserequest_added_date)= MONTH(CURDATE())
-        $sql="SELECT COUNT(*) AS count FROM `purchase_request` WHERE MONTH(purchaserequest_date)= EXTRACT(MONTH FROM '$so_date') ";
+        $sql="SELECT COUNT(*) AS count FROM `sales_order` WHERE MONTH(salesorder_date)= EXTRACT(MONTH FROM '$so_date') ";
 
         $sql1="SELECT  EXTRACT(MONTH FROM '$so_date') AS pr_month ";
         $sql2="SELECT  EXTRACT(YEAR FROM '$so_date') AS pr_year ";
@@ -217,7 +219,20 @@ function get_sales_order_by_customer($x){
     return $sales_order_array;
 }
 
+function sales_order_status($orderidstatus){
+    $sql1="SELECT * FROM sales_orderitem WHERE so_salesorderid=$orderidstatus AND so_itemstatus='ACTIVE'";
+    $result=$this->db->query($sql1);
+    echo $sql1;
 
+if($result->num_rows==0){
+    $sql2="UPDATE sales_order SET salesorder_status='INACTIVE' WHERE salesorder_id=$orderidstatus";
+    $this->db->query($sql2);
+    echo $sql2;
+    return true;
+}else{
+    return false;
+}
+}
 
 
 

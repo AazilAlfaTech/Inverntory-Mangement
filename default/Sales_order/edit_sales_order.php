@@ -46,7 +46,7 @@ include_once "../../files/head.php";
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Add New Purchase Order</h4>
+                                    <h4>Edit Sales Order</h4>
 
                                 </div>
                             </div>
@@ -73,7 +73,7 @@ include_once "../../files/head.php";
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Purchase Order</h5>
+                                    <!-- <h5>Edit Sales order</h5> -->
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -92,7 +92,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
 
                                             <div class="col-sm-4">
-                                                <label class=" col-form-label"> PO No</label>
+                                                <label class=" col-form-label"> SO Reference No</label>
                                                 <input class="form-control" type="text" readonly='true' value=<?=$sales_order2->salesorder_ref ?>>
 
                                             </div>
@@ -105,7 +105,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="text" readonly='true' value=<?=$sales_order2->salesorder_date ?>>
+                                                <input class="form-control" type="text"  value=<?=$sales_order2->salesorder_date ?> id="txtDate">
                                             </div>
                                         </div>
 
@@ -133,31 +133,35 @@ include_once "../../files/head.php";
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Price</label>
-                                                <input type="text" class="form-control pricetext " placeholder="" name="soitemprice" id="soitem_price">
+                                                <select class="form-control pricelevel" name="soitemprice" id="soitem_price">
+                                                    <option value=""> Pricelevel</option>
+                                                </select>
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Qty</label>
-                                                <input type="text" class="form-control quantitytext" placeholder="" name="soitemqty" id="soitem_qty">
+                                                <input type="number" class="form-control qty_add" placeholder="0" name="soitemqty" id="soitem_qty">
+                                                <div style="color: red; display: none" class="msg1">Digits only</div>
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Discount</label>
-                                                <input type="text" class="form-control discounttext" placeholder="" name="soitemdiscount" id="soitem_discount">
+                                                <input type="text" class="form-control disc_add" placeholder="0.00" name="soitemdiscount" id="soitem_discount">
+                                                <div style="color: red; display: none" class="msg2">Digits only</div>
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Total</label>
-                                                <input type="text" class="form-control totaltext" placeholder="" name="sofinalprice" id="sofinal_price" disabled>
+                                                <input type="text" class="form-control totaladd" placeholder="0.00" name="sofinalprice" id="sofinal_price" disabled>
                                             </div>
 
                                         </div>
 
                                         <button type="button" class="btn btn-primary add" name="addprbtn" id="add_prbtn">ADD</button>
-                                        <button class="btn btn-inverse reset">CLEAR</button>
+                                        <button class="btn btn-inverse reset" type="button">CLEAR</button>
                                         <br>
                                         <br>
 
@@ -191,7 +195,7 @@ include_once "../../files/head.php";
                                                             </td>
                                                             <td class='table-edit-view'><span class='tabledit-span'><?= $item->so_itemprice ?></span>
                                                                 <input class=' input-borderless input-sm row_data price'   type='text' name='Price_edit[]' readonly  value='<?= $item->so_itemprice ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
-                                                                <input class='form-control input-sm subtotal'   type='text'  value='<?=$item->so_subtotal?>'>
+                                                                <input class='form-control input-sm subtotal'   type='hidden'  value='<?=$item->so_subtotal?>'>
                                                             </td>
                                                             <td class='table-edit-view'><span class='tabledit-span'><?= $item->so_itemdiscount ?></span>
                                                                 <input class=' input-borderless input-sm row_data discount'   type='text' name='Discount_edit[]' readonly  value='<?= $item->so_itemdiscount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
@@ -228,16 +232,14 @@ include_once "../../files/head.php";
                                                         <th> Sub Total :</th>
                                                         <td ><input type="text" id="total_price" data-a-sign="Rs. " class=" form-control form-control-sm autonumber"></td>
                                                     </tr>
-                                                    <tr>
-                                                        <th> Total Discount :</th>
-                                                        <td ><input type="text" id="total_discount"  class="form-control form-control-sm  autonumber" data-a-sign="Rs. " ></td>
-                                                    </tr>
+                                                    
                                                 
                                                     <tr class="text-info">
                                                         <td>
                                                             <hr>
                                                             <h5 class="text-primary">Total :</h5>
                                                         </td> 
+                                                        <td>
                                                             <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control"></h5>
                                                         </td>
                                                     </tr>
@@ -271,86 +273,11 @@ include_once "../../files/foot.php";
 
 ?>
 
-
+<script type="text/javascript" src="../javascript/sales.js"></script>
+<script type="text/javascript" src="../javascript/sales/sales_order.js"></script>
 
 <script>
-    $(".productform").on("keyup", ".quantitytext, .pricetext, .discounttext", function() {
-            console.log("hhiii");
-            var row = $(this).closest(" ");
-           
-            var quants = row.find(".quantity").val();
-            var prc = row.find(".pricetext").val();
-           // var tot = quants * prc;
-           var disc= row.find(".discounttext").val();
-                        var subtot= parseFloat(quants * prc * disc/100);
-                        var tot = parseFloat(quants * prc - subtot);
-                        console.log(tot);
-            row.find(".totaltext").attr("value",tot);
-        });
 
-$(".add").click(function(){
-    console.log("addrows");
-    addrows();
-    clearrows();
-    cal_totquantity();
-    cal_totprice();
-    cal_totdiscount();
-    final_total();
-});
-
-$(".reset").click(function(){
-    clearrows();
-});
-
-function addrows(){
-
-    //getvalues
-    productid=$("#soitem_productid option:selected").val();
-    productname=$("#soitem_productid option:selected").text();
-    productprice=$("#soitem_price").val();
-    productquantity=$("#soitem_qty").val();
-    productdiscount=$("#soitem_discount").val();
-    producttotal=$("#sofinal_price").val();
-    productsubtotal=parseFloat(productprice*productquantity);
-    console.log(productid);
-
-
-    $(".itembody").append("<tr>\
-        <td class='table-edit-view'>"+productname+"\
-            <input class='form-control input-sm productid ' name='Product[]'   type='hidden' name='' value='"+productid+"'>\
-        </td>\
-        <td class='table-edit-view'>\
-            <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='"+productquantity+"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
-        </td>\
-        <td class='table-edit-view'>\
-            <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value='"+productprice+"'> <div style='color:red; display: none' class='msg2'>Digits only</div>\
-            <input class='form-control input-sm subtotal'   type='text'  value='"+productsubtotal+"'>\
-            </td>\
-        <td class='table-edit-view'>\
-            <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+productdiscount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
-        </td>\
-        <td class='table-edit-view'>\
-            <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+producttotal+"'>\
-        </td>\
-        <td>\
-            <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
-            <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
-            <span class='btn_cancel'><button class='btn btn-mini btn-danger ' type='button'>Cancel</button></span>\
-            <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>\
-        </td>\
-</tr>\
-    ");
-
-    $(".btn_cancel").hide();
-    $(".btn_save").hide();
-}
-function clearrows(){
-    $("#soitem_productid option:selected").text("");
-    $("#soitem_price").val("");
-    $("#soitem_qty").val("");
-    $("#soitem_discount").val("");
-    $("#sofinal_price").val("");
-}
 
 $(document).on('click', '.deletedatarow', function(event) {
     var tbl_row = $(this).closest('tr');
