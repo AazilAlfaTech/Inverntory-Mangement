@@ -1,5 +1,7 @@
 <?php
 include_once "../../files/config.php";
+include_once "../sales_invoice/sales_invoice.php";
+include_once "../sales_invoice/sales_invoice_item.php";
 
 class sales_dispatch_item{ 
 
@@ -32,7 +34,8 @@ function __construct(){
 
 function insert_sales_dispatch_item1($sd_id){
 
-
+    $salesinvoiceitem5=new sales_invoice_item();
+    $salesinvoice5=new sales_invoice();
 
     $list=0;
    
@@ -42,6 +45,9 @@ function insert_sales_dispatch_item1($sd_id){
         ('".$_POST['Quantity'][$list]."','".$_POST['Orderid'][$list]."','".$_POST['Product'][$list]."','".$_POST['Price'][$list]."','".$_POST['Discount'][$list]."',$sd_id)";
        echo $sql;
        $this->db->query($sql);
+
+       $salesinvoiceitem5->delete_sales_invoice_item($_POST['InvoiceItemid'][$list]);
+       $salesinvoice5->sales_invoice_status($_POST['Orderid'][$list]);
        $list++;
     }
     return true;

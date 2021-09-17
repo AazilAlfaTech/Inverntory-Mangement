@@ -107,7 +107,7 @@ include_once "../../files/head.php";
                                                            
                                                                 <td>$item->salesquot_ref</td>
                                                                 <td>$item->salesquot_date</td>
-                                                                <td>".$item->salesquot_customer->customer_name."</td>
+                                                                <td>$item->salesquot_customer_name</td>
 
                                                                 <td>
                                                                     <div class='btn-group btn-group-sm' style='float: none;'>

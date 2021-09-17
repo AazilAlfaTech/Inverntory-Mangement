@@ -31,7 +31,7 @@ function insert_sales_invoice(){
     $sql="INSERT INTO sales_invoice (salesinvoice_customer,salesinvoice_ref,salesinvoice_paymethod,salesinvoice_cashmethod,salesinvoice_date)
     VALUES('$this->salesinvoice_customer','$this->salesinvoice_ref','$this->salesinvoice_paymethod','$this->salesinvoice_cashmethod','$this->salesinvoice_date')
     ";
-       echo $sql;
+       //echo $sql;
        $this->db->query($sql);
     $so_id=$this->db->insert_id;
     return $so_id;
@@ -137,10 +137,7 @@ function si_code($salesinvoice_date){
         $sql1="SELECT  EXTRACT(MONTH FROM '$salesinvoice_date') AS si_month ";
         $sql2="SELECT  EXTRACT(YEAR FROM '$salesinvoice_date') AS si_year ";
 
-        echo $sql;
-        echo $sql1;
-        echo $sql2;
-
+       
         $result = $this->db->query($sql);
         $result1 = $this->db->query($sql1);
         $result2 = $this->db->query($sql2);
@@ -190,7 +187,7 @@ function si_code($salesinvoice_date){
 
     function get_all_sales_invoice_bycustomer($cusid){
 
-        $sql="SELECT * FROM  sales_invoice WHERE salesinvoice_customer=$cusid" ;     
+        $sql="SELECT * FROM  sales_invoice WHERE salesinvoice_customer=$cusid AND sales_invoice.salesinvoice_status='ACTIVE'" ;     
         $result=$this->db->query($sql);
     
         $sales_invoice_array=array(); //array created
@@ -215,7 +212,22 @@ function si_code($salesinvoice_date){
         return $sales_invoice_array;
     }
 
+//=====================================================================================================================================
 
+function sales_invoice_status($salesinvoicestatus){
+    $sql1="SELECT * FROM sales_invoice_item WHERE si_item_invoiceid=$salesinvoicestatus AND si_item_status='ACTIVE'";
+    $result=$this->db->query($sql1);
+    echo $sql1;
+
+if($result->num_rows==0){
+    $sql2="UPDATE sales_invoice SET salesinvoice_status='INACTIVE' WHERE salesinvoice_id =$salesinvoicestatus";
+    $this->db->query($sql2);
+    echo $sql2;
+    return true;
+}else{
+    return false;
+}
+}
 
 
 

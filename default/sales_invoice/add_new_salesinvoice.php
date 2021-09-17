@@ -116,8 +116,8 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Customer</label>
-                                                <select class="js-example-basic-single col-sm-12 selectcustomer" name="sinvcustomer" id="sinv_customer">
-                                                        <option value="-1" disable selected>Select Customer</option>
+                                                <select class="js-example-basic-single col-sm-12 selectcustomer" name="sinvcustomer" id="sinv_customer" required>
+                                                        <option value="" disable selected>Select Customer</option>
                                                     <?php
                                                     foreach ($all_cus as $item)
                                                         echo "<option value='$item->customer_id'> $item->customer_name</option>";
@@ -127,7 +127,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="date" name="sinvdate"  value="<?php echo date('Y-m-d');?>">
+                                                <input class="form-control" id="txtDate" type="date" name="sinvdate"  value="<?php echo date('Y-m-d');?>" required>
                                             </div>
 
                                         </div>
@@ -160,8 +160,8 @@ include_once "../../files/head.php";
 
                                         <div class="col-sm-6">
                                             <label class=" col-form-label">Payment Methord</label>
-                                            <select class="js-example-basic-single col-sm-12" name="sinvpaymethod" >
-
+                                            <select class="js-example-basic-single col-sm-12 paymethod" name="sinvpaymethod" required >
+                                                <option value="">Select Payment method</option>
                                                 <option value="cash">Cash </option>
                                                 <option value="credit ">Credit </option>
 
@@ -170,17 +170,14 @@ include_once "../../files/head.php";
                                             </select>
 
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-6 paytype">
                                             <label class=" col-form-label">Payment type</label>
-                                            <select class="js-example-basic-single col-sm-12" name="sinvpaymethodcash" >
-
+                                            <select class="js-example-basic-single col-sm-12" name="sinvpaymethodcash"  >
+                                                <option value="">Select Payment type</option>
                                                 <option value="cash">Cash </option>
                                                 <option value="card"> Card</option>
                                                 <option value="bank ">Bank Tranfer </option>
                                                 <option value="cheque "> Cheque</option>
-
-
-
                                             </select>
 
                                         </div>
@@ -247,9 +244,23 @@ include_once "../../files/head.php";
 
 
 
-<!-- <script type="text/javascript" src="../javascript/sales.js "></script> -->
+<script type="text/javascript" src="../javascript/sales.js "></script>
 
 <script>
+
+$( document ).ready(function() {
+
+    $(".paytype").hide();
+    $(".paymethod").change(function() {
+        var paymethod= $(".paymethod").val();
+        console.log(paymethod);
+        if( paymethod=="cash"){
+            $(".paytype").show();
+        }
+    });
+
+});
+
 $("#sinv_customer").change(function() {
     var customer_id = $("#sinv_customer").val();
     console.log(customer_id);
@@ -257,6 +268,7 @@ $("#sinv_customer").change(function() {
          console.log(data);
 
          $("#tbody").html("");
+         $(".itembody").html("");
          var txt = '';
      
          var i_data = JSON.parse(data);
@@ -273,10 +285,9 @@ $("#sinv_customer").change(function() {
                   '</td>'+
                 '</tr>';
             $("#tbody").append(txt);
-             $(".btndel").hide();
+            $(".btndel").hide();
 
-        //      var tbl_row = $(this).closest('tr');
-        // tbl_row.find('.deleteroworder').show();
+        
 
 
          });
@@ -289,11 +300,6 @@ $("#sinv_customer").change(function() {
 });
 
 
-// $(document).on('click', '.addrow', function(event) {
-
-//     var tbl_row = $(this).closest('tr');
-//     tbl_row.find('.deleteroworder').show();
-// });
 
 
 
@@ -322,8 +328,9 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
 
             $(".itembody").append(
                 "<tr>\
-               <td class='table-edit-view'><span class='tabledit-span'>"+ item_data[o].so_salesorderid+"</span>\
+               <td class='table-edit'><span class='salesorder'>"+ item_data[o].so_salesorderid+"<span>\
             <input class='form-control input-sm orderid'   type='hidden' name='Orderid[]' value='"+ item_data[o].so_salesorderid+"'>\
+            <input class='form-control input-sm orderid'   type='text'  name='OrderItemid[]' value='"+ item_data[o].so_itemid+"'>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'>"+ item_data[o].so_itemproduct_name+"</span>\
             <input class='form-control input-sm productid '   type='hidden' name='Product[]' value='"+ item_data[o].so_itemproductid+"'>\
@@ -332,7 +339,9 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
             <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].so_itemqty +"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
-            <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value='"+ item_data[o].so_itemprice +"'> <div style='color:red; display: none' class='msg2'>Digits only</div>\
+            <select name='Price[]' id='productprice' class='input-borderless price'>\
+            <option value='"+item_data[o].so_itemprice+"'>"+item_data[o].so_itemprice+"</option>\
+            </select>\
             <input class='form-control input-sm subtotal '   type='hidden' name='Orderid[]' value='"+ item_data[o].so_subtotal+"'>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
@@ -344,8 +353,8 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
         <td>\
             <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
             <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
-            <span class='btn_cancel'><bbtn_deleterowutton class='btn btn-mini btn-danger' type='button'>Cancel</button></span>\
-            <span class=''><button   class='btn btn-mini btn-danger'>Delete</button></span>\
+            <span class='btn_cancel'><bbtn_deleterowutton class='btn btn-mini btn-danger' type='button'>Reset</button></span>\
+            <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>\
         </td>\
         </tr>");
 
@@ -353,8 +362,7 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
         $(".btn_cancel").hide();
 
         $(btn).parent().find(".btnadd").hide();
-      
-    $(btn).parent().find(".btndel").show();
+        $(btn).parent().find(".btndel").show();
      
          });
     });
@@ -363,27 +371,31 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
 
 function removelist(orderid,btn2){
     console.log("removelist");
-    // //var tbl_row = $(".itembody").closest('tr');
-    // $.each(function(){
-    //     var $id=$(".itembody").find(".orderid").val();
-    //     console.log($id);
-    //     if($id==orderid){
-    //         console.log("id is");
-           
-    //     }
+    // $('.itembody tbody tr').each(function(){
+         
+      
+    //     //   $(this).children('td').children('input').each(function(indexColumna){
+    //     //     val1=indexColumna.val();
+    //     //     console.log(val1);
+    //     //     if(indexColumna.val()==orderid){
+    //     //         $(this).remove();
+    //     //     };
+    //     //   });
+          
+    //     });//fin de '#myTable tbody tr'
+      
+     
+        $(".itembody .table-edit .salesorder").each(function() {
+        console.log($(this).text());
+        if($(this).text()==orderid){
+            $(this).parent().parent().remove();
+        }
+      
 
-    //     $(".itembody").html("");
-
-    // });
-    //$(".itembody").find("tr[value='8']").val();
-    
-      $a= $(".itembody").find("input[value='"+orderid[i]+"']").val();
-    
-
-  
-
-
-}
+    });
+            $(btn2).parent().find(".btnadd").show();
+        $(btn2).parent().find(".btndel").hide();
+    }
 </script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>
 

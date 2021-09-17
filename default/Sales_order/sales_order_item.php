@@ -1,5 +1,6 @@
 <?php
 include_once "../../files/config.php";
+include_once "../sales_quotation/sales_quatation_item.php";
 
 class sales_orderitem{ 
 
@@ -29,6 +30,8 @@ function __construct(){
 
 
 function insert_sales_orderitem($orderid){
+    //$sq_item=new sales_quotationitem();
+
 
    $list=0;
     
@@ -38,6 +41,8 @@ function insert_sales_orderitem($orderid){
    
     echo $sql;
         $this->db->query($sql);
+
+        //$sq_item->delete_sqitem($_POST['Quoteid'][$list]);
        $list++;
 }
 return true;
@@ -56,6 +61,8 @@ function edit_sales_orderitem(){
         $sql="UPDATE sales_orderitem SET so_itemqty='".$_POST['Quantity_edit'][$list2]."',so_itemprice ='".$_POST['Price_edit'][$list2]."',so_itemdiscount='".$_POST['Discount_edit'][$list2]."' WHERE so_itemid='".$_POST['Orderid'][$list2]."' ";
         // echo $sql;
         $this->db->query($sql);
+
+
        $list2++;
     }
 
@@ -84,7 +91,7 @@ function delete_sales_orderitem($so_itemid){
 
 function get_all_sales_orderitem($so_itemid){
     $sql="SELECT sales_orderitem.so_itemid,sales_orderitem.so_salesorderid,sales_orderitem.so_itemproductid,sales_orderitem.so_itemprice,
-    sales_orderitem.so_itemqty, sales_orderitem.so_itemdiscount, product.product_name FROM sales_orderitem JOIN product ON sales_orderitem.so_itemproductid=product.product_id WHERE sales_orderitem.so_salesorderid=$so_itemid";
+    sales_orderitem.so_itemqty, sales_orderitem.so_itemdiscount, product.product_name FROM sales_orderitem JOIN product ON sales_orderitem.so_itemproductid=product.product_id WHERE sales_orderitem.so_salesorderid=$so_itemid AND sales_orderitem.so_itemstatus='ACTIVE' ";
 
     //echo $sql;
   
@@ -124,7 +131,7 @@ function get_sales_orderitem_by_id($id){
 
     //$sql="SELECT * FROM sales_orderitem WHERE so_itemid = $so_itemid";
     $sql="SELECT sales_orderitem.so_itemid,sales_orderitem.so_salesorderid,sales_orderitem.so_itemproductid,sales_orderitem.so_itemprice,
-    sales_orderitem.so_itemqty, sales_orderitem.so_itemdiscount, product.product_name FROM sales_orderitem JOIN product ON sales_orderitem.so_itemproductid=product.product_id WHERE sales_orderitem.so_salesorderid=$id";
+    sales_orderitem.so_itemqty, sales_orderitem.so_itemdiscount, product.product_name FROM sales_orderitem JOIN product ON sales_orderitem.so_itemproductid=product.product_id WHERE sales_orderitem.so_salesorderid=$id AND sales_orderitem.so_itemstatus='ACTIVE' ";
 
     //echo $sql;
     $result=$this->db->query($sql);
@@ -146,7 +153,15 @@ function get_sales_orderitem_by_id($id){
     return $sales_orderitem_item;
 }
 
+function update_sales_orderitem($so_itemid){
 
+    $sql="UPDATE sales_orderitem SET so_itemstatus='INACTIVE' WHERE so_itemid = $so_itemid ";
+    //echo $sql;
+    $this->db->query($sql);
+    echo true;
+
+
+}
 
 
 

@@ -31,8 +31,8 @@ function __construct(){
 
 function insert_sales_dispatch(){
 
-    $sql="INSERT INTO sales_dispatch (salesdispatch_ref,salesdispatch_date)
-    VALUES('$this->salesdispatch_ref','$this->salesdispatch_date')";
+    $sql="INSERT INTO sales_dispatch (salesdispatch_ref,salesdispatch_date,salesdispatch_customer)
+    VALUES('$this->salesdispatch_ref','$this->salesdispatch_date','$this->salesdispatch_customer')";
        echo $sql;
        $this->db->query($sql);
     $sd_id=$this->db->insert_id;
@@ -128,7 +128,7 @@ function delete_sales_dispatch($salesdispatch_id){
 
 function get_all_sales_dispatch(){
 
-    $sql="SELECT * FROM sales_dispatch WHERE salesdispatch_status='ACTIVE' ";
+    $sql="SELECT sales_dispatch.salesdispatch_id,sales_dispatch.salesdispatch_customer, sales_dispatch.salesdispatch_ref, sales_dispatch.salesdispatch_date,customer.customer_name FROM `sales_dispatch` JOIN customer ON sales_dispatch.salesdispatch_customer=customer.customer_id WHERE sales_dispatch.salesdispatch_status='ACTIVE'";
   
     $result=$this->db->query($sql);
 
@@ -139,13 +139,12 @@ function get_all_sales_dispatch(){
         $sales_dispatch_item = new sales_dispatch();
 
         $sales_dispatch_item->salesdispatch_id=$row["salesdispatch_id"];
-        $sales_dispatch_item->salesdispatch_si_id=$row["salesdispatch_si_id"];
         $sales_dispatch_item->salesdispatch_customer=$row["salesdispatch_customer"];
+        $sales_dispatch_item->salesdispatch_customer_name=$row["customer_name"];
         $sales_dispatch_item->salesdispatch_ref=$row["salesdispatch_ref"];
-        $sales_dispatch_item->salesdispatch_paymethod=$row["salesdispatch_paymethod"];
         $sales_dispatch_item->salesdispatch_date=$row["salesdispatch_date"];
-        $sales_dispatch_item->si_item_soprice=$row["si_item_soprice"];
-        $sales_dispatch_item->salesdispatch_status=$row["salesdispatch_status"];
+       
+        
 
         
         
@@ -164,7 +163,7 @@ function get_all_sales_dispatch(){
 
 function get_sales_dispatch_by_id($salesdispatch_id){
 
-    $sql="SELECT * FROM sales_dispatch WHERE salesdispatch_id = $salesdispatch_id";
+    $sql="SELECT sales_dispatch.salesdispatch_id,sales_dispatch.salesdispatch_customer, sales_dispatch.salesdispatch_ref, sales_dispatch.salesdispatch_date,customer.customer_name FROM `sales_dispatch` JOIN customer ON sales_dispatch.salesdispatch_customer=customer.customer_id WHERE sales_dispatch.salesdispatch_status='ACTIVE' AND salesdispatch_id = $salesdispatch_id";
 
     //echo $sql;
     $result=$this->db->query($sql);
@@ -173,14 +172,9 @@ function get_sales_dispatch_by_id($salesdispatch_id){
     $sales_dispatch_item = new sales_dispatch();
 
     $sales_dispatch_item->salesdispatch_id=$row["salesdispatch_id"];
-    $sales_dispatch_item->salesdispatch_si_id=$row["salesdispatch_si_id"];
     $sales_dispatch_item->salesdispatch_customer=$row["salesdispatch_customer"];
     $sales_dispatch_item->salesdispatch_ref=$row["salesdispatch_ref"];
-    $sales_dispatch_item->salesdispatch_paymethod=$row["salesdispatch_paymethod"];
     $sales_dispatch_item->salesdispatch_date=$row["salesdispatch_date"];
-    $sales_dispatch_item->si_item_soprice=$row["si_item_soprice"];
-    $sales_dispatch_item->salesdispatch_status=$row["salesdispatch_status"];
-       
     return $sales_dispatch_item;
 }
 

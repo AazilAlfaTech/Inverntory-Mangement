@@ -1,5 +1,7 @@
 <?php
 include_once "../../files/config.php";
+include_once "../sales_order/sales_order_item.php";
+include_once "../sales_order/sales_order.php";
 
 class sales_invoice_item{ 
 
@@ -32,7 +34,8 @@ function __construct(){
 
 function insert_sales_invoice_item1($so_id){
 
-
+    $orderitem5=new sales_orderitem();
+    $order5=new sales_order();
 
     $list=0;
    
@@ -42,8 +45,11 @@ function insert_sales_invoice_item1($so_id){
         ('".$_POST['Quantity'][$list]."','".$_POST['Orderid'][$list]."','".$_POST['Product'][$list]."','".$_POST['Price'][$list]."','".$_POST['Discount'][$list]."',$so_id)";
        echo $sql;
        $this->db->query($sql);
+       $orderitem5->update_sales_orderitem($_POST['OrderItemid'][$list]);
+       $order5->sales_order_status($_POST['Orderid'][$list]);
        $list++;
     }
+    
     return true;
 
 }

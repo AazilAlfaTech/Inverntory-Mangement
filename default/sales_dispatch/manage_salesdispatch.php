@@ -1,5 +1,9 @@
 <?php
+include_once "../sales_dispatch/sales_dispatch.php";
+$salesdispatch3=new sales_dispatch();
 
+$result_dispatch=$salesdispatch3->get_all_sales_dispatch();
+include_once "../../files/head.php";
 
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
@@ -35,8 +39,8 @@
                 <!-- Page-header end -->
 
                 <div class="d-flex flex-row-reverse">
-                    <a href="add_new_sales_order.php">
-                        <button class="btn btn-mat btn-primary ">Add New Sales Order</i></button>
+                    <a href="add_new_salesdispatch.php">
+                        <button class="btn btn-mat btn-primary ">Add New Sales Dispatch </i></button>
                     </a>
                 </div>
 
@@ -80,6 +84,31 @@
                                             
                                             </thead>
                                             <tbody>
+                                            <?php
+                                                    foreach($result_dispatch as $item)
+                                                    {echo"
+                                                        <tr>
+                                                            <td id='gr_id_td'>$item->salesdispatch_id</td>
+                                                            <td>$item->salesdispatch_ref</td>
+                                                            <td>$item->salesdispatch_date</td>
+                                                            <td>$item->salesdispatch_customer_name</td>
+
+                                                            <td style='white-space: nowrap, width: 1%;'>
+                                                                <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
+                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                <a href='viewsalesorder.php?view=$item->salesdispatch_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></a>
+                                                                <a href='edit_sales_order.php?edit=$item->salesdispatch_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></a>
+                                                                <button type='button'  onclick='deleteorder($item->salesdispatch_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                                                
+                                                            </div>
+                                                        </td>
+                                                        </tr>
+                                                        
+                                                        ";
+
+                                                    }
+                                                ?>
+                                            
 
                                             
 
