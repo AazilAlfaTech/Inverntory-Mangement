@@ -31,11 +31,11 @@ function __construct(){
 function insert_sales_quotationitem($id)
 {
     $product_list=0;
-    foreach($_POST['sq_item_price'] as $item)
+    foreach($_POST['sq_item_productid'] as $item)
     {
         $sql="INSERT INTO sales_quotationitem (sq_item_quotid,sq_item_productid,sq_item_price,sq_item_qty,sq_item_discount)
-        VALUES($id,'".$_POST['sq_item_productid'][$product_list]."','".$_POST['sq_item_price'][$product_list]."','".$_POST['sq_item_qty'][$product_list]."','".$_POST['sq_item_discount'][$product_list]."')";
-        // echo $sql;
+        VALUES($id,'".$_POST['sq_item_productid'][$product_list]."','".$_POST['sq_item_price1'][$product_list]."','".$_POST['sq_item_qty'][$product_list]."','".$_POST['sq_item_discount'][$product_list]."')";
+        //echo $sql;
         $this->db->query($sql);
         $product_list++;
     }
@@ -57,7 +57,7 @@ function edit_sq_item()
     {
         $sql="UPDATE sales_quotationitem SET sq_item_price='".$_POST['sq_item_price_edit'][$product_list]."',sq_item_qty='".$_POST['sq_item_qty_edit'][$product_list]."',sq_item_discount='".$_POST['sq_item_discount_edit'][$product_list]."'
         WHERE sq_item_id='".$_POST['sq_item_id_edit'][$product_list]."' ";
-        // echo $sql;
+        //echo $sql;
         $this->db->query($sql);
         $product_list++;
     }
@@ -178,29 +178,22 @@ function get_all_item_bysquotid($id)
     {
         $sql="UPDATE sales_quotationitem SET sq_item_status='INACTIVE' WHERE sq_item_id=$sq_id ";
         $this->db->query($sql);
-        // echo $sql; 
+      
         echo true;
     }
 
-
-
-    function get_total_values($id){
-        $sql=" SELECT SUM(sales_quotationitem.sq_item_qty) AS tot_qty,SUM(purchase_order_item.po_item_price) AS tot_price,SUM(sales_quotationitem.sq_item_discount) AS tot_discount  FROM sales_quotationitem LEFT JOIN product ON sales_quotationitem.sq_item_productid=product.product_id WHERE sq_item_quotid=$id";
-        $result=$this->db->query($sql);
-        $row=$result->fetch_array();
-        echo $row;
-        $sq_item=new purchaseorderitem();
-    
-        $sq_item->totalquantity=$row['tot_qty'];
-        $sq_item->totalprice=$row['tot_price'];
-        $sq_item->totaldiscount=$row['tot_discount'];
-        $sq_item->net_total=round(($row['tot_qty']*$row['tot_price'])-($row['tot_qty']*$row['tot_price']*$row['tot_discount']/100),2);
-    
-        return $sq_item;
-    
+    function update_sqitem($sq_quote_id)
+    {
+        
+        $sql="UPDATE sales_quotationitem SET sq_item_status='INACTIVE' WHERE sq_item_quotid=$sq_quote_id ";
+        $this->db->query($sql);
+        echo $sql; 
+       
     }
 
 
+
+   
 
 
 

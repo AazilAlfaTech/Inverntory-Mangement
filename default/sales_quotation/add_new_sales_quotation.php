@@ -91,8 +91,8 @@
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Customer</label>
-                                                <select class="js-example-basic-single col-sm-12" name="salesquotcustomer" id="sq_customer">
-                                                    <option value=" ">Select customer</option>
+                                                <select class="js-example-basic-single col-sm-12" name="salesquotcustomer" id="sq_customer" required>
+                                                <option value="">-Select Customer-</option>
 
                                                     <?php
                                                         foreach($res_cust1 as $item)
@@ -107,15 +107,15 @@
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="date" name="salesquotdate" id="sq_date">
+                                                <input class="form-control" type="date" value="<?php echo date('Y-m-d');?>" name="salesquotdate" id="txtDate"  required>
                                             </div>
                                         </div>
                                         <hr>
-                                        <div class="form-group row">
-
+                                        <div class="form-group  productform row">
+                                    
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Product</label>
-                                                <select class="js-example-basic-single col-sm-12" name="sqitem_productid" id="sq_itemproductid">
+                                                <select class="js-example-basic-single col-sm-12 product_level" name="sqitem_productid" id="sq_itemproductid">
                                                 <option value="-1 ">Select product</option>
                                                     <?php
                                                         foreach($prod as $item)
@@ -133,27 +133,32 @@
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Price</label>
-                                                <input type="text" class="form-control" placeholder="" name="sqitem_price" id="sq_itemprice" onkeyup="cal_prd_total()">
+                                                
+                                                <select class="form-control pricelevel" name="soitemprice" id="sq_itemprice" >
+                                                    <option value=""> Pricelevel</option>
+                                                </select>
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Qty</label>
-                                                <input type="text" class="form-control" placeholder="" name="sqitem_qty" id="sq_itemqty" onkeyup="cal_prd_total()">
+                                                <input type="number" class="form-control qty_add" placeholder="0" name="sqitem_qty" id="sq_itemqty">
+                                                <div style="color: red; display: none" class="msg1">Digits only</div>
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Discount</label>
-                                                <input type="text" class="form-control" placeholder="" name="sqitem_discount" id="sq_itemdiscount" onkeyup="cal_prd_total()">
+                                                <input type="text" class="form-control disc_add" placeholder="0.00" name="sqitem_discount" id="sq_itemdiscount" >
+                                                <div style="color: red; display: none" class="msg2">Digits only</div>
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Total</label>
-                                                <input type="text" class="form-control" placeholder="" name="sqitem_finalprice" id="sq_itemfinalprice" disabled>
+                                                <input type="text" class="form-control totaladd" placeholder="0.00" name="sqitem_finalprice" id="sq_itemfinalprice" disabled>
+                                        
                                             </div>
-
                                         </div>
 
                                         <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
@@ -168,8 +173,8 @@
                                                 <thead class='table-primary'>
                                                     <tr>
                                                         <th>Product</th>
-                                                        <th>Price</th>
                                                         <th>Qty</th>
+                                                        <th>Price</th>
                                                         <th>Discount</th>
                                                         <th>Total</th>
                                                         <th>Action</th>
@@ -191,10 +196,10 @@
                                                                 <th> Sub Total :</th>
                                                                 <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber" readonly></td>
                                                             </tr>
-                                                            <tr>
+                                                            <!-- <tr>
                                                                 <th> Total Discount :</th>
                                                                 <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " readonly></td>
-                                                            </tr>
+                                                            </tr> -->
                                                         
                                                             <tr class="text-info">
                                                                 <td>
@@ -233,91 +238,6 @@
     include_once "../../files/foot.php";
 
 ?>
-<!-- <script type="text/javascript" src="../javascript/editabletable.js"></script> -->
-<script>
-    
-    function cal_prd_total()
-    {
-
-        var pprice = $("#sq_itemprice").val();
-        var pqty =$("#sq_itemqty").val();
-        var pdis = $("#sq_itemdiscount").val(); 
-
-
-        var tot = parseFloat(pprice)*parseFloat(pqty)*parseFloat(pdis)/100
-        ftot =  parseFloat(pprice)*parseFloat(pqty) - parseFloat(tot)
-
-        $("#sq_itemfinalprice").val(ftot);
-
-    }
-
-    // ..........................Click the add button...............................................................
-    $("#add_prbtn").click(function()
-    {
-        add_products();
-        clear_products();
-        cal_totquantity();
-        cal_totprice();
-        cal_totdiscount();
-        final_total();
-    });
-
-    $(".reset").click(function()
-    {
-        clear_products();
-    });
-
-    // ................................function to append the products..............................
-    function add_products()
-    {
-        var sq_prod=$("#sq_itemproductid option:selected").val();
-        var sq_prod_name=$("#sq_itemproductid option:selected").text(); //dropdown
-        var sq_price=$("#sq_itemprice").val();
-        var sq_qty=$("#sq_itemqty").val();
-        var sq_dis=$("#sq_itemdiscount").val();
-        var sq_fprice=$("#sq_itemfinalprice").val();
-        sq_subtotal=parseFloat(sq_price * sq_qty)
-        
-         $("#tbody").append("<tr>\
-            <td class='table-edit-view' >"+ sq_prod_name +"\
-                <input  class='form-control input-sm productid  ' type='hidden' name='sq_item_productid[]' value='"+sq_prod+"'>\
-            </td>\
-            <td class='table-edit-view'>\
-                <input class='input-borderless input-sm row_data price'  type='text' readonly name='sq_item_price[]' value='"+sq_price+"'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> \
-                <input class='form-control input-sm subtotal'   type='hidden'  value='"+sq_subtotal+"'>\
-            </td>\
-            <td class='table-edit-view'>\
-                <input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='"+sq_qty+"'> <div style='color: red; display: none' class='msg1'>'Digits only'</div>\
-            </td>\
-            <td class='table-edit-view'>\
-                <input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='"+sq_dis+"'><div style='color: red; display: none' class='msg3'>'Digits only'</div>\
-            </td>\
-            <td class='table-edit-view'>\
-                <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+sq_fprice+"'>\
-            </td>\
-            <td>\
-                <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
-                <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
-                <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>\
-            </td>\
-             </tr>");
-         
- 
-         $(".btn_save").hide();
-        $(".btn_cancel").hide();
-
-    }
-
-    // function to clear the products
-    
-    function clear_products()
-    {
-        $("#sq_itemproductid option:selected").text(""); //dropdown
-        $("#sq_itemprice").val("");
-        $("#sq_itemqty").val("");
-        $("#sq_itemdiscount").val("");
-        $("#sq_itemfinalprice").val("");
-    }
-
-</script>
+<script type="text/javascript" src="../javascript/sales.js"></script>
+<script type="text/javascript" src="../javascript/sales/sales_quote.js"></script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>
