@@ -2,14 +2,14 @@
 
 include_once "../../files/config.php";
 
-class inter_loc_transfer_item {
+class interloctranfer_item {
 
-public $inter_loc_transfer_item_id;
-public $inter_loc_transfer_item_code;
-public $inter_loc_transfer_item_from;
-public $inter_loc_transfer_item_to;
-public $inter_loc_transfer_item_status;
-public $inter_loc_transfer_item_date;
+public $interloctranfer_item_id;
+public $interloctranfer_item_price;
+public $interloctranfer_item_qty;
+public $interloctranfer_item_batch;
+public $interloctranfer_item_status;
+public $interloctranfer_item_date;
 
 private $db;
 
@@ -23,11 +23,11 @@ function __construct(){
 
 //..............................insert funtion..................
 
-function insert_inter_loc_transfer_item(){
+function insert_interloctranfer_item(){
 
 
-    $sql = "INSERT INTO inter_loc_transfer_item (inter_loc_transfer_item_code,inter_loc_transfer_item_from,inter_loc_transfer_item_to,inter_loc_transfer_item_date) VALUES 
-    ('$this->inter_loc_transfer_item_code','$this->inter_loc_transfer_item_from', '$this->inter_loc_transfer_item_to','$this->inter_loc_transfer_item_date')";
+    $sql = "INSERT INTO interloctranfer_item (interloctranfer_item_price,interloctranfer_item_qty,interloctranfer_item_batch) VALUES 
+    ('$this->interloctranfer_item_price','$this->interloctranfer_item_qty', '$this->interloctranfer_item_batch')";
     $this->db->query($sql);
      echo $sql;
      return true;
@@ -35,31 +35,31 @@ function insert_inter_loc_transfer_item(){
 }
 // //........................get all function........................
 
-function get_all_inter_loc_transfer_item(){
-    $sql = "SELECT * FROM inter_loc_transfer_item WHERE  inter_loc_transfer_item_status = 'ACTIVE'  ";
+function get_all_interloctranfer_item(){
+    $sql = "SELECT * FROM interloctranfer_item WHERE  interloctranfer_item_status = 'ACTIVE'  ";
 
     //echo $sql;
 
     
     $result = $this->db->query($sql);   
 
-    $inter_loc_transfer_item_array = array();
+    $interloctranfer_item_array = array();
 
     
     while($row = $result->fetch_array()){
 
-        $inter_loc_transfer_item_item = new inter_loc_transfer_item(); 
+        $interloctranfer_item_item = new interloctranfer_item(); 
 
-        $inter_loc_transfer_item_item->inter_loc_transfer_item_id=$row["inter_loc_transfer_item_id"];
-        $inter_loc_transfer_item_item->inter_loc_transfer_item_code=$row["inter_loc_transfer_item_code"];
-        $inter_loc_transfer_item_item->inter_loc_transfer_item_date=$row["inter_loc_transfer_item_date"];
+        $interloctranfer_item_item->interloctranfer_item_id=$row["interloctranfer_item_id"];
+        $interloctranfer_item_item->interloctranfer_item_price=$row["interloctranfer_item_price"];
+        $interloctranfer_item_item->interloctranfer_item_date=$row["interloctranfer_item_date"];
     
 
-    $inter_loc_transfer_item_array[] = $inter_loc_transfer_item_item;
+    $interloctranfer_item_array[] = $interloctranfer_item_item;
 
     }
 
-    return $inter_loc_transfer_item_array;  
+    return $interloctranfer_item_array;  
 
 
 }
@@ -67,9 +67,9 @@ function get_all_inter_loc_transfer_item(){
 
 //...........................get by ID..........
 
-function get_inter_loc_transfer_item_by_id($inter_loc_transfer_item_id){
-    $sql = "SELECT * FROM inter_loc_transfer_item WHERE inter_loc_transfer_item_id =$inter_loc_transfer_item_id 
-    AND inter_loc_transfer_item_status = 'ACTIVE'";
+function get_interloctranfer_item_by_id($interloctranfer_item_id){
+    $sql = "SELECT * FROM interloctranfer_item WHERE interloctranfer_item_id =$interloctranfer_item_id 
+    AND interloctranfer_item_status = 'ACTIVE'";
 
     //echo $sql;
 
@@ -79,34 +79,34 @@ function get_inter_loc_transfer_item_by_id($inter_loc_transfer_item_id){
     // $group_array=array();
 
     $row=$result->fetch_array();
-        $inter_loc_transfer_item_item=new inter_loc_transfer_item(); //object
+        $interloctranfer_item_item=new interloctranfer_item(); //object
 
-        $inter_loc_transfer_item_item->inter_loc_transfer_item_id=$row["inter_loc_transfer_item_id"];
-        $inter_loc_transfer_item_item->inter_loc_transfer_item_code=$row["inter_loc_transfer_item_code"];
-        $inter_loc_transfer_item_item->inter_loc_transfer_item_date=$row["inter_loc_transfer_item_date"];
+        $interloctranfer_item_item->interloctranfer_item_id=$row["interloctranfer_item_id"];
+        $interloctranfer_item_item->interloctranfer_item_price=$row["interloctranfer_item_price"];
+        $interloctranfer_item_item->interloctranfer_item_date=$row["interloctranfer_item_date"];
         
 
        
-    return $inter_loc_transfer_item_item;
+    return $interloctranfer_item_item;
 
 }
 
 //.............................Edit...........
 
-// function edit_inter_loc_transfer_item($inter_loc_transfer_item_id){
-//     $sql = "UPDATE inter_loc_transfer_item SET inter_loc_transfer_item_code = '$this->inter_loc_transfer_item_code', inter_loc_transfer_item_name = '$this->inter_loc_transfer_item_name',
-//   inter_loc_transfer_item_from = '$this->inter_loc_transfer_item_from', inter_loc_transfer_item_from = '$this->inter_loc_transfer_item_from'
+// function edit_interloctranfer_item($interloctranfer_item_id){
+//     $sql = "UPDATE interloctranfer_item SET interloctranfer_item_price = '$this->interloctranfer_item_price', interloctranfer_item_name = '$this->interloctranfer_item_name',
+//   interloctranfer_item_qty = '$this->interloctranfer_item_qty', interloctranfer_item_qty = '$this->interloctranfer_item_qty'
     
-//      WHERE inter_loc_transfer_item_id = '$inter_loc_transfer_item_id'";
+//      WHERE interloctranfer_item_id = '$interloctranfer_item_id'";
 
 //     $this->db->query($sql);
 //     return true;
     
 // }
 //............................Delete.............
-function delete_inter_loc_transfer_item($inter_loc_transfer_item_id){
+function delete_interloctranfer_item($interloctranfer_item_id){
 
-    $sql = "UPDATE inter_loc_transfer_item set inter_loc_transfer_item_status = 'INACTIVE' WHERE inter_loc_transfer_item_id='$inter_loc_transfer_item_id'";
+    $sql = "UPDATE interloctranfer_item set interloctranfer_item_status = 'INACTIVE' WHERE interloctranfer_item_id='$interloctranfer_item_id'";
 
     //echo $sql;
 
