@@ -86,7 +86,7 @@
 
                 // Gets the extension of the file selected
                 $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
-                print_r($a);
+                // print_r($a);
                 if($a=='xlsx')
                 {
                     // include the class excel libraray
@@ -114,14 +114,27 @@
                             $product_inventory_val=$sheet->getCellByColumnAndRow(5,$i)->getValue();
                             $product_batch=$sheet->getCellByColumnAndRow(6,$i)->getValue();
 
+                            $group=new group();
+                            $prod_groupid=$group->return_groupid($product_group);
+                            // print_r($prod_groupid);
+                            // exit;
+                            $type=new producttype();
+                            $prod_typeid=$type->return_typeid($product_type);
+                            // print_r($prod_typeid);
+                            // exit;
+                            $uom=new uom();
+                            $prod_uomid=$uom->return_uomid($product_uom);
+                            // print_r($prod_uomid);
                             $product_code=new product();
-                            $prod=$product_code->get_count($product_type,$product_group);
+                            $prod=$product_code->get_count($prod_typeid,$prod_groupid);
+                            // print_r($prod);
+                            // exit;
                             // echo"$name";
                             if($product_name!='')
                             {
                                 // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
                                 $sql="INSERT INTO product (product_name,product_code,product_group,product_type,product_uom,product_desc,product_inventory_val,product_batch )
-                                VALUES ('$product_name','$prod','$product_group','$product_type','$product_uom','$product_desc','$product_inventory_val',
+                                VALUES ('$product_name','$prod','$prod_groupid','$prod_typeid','$prod_uomid','$product_desc','$product_inventory_val',
                                 '$product_batch')";
                                 $this->db->query($sql);
                                 $msg=1;

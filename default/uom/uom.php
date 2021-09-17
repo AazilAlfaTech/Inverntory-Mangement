@@ -219,6 +219,21 @@ function get_uom_by_name($uom_name){
 
 }
 
+function return_uomid($uomname){
+    $sql="SELECT uom_id FROM product_uom WHERE uom_name='$uomname'";
+    $result=$this->db->query($sql);
+    // echo '<pre>';
+    // print_r($result);
+   
+    if ($result->num_rows > 0) 
+    {
+        // output data of each row
+        $row=$result->fetch_array();
+        $uom_id=$row["uom_id"];
+        return $uom_id;
+    }
+}
+
 
 
 }

@@ -170,7 +170,7 @@
 
 <?php
 
-        include_once "../../files/print_foot.php";
+        include_once "../../files/foot.php";
 
         ?>
         <script type="text/javascript" src="../javascript/editabletable.js"></script>

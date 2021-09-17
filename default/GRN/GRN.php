@@ -107,7 +107,7 @@
             $SQL="SELECT grn.grn_id,grn.grn_puch_orderid,grn.grn_ref_no,grn.grn_received_loc,grn.grn_status,grn.grn_date,supplier.supplier_name
             FROM grn INNER JOIN purchase_order on grn.grn_puch_orderid=purchase_order.purchaseorder_id INNER JOIN purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
             INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE grn_status='ACTIVE'";
-            echo $SQL;
+            // echo $SQL;
             $result=$this->db->query($SQL);
             $grn_array=array();
 

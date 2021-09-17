@@ -125,7 +125,7 @@ include_once "../../files/foot.php";
 
     function view_grn(grn)
     {
-        window.location.href="view_grn.php?view="+grn;
+        // window.location.href="view_grn.php?view="+grn;
         window.location.href="print_grn.php?view="+grn;
     }
 </script>
