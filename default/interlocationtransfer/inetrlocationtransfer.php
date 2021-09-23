@@ -64,6 +64,64 @@ function get_all_inter_loc_transfer(){
 
 }
 
+// ------------------------------------------------------------------------------------------------
+function int_loc_code1($int_date){
+
+    // SELECT * FROM `purchase_request` WHERE MONTH(purchaserequest_added_date)= MONTH(CURDATE())
+        $sql="SELECT COUNT(*) AS count FROM `inter_loc_transfer` WHERE MONTH(inter_loc_transfer_date)= EXTRACT(MONTH FROM '$int_date') ";
+
+        $sql1="SELECT  EXTRACT(MONTH FROM '$int_date') AS pr_month ";
+        $sql2="SELECT  EXTRACT(YEAR FROM '$int_date') AS pr_year ";
+
+        $result = $this->db->query($sql);
+        $result1 = $this->db->query($sql1);
+        $result2 = $this->db->query($sql2);
+
+        $count= 0;
+
+
+        while($row=$result->fetch_array()){
+
+            $count = $row["count"];
+        }
+
+        
+        $month = "";
+
+        while($row=$result1->fetch_array()){
+
+            $month = $row["pr_month"];
+        }
+
+        $month =sprintf("%02d", $month);
+
+        $year = "";
+
+        while($row=$result2->fetch_array()){
+
+            $year = $row["pr_year"];
+        }
+
+  
+        
+
+        $count = $count + 1 ;
+        $count = sprintf("%04d", $count);
+
+
+        //  $year = date("Y");
+
+
+        $code = "ILT".  substr($year, 2, 2 ) . $month . $count;  
+
+
+        return $code;
+
+
+    }
+
+
+
 
 //...........................get by ID..........
 
