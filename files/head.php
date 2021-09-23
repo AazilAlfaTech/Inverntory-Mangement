@@ -18,7 +18,7 @@
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="..\..\files\bower_components\bootstrap\css\bootstrap.min.css">
     <!-- themify-icons line icon -->
-    <link rel="stylesheet" type="text/css" href="..\..\files\assets\icon\themify-icons\themify-icons.css">
+    <!-- <link rel="stylesheet" type="text/css" href="..\..\files\assets\icon\themify-icons\themify-icons.css"> -->
     <!-- ico font -->
     <link rel="stylesheet" type="text/css" href="..\..\files\assets\icon\icofont\css\icofont.css">
     <!-- feather Awesome -->
@@ -33,6 +33,16 @@
     <link rel="stylesheet" type="text/css" href="..\..\files\bower_components\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="..\..\files\assets\pages\data-table\extensions\autofill\css\autoFill.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="..\..\files\assets\pages\data-table\extensions\autofill\css\select.dataTables.min.css">
+  
+    <!-- Data Table Css -->
+    <link rel="stylesheet" type="text/css" href="..\..\files\bower_components\datatables.net-bs4\css\dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="..\..\files\assets\pages\data-table\css\buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="..\..\files\bower_components\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="..\..\files\assets\pages\data-table\extensions\buttons\css\buttons.dataTables.min.css">
+
+
+
+
 
     <!-- Font Awesome -->
     <link rel="stylesheet" type="text/css" href="..\..\files\assets\icon\font-awesome\css\font-awesome.min.css">
@@ -500,7 +510,7 @@
 
                             <li class="">
                                 <a href="../city/manage_city.php" >
-                                    <span class="pcoded-micon"><i class="ti-map-alt"></i></span>
+                                    <span class="pcoded-micon"><i class="fa fa-map-marker"></i></span>
                                     <span class="pcoded-mtext">Add City</span>
                                
                                 </a>
@@ -510,7 +520,7 @@
 
                             <li class="">
                                 <a href="../salesrep/manage_salesrep.php" >
-                                    <span class="pcoded-micon"><i class="ti-user"></i></span>
+                                    <span class="pcoded-micon"><i class="fa fa-group"></i></span>
                                     <span class="pcoded-mtext">Sales Rep</span>
                                
                                 </a>
@@ -519,15 +529,93 @@
 
                             <li class="">
                                 <a href="../interlocationtransfer/manage_interlocationtransfer.php" >
-                                    <span class="pcoded-micon"><i class="ti-map-alt"></i></span>
+                                    <span class="pcoded-micon"><i class="fa fa-arrows-h"></i></span>
                                     <span class="pcoded-mtext">Inter Location Transfer</span>
                                
                                 </a>
                              
                             </li>
 
+<!-- --------------------------------------REPORTS---------------------------------------------------------------------------- -->
+<li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)">
+                                    <span class="pcoded-micon"><i class="fa fa-file-text-o"></i></span>
+                                    <span class="pcoded-mtext">Reports</span>
+                               
+                                </a>
+                                <!-- ------------------------------------ -->
+                                <ul class="pcoded-submenu">
+                                    <!-- -------------------------- -->
+                                <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)">
+                           
+                                    <span class="pcoded-mtext">Purchase Report</span>
+                               
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class="">
+                                        <a href="../reports/purchase_order_ report.php " >
+                                            <span class="pcoded-mtext">Purchase Order Report </span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="../reports/grn_report.php " >
+                                            <span class="pcoded-mtext">Goods Received Note Report </span>
+                                        </a>
+                                    </li>
 
+                                    <li class=" ">
+                                        <a href="../reports/manage_supplier.php " >
+                                            <span class="pcoded-mtext">Goods Received Note Report </span>
+                                        </a>
+                                    </li>
+                                  
+
+                                </ul>
+                            </li>
+                          
+                                  
+
+                                </ul>
+
+
+
+
+                                <ul class="pcoded-submenu">
+                                    <!-- -------------------------- -->
+                                <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)">
+                           
+                                    <span class="pcoded-mtext">Sales Report</span>
+                               
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class="">
+                                        <a href="../reports/manage_supplier_group.php " >
+                                            <span class="pcoded-mtext">Sales Report </span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="../reports/manage_supplier.php " >
+                                            <span class="pcoded-mtext">Salaes Dispatch Report</span>
+                                        </a>
+                                    </li>
+
+                                 
+                                  
+
+                                </ul>
+                            </li>
+                          
+                                  
+
+                                </ul>
+
+                            </li>
                         </ul>
+
+
+
                       
                    
                        

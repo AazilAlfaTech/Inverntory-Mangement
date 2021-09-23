@@ -308,7 +308,7 @@ include_once "../../files/head.php";
                                             <!-- <div class="col-sm-6 row"> -->
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label"> Product image</label>
-                                                <input type="file"  class="form-control" placeholder="" name="productimage" id="filer_input1"   value="">
+                                                <input type="file"  class="form-control" placeholder="" name="productimage" id=""   value="">
                                             </div>
                                                 <!-- <div class="col-sm-3">
                                             <img src="/IMS/inventory/default/product/productimage/<?=$product1->product_id?>.jpg" style="height: 100px; width: 150px;">  
@@ -335,13 +335,13 @@ include_once "../../files/head.php";
                                                         <div class="col-sm-9">
                                                             <div class="radio ">
                                                                 
-                                                                    <input type="radio" name="levelstatus[]" value="active"  >
+                                                                    <input type="radio" id="levelstatus" name="levelstatus[]" value="active"  >
                                                                     ACTIVE
                                                                
                                                             </div>
                                                             <div class="radio ">
                                                                 
-                                                                    <input type="radio" name="levelstatus[]" value="inactive"  >
+                                                                    <input type="radio" id="levelstatus" name="levelstatus[]" value="inactive"  >
                                                                         INACTIVE
                                                                
                                                             </div>

@@ -30,14 +30,23 @@ $res_loc = $loc1->get_all_location();
 
 // --------------------------------------------------------------------------------------------------------------------
 
-if (isset($_POST['inter_loc_transfercode'])) {
+if (isset($_POST['inter_loc_transferdate'])) {
 
 
-    $inter_loc_tr1->inter_loc_transfer_code = $_POST['inter_loc_transfercode'];
+    // $inter_loc_tr1->inter_loc_transfer_code = $_POST['inter_loc_transfercode'];
+    $inter_loc_tr1->inter_loc_transfer_date = $_POST['inter_loc_transferdate'];
+    $inter_loc_tr1->inter_loc_transfer_from = $_POST['inter_loc_transferfrom'];
+    $inter_loc_tr1->inter_loc_transferto = $_POST['inter_loc_transferto'];
+    $inter_loc_tr1->inter_loc_transfer_code = $inter_loc_tr1->int_loc_code1($_POST["inter_loc_transferdate"]);
+
+
 
 
     $inter_loc_tr1->insert_inter_loc_transfer();
 }
+
+
+
 
 
 // ------------------------------------------------------------------------------------------------------------
@@ -101,7 +110,7 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
 
-                                    <form action="manage_interlocationtransfer.php" method="POST">
+                                    <form action="add_interlocation_tr.php" method="POST">
 
 
 
@@ -126,18 +135,16 @@ include_once "../../files/head.php";
 
                                         <div class="form-group row">
 
-<div class="col-sm-6">
-    <label class=" col-form-label">From</label>
-    <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier" required>
+<div class="col-sm-4">
+    <label class=" col-form-label">Select Product</label>
+    <select class="js-example-basic-single col-sm-12" name="int_itemproductid" id="int_itemproductid">
 
-        <option value=" ">Select Location</option>
+        <option value="-1 ">Select product</option>
         <?php
-        foreach ($res_loc as $item)
+        foreach ($res_prod as $item)
 
-            if ($item->location_id == $res_inter_loc1->purchaserequest_supplier)
-                echo "<option value='$item->location_id' selected='selected'>$item->location_name</option>";
-            else
-                echo "<option value='$item->location_id'>$item->location_name</option>";
+           
+                echo "<option value='$item->product_id'> $item->product_name</option>";
         ?>
 
 
@@ -145,44 +152,46 @@ include_once "../../files/head.php";
 
 </div>
 
+<div class="col-sm-2">
 
-
-<div class="col-sm-6">
-    <label class=" col-form-label">To</label>
-    <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier" required>
-
-        <option value=" ">Select Location</option>
-        <?php
-        foreach ($res_loc as $item)
-
-        if ($item->location_id == $res_inter_loc1->purchaserequest_supplier)
-            echo "<option value='$item->location_id' selected='selected'>$item->location_name</option>";
-        else
-            echo "<option value='$item->location_id'>$item->location_name</option>";
-        ?>
-
-
-    </select>
+    <label class=" col-form-label">Price</label>
+    <input type="text" class="form-control" placeholder="" name="int_itemprice" id="int_itemprice" onkeyup="cal_prd_total()">
 </div>
 
+<div class="col-sm-2">
+
+    <label class=" col-form-label">Qty</label>
+    <input type="number" class="form-control" placeholder="" name="int_itemqty" id="int_itemqty" onkeyup="cal_prd_total()">
 </div>
 
+<div class="col-sm-2">
 
+    <label class=" col-form-label">Batch No</label>
+    <input type="text" class="form-control" placeholder="" name="int_batch" Id="int_batch" onkeyup="cal_prd_total()">
+</div>
+
+<!-- <div class="col-sm-2">
+
+    <label class=" col-form-label">Total</label>
+    <input type="text" class="form-control" placeholder="" name="pr_itemfinalprice" id="preq_itemfinalprice" disabled>
+</div> -->
+
+</div>
 
                                         <div class="form-group row">
 
-                                            <div class="col-sm-4">
-                                                <label class=" col-form-label">Select Product</label>
-                                                <select class="js-example-basic-single col-sm-12" name="pr_itemproductid" id="preq_itemproductid">
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">From</label>
+                                                <select class="js-example-basic-single col-sm-12" name="inter_loc_transferfrom" id="inter_loc_transferfrom" required>
 
-                                                    <option value="-1 ">Select product</option>
+                                                    <option value=" ">Select Location</option>
                                                     <?php
-                                                    foreach ($res_prod as $item)
+                                                    foreach ($res_loc as $item)
 
-                                                        if ($item->product_id == $product1->product_id)
-                                                            echo "<option value='$item->product_id' selected='selected'>$item->product_name</option>";
+                                                        if ($item->location_id == $res_inter_loc1->purchaserequest_supplier)
+                                                            echo "<option value='$item->location_id' selected='selected'>$item->location_name</option>";
                                                         else
-                                                            echo "<option value='$item->product_id'> $item->product_name</option>";
+                                                            echo "<option value='$item->location_id'>$item->location_name</option>";
                                                     ?>
 
 
@@ -190,31 +199,31 @@ include_once "../../files/head.php";
 
                                             </div>
 
-                                            <div class="col-sm-2">
 
-                                                <label class=" col-form-label">Price</label>
-                                                <input type="text" class="form-control" placeholder="" name="pr_itemprice" id="preq_itemprice" onkeyup="cal_prd_total()">
+
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">To</label>
+                                                <select class="js-example-basic-single col-sm-12" name="inter_loc_transferto" id="inter_loc_transferto" required>
+
+                                                    <option value=" ">Select Location</option>
+                                                    <?php
+                                                    foreach ($res_loc as $item)
+
+                                                        if ($item->location_id == $res_inter_loc1->purchaserequest_supplier)
+                                                            echo "<option value='$item->location_id' selected='selected'>$item->location_name</option>";
+                                                        else
+                                                            echo "<option value='$item->location_id'>$item->location_name</option>";
+                                                    ?>
+
+
+                                                </select>
                                             </div>
-
-                                            <div class="col-sm-2">
-
-                                                <label class=" col-form-label">Qty</label>
-                                                <input type="number" class="form-control" placeholder="" name="pr_itemqty" id="preq_itemqty" onkeyup="cal_prd_total()">
-                                            </div>
-
-                                            <div class="col-sm-2">
-
-                                                <label class=" col-form-label">Discount</label>
-                                                <input type="text" class="form-control" placeholder="" name="pr_itemdiscount" Id="preq_itemdiscount" onkeyup="cal_prd_total()">
-                                            </div>
-
-                                            <!-- <div class="col-sm-2">
-
-                                                <label class=" col-form-label">Total</label>
-                                                <input type="text" class="form-control" placeholder="" name="pr_itemfinalprice" id="preq_itemfinalprice" disabled>
-                                            </div> -->
 
                                         </div>
+
+
+
+                                 
                                         <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
                                         <button type="button" class="btn btn-inverse reset">CLEAR</button>
 
@@ -232,17 +241,17 @@ include_once "../../files/head.php";
                                                         <th>Qty</th>
                                                         <th>Price</th>
                                                         <th>Batch No</th>
-                                 
+
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbody">
-                                             
-                                                 
+
+
                                                 </tbody>
                                             </table>
                                         </div>
-                                    
+
 
 
 
@@ -282,9 +291,9 @@ include_once "../../files/head.php";
 
 
 
-                        var pprice = $("#preq_itemprice").val();
-                        var pqty = $("#preq_itemqty").val();
-                        var pdis = $("#preq_itemdiscount").val();
+                        var pprice = $("#int_itemprice").val();
+                        var pqty = $("#int_itemqty").val();
+                        var pdis = $("#int_batch").val();
 
 
                         var tot = parseFloat(pprice) * parseFloat(pqty) * parseFloat(pdis) / 100
@@ -321,29 +330,28 @@ include_once "../../files/head.php";
                     });
 
                     // ---------------------------------------------------------------------------------------------------------------------
-                    function add_products()
-    {
-        var sq_prod=$("#sq_itemproductid option:selected").val();
-        var sq_prod_name=$("#sq_itemproductid option:selected").text(); //dropdown
-        var sq_price=$("#sq_itemprice").val();
-        var sq_qty=$("#sq_itemqty").val();
-        var sq_dis=$("#sq_itemdiscount").val();
-        var sq_fprice=$("#sq_itemfinalprice").val();
-        sq_subtotal=parseFloat(sq_price * sq_qty)
-        
-         $("#tbody").append("<tr>\
-            <td class='table-edit-view' >"+ sq_prod_name +"\
-                <input  class='form-control input-sm productid  ' type='hidden' name='sq_item_productid[]' value='"+sq_prod+"'>\
+                    function add_products() {
+                        var sq_prod = $("#int_itemproductid option:selected").val();
+                        var sq_prod_name = $("#int_itemproductid option:selected").text(); //dropdown
+                        var sq_price = $("#int_itemprice").val();
+                        var sq_qty = $("#int_itemqty").val();
+                        var sq_dis = $("#int_batch").val();
+                        var sq_fprice = $("#int_itemfinalprice").val();
+                        sq_subtotal = parseFloat(sq_price * sq_qty)
+
+                        $("#tbody").append("<tr>\
+            <td class='table-edit-view' >" + sq_prod_name + "\
+                <input  class='form-control input-sm productid  ' type='hidden' name='sq_item_productid[]' value='" + sq_prod + "'>\
             </td>\
             <td class='table-edit-view'>\
-                <input class='input-borderless input-sm row_data price'  type='text' readonly name='sq_item_price[]' value='"+sq_price+"'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> \
-                <input class='form-control input-sm subtotal'   type='hidden'  value='"+sq_subtotal+"'>\
+                <input class='input-borderless input-sm row_data price'  type='text' readonly name='sq_item_price[]' value='" + sq_price + "'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> \
+                <input class='form-control input-sm subtotal'   type='hidden'  value='" + sq_subtotal + "'>\
             </td>\
             <td class='table-edit-view'>\
-                <input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='"+sq_qty+"'> <div style='color: red; display: none' class='msg1'>'Digits only'</div>\
+                <input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='" + sq_qty + "'> <div style='color: red; display: none' class='msg1'>'Digits only'</div>\
             </td>\
             <td class='table-edit-view'>\
-                <input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='"+sq_dis+"'><div style='color: red; display: none' class='msg3'>'Digits only'</div>\
+                <input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='" + sq_dis + "'><div style='color: red; display: none' class='msg3'>'Digits only'</div>\
             </td>\
             <td>\
                 <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
@@ -351,12 +359,12 @@ include_once "../../files/head.php";
                 <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>\
             </td>\
              </tr>");
-         
- 
-         $(".btn_save").hide();
-        $(".btn_cancel").hide();
 
-    }
+
+                        $(".btn_save").hide();
+                        $(".btn_cancel").hide();
+
+                    }
 
                     // ----------------------------------------------------------------------------------------------------------------
 
@@ -366,9 +374,9 @@ include_once "../../files/head.php";
 
 
                         $("#preq_itemproductid option:selected").text(""); //dropdown
-                        $("#preq_itemprice").val("");
-                        $("#preq_itemqty").val("");
-                        $("#preq_itemdiscount").val("");
+                        $("#int_itemprice").val("");
+                        $("#int_itemqty").val("");
+                        $("#int_batch").val("");
                         $("#preq_itemfinalprice").val("");
 
 

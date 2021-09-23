@@ -97,8 +97,8 @@
 
                                                                 <td>
                                                                     <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                    <button type='button' id='edit_pr' onclick='view_grn($item->inter_loc_transfer_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></button>
-                                                                        <button type='button' onclick='GRN_details($item->inter_loc_transfer_id)'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+     
+                                                                        <button type='button' onclick='edit_int($item->inter_loc_transfer_id)'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
                                                                         <button type='button'  onclick='del_group($item->inter_loc_transfer_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group_name'></span></button>
                                                
                                                                     </div>
@@ -120,9 +120,9 @@ include_once "../../files/foot.php";
 
 ?>
 <script>
-     function GRN_details(grn)
+     function edit_int(grn)
     {
-        window.location.href="edit_grn.php?view="+grn;
+        window.location.href="edit_interlocation_tr.php?view="+grn;
     }
 
     function view_grn(grn)
