@@ -31,14 +31,14 @@ function insert_suppier(){
     $MAIL=$_POST["supemail"];
     $CONTACT=$_POST["supno"];
     $sql1= "SELECT * FROM supplier WHERE supplier_status='ACTIVE' AND supplier_code='$CODE' OR supplier_email='$MAIL' OR supplier_contactno='$CONTACT' ";
-    echo($sql1);
+    // echo($sql1);
     $res_code=$this->db->query($sql1);
 
  
 if($res_code->num_rows==0){
     $sql="INSERT INTO supplier (supplier_code,supplier_name,supplier_group,supplier_add,supplier_contactno,supplier_email) 
     VALUES ('$this->supplier_code','$this->supplier_name','$this->supplier_group','$this->supplier_add','$this->supplier_contactno','$this->supplier_email');";
-    echo $sql;
+    // echo $sql;
     $this->db->query($sql);
     return true;
 }else 
@@ -56,7 +56,7 @@ function import_supplier()
         // Gets the extension of the file selected
         $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
         print_r($a);
-        if($a='xlsx')
+        if($a=='xlsx')
         {
             // include the class excel libraray
             require ("../import/import_excel/PHPExcel.php");
@@ -77,28 +77,54 @@ function import_supplier()
                     // Get the column name and the value
                     $supplier_code=$sheet->getCellByColumnAndRow(0,$i)->getValue();
                     $supplier_name=$sheet->getCellByColumnAndRow(1,$i)->getValue();
-                    $supplier_group=$sheet->getCellByColumnAndRow(2,$i)->getValue();
+                    $supplier_group_name=$sheet->getCellByColumnAndRow(2,$i)->getValue();
                     $supplier_add=$sheet->getCellByColumnAndRow(3,$i)->getValue();
                     $supplier_contactno=$sheet->getCellByColumnAndRow(4,$i)->getValue();
                     $supplier_email=$sheet->getCellByColumnAndRow(5,$i)->getValue();
 
+                    $sup_group=new supplier_group();
+                    $supplier_group_id=$sup_group->return_sup_groupid($supplier_group_name);
+
+
                     // echo"$name";
                     if($supplier_code!='')
                     {
-                        // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
-                        $sql="INSERT INTO supplier (supplier_code,supplier_name,supplier_group,supplier_add,supplier_contactno,supplier_email)
-                        VALUES ('$supplier_code','$supplier_name','$supplier_group','$supplier_add','$supplier_contactno',
-                        '$supplier_email')";
-                        $this->db->query($sql);
+                        $sql1= "SELECT * FROM supplier WHERE supplier_status='ACTIVE' AND supplier_code='$CODE' OR supplier_email='$MAIL' OR supplier_contactno='$CONTACT' ";
+                        // echo($sql1);
+                        $res_code=$this->db->query($sql1);
+
+                        if($res_code->num_rows==0)
+                        {
+                            // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                            $sql="INSERT INTO supplier (supplier_code,supplier_name,supplier_group,supplier_add,supplier_contactno,supplier_email)
+                            VALUES ('$supplier_code','$supplier_name','$supplier_group_id','$supplier_add','$supplier_contactno',
+                            '$supplier_email')";
+                            $this->db->query($sql);
+                            $msg=1;
+                        }
+                        else
+                        {
+                            $msg1=2;
+                        }
                     }
                 }
-            }      
-            return true;     
+                if(isset($msg))
+                {
+                    // echo "Successful";
+                        header("location:../supplier/manage_supplier.php?success=1");
+
+                }
+                if(isset($msg1))
+                {
+                // echo "Unsuccessful";
+                    header("location:../supplier/manage_supplier.php?notsuccess=1");
+
+                }
+            }          
         }
         else 
         {
-            return false;
-            // echo "Invalid file format";
+            echo "Invalid file format";
         }
     }
 

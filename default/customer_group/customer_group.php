@@ -50,7 +50,7 @@ function insert_customer_group(){
         // Gets the extension of the file selected
         $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
         print_r($a);
-        if($a='xlsx')
+        if($a=='xlsx')
         {
             // include the class excel libraray
             require ("../import/import_excel/PHPExcel.php");
@@ -75,18 +75,40 @@ function insert_customer_group(){
                     // echo"$name";
                     if($customergroup_code!='')
                     {
-                        // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
-                        $sql="INSERT INTO customer_group (customergroup_code,customergroup_name) VALUES ('$customergroup_code','$customergroup_name')";
-                        $this->db->query($sql);
+                        $sql_check="SELECT * FROM customer_group WHERE customergroup_code = '$cus_groupcode' OR customergroup_name='$cus_groupname' ";
+                        $res_code=$this->db->query($sql_check);
+
+                        if($res_code->num_rows==0)
+                        {
+                            // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                            $sql="INSERT INTO customer_group (customergroup_code,customergroup_name) VALUES ('$customergroup_code','$customergroup_name')";
+                            $this->db->query($sql);
+                            $msg=1;
+                        }
+                        else
+                        {
+                            $msg1=2;
+                        }
                     }
                 }
-            }      
-            return true;     
+                if(isset($msg))
+                        {
+                            // echo "Successful";
+                                header("location:../customer_group/manage_customer_group.php?success=1");
+
+                        }
+                        if(isset($msg1))
+                        {
+                        // echo "Unsuccessful";
+                            header("location:../customer_group/manage_customer_group.php?notsuccess=1");
+
+                        }
+            }          
         }
         else 
         {
-            return false;
-            // echo "Invalid file format";
+            // return false;
+            echo "Invalid file format";
         }
     }
 
@@ -214,6 +236,26 @@ function get_customer_group_by_name($cus_grp_name){
     return $cus_grp_item;
 }
 
-
+function return_cus_groupid($cus_groupname){
+    $sql="SELECT customergroup_id FROM customer_group WHERE customergroup_name='$cus_groupname'";
+    $result=$this->db->query($sql);
+    echo '<pre>';
+    print_r($result);
+   
+    if ($result->num_rows > 0) 
+    {
+        // output data of each row
+        $row=$result->fetch_array();
+        $cus_group_id=$row["customergroup_id"]; 
+        return $cus_group_id;
+        // print_r($group_id);
+    }
+    else
+    {
+        
+        echo "invalid group!";
+        // return false;
+    }
+}
 
 }
