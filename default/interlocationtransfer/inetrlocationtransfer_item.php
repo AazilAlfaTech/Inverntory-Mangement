@@ -5,6 +5,7 @@ include_once "../../files/config.php";
 class interloctranfer_item {
 
 public $interloctranfer_item_id;
+public $interloctranfer_item_product;
 public $interloctranfer_item_price;
 public $interloctranfer_item_qty;
 public $interloctranfer_item_batch;
@@ -26,8 +27,8 @@ function __construct(){
 function insert_interloctranfer_item(){
 
 
-    $sql = "INSERT INTO interloctranfer_item (interloctranfer_item_price,interloctranfer_item_qty,interloctranfer_item_batch) VALUES 
-    ('$this->interloctranfer_item_price','$this->interloctranfer_item_qty', '$this->interloctranfer_item_batch')";
+    $sql = "INSERT INTO interloctranfer_item (interloctranfer_item_product,interloctranfer_item_price,interloctranfer_item_qty,interloctranfer_item_batch) VALUES 
+    ('$this->interloctranfer_item_product','$this->interloctranfer_item_price','$this->interloctranfer_item_qty', '$this->interloctranfer_item_batch')";
     $this->db->query($sql);
      echo $sql;
      return true;
@@ -103,6 +104,7 @@ function get_interloctranfer_item_by_id($interloctranfer_item_id){
 //     return true;
     
 // }
+
 //............................Delete.............
 function delete_interloctranfer_item($interloctranfer_item_id){
 
