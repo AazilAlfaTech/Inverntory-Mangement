@@ -327,8 +327,8 @@ include_once "../../files/head.php";
                                             <td>$item->group_name</td>
 
                                             <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                            <button type='button' id='$item->group_id'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
-                                               <button type='button'  onclick='del_group($item->group_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group_name'></span></button>
+                                            <button type='button' id='$item->group_id'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button>
+                                               <button type='button'  onclick='del_group($item->group_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-trash-o delete_group_name'></span></button>
                                                
                                            </div></td>
                                         </tr>

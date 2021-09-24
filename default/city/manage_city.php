@@ -262,8 +262,8 @@ include_once "../../files/head.php";
                                                             <td>".$item->city_district->district_name."  </td>
 
                                                             <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                            <button type='button' onclick='edit_city($item->city_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
-                                                            <button type='button'  onclick='delete_city($item->city_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+                                                            <button type='button' onclick='edit_city($item->city_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button>
+                                                            <button type='button'  onclick='delete_city($item->city_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-trash-o'></i></button>
                                                             
                                                         </div>
 
