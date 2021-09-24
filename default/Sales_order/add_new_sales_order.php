@@ -231,7 +231,7 @@ include_once "../../files/head.php";
                                                             ?>
                                                 </select>
                                             </div>
-
+                                            
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Price</label>
@@ -287,7 +287,7 @@ include_once "../../files/head.php";
                                                     <?php if(isset($_GET['view'])):?>
                                                         <?php foreach($resultitem as $item):  ?>
                                                             <tr>    
-                                                                <td class='table-edit-view'><span class=''><?= $item->sq_item_productname?></span>
+                                                                <td class='table-edit-view'><span class=''><?= $item->product_name?></span>
                                                                     <input class='form-control input-sm productid  '   type='hidden' name='Product[]' value='<?= $item->sq_item_productid ?>'>
                                                                    
                                                                     
@@ -304,8 +304,8 @@ include_once "../../files/head.php";
                                                                 </td>
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_discount ?></span>
                                                                     <input class=' input-borderless input-sm row_data discount'   type='text' name='Discount[]' readonly  value='<?= $item->sq_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
-                                                                <td class='table-edit-view'><span class='tabledit-span'><?=$item->sq_item_finaltotal ?></span>
-                                                                    <input class=' input-borderless input-sm  total'   type='text' readonly value='<?=$item->sq_item_finaltotal ?>'>
+                                                                <td class='table-edit-view'><span class='tabledit-span'><?=$item->sq_item_finalprice ?></span>
+                                                                    <input class=' input-borderless input-sm  total'   type='text' readonly value='<?=$item->sq_item_finalprice ?>'>
                                                                 </td>
                                                                 <td>
                                                                 <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>

@@ -7,9 +7,10 @@
             public $grn_item_grnid;
             public $grn_item_productid;
             public $grn_item_qty;
+            public $grn_item_remain_qty;
             public $grn_item_price;
             public $grn_item_discount;
-            // public $grn_item_finalprice;
+        
             public $grn_item_status;
             public $db;
 
@@ -28,8 +29,8 @@
                foreach($_POST['grn_itemid'] as $item)
                 {
                     
-                    $SQL="INSERT INTO grn_item (grn_item_grnid,grn_item_productid,grn_item_qty,grn_item_price,grn_item_discount)
-                    VALUES ($id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_itemprice'][$grn_list]."',
+                    $SQL="INSERT INTO grn_item (grn_item_grnid,grn_item_productid,grn_item_qty,grn_item_remain_qty,grn_item_price,grn_item_discount)
+                    VALUES ($id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_itemprice'][$grn_list]."',
                     '".$_POST['grn_item_discount'][$grn_list]."')";
                     $this->db->query($SQL);
                     echo $SQL;

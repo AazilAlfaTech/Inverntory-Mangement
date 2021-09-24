@@ -35,6 +35,7 @@ if(isset($_POST["sinvcustomer"]))
     $sales_invoice_item1->insert_sales_invoice_item1($so_id);
 
     //$sales_orderitem2->insert_sales_orderitem($so_id);
+    //header("location:../sales_quotation/manage_sales_invoice.php");
 
 
        
