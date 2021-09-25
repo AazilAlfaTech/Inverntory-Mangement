@@ -5,6 +5,7 @@ include_once "../group/group.php";
 include_once "../producttype/producttype.php";
 include_once "../uom/uom.php";
 include_once "../product/pricelevel.php";
+include_once "../stock/avco.php";
 
 $group1=new group();
 $result_group=$group1->get_all_group();
@@ -17,8 +18,9 @@ $result_uom=$uom1->get_all_uom();
 
 $pricelevel1=new pricelevel();
 
-
 $product1=new product();
+
+$avco_product1=new avco();
 
 // download the sample excel file
 if(!empty($_GET['file_download']))
@@ -79,6 +81,7 @@ if (isset($_POST["productname"]))
         $res_edit= $product1->edit_product($_POST['product_id']);
         $pricelevel1-> insert_pricelevel($_POST['product_id']);
         $pricelevel1->update_pricelevel(); 
+        
      
             //code for insert validation
             // if($res_edit==true){
@@ -91,7 +94,12 @@ if (isset($_POST["productname"]))
     {
             $res_insert=$product1->insert_product();   
             $pricelevel1-> insert_pricelevel( $res_insert);
-            echo $res_insert;
+         
+            if($_POST["productval"]=='AVCO')
+            {
+                $avco_product1->insert_avco( $res_insert);
+                echo "AVCO DONE";
+            }
             //code for insert validation
             // if($res_insert==true){
                 

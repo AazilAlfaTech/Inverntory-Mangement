@@ -43,7 +43,7 @@ function insert_sales_invoice_item1($so_id){
     foreach($_POST['Quantity'] as $item){
         $sql="INSERT INTO sales_invoice_item (si_item_qty,si_item_orderid,si_item_productid,si_item_price,si_item_discount,si_item_invoiceid)VALUES 
         ('".$_POST['Quantity'][$list]."','".$_POST['Orderid'][$list]."','".$_POST['Product'][$list]."','".$_POST['Price'][$list]."','".$_POST['Discount'][$list]."',$so_id)";
-       echo $sql;
+      //echo $sql;
        $this->db->query($sql);
        $orderitem5->update_sales_orderitem($_POST['OrderItemid'][$list]);
        $order5->sales_order_status($_POST['Orderid'][$list]);

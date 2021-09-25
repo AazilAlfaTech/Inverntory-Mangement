@@ -1,6 +1,7 @@
 <?php
    include_once("../../files/config.php");
    include_once("../sales_invoice/sales_invoice_item.php");
+   include_once ("../stock/avco.php");
 class fifocalculation{
     public $fifo_id;
     public $fifo_productid;
@@ -8,6 +9,7 @@ class fifocalculation{
     public $fifo_salesitemid;
     public $fifo_soldqty;
     public $fifo_remainingqty;
+    public $fifo_soldcost;
     public $db;
 
     function __construct()
@@ -37,12 +39,14 @@ class fifocalculation{
 
 
         //start fifo
+     
         if($salesinvoiceitemqty>0)
                 {
                     $sqlGRNitem="SELECT * FROM grn_item WHERE grn_item_productid=$productid AND grn_item_qty > 0 ORDER BY grn_item_id ASC";
-                    $res_GRNitem=$this->db->query( $sqlGRNitem);
+                    $res_GRNitem=$this->db->query($sqlGRNitem);
                     //echo  $sqlGRNitem;
                   //  return true;
+                  
 
                     if($res_GRNitem)
                     {
@@ -57,9 +61,9 @@ class fifocalculation{
 
                             $fifosalesqty=min($salesinvoiceitemqty,$grnremainingqty);
                             $fiforemainingqty= $grnremainingqty -  $fifosalesqty;
-                            //$fifocost = $grnitemunitprice*$fifosalesqty;
+                            $fifocost = $grnitemunitprice;
 
-                            $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_purchaseitemid,fifo_salesitemid,fifo_soldqty,fifo_remainingqty) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fiforemainingqty)";
+                            $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_purchaseitemid,fifo_salesitemid,fifo_soldqty,fifo_remainingqty,fifo_soldcost) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fiforemainingqty,$fifocost)";
                             $this->db->query($sql_fifo);
                             echo $sql_fifo;
                             $sql_grn_item="UPDATE grn_item SET grn_item_remain_qty= $fiforemainingqty WHERE grn_item_id=$grnitemid ";
@@ -76,6 +80,58 @@ class fifocalculation{
                     }
                 }
             }
+
+
+            function insert_avco($salesinvoiceitemqty,$productid,$salesinvoiceitemid){
+                    
+        
+               // get avco ost price
+               $avco_product3=new avco();
+               $fifocost=$avco_product3->get_costpricebyid($productid);
+              // echo $fifocost;
+
+                if($salesinvoiceitemqty>0)
+                        {
+                            $sqlGRNitem="SELECT * FROM grn_item WHERE grn_item_productid=$productid AND grn_item_qty > 0 ORDER BY grn_item_id ASC";
+                            $res_GRNitem=$this->db->query( $sqlGRNitem);
+                            
+                            if($res_GRNitem)
+                            {
+                                while($item2=$res_GRNitem->fetch_array())
+                                {
+                                  
+                                   $grnitemid=$item2['grn_item_id'];
+                                   //echo $grnitemid;
+                                    $grnqty= $item2['grn_item_qty'];
+                                    $grnremainingqty=$item2['grn_item_remain_qty'];
+                                    $grnitemunitprice=$item2['grn_item_price'];
+        
+                                    $fifosalesqty=min($salesinvoiceitemqty,$grnremainingqty);
+                                    $fiforemainingqty= $grnremainingqty -  $fifosalesqty;
+                                    //$fifocost = $grnitemunitprice*$fifosalesqty;
+                                   
+                                    $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_purchaseitemid,fifo_salesitemid,fifo_soldqty,fifo_remainingqty,fifo_soldcost) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fiforemainingqty,$fifocost)";
+                                    $this->db->query($sql_fifo);
+                                    echo $sql_fifo;      
+                                    $sql_grn_item="UPDATE grn_item SET grn_item_remain_qty= $fiforemainingqty WHERE grn_item_id=$grnitemid ";
+                                    $this->db->query( $sql_grn_item);
+                                    echo  $sql_grn_item;
+        
+                                    $salesinvoiceitemqty-=$fifosalesqty;  
+                                    if($salesinvoiceitemqty <= 0)
+                                    break;
+                                    
+        
+                                }
+                                // $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_salesitemid,fifo_soldqty,fifo_soldcost) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fiforemainingqty,$fifocost)";
+                                // $this->db->query($sql_fifo);
+                                // echo $sql_fifo;
+                               
+                                
+                            }
+                        }
+                    }
+        
 
 }
 

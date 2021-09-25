@@ -1,6 +1,7 @@
 <?php
         include_once "../../files/config.php";
         include_once "../product/product.php";
+        include_once "../stock/avco.php";
         class grn_item
         {
             public $grn_item_id;
@@ -23,7 +24,7 @@
 
             function insert_grnitem($id)
             {
-                
+                $avco_product2=new avco();
                 $grn_list=0;
             
                foreach($_POST['grn_itemid'] as $item)
@@ -33,7 +34,10 @@
                     VALUES ($id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_itemprice'][$grn_list]."',
                     '".$_POST['grn_item_discount'][$grn_list]."')";
                     $this->db->query($SQL);
-                    echo $SQL;
+                    if($_POST['grn_itemid_inventory'][$grn_list]=='AVCO'){
+                        
+                        $avco_product2->updatecostprice($_POST['grn_itemid'][$grn_list]);
+                    }
 
                     $grn_list++;
                 }
