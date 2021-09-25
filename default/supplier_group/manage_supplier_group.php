@@ -288,8 +288,8 @@ include_once "supplier_group.php";
                                                                      
 
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                                        <button type='button' onclick='edit_sup_grp($item->suppliergroup_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button> </a>
-                                               <button type='button'  onclick='delete_sup_grp($item->suppliergroup_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                                                        <button type='button' onclick='edit_sup_grp($item->suppliergroup_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button> </a>
+                                               <button type='button'  onclick='delete_sup_grp($item->suppliergroup_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
                                                </td> 
                                                
                                                
