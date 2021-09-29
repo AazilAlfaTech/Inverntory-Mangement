@@ -22,7 +22,11 @@ $res_loc = $loc->get_all_location();
 
 include_once "../product/product.php";
 $prd = new product();
-$res_prd = $prd->getall_product2()
+$res_prd = $prd->getall_product2();
+
+include_once "../customer/customer.php";
+$cus = new customer();
+$res_cus = $cus->get_all_customer();
 
 
 
@@ -116,15 +120,15 @@ $res_prd = $prd->getall_product2()
                                                 </div>
 
                                                 <div class="col-sm-4">
-                                                    <label class=" col-form-label">Suplier</label>
+                                                    <label class=" col-form-label">Customer</label>
                                                  
 
                                                     <select class="js-example-basic-single col-sm-12" name="" id="" required>
-                                                    <option value="-1">Select Supplier</option>
+                                                    <option value="-1">Select Customer</option>
                                                     <?php
-                                                        foreach($res_sup as $item)
+                                                        foreach($res_cus as $item)
                                                       
-                                                        echo"<option value='$item->supplier_id '>$item->supplier_name</option>";
+                                                        echo"<option value='$item->customer_id '>$item->customer_name</option>";
                                                    ?>
                                                 </select>
 
