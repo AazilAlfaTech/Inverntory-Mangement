@@ -47,7 +47,7 @@ $res_prd = $prd->getall_product2()
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>GRN Report</h4>
+                                    <h4>Sales Report</h4>
 
                                 </div>
                             </div>
@@ -79,7 +79,7 @@ $res_prd = $prd->getall_product2()
 
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>GRN Report</h5>
+                                    <h5>Sales Report</h5>
                                     <span></span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">

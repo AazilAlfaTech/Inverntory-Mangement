@@ -219,19 +219,14 @@ $res_prd = $prd->getall_product2()
                                                 <thead>
                                                     <tr>
                                                         <th>DATE</th>
-                                                        <th>Ref No</th>
-                                                        <th>Product Code</th>
-                                                        <th>Group</th>
-                                                        <th>Type</th>
+                                                        <th>Ref No</th>                      
+                                                        <th>Sales Inv No.</th>
+                                                        <th>Product Code</th>   
                                                         <th>Product Name</th>
-
-                                                        <th>Supplier</th>
                                                         <th>Location</th>
+                                            
                                                         <th>Quantity</th>
-                                                        <th>Cost Price</th>
-                                                        <th>Disc %</th>
-                                                        <th>Discount</th>
-                                                        <th>Total</th>
+                                                   
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -243,12 +238,7 @@ $res_prd = $prd->getall_product2()
                                                         <td>2011/04/25</td>
                                                         <td>$320,800</td>
                                                         <td>Tiger Nixon</td>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
-                                                        <td>2011/04/25</td>
-                                                        <td>$320,800</td>
-                                                        <td>$320,800</td>
+                                                       
                                                     </tr>
 
                                                 </tbody>
