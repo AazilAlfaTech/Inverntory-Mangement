@@ -187,7 +187,7 @@ function get_all_item_bysquotid($id)
         
         $sql="UPDATE sales_quotationitem SET sq_item_status='INACTIVE' WHERE sq_item_quotid=$sq_quote_id ";
         $this->db->query($sql);
-        echo $sql; 
+       // echo $sql; 
        
     }
 

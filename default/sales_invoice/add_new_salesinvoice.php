@@ -30,11 +30,12 @@ if(isset($_POST["sinvcustomer"]))
     $sales_invoice1->salesinvoice_cashmethod= $_POST["sinvpaymethodcash"];
     $sales_invoice1->salesinvoice_date=$_POST["sinvdate"];
     $sales_invoice1->salesinvoice_ref=$sales_invoice1->si_code($_POST["sinvdate"]);
-    $so_id= $sales_invoice1->insert_sales_invoice();
-    echo $so_id;
-    $sales_invoice_item1->insert_sales_invoice_item1($so_id);
+    $si_id= $sales_invoice1->insert_sales_invoice();
+    //echo $so_id;
+    $sales_invoice_item1->insert_sales_invoice_item1($si_id);
 
     //$sales_orderitem2->insert_sales_orderitem($so_id);
+    //header("location:../sales_quotation/manage_sales_invoice.php");
 
 
        
@@ -197,6 +198,7 @@ include_once "../../files/head.php";
                                                     <th>Qty</th>
                                                     <th>Price</th>
                                                     <th>Discount</th>
+                                                    <th>Status</th>
                                                     <th>Total</th>
                                                     <th>Action</th>
 
@@ -253,7 +255,7 @@ $( document ).ready(function() {
     $(".paytype").hide();
     $(".paymethod").change(function() {
         var paymethod= $(".paymethod").val();
-        console.log(paymethod);
+    //    console.log(paymethod);
         if( paymethod=="cash"){
             $(".paytype").show();
         }
@@ -263,9 +265,9 @@ $( document ).ready(function() {
 
 $("#sinv_customer").change(function() {
     var customer_id = $("#sinv_customer").val();
-    console.log(customer_id);
+  //  console.log(customer_id);
      $.get("../ajax/ajaxsales.php?type=get_sales_order_of_customer", { customerselect: customer_id }, function(data) {
-         console.log(data);
+        // console.log(data);
 
          $("#tbody").html("");
          $(".itembody").html("");
@@ -322,8 +324,8 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
         // console.log(item_data);
         $.each(item_data, function(o, p) {
 
-            console.log(o);
-            console.log(p);
+            // console.log(o);
+            // console.log(p);
 
 
             $(".itembody").append(
@@ -346,6 +348,11 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
             <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+ item_data[o].so_itemdiscount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
+        </td>\
+        <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <select name='Status[]' id='productstatus' class='input-borderless status'>\
+            <option value='"+item_data[o].so_itemstatus+"' selected='selected'>"+item_data[o].so_itemstatus+"</option>\
+            </select>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
             <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+item_data[o].so_finaltotal+"'>\
@@ -386,7 +393,7 @@ function removelist(orderid,btn2){
       
      
         $(".itembody .table-edit .salesorder").each(function() {
-        console.log($(this).text());
+       // console.log($(this).text());
         if($(this).text()==orderid){
             $(this).parent().parent().remove();
         }

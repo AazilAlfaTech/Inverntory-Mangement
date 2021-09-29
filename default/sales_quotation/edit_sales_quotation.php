@@ -14,25 +14,23 @@
     include_once "sales_quatation_item.php";
     $sales_quot_item1=new sales_quotationitem();
 
-    // if(isset($_GET["edit_sq"]))
-    // {
-    //     $sales_quot1=$sales_quot1->get_salesquotation_by_id($_GET["edit_sq"]);
-    //     $sales_quot_item1=$sales_quot_item1->get_all_item_bysquotid($_GET["edit_sq"]);
-    // }
-    if(isset($_POST["save"]))
-    {
     
+    if(isset($_GET["edit_sq"]))
+    {
+        $sales_quot1=$sales_quot1->get_salesquotation_by_id($_GET["edit_sq"]);
+        $sales_quot_item1=$sales_quot_item1->get_all_item_bysquotid($_GET["edit_sq"]);
+
+    }
+    elseif(isset($_POST["save"]))
+    {
+        $sales_quot1->salesquot_date=$_POST["salesquotdate"];
+        $sales_quot1->edit_sales_quotation($_POST["sq_id"]);
         $sales_quot_item1->insert_sales_quotationitem($_POST["sq_id"]);
+        header("location:../sales_quotation/manage_sales_quotation.php"); 
         // print_r($a);
         
         $sales_quot_item1->edit_sq_item();
     }
-    else
-    {
-        $sales_quot1=$sales_quot1->get_salesquotation_by_id($_GET["edit_sq"]);
-        $sales_quot_item1=$sales_quot_item1->get_all_item_bysquotid($_GET["edit_sq"]);
-    }
-    
     include_once "../../files/head.php";
 
 ?>
@@ -94,21 +92,7 @@
 
                                         <div class="form-group row">
 
-                                            <!-- <div class="col-sm-4">
-                                                <label class=" col-form-label">Select Customer</label>
-                                                <select class="js-example-basic-single col-sm-12" name="salesquotcustomer" id="sq_customer" readonly> 
-                                                    <option value=" ">Select customer</option>
-
-                                                    <?php:
-                                                        // foreach($res_cust1 as $item)
-                                                        // if($item->customer_id==$sales_quot1->salesquot_customer)
-                                                        //     echo"<option value='$item->customer_id' selected='selected'>$item->customer_name</option>";
-                                                        // else
-                                                        //     echo"<option value='$item->customer_id'>$item->customer_name</option>";
-                                                    ?>
-                                                </select>
-
-                                            </div> -->
+                                            
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Customer</label>
                                                 <input class="form-control" type="text" readonly='true' value="<?=$sales_quot1->salesquot_customer_name?>">
@@ -137,7 +121,7 @@
                                                         foreach($prod as $item)
             
                                                         if($item->product_id ==$product1->product_id)   
-                                                                echo "<option value='$item->product_id' selected='selected'>$item->product_name</option>";
+                                                                echo "<option value='$item->product_id' >$item->product_name</option>";
                                                         else
                                                         echo"<option value='$item->product_id'> $item->product_name</option>";
                                                      ?>
@@ -165,7 +149,7 @@
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Discount</label>
-                                                <input type="text" class="form-control disc_add" placeholder="0.00"  id="sq_itemdiscount" >
+                                                <input type="text" class="form-control disc_add" placeholder="0.00"  id="sq_itemdiscount" value="0.00" >
                                                 <div style="color: red; display: none" class="msg2">Digits only</div>
                                             </div>
 
@@ -178,7 +162,7 @@
                                         </div>
 
                                         <button type="button" class="btn btn-primary " id="add_prbtn"  >ADD</button>
-                                        <button class="btn btn-inverse">CLEAR</button>
+                                        <button class="btn btn-inverse reset" type="button" >CLEAR</button>
 
                                         <br>
                                         <br>

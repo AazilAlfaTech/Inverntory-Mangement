@@ -10,13 +10,6 @@ include_once "../sales_quotation/sales_quatation.php";
 $sales_quotation2=new sales_quotation();
 include_once "../sales_quotation/sales_quatation_item.php";
 $sales_quotationitem2=new sales_quotationitem();
-//------------------------------------------------------------------------------
-// include_once "../sales_quotation/sales_quotation2.php";
-// $sales_quotation3=new sales_quotation2();
-// $sales_quotation5=new sales_quotation2();
-
-
-//------------------------------------------------------------------------------
 
 include_once "../product/product.php";
 $product1 = new product(); 
@@ -29,21 +22,28 @@ $productlist=$product1->getall_product2();
 $result_customer=$customer2->get_all_customer();
 
 //insert salesorder
+$error_msg="";
 if(isset($_POST['sodate'])){
+
+    if(!isset($_POST['Quantity'])){
+        $error_msg="Products are not added to the order list";
+        echo "Products are not added to the order list";
+    }else{
     $sales_order2->salesorder_customer=$_POST['socustomer'];
     $sales_order2->salesorder_date=$_POST['sodate'];
     $sales_order2->salesorder_quotid=$_POST['soquoteid'];
     $sales_order2->salesorder_ref=$sales_order2->so_code($_POST['sodate']);
     $salesorderid=$sales_order2->insert_sales_order();
-   $sales_orderitem2->insert_sales_orderitem($salesorderid);
-  
-   $sales_quotation2->update_salequote_status($_POST['soquoteid']);
-   $sales_quotationitem2->update_sqitem($_POST['soquoteid']);
-
+   
+    $sales_orderitem2->insert_sales_orderitem($salesorderid);
+    $sales_quotation2->update_salequote_status($_POST['soquoteid']);
+    $sales_quotationitem2->update_sqitem($_POST['soquoteid']);
+   header("location:../sales_order/manage_sales_order.php");
+    }
 }
 
 //getall sales quotation
-                    //$result_salesquote=$sales_quotation2->get_all_sales_quotation();
+            
   $result_salesquote=$sales_quotation2->get_all_sales_quotation();
 
 
@@ -51,8 +51,7 @@ if(isset($_POST['sodate'])){
     $sales_quotation3=$sales_quotation2->get_salesquotation_by_id($_GET['view']);
     $resultitem=$sales_quotationitem2->get_all_item_bysquotid($_GET['view']);
    
-    //print_r( $resultitem);
-
+  
   }
   
 
@@ -113,6 +112,7 @@ include_once "../../files/head.php";
                                     </div>
                                 </div>
                                 <div class="card-block"  style="display: none;">
+                               
                                     <div class="dt-responsive table-responsive">
 
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
@@ -157,7 +157,7 @@ include_once "../../files/head.php";
      
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Add New Salaes Order</h5>
+                                    <h5>Add New Sales Order</h5>
 
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -169,6 +169,17 @@ include_once "../../files/head.php";
                                 </div>
 
                                 <div class="card-block">
+                                    <?php
+                                           
+                                                echo" <div class='alert alert-success background-success'>
+                                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                                </button>
+                                                <strong> <?= $error_msg ?> </strong> 
+                                            </div>";
+                                           
+                                    ?>
+                                
 
                                     <form  action="add_new_sales_order.php"  method="POST">
                                         
@@ -218,7 +229,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Product</label>
-                                                <select class="js-example-basic-single col-sm-12" name="soitemproductid" id="soitem_productid">
+                                                <select class="js-example-basic-single col-sm-12 product_level" name="soitemproductid" onchange="get_qty()" id="soitem_productid">
                                                   
                                                         <option value="-1 ">Select product</option>
                                                             <?php
@@ -231,7 +242,7 @@ include_once "../../files/head.php";
                                                             ?>
                                                 </select>
                                             </div>
-
+                                            
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Price</label>
@@ -244,7 +255,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Qty</label>
-                                                <input type="number" class="form-control qty_add " placeholder="" name="soitemqty" id="soitem_qty">
+                                                <input type="text" class="form-control qty_add " placeholder="" name="soitemqty" id="soitem_qty">
                                                 <div style="color: red; display: none" class="msg1">Digits only</div>
                                             </div>
 
@@ -287,7 +298,7 @@ include_once "../../files/head.php";
                                                     <?php if(isset($_GET['view'])):?>
                                                         <?php foreach($resultitem as $item):  ?>
                                                             <tr>    
-                                                                <td class='table-edit-view'><span class=''><?= $item->sq_item_productname?></span>
+                                                                <td class='table-edit-view'><span class=''><?= $item->product_name?></span>
                                                                     <input class='form-control input-sm productid  '   type='hidden' name='Product[]' value='<?= $item->sq_item_productid ?>'>
                                                                    
                                                                     
@@ -298,20 +309,20 @@ include_once "../../files/head.php";
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_price ?></span>
                                                                     <!-- <input class=' input-borderless input-sm row_data price'   type='text' name='Price[]' readonly  value='<?= $item->sq_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div> -->
                                                                     <input class='form-control input-sm subtotal'   type='hidden'  value='<?=$item->sq_item_subtotal?>'>
-                                                                    <select name="" id="productprice" class="input-borderless price">
+                                                                    <select name="Price[]" id="productprice" class="input-borderless price">
                                                                         <option value="<?=$item->sq_item_price?>"><?=$item->sq_item_price?></option>
                                                                     </select>
                                                                 </td>
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_discount ?></span>
                                                                     <input class=' input-borderless input-sm row_data discount'   type='text' name='Discount[]' readonly  value='<?= $item->sq_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
-                                                                <td class='table-edit-view'><span class='tabledit-span'><?=$item->sq_item_finaltotal ?></span>
-                                                                    <input class=' input-borderless input-sm  total'   type='text' readonly value='<?=$item->sq_item_finaltotal ?>'>
+                                                                <td class='table-edit-view'><span class='tabledit-span'><?=$item->sq_item_finalprice ?></span>
+                                                                    <input class=' input-borderless input-sm  total'   type='text' readonly value='<?=$item->sq_item_finalprice ?>'>
                                                                 </td>
                                                                 <td>
                                                                 <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
                                                                 <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
-                                                                <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
-                                                                <span class='deletedata'><button  class='btn btn-mini btn-danger ' type='button'>Delete</button></span>
+                                                                <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Reset</button></span>
+                                                                <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>
                                                                 </td>
         
                                                             </tr>
@@ -334,10 +345,7 @@ include_once "../../files/head.php";
                                                         <th> Sub Total :</th>
                                                         <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber"></td>
                                                     </tr>
-                                                    <tr>
-                                                        <th> Total Discount :</th>
-                                                        <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " ></td>
-                                                    </tr>
+                                                    
                                                 
                                                     <tr class="text-info">
                                                         <td>

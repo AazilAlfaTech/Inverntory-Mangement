@@ -33,7 +33,7 @@ function insert_sales_dispatch(){
 
     $sql="INSERT INTO sales_dispatch (salesdispatch_ref,salesdispatch_date,salesdispatch_customer)
     VALUES('$this->salesdispatch_ref','$this->salesdispatch_date','$this->salesdispatch_customer')";
-       echo $sql;
+      // echo $sql;
        $this->db->query($sql);
     $sd_id=$this->db->insert_id;
     return $sd_id;

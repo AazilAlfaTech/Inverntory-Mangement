@@ -21,7 +21,7 @@ class pricelevel{
     $sql="INSERT INTO pricelevel (pricelevel_level_no,pricelevel_price,pricelevel_status,pricelevel_productid) VALUES 
     ('".$_POST['level_no'][$list1]."','".$_POST['level_price'][$list1]."','".$_POST['level_status'][$list1]."',$productid)";
    
-    echo $sql;
+   // echo $sql;
         $this->db->query($sql);
        $list1++;
 }
