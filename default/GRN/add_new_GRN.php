@@ -17,7 +17,7 @@
     if(isset($_GET["view"]))
     {
         $result_po2=$po1-> get_purchaseorder_by_id($_GET["view"]);
-        $result_grn1=$grn1-> get_purchsup_by_prid($_GET["view"]);
+        $result_grn1=$po1->get_purchaseorder_by_id($_GET["view"]);
         $result_grn2=$grn1-> get_all_grn_by_poid($_GET["view"]);
     }
 
@@ -153,7 +153,7 @@
 
                                                     <div class='col-sm-6'>
                                                         <label class='col-form-label' >Supplier</label>
-                                                        <input class='form-control' id='po_supp' type='text' disabled='true' value=<?=$result_grn1->purchaserequest_suppname?>>
+                                                        <input class='form-control' id='po_supp' type='text' disabled='true' value=<?=$result_grn1->supplier_name1?>>
                                                     </div>
                                        
                                                 <?php endif ;?>

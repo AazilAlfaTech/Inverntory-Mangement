@@ -31,15 +31,16 @@ if(isset($_GET["view"]))
 
 
 if(isset($_POST['purchaseorderdate'])){
-    $purchaseorder2->purchaserorder_requestid=$_POST['purchaseorderdate'];
+    // $purchaseorder2->purchaserorder_requestid=$_POST['purchaseorderdate'];
     $purchaseorder2->purchaserorder_requestid=$_POST['purchaseorderrequest'];
     $purchaseorder2->purchaseorder_date=$_POST['purchaseorderdate'];
     $purchaseorder2->purchaseorder_ref=$purchaseorder2->po_code($_POST['purchaseorderdate']);
-
     $Purch_reqid=$purchaseorder2->insert_purchaseorder();
-    
-    
-   $purchaseorderitem2->insert_POitem1($Purch_reqid);
+    $purchaseorderitem2->insert_POitem1($Purch_reqid);
+    $purchase_request2->inactive_purchreq_status($_POST['purchaseorderrequest']);
+    echo '<pre>';
+    print_r($purchase_request2);
+    $purchase_request_item2->inactive_purchasereq_item($_POST['purchaseorderrequest']);
    header("location:../purchase_order/manage_purchase_order.php?success=1");
 
 
@@ -167,7 +168,7 @@ include_once "../../files/head.php";
                         <div class='form-group row'>
                             <!-- top form start -->
                             <!-- purchase request id -->
-                            <input type='hidden'  class='form-control' value=<?=$_GET['view'] ?> name='purchaseorderrequest' required>
+                            <input type='text'  class='form-control' value=<?=$_GET['view'] ?> name='purchaseorderrequest' required>
                             
 
                             <div class='col-sm-4'>
@@ -176,7 +177,7 @@ include_once "../../files/head.php";
                             </div>
                             <div class='col-sm-4'>
                                 <label class='col-form-label'>Supplier</label>
-                                <input class='form-control' type='text'value=<?=$purchase_request2->purchaserequest_supplier ?> <?php if($purchase_request2->purchaserequest_supplier){echo "readonly=\"readonly\"";} ?>>
+                                <input class='form-control' type='text'value=<?=$purchase_request2->supplier_name?> <?php if($purchase_request2->purchaserequest_supplier){echo "readonly=\"readonly\"";} ?>>
                             </div>
                             <div class='col-sm-4'>
                                 <label class='col-form-label'>Date</label>
@@ -283,8 +284,8 @@ include_once "../../files/head.php";
                                         <td>
                                         <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
                                         <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
-                                        <span class='btn_cancel'><btn_deleterowutton class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
-                                        <span class=''><button    class='btn btn-mini btn-danger'>Delete</button></span>
+                                        <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
+                                        <span class='deletedata'><button    class='btn btn-mini btn-danger'type='button'>Delete</button></span>
                                         </td>
                                             
                                     </td>

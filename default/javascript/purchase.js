@@ -58,12 +58,12 @@
 
     //function to calculate total in add product form......................................................................
 $( document ).ready(function() {
-  $(".productform").on("keyup", ".qty_add, .pricelevel, .disc_add", function() {
-       
-       var row = $(this).closest(".row");
+  $(".productform").on("keyup", ".price_add,.qty_add, .disc_add", function() {
       
+       var row = $(this).closest(".row");
+      console.log("hi")
        var quants = row.find(".qty_add").val();
-       var prc = row.find(".pricelevel").val();
+       var prc = row.find(".price_add").val();
        
        console.log(prc);
       // var tot = quants * prc;
@@ -76,12 +76,12 @@ $( document ).ready(function() {
        //row.find(".totaladd").attr("value",tot);
    });
   
-   $(".productform").on("change", ".pricelevel", function() {
+   $(".productform").on("change", ".price_add", function() {
               console.log("onchange");
               var row = $(this).closest(".row");
              
               var quants = row.find(".qty_add").val();
-              var prc = row.find(".pricelevel").val();
+              var prc = row.find(".price_add").val();
               
               console.log(prc);
              // var tot = quants * prc;
@@ -98,7 +98,7 @@ $( document ).ready(function() {
     //validate only numbers....................................................................................
     $(".productform").on("keyup", ".qty_add, .disc_add ,.price_add", function(event)
     {
-      console.log("validation123")
+      // console.log("validation123")
   
       row = $(this).closest(".row");
 
@@ -125,7 +125,7 @@ $( document ).ready(function() {
       //validate only numbers for quantity
       row.find(".qty_add").on("keypress",function(e)
       {
-        console.log("validation")
+        // console.log("validation")
     
         var charCode = (e.which) ? e.which : event.keyCode    
         

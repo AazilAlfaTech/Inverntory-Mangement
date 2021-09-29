@@ -120,7 +120,7 @@
                 $grn->grn_received_loc=$row["grn_received_loc"];
                 $grn->grn_status=$row["grn_status"];
                 $grn->grn_date=$row["grn_date"];
-              $grn->grn_supplier=$row["supplier_name"];
+                $grn->grn_supplier=$row["supplier_name"];
 
                 $grn_array[]=$grn;
             }
@@ -233,21 +233,21 @@
         }
 
         // join the pr table and supplier............................................................................
-        function get_purchsup_by_prid($pr_id){
+        // function get_purchsup_by_prid($pr_id){
 
-            $sql="SELECT * FROM purchase_request INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE' AND purchaserequest_supplier='$pr_id' ";
-            //echo $sql;
-            $result=$this->db->query($sql);
-            $row=$result->fetch_array();
-            // $supp=new supplier ();
-            $purchaserequest_item = new purchaserequest();
+        //     $sql="SELECT * FROM purchase_request INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE' AND purchaserequest_supplier='$pr_id' ";
+        //     //echo $sql;
+        //     $result=$this->db->query($sql);
+        //     $row=$result->fetch_array();
+        //     // $supp=new supplier ();
+        //     $purchaserequest_item = new purchaserequest();
         
-            $purchaserequest_item->purchaserequest_=$row["purchaserequest_date"];
-            $purchaserequest_item->purchaserequest_suppid=$row["purchaserequest_supplier"];
-            $purchaserequest_item->purchaserequest_suppname=$row["supplier_name"];
-            $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
+        //     $purchaserequest_item->purchaserequest_=$row["purchaserequest_date"];
+        //     $purchaserequest_item->purchaserequest_suppid=$row["purchaserequest_supplier"];
+        //     $purchaserequest_item->purchaserequest_suppname=$row["supplier_name"];
+        //     $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
         
-            return $purchaserequest_item;
-        }
+        //     return $purchaserequest_item;
+        // }
     }
 ?>

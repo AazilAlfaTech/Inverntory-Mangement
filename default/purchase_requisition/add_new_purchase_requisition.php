@@ -25,10 +25,7 @@
         $purchase1->purchaserequest_ref= $purchase1->pr_code1($_POST["purchaserequestdate"]);
 
         $pr_id=$purchase1->insert_purchaserequest();
-
         $product_item1->insert_purchaserequest_item($pr_id );
-
-
     }
 
     // if(isset($_GET['edit_pr'])){
@@ -97,7 +94,7 @@
                                                 <label class=" col-form-label">Select Supplier</label>
                                                 <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier" required>
 
-                                                    <option value=" ">-Select supplier-</option>
+                                                    <option value="">-Select supplier-</option>
                                                     <?php
                                                         foreach($sup as $item)
 			                                        
@@ -121,9 +118,9 @@
 
                                             <div class="col-sm-2">
                                                 <label class=" col-form-label">Select Product</label>
-                                                <select class="js-example-basic-single col-sm-12 product_level" name="pr_itemproductid" id="preq_itemproductid" > 
+                                                <select class="js-example-basic-single col-sm-12 product_level" name="pr_itemproductid" id="preq_itemproductid"> 
 
-                                                    <option value="-1 ">Select product</option>
+                                                    <option value="-1">Select product</option>
                                                     <?php
                                                  foreach($prod as $item)
       
@@ -141,7 +138,7 @@
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Product batch</label>
-                                                <input type="text" class="form-control" placeholder="" name="pr_batch" id="preq_prodbatch"  >
+                                                <input type="text" class="form-control product_batch" placeholder="" name="pr_batch" id="preq_prodbatch"  >
                                             </div>
 
                                             <div class="col-sm-2">
@@ -176,7 +173,7 @@
                                         </div>
 
                                         <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
-                                        <button class="btn btn-inverse">CLEAR</button>
+                                        <button type="button" class="btn btn-inverse reset">CLEAR</button>
 
                                         <br>
                                         <br>
@@ -187,7 +184,7 @@
                                             <table class="table table-striped table-bordered" id="example-2">
                                                 <thead  class='table-primary'>
                                                     <tr>
-                                                        <!-- <th>#</th> -->
+                                                        <th>#</th>
                                                         <th>Product</th>
                                                         <th>Price</th>
                                                         <th>Qty</th>
@@ -284,82 +281,9 @@ function cal_prd_total(){
 
 }
 
-// -------------------------------------------------------------------------------------------------------------------------
-
-$("#add_prbtn").click(function(){
-
-    add_products();
-    clear_products();
-   
-});
-
-// ---------------------------------------------------------------------------------------------------------------------
-function add_products()
-    {
-
-       
-   
-        var pr_prod=$("#preq_itemproductid option:selected").val();
-        var pr_prod_name=$("#preq_itemproductid option:selected").text(); //dropdown
-        var p_price=$("#preq_itemprice").val();
-        var p_qty=$("#preq_itemqty").val();
-        var p_dis=$("#preq_itemdiscount").val();
-        var p_tot= $("#preq_itemfinalprice").val();
-        
-        // var tcost=(parseFloat(cost)* parseFloat(wght)* parseFloat(qty)).toFixed(3); //total
-       
-        // var tprice=parseFloat(sprice)*parseFloat(wght)* parseFloat(qty);
-        // tprice.toFixed(3);
-        productsubtotal=parseFloat(p_price*p_qty);
-    if($("#preq_itemproductid").val()=='' || $("#preq_itemprice").val()==''|| $("#preq_itemqty").val()==''  || $("#preq_itemdiscount").val()==''){
-         alert("Fill all the fields in item info");
-     } else{
-         $("#tbody").append("<tr><td >"+1+"</td><td><input  class='form-control input-sm  ' type='hidden' name='pr_item_productid[]' value='"+pr_prod+"'> <span class='tabledit-span'>"+ pr_prod_name +" </span></td><td><input class='input-borderless input-sm row_data price'  type='text' readonly name='pr_item_price[]' value='"+p_price+"'>  </td><td><input class='input-borderless input-sm row_data quantity' type='text' readonly name='pr_item_qty[]' value='"+p_qty+"'> </td><td><input class='input-borderless input-sm row_data discount' type='text' readonly name='pr_item_discount[]' value='"+p_dis+"'></td> <td><input  class='input-borderless input-sm row_data total ' type='text' readonly name='pr_item_finalprice[]' value='"+p_tot+"'></td>      <td><span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span> <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span><span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span> <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span></td>   </tr>");
-         
- 
-         $(".btn_save").hide();
-        $(".btn_cancel").hide();
-     }
-
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-
-
-    function clear_products()
-    {
-
-       
-   
-        $("#preq_itemproductid option:selected").text(""); //dropdown
-       $("#preq_itemprice").val("");
-      $("#preq_itemqty").val("");
-        $("#preq_itemdiscount").val("");
-        $("#preq_itemfinalprice").val("");
-        
-      
-
-
-    }
-
-
-    
-    function edit_pr(edit_pr) {
-
-
-window.location.href = "add_new_purchase_requisition.php?edit_pr=" + edit_pr;
-
-
-
-}
-
-
-
-// ========================================================================================================================
-
-
 
 
 </script>
 <script type="text/javascript" src="../javascript/purchase.js"></script>
+<script type="text/javascript" src="../javascript/purchase/purchase_req.js"></script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>

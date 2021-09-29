@@ -226,39 +226,22 @@ function delete_purchaserequest($purchaserequest_id){
 
 // ------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-        
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    function inactive_purchreq_status($purchasereq_id)
+    {
+        $sql="UPDATE  purchase_request SET purchaserequest_status='INACTIVE' WHERE purchaserequest_id=$purchasereq_id ";
+        echo $sql;
+        $this->db->query($sql);
+        return true;
     }
 
+    function approved_purchreq_status($purchasereq_id)
+    {
+        $sql="UPDATE  purchase_request SET purchaserequest_status='APPROVED' WHERE purchaserequest_id=$purchasereq_id ";
+        echo $sql;
+        $this->db->query($sql);
+        return true;
+    }
 
-
-
-
-
-
+}
 
 ?>

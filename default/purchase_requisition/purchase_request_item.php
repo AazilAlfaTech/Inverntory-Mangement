@@ -138,6 +138,15 @@ function edit_PR_item(){
     return true;
 
 }
+
+function inactive_purchasereq_item($purch_req_id)
+    {
+        
+        $sql="UPDATE purchase_request_item SET pr_item_status='INACTIVE' WHERE pr_item_requestid=$purch_req_id";
+        $this->db->query($sql);
+        echo $sql; 
+       
+    }
 }
 
 
