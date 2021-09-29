@@ -63,6 +63,11 @@ $(".itembody").append("<tr>\
     <td class='table-edit-view'>\
         <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+productdiscount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
     </td>\
+    <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <select name='Status[]' id='productstatus' class='input-borderless status'>\
+            <option value='"+item_data[o].so_itemstatus+"' selected='selected'>"+item_data[o].so_itemstatus+"</option>\
+            </select>\
+        </td>\
     <td class='table-edit-view'>\
         <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+producttotal+"'>\
     </td>\
@@ -88,22 +93,22 @@ $("#sofinal_price").val("");
 
 //get price level for selected item
 
-$("#soitem_productid").change(function(){
-    var product_id=$("#soitem_productid").val();
-    console.log(product_id);
-    $.get("../ajax/ajaxsales.php?type=get_pricelevels",{productid:product_id},function(data)
-    {
-      console.log(data);
-      var d=JSON.parse(data); 
-      $("#soitem_price").html("");
-      $.each(d,function(i,x)
-      {
-        console.log(i);
-        console.log(x);
-        $("#soitem_price").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
-      });
-    });
+// $("#soitem_productid").change(function(){
+//     var product_id=$("#soitem_productid").val();
+//     console.log(product_id);
+//     $.get("../ajax/ajaxsales.php?type=get_pricelevels",{productid:product_id},function(data)
+//     {
+//       console.log(data);
+//       var d=JSON.parse(data); 
+//       $("#soitem_price").html("");
+//       $.each(d,function(i,x)
+//       {
+//         console.log(i);
+//         console.log(x);
+//         $("#soitem_price").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
+//       });
+//     });
 
-});
+// });
 
 

@@ -67,7 +67,6 @@ function add_products()
 
 function clear_products()
 {
-   
     $("#sq_itemprice").val("");
     $("#sq_itemqty").val("");
     $("#sq_itemdiscount").val("");

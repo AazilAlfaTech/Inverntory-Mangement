@@ -29,6 +29,8 @@
                 VALUES ('$this->product_name','$this->product_group','$this->product_code','$this->product_type','$this->product_uom','$this->product_desc','$this->product_inventory_val',
                 '$this->product_batch')";
                 $this->db->query($SQL);
+
+               
                 $product_id=$this->db->insert_id; //gets the id of the last insertion
                 move_uploaded_file($_FILES["productimage"]["tmp_name"],"../product/productimage/$product_id.jpg");
                 // echo $SQL;
