@@ -25,7 +25,6 @@
        $sales_quot_item1->insert_sales_quotationitem($pr_id);
       // echo "<script type='text/javascript'>alert('Successful - Record Updated!'); window.location.href = '../sales_quotation/manage_sales_quotation.php';</script>";
 
-       echo "<script type='text/javascript'>alert('Successful')</script>";
        header("location:../sales_quotation/manage_sales_quotation.php");
     }
     

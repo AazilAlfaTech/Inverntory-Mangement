@@ -46,7 +46,7 @@ function insert_sales_dispatch_item1($sd_id){
     foreach($_POST['Quantity'] as $item){
         $sql="INSERT INTO sales_dispatch_item (sd_item_qty,sd_item_invoiceid,sd_item_productid,sd_item_price,sd_item_discount,sd_item_saledispatch_id)VALUES 
         ('".$_POST['Quantity'][$list]."','".$_POST['Orderid'][$list]."','".$_POST['Product'][$list]."','".$_POST['Price'][$list]."','".$_POST['Discount'][$list]."',$sd_id)";
-      // echo $sql;
+     
        $this->db->query($sql);
         if($_POST['Product'][$list]>0){
             $sql_product="SELECT product_inventory_val FROM product WHERE product_id='".$_POST['Product'][$list]."'";
@@ -54,7 +54,7 @@ function insert_sales_dispatch_item1($sd_id){
            //echo $sql_product;
             $row_item=$res_inventory->fetch_array();
             $inventory=$row_item['product_inventory_val'];
-            echo  $inventory;
+           // echo  $inventory;
 
             if($inventory=='FIFO'){
             $fifoitem-> insert_fifo($_POST['Quantity'][$list],$_POST['Product'][$list],$sd_id);

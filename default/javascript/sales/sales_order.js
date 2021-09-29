@@ -88,22 +88,22 @@ $("#sofinal_price").val("");
 
 //get price level for selected item
 
-$("#soitem_productid").change(function(){
-    var product_id=$("#soitem_productid").val();
-    console.log(product_id);
-    $.get("../ajax/ajaxsales.php?type=get_pricelevels",{productid:product_id},function(data)
-    {
-      console.log(data);
-      var d=JSON.parse(data); 
-      $("#soitem_price").html("");
-      $.each(d,function(i,x)
-      {
-        console.log(i);
-        console.log(x);
-        $("#soitem_price").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
-      });
-    });
+// $("#soitem_productid").change(function(){
+//     var product_id=$("#soitem_productid").val();
+//     console.log(product_id);
+//     $.get("../ajax/ajaxsales.php?type=get_pricelevels",{productid:product_id},function(data)
+//     {
+//       console.log(data);
+//       var d=JSON.parse(data); 
+//       $("#soitem_price").html("");
+//       $.each(d,function(i,x)
+//       {
+//         console.log(i);
+//         console.log(x);
+//         $("#soitem_price").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
+//       });
+//     });
 
-});
+// });
 
 

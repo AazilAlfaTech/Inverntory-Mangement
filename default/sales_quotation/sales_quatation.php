@@ -190,7 +190,7 @@ function get_salesquotation_by_id($sales_quotationid){
 // ========================================================================================================================================
 function update_salequote_status($add_salesquotation_id){
     $sql="UPDATE sales_quotation SET salesquot_status='INACTIVE' WHERE salesquot_id=$add_salesquotation_id ";
-    echo $sql;
+    //echo $sql;
     $this->db->query($sql);
 
     

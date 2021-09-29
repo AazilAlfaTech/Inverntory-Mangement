@@ -17,5 +17,12 @@ function getpurchaserequestitem(){
     echo json_encode($result_PRitem);
 }
 
+function get_sum_remainingqty(){
+    include_once "../GRN/grn_item.php";
+    $grn_item2= new grn_item();
+    $result_stock=$grn_item2->item_remaining_stock_productid($_GET['prodid']);
+    echo json_encode($result_stock);
+}
+
 
 ?>

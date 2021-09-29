@@ -22,8 +22,7 @@ class sales_invoice_item{
 
     private $db;
 
-// --------------------------------------------------------------------------------------------------------------------
-function __construct(){
+ function __construct(){
           
     $this->db=new mysqli(host,un,pw,db1);
 }
@@ -45,11 +44,16 @@ function insert_sales_invoice_item1($so_id){
         ('".$_POST['Quantity'][$list]."','".$_POST['Orderid'][$list]."','".$_POST['Product'][$list]."','".$_POST['Price'][$list]."','".$_POST['Discount'][$list]."',$so_id)";
       //echo $sql;
        $this->db->query($sql);
-       $orderitem5->update_sales_orderitem($_POST['OrderItemid'][$list]);
-       $order5->sales_order_status($_POST['Orderid'][$list]);
+       if($_POST['Status'][$list]=='INACTIVE'){
+        $orderitem5->update_sales_orderitem($_POST['Orderid'] [$list]);
+       }
+
+
+      
+  
        $list++;
     }
-    
+    $order5->sales_order_status($_POST['Orderid'][$list]);
     return true;
 
 }

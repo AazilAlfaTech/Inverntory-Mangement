@@ -17,18 +17,18 @@ class avco{
     function insert_avco($product){
         $sql_avco="INSERT INTO avco_product (avco_productid) VALUES ($product) ";
         $this->db->query($sql_avco);
-        echo  $sql_avco;
+        //echo  $sql_avco;
         return true;
     }
 
 
     function updatecostprice($productid){
         $sql_sumofcostprice="SELECT SUM(grn_item_price) AS totcostprice FROM grn_item WHERE grn_item_productid=$productid";
-        echo $sql_sumofcostprice;
+       // echo $sql_sumofcostprice;
         $result_sum_costprice=$this->db->query($sql_sumofcostprice);
 
         $sql_countofcostprice="SELECT COUNT(grn_item_price) AS countcostprice FROM grn_item WHERE grn_item_productid=$productid";
-        echo  $sql_countofcostprice;
+       // echo  $sql_countofcostprice;
         $result_count_costprice=$this->db->query($sql_countofcostprice);
 
         $row1=$result_sum_costprice->fetch_array();
@@ -42,7 +42,7 @@ class avco{
 
        $sql_updateprice="UPDATE avco_product SET avco_costprice=$average_costprice WHERE avco_productid=$productid ";
        $this->db->query($sql_updateprice);
-       echo $sql_updateprice;
+      // echo $sql_updateprice;
        return true;
 
 

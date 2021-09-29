@@ -76,9 +76,10 @@ include_once "../../files/head.php";
                                             <thead>
                                             <tr>
                                                     <th>#</th>
-                                                    <th>Reference</th>
                                                     <th>Date</th>
+                                                    <th>Reference</th>
                                                     <th>Customer</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
 
                                                 </tr>
@@ -91,10 +92,11 @@ include_once "../../files/head.php";
                                                     {echo"
                                                         <tr>
                                                             <td id='gr_id_td'>$item->salesorder_id</td>
-                                                            <td>$item->salesorder_ref</td>
                                                             <td>$item->salesorder_date</td>
+                                                            <td>$item->salesorder_ref</td>
+                                                           
                                                             <td>$item->salesorder_customer_name</td>
-
+                                                            <td>$item->salesorder_status</td>
                                                             <td style='white-space: nowrap, width: 1%;'>
                                                                 <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
                                                                  <div class='btn-group btn-group-sm' style='float: none;'>
