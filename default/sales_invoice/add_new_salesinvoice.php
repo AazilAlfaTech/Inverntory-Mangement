@@ -353,7 +353,6 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
             <select name='Status[]' id='productstatus' class='input-borderless status'>\
             <option value='"+item_data[o].so_itemstatus+"' selected='selected'>"+item_data[o].so_itemstatus+"</option>\
             </select>\
-            <input class='form-control input-sm subtotal '   type='hidden' name='Orderid[]' value='"+ item_data[o].so_subtotal+"'>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
             <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+item_data[o].so_finaltotal+"'>\

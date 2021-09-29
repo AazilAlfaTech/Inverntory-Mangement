@@ -63,6 +63,11 @@ $(".itembody").append("<tr>\
     <td class='table-edit-view'>\
         <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+productdiscount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
     </td>\
+    <td class='table-edit-view'><span class='tabledit-span'></span>\
+            <select name='Status[]' id='productstatus' class='input-borderless status'>\
+            <option value='"+item_data[o].so_itemstatus+"' selected='selected'>"+item_data[o].so_itemstatus+"</option>\
+            </select>\
+        </td>\
     <td class='table-edit-view'>\
         <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+producttotal+"'>\
     </td>\
