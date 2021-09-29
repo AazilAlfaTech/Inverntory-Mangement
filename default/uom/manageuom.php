@@ -329,8 +329,8 @@
                                                                         <td> <div class='btn-group btn-group-sm' style='float: none;'>
 
                                                                         
-                                                                        <button type='button'  onclick='edit_uom($item->uom_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
-                                                                        <button type='button'  onclick='delete_uom($item->uom_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete delete_group'></span></button>
+                                                                        <button type='button'  onclick='edit_uom($item->uom_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button>
+                                                                        <button type='button'  onclick='delete_uom($item->uom_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o delete_group'></span></button>
                                                                         
                                                                     </div></td>
 

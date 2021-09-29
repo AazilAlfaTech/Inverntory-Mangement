@@ -209,6 +209,7 @@
                                                                 <!-- <td scope='row'>1</td> -->
                                                                 <td class='table-edit-view'><span class=''><?=$item->purchaseorder_itemname?></span>
                                                                     <input class='form-control input-sm' type='hidden' name='grn_itemid[]' value='<?=$item->purchaseorder_itemid?>'>
+                                                                    <input class='form-control input-sm' type='text' name='grn_itemid_inventory[]' value='<?=$item->purchaseorder_productinventory?>'>
                                                                 </td>
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?=$item->purchaseorder_qty?></span>
                                                                     <input class='input-borderless input-sm row_data quantity' type='text' readonly  name='grn_item_qty[]' value='<?=$item->purchaseorder_qty?>'><div style="color: red; display: none" class="msg1">Digits only</div>

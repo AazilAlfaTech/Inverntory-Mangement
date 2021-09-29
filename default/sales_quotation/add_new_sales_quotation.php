@@ -14,6 +14,7 @@
     include_once "sales_quatation_item.php";
     $sales_quot_item1=new sales_quotationitem();
 
+ 
     if(isset($_POST["salesquotcustomer"]))
     {
         $sales_quot1->salesquot_customer=$_POST["salesquotcustomer"];
@@ -21,8 +22,10 @@
         $sales_quot1->salesquot_ref=$sales_quot1->salesquot_code($_POST["salesquotdate"]);
 
        $pr_id=$sales_quot1->insert_sales_quotation();
-        // print_r($a);
-        $sales_quot_item1->insert_sales_quotationitem($pr_id);
+       $sales_quot_item1->insert_sales_quotationitem($pr_id);
+      // echo "<script type='text/javascript'>alert('Successful - Record Updated!'); window.location.href = '../sales_quotation/manage_sales_quotation.php';</script>";
+
+       header("location:../sales_quotation/manage_sales_quotation.php");
     }
     
     include_once "../../files/head.php";
@@ -142,7 +145,7 @@
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Qty</label>
-                                                <input type="number" class="form-control qty_add" placeholder="0" name="sqitem_qty" id="sq_itemqty">
+                                                <input type="text" class="form-control qty_add" placeholder="0" name="sqitem_qty" id="sq_itemqty">
                                                 <div style="color: red; display: none" class="msg1">Digits only</div>
                                             </div>
 

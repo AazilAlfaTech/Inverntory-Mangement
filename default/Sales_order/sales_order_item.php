@@ -11,7 +11,7 @@ class sales_orderitem{
     public $so_itemqty;
     public $so_itemdiscount;
 
-    // public $so_itemstatus;
+     public $so_itemstatus;
     
  
   
@@ -39,7 +39,7 @@ function insert_sales_orderitem($orderid){
     $sql="INSERT INTO sales_orderitem (so_itemqty,so_itemproductid,so_itemdiscount,so_itemprice,so_salesorderid) VALUES 
     ('".$_POST['Quantity'][$list]."','".$_POST['Product'][$list]."','".$_POST['Discount'][$list]."','".$_POST['Price'][$list]."',$orderid)";
    
-    echo $sql;
+  //  echo $sql;
         $this->db->query($sql);
 
         //$sq_item->delete_sqitem($_POST['Quoteid'][$list]);
@@ -91,7 +91,7 @@ function delete_sales_orderitem($so_itemid){
 
 function get_all_sales_orderitem($so_itemid){
     $sql="SELECT sales_orderitem.so_itemid,sales_orderitem.so_salesorderid,sales_orderitem.so_itemproductid,sales_orderitem.so_itemprice,
-    sales_orderitem.so_itemqty, sales_orderitem.so_itemdiscount, product.product_name FROM sales_orderitem JOIN product ON sales_orderitem.so_itemproductid=product.product_id WHERE sales_orderitem.so_salesorderid=$so_itemid AND sales_orderitem.so_itemstatus='ACTIVE' ";
+    sales_orderitem.so_itemqty, sales_orderitem.so_itemdiscount,sales_orderitem.so_itemstatus, product.product_name FROM sales_orderitem JOIN product ON sales_orderitem.so_itemproductid=product.product_id WHERE sales_orderitem.so_salesorderid=$so_itemid AND sales_orderitem.so_itemstatus='ACTIVE' ";
 
     //echo $sql;
   
@@ -110,6 +110,7 @@ function get_all_sales_orderitem($so_itemid){
         $sales_orderitem_item->so_itemprice=$row["so_itemprice"];
         $sales_orderitem_item->so_itemqty=$row["so_itemqty"];
         $sales_orderitem_item->so_itemdiscount=$row["so_itemdiscount"];
+        $sales_orderitem_item->so_itemstatus=$row['so_itemstatus'];
         $sales_orderitem_item->so_subtotal=round(($row["so_itemqty"]*$row["so_itemprice"]),2);
         $sales_orderitem_item->so_finaltotal=round(($row['so_itemqty']*$row['so_itemprice'])-($row['so_itemqty']*$row['so_itemprice']*$row['so_itemdiscount']/100),2);
         

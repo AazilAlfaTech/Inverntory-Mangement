@@ -10,8 +10,11 @@ $product1 = new product();
 $productlist=$product1->getall_product2();
 
 if(isset($_POST['save'])){
-   $sales_orderitem2->insert_sales_orderitem($_POST['salesorderid']);
+    $sales_order2->salesorder_date=$_POST['so_date'];
+    $sales_order2->edit_sales_order($_POST['salesorderid']);
+    $sales_orderitem2->insert_sales_orderitem($_POST['salesorderid']);
     $sales_orderitem2->edit_sales_orderitem();
+    header("location:../sales_order/manage_sales_order.php");
     // if($res_edit==true){
  
     //     header("location:../purchase_order/manage_purchase_order.php?success_edit=1");
@@ -105,7 +108,7 @@ include_once "../../files/head.php";
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="text"  value=<?=$sales_order2->salesorder_date ?> id="txtDate">
+                                                <input class="form-control" type="date"  value="<?=$sales_order2->salesorder_date ?>"  name="so_date" id="txtDate">
                                             </div>
                                         </div>
 
@@ -141,7 +144,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Qty</label>
-                                                <input type="number" class="form-control qty_add" placeholder="0" name="soitemqty" id="soitem_qty">
+                                                <input type="text" class="form-control qty_add" placeholder="0" name="soitemqty" id="soitem_qty">
                                                 <div style="color: red; display: none" class="msg1">Digits only</div>
                                             </div>
 
