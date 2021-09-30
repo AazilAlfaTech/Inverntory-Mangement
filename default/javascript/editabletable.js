@@ -1,19 +1,18 @@
     
      //function to be called when the page loads
      $( document ).ready(function() {
-        console.log( "hello!" );
-           
+     
             $(".btn_cancel").hide();
              $(".btn_save").hide();
             
          
             $(".tabledit-span").hide();
-                cal_totquantity();
+                    cal_totquantity();
                     cal_totprice();
                     cal_totdiscount();
                     final_total();
     
-                  
+ //calculate total in each row.................................................................................................                 
         $("table").on("keyup", ".quantity, .price, .discount", function() {
      
             var row = $(this).closest("tr");
@@ -48,46 +47,28 @@
             row.find(".total").attr("value",tot);
         });
 
-          $("table").on("change", ".price", function() {
-            console.log("onchange");
-            var row = $(this).closest("tr");
-           
-            var quants = row.find(".quantity").val();
-            var prc = row.find(".price").val();
-            
-            console.log(prc);
-           // var tot = quants * prc;
-           var disc= row.find(".discount").val();
-                        var subtot= parseFloat(quants * prc * disc/100);
-                        console.log(subtot);
-                        var tot = parseFloat(quants * prc - subtot);
-                        console.log(tot);
-            row.find(".total").attr("value",tot);
-        });
-        // $("#productprice").change(function(){
-        //     var priceval=$("#productprice").val();
+        //   $("table").on("change", ".price", function() {
         //     console.log("onchange");
-        //     console.log(priceval);
-        //     $("table").on("keyup", ".quantity, .price, .discount", function() {
-     
-        //         var row = $(this).closest("tr");
-               
-        //         var quants = row.find(".quantity").val();
-        //         var prc = row.find(".price").val();
-                
-        //         console.log(prc);
-        //        // var tot = quants * prc;
-        //        var disc= row.find(".discount").val();
-        //                     var subtot= parseFloat(quants * prc * disc/100);
-        //                     console.log(subtot);
-        //                     var tot = parseFloat(quants * prc - subtot);
-        //                     console.log(tot);
-        //         row.find(".total").attr("value",tot);
-        //     });
+        //     var row = $(this).closest("tr");
+           
+        //     var quants = row.find(".quantity").val();
+        //     var prc = row.find(".price").val();
+            
+        //     console.log(prc);
+        //    // var tot = quants * prc;
+        //    var disc= row.find(".discount").val();
+        //                 var subtot= parseFloat(quants * prc * disc/100);
+        //                 console.log(subtot);
+        //                 var tot = parseFloat(quants * prc - subtot);
+        //                 console.log(tot);
+        //     row.find(".total").attr("value",tot);
         // });
+        
     
     });
-    
+//......................page onload fuctions end.....................................................................................
+
+
     //click on the edit button, row becomes editable
     $(document).on('click', '.btn_edit', function(event) 
     {
@@ -115,10 +96,15 @@
         tbl_row.find('.row_data')
         .attr('readonly', false)
 
-         var id1=tbl_row.find(".productid").val();;
-        console.log(id1);
-        
-        getpricelevel(id1);
+        //get product id
+        var id1=tbl_row.find(".productid").val();
+        var statusval=tbl_row.find(".status").val();
+        console.log(statusval);
+      
+        //execute fuction to show the pricelevel dropdownlist
+        getpricelevel(id1,statusval);
+
+        //execute function to show the status dropdown
       
 
         //--->add the original entry data to attribute original_entry
@@ -151,13 +137,12 @@ $(document).on('click', '.btn_save', function(event)
         //hide edit button
         tbl_row.find('.btn_edit').show(); 
         tbl_row.find('.row_data')
+
         //type text changes to type hidden
         .attr('readonly', true)
         
         
-
-        
-        tbl_row.find('.row_data').each(function(index,val) 
+         tbl_row.find('.row_data').each(function(index,val) 
         {  
              //changes made het assigned to the value attribute
             $(this).attr('value', $(this).val());
@@ -176,7 +161,7 @@ $(document).on('click', '.btn_save', function(event)
 
         cal_totquantity();
         cal_totprice();
-        cal_totdiscount();
+        //cal_totdiscount();
         final_total();
         }
 
@@ -223,11 +208,11 @@ $(document).on('click', '.btn_deleterow', function(event) {
     tbl_row.remove();
     cal_totquantity();
     cal_totprice();
-    cal_totdiscount();
+   // cal_totdiscount();
     final_total();
 
 });
-// st
+
 $(document).on('click', '.deletedata', function(event) {
     var tbl_row = $(this).closest('tr');
     console.log ("deletedata");
@@ -268,7 +253,7 @@ $(document).on('click', '.deletedata', function(event) {
 
 
 
-
+//validations -only numbers.......................................................................................................
 
 
 $(document).on('click', '.btn_edit', function(event){
@@ -280,7 +265,7 @@ var row=$(this).closest('tr');
 row.find(".quantity").on("keypress",function(e)
 {
 
-    var charCode = (e.which) ? e.which : event.keyCode    
+    var charCode = (e.which) ? e.which : event.charCode    
     
     if(String.fromCharCode(charCode).match(/[^0-9]/g))
     {  
@@ -295,7 +280,9 @@ row.find(".price").on("keypress",function(e)
        
     var charCode = (e.which) ? e.which : event.keyCode    
     
-    if(String.fromCharCode(charCode).match(/[^0-9]/g)){  
+    if(e.which != 8 && e.which != 0 
+        && (e.which < 48 || e.which > 57) 
+        && e.charCode != 46 && e.charCode != 44){  
         row.find(".msg2").css("display", "inline"); 
         return false;  
     }else
@@ -308,7 +295,9 @@ row.find(".discount").on("keypress",function(e)
 
     var charCode = (e.which) ? e.which : event.keyCode    
     
-    if(String.fromCharCode(charCode).match(/[^0-9]/g)){  
+    if(e.which != 8 && e.which != 0 
+        && (e.which < 48 || e.which > 57) 
+        && e.charCode != 46){  
         row.find(".msg3").css("display", "inline"); 
         return false;  
     }else
@@ -318,21 +307,32 @@ row.find(".discount").on("keypress",function(e)
 
 
 });
-function getpricelevel(e){
-    console.log("getpricelevel");
+
+function getpricelevel(e,d){
+  //  console.log("getpricelevel");
     console.log(e);
     $.get("../ajax/ajaxsales.php?type=get_pricelevels",{productid:e},function(data)
     {
-      console.log(data);
+      //console.log(data);
       var d=JSON.parse(data); 
       //$("#productprice").html("");
       $.each(d,function(i,x)
       {
-        console.log(i);
-        console.log(x);
+        
         $("#productprice").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
       });
     });
+
+    //append status dropdown
+    if(d=='ACTIVE'){
+        
+    
+        $("#productstatus").append("<option value='INACTIVE'>INACTIVE</option>");
+    }else if(d=='INACTIVE'){
+       
+        $("#productstatus").append("<option value='ACTIVE'>ACTIVE</option>");
+    }
+    // $("#productstatus").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
 }
 
 function cal_totquantity(){

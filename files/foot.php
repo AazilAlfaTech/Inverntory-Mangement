@@ -77,8 +77,8 @@
 
 
     <!-- data-table js -->
-    <script src="..\..\files\bower_components\datatables.net\js\jquery.dataTables.min.js"></script>
-    <script src="..\..\files\bower_components\datatables.net-buttons\js\dataTables.buttons.min.js"></script>
+
+   
     <script src="..\..\files\assets\pages\data-table\js\jszip.min.js"></script>
     <script src="..\..\files\assets\pages\data-table\js\pdfmake.min.js"></script>
     <script src="..\..\files\assets\pages\data-table\js\vfs_fonts.js"></script>

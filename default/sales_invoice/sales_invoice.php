@@ -218,12 +218,12 @@ function si_code($salesinvoice_date){
 function sales_invoice_status($salesinvoicestatus){
     $sql1="SELECT * FROM sales_invoice_item WHERE si_item_invoiceid=$salesinvoicestatus AND si_item_status='ACTIVE'";
     $result=$this->db->query($sql1);
-    echo $sql1;
+   // echo $sql1;
 
 if($result->num_rows==0){
     $sql2="UPDATE sales_invoice SET salesinvoice_status='INACTIVE' WHERE salesinvoice_id =$salesinvoicestatus";
     $this->db->query($sql2);
-    echo $sql2;
+    //echo $sql2;
     return true;
 }else{
     return false;

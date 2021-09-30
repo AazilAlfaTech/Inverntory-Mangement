@@ -591,12 +591,12 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../reports/manage_supplier_group.php " >
+                                        <a href="../reports/sales_report.php " >
                                             <span class="pcoded-mtext">Sales Report </span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../reports/manage_supplier.php " >
+                                        <a href="../reports/dispatch_report.php " >
                                             <span class="pcoded-mtext">Salaes Dispatch Report</span>
                                         </a>
                                     </li>

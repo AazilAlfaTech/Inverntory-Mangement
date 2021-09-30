@@ -5,6 +5,7 @@ include_once "../group/group.php";
 include_once "../producttype/producttype.php";
 include_once "../uom/uom.php";
 include_once "../product/pricelevel.php";
+include_once "../stock/avco.php";
 
 $group1=new group();
 $result_group=$group1->get_all_group();
@@ -17,8 +18,9 @@ $result_uom=$uom1->get_all_uom();
 
 $pricelevel1=new pricelevel();
 
-
 $product1=new product();
+
+$avco_product1=new avco();
 
 // download the sample excel file
 if(!empty($_GET['file_download']))
@@ -79,6 +81,7 @@ if (isset($_POST["productname"]))
         $res_edit= $product1->edit_product($_POST['product_id']);
         $pricelevel1-> insert_pricelevel($_POST['product_id']);
         $pricelevel1->update_pricelevel(); 
+        
      
             //code for insert validation
             // if($res_edit==true){
@@ -91,7 +94,12 @@ if (isset($_POST["productname"]))
     {
             $res_insert=$product1->insert_product();   
             $pricelevel1-> insert_pricelevel( $res_insert);
-            echo $res_insert;
+         
+            if($_POST["productval"]=='AVCO')
+            {
+                $avco_product1->insert_avco( $res_insert);
+                echo "AVCO DONE";
+            }
             //code for insert validation
             // if($res_insert==true){
                 
@@ -538,9 +546,9 @@ include_once "../../files/head.php";
                                                             <td>$item->product_typename</td>
                                                             <td>
                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                <button type='button' id='editprod' onclick='view_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='icofont icofont-eye-alt'></i></span></button>
-                                                                    <button type='button' id='editprod' onclick='edit_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
-                                                                    <button type='button'  onclick='delete_product($item->product_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='icofont icofont-ui-delete'></span></button>
+                                                                <button type='button' id='editprod' onclick='view_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>
+                                                                    <button type='button' id='editprod' onclick='edit_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button>
+                                                                    <button type='button'  onclick='delete_product($item->product_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
                                                                 </div>
                                                             </td>
                                                         </tr>";

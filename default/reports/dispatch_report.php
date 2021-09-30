@@ -22,7 +22,11 @@ $res_loc = $loc->get_all_location();
 
 include_once "../product/product.php";
 $prd = new product();
-$res_prd = $prd->getall_product2()
+$res_prd = $prd->getall_product2();
+
+include_once "../customer/customer.php";
+$cus = new customer();
+$res_cus = $cus->get_all_customer();
 
 
 
@@ -116,15 +120,15 @@ $res_prd = $prd->getall_product2()
                                                 </div>
 
                                                 <div class="col-sm-4">
-                                                    <label class=" col-form-label">Suplier</label>
+                                                    <label class=" col-form-label">Customer</label>
                                                  
 
                                                     <select class="js-example-basic-single col-sm-12" name="" id="" required>
-                                                    <option value="-1">Select Supplier</option>
+                                                    <option value="-1">Select Customer</option>
                                                     <?php
-                                                        foreach($res_sup as $item)
+                                                        foreach($res_cus as $item)
                                                       
-                                                        echo"<option value='$item->supplier_id '>$item->supplier_name</option>";
+                                                        echo"<option value='$item->customer_id '>$item->customer_name</option>";
                                                    ?>
                                                 </select>
 
@@ -219,19 +223,14 @@ $res_prd = $prd->getall_product2()
                                                 <thead>
                                                     <tr>
                                                         <th>DATE</th>
-                                                        <th>Ref No</th>
-                                                        <th>Product Code</th>
-                                                        <th>Group</th>
-                                                        <th>Type</th>
+                                                        <th>Ref No</th>                      
+                                                        <th>Sales Inv No.</th>
+                                                        <th>Product Code</th>   
                                                         <th>Product Name</th>
-
-                                                        <th>Supplier</th>
                                                         <th>Location</th>
+                                            
                                                         <th>Quantity</th>
-                                                        <th>Cost Price</th>
-                                                        <th>Disc %</th>
-                                                        <th>Discount</th>
-                                                        <th>Total</th>
+                                                   
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -243,12 +242,7 @@ $res_prd = $prd->getall_product2()
                                                         <td>2011/04/25</td>
                                                         <td>$320,800</td>
                                                         <td>Tiger Nixon</td>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
-                                                        <td>2011/04/25</td>
-                                                        <td>$320,800</td>
-                                                        <td>$320,800</td>
+                                                       
                                                     </tr>
 
                                                 </tbody>

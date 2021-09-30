@@ -1,16 +1,18 @@
 <?php
         include_once "../../files/config.php";
         include_once "../product/product.php";
+        include_once "../stock/avco.php";
         class grn_item
         {
             public $grn_item_id;
             public $grn_item_grnid;
             public $grn_item_productid;
             public $grn_item_qty;
+            public $grn_item_remain_qty;
             public $grn_item_price;
             public $grn_item_discount;
-            // public $grn_item_finalprice;
-            public $grn_item_subtotoal;
+            public $grn_qty;
+        
             public $grn_item_status;
             public $db;
 
@@ -23,17 +25,29 @@
 
             function insert_grnitem($id)
             {
-                
+                $avco_product2=new avco();
                 $grn_list=0;
             
                foreach($_POST['grn_itemid'] as $item)
                 {
                     
-                    $SQL="INSERT INTO grn_item (grn_item_grnid,grn_item_productid,grn_item_qty,grn_item_price,grn_item_discount)
-                    VALUES ($id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_itemprice'][$grn_list]."',
+                    $SQL="INSERT INTO grn_item (grn_item_grnid,grn_item_productid,grn_item_qty,grn_item_remain_qty,grn_item_price,grn_item_discount)
+                    VALUES ($id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_itemprice'][$grn_list]."',
                     '".$_POST['grn_item_discount'][$grn_list]."')";
                     $this->db->query($SQL);
-                    echo $SQL;
+                    if($_POST['grn_itemid_inventory'][$grn_list]=='AVCO'){
+                        
+                        $avco_product2->updatecostprice($_POST['grn_itemid'][$grn_list]);
+                       $resultcost=$avco_product2->get_costpricebyid($_POST['grn_itemid'][$grn_list]);
+                        $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_costprice) VALUES ('GRN',$id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."',$resultcost)";
+                        $this->db->query( $sql_stock);
+                        echo $sql_stock;
+                    }elseif($_POST['grn_itemid_inventory'][$grn_list]=='FIFO'){
+                            $costprice=round(($_POST['grn_itemprice'][$grn_list] * 1) - ($_POST['grn_itemprice'][$grn_list] *1* $_POST['grn_item_discount'][$grn_list]/100),2);
+                            $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_costprice) VALUES ('GRN',$id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."',$costprice)";
+                        $this->db->query( $sql_stock);
+                    }
+                   
 
                     $grn_list++;
                 }
@@ -84,7 +98,15 @@
                 return $grn_item_array;
             }
 
-            
+            function item_remaining_stock_productid($productid){
+                $sql="SELECT SUM(grn_item_remain_qty) AS totqty FROM grn_item WHERE grn_item_productid= $productid";
+                $result_qty=$this->db->query($sql);
+                $row=$result_qty->fetch_array();
+                 
+                $grn_item1=new grn_item();
+                $grn_item1->grn_qty=$row['totqty'];
+                return $grn_item1;
+            }
 
         }
 

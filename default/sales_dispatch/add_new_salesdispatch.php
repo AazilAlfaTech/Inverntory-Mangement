@@ -20,6 +20,7 @@ if(isset($_POST['sdis_date'])){
     $sales_dispatch2->salesdispatch_ref=$sales_dispatch2->sd_code($_POST['sdis_date']);
     $dispatchid=$sales_dispatch2->insert_sales_dispatch();
     $salesdispatchitem->insert_sales_dispatch_item1($dispatchid);
+    
 }
 
 
