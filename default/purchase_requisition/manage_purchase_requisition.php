@@ -180,7 +180,7 @@ include_once "../../files/foot.php";
                             function view_pr(view_pr) {
 
 
-                                window.location.href = "view_puchase_requisition.php?view_pr=" + view_pr;
+                                window.location.href = "print_purchaserequistion.php?view_pr=" + view_pr;
 
 
                             }

@@ -94,19 +94,21 @@
 
                                                     <?php
                                                 foreach ($result_grnitem3 as $item)
-                                                    {
-                                                        echo
-                                                        "
-                                                        <tr>
-                                                            <td>$item->grn_item_prodname </td>
-                                                            <td class='quantity'>$item->grn_item_qty </td>
-                                                            <td>$item->grn_item_price</td>
-                                                            <td>$item->grn_item_dis</td>
-                                                            <td>$item->grn_item_finalprice</td>
-                                                        </tr>
-                                                 
-                                                  ";
-                                                    }
+                                                {
+                                                    echo
+                                                    "
+                                                    <tr>
+                                                        <td>$item->grn_item_prodname </td>
+                                                        <td><input class='input-borderless quantity' readonly type='text' value='$item->grn_item_qty'    </td>
+                                                        <td><input class='input-borderless price' readonly type='text' value='$item->grn_item_price'</td>
+                                                        <td><input class='input-borderless discount ' readonly type='text' value='$item->grn_item_dis'></td>
+                                 <input class='input-borderless subtotal' readonly type='hidden' value='$item->grn_item_subtotoal'>
+                                                        <td><input class='input-borderless total' readonly type='text' value='$item->grn_item_finalprice'></td>
+
+                                                    </tr>
+                                             
+                                              ";
+                                                }   
                                                   ?>
                                                     </tbody>
                                                 </table>
@@ -115,19 +117,25 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <table class="table table-responsive invoice-table invoice-total">
-                                                <tbody class="pricelist">
+                                        </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                        <table class="table table-responsive invoice-table invoice-total">
+                                                <tbody>
                                                     <tr>
-                                                        <th>Total Quantity :</th>
-                                                        <td><input type="text" id="total_quan" name="totqty" class="form-control form-control-sm" ></td>
+                                                        <th>Total quantity :</th>
+                                                        <td><span></span><input class='input-borderless autonumber' id="total_quan" readonly type='text' value=''></td>
                                                     </tr>
                                                     <tr>
-                                                        <th>Taxes (10%) :</th>
-                                                        <td>$57.00</td>
+                                                        <th>Sub Total :</th>
+                                                        <td><span>Rs.</span><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' data-a-sign="Rs. "></td>
                                                     </tr>
                                                     <tr>
-                                                        <th>Discount (5%) :</th>
-                                                        <td>$45.00</td>
+                                                        <th>Discount :</th>
+                                                        <td><span></span><input class='input-borderless autonumber' id="total_discount" readonly type='text' value=''></td>
                                                     </tr>
                                                     <tr class="text-info">
                                                         <td>
@@ -136,7 +144,7 @@
                                                         </td>
                                                         <td>
                                                             <hr>
-                                                            <h5 class="text-primary">$4827.00</h5>
+                                                            <h5 class="text-primary"><span>Rs.</span><input class='input-borderless' id="total_final" readonly type='text' value='$item->so_itemqty'></h5>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -170,7 +178,7 @@
 
 <?php
 
-        include_once "../../files/foot.php";
+        include_once "../../files/print_foot.php";
 
         ?>
         <script type="text/javascript" src="../javascript/editabletable.js"></script>
