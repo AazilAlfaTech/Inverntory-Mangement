@@ -105,7 +105,7 @@
         getpricelevel(id1,statusval);
 
         //execute function to show the status dropdown
-      
+        $("#productstatus").append("<option value='INACTIVE'>INACTIVE</option>");
 
         //--->add the original entry data to attribute original_entry
         //--->applicable only to input tag
@@ -313,25 +313,23 @@ function getpricelevel(e,d){
     console.log(e);
     $.get("../ajax/ajaxsales.php?type=get_pricelevels",{productid:e},function(data)
     {
-      //console.log(data);
+      console.log(data);
       var d=JSON.parse(data); 
-      //$("#productprice").html("");
+      $("#productprice").html("");
       $.each(d,function(i,x)
       {
-        
+        console.log(i);
+        console.log(x);
         $("#productprice").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
       });
     });
 
     //append status dropdown
-    if(d=='ACTIVE'){
+  
         
     
-        $("#productstatus").append("<option value='INACTIVE'>INACTIVE</option>");
-    }else if(d=='INACTIVE'){
        
-        $("#productstatus").append("<option value='ACTIVE'>ACTIVE</option>");
-    }
+    
     // $("#productstatus").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
 }
 

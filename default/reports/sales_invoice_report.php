@@ -28,8 +28,15 @@ include_once "../customer/customer.php";
 $cus = new customer();
 $res_cus = $cus->get_all_customer();
 
+include_once "../sales_invoice/sales_invoice.php";
+$sales_invoice4=new sales_invoice();
+$res_invoice=$sales_invoice4->sales_invoice_report();
+//print_r($res_invoice);
+//exit;
 
-
+if(isset($_POST['filter'])){
+    $res_invoice=$sales_invoice4->sales_invoice_report_filter($_POST);
+}
 
 
 
@@ -97,7 +104,7 @@ $res_cus = $cus->get_all_customer();
 
                                     <div class="card-block">
 
-                                        <form action=" " method="POST" id="submitgroup">
+                                        <form action="sales_invoice_report.php" method="POST" >
 
 
 
@@ -105,16 +112,14 @@ $res_cus = $cus->get_all_customer();
                                                 <div class="col-sm-4">
                                                     <label class=" col-form-label">From</label>
 
-                                                    <input type="date" class="form-control" name="groupcode" pattern="" id="gr_code" placeholder="" >
-                                                    <div class="col-form-label" id="">
-                                                    </div>
+                                                    <input type="date" class="form-control" name="filter_startdt" pattern="" id="gr_code" placeholder="" >
+                                                  
                                                 </div>
 
                                                 <div class="col-sm-4">
                                                     <label class=" col-form-label">To</label>
-                                                    <input type="date" name="groupname" class="form-control" id="gr_name" >
-                                                    <div class="col-form-label" id="namecheck_msg" style="display:none;">
-                                                    </div>
+                                                    <input type="date" name="filter_enddt" class="form-control" id="gr_name" >
+                                                    
 
                                                 </div>
 
@@ -122,12 +127,12 @@ $res_cus = $cus->get_all_customer();
                                                     <label class=" col-form-label">Customer</label>
                                                  
 
-                                                    <select class="js-example-basic-single col-sm-12" name="" id="" required>
+                                                    <select class="js-example-basic-single col-sm-12" name="filter_cus" id="" >
                                                     <option value="-1">Select Customer</option>
                                                     <?php
                                                         foreach($res_cus as $item)
                                                       
-                                                        echo"<option value='$item->customer_id '>$item->customer_name</option>";
+                                                        echo"<option value='$item->customer_name '>$item->customer_name</option>";
                                                    ?>
                                                 </select>
 
@@ -194,19 +199,19 @@ $res_cus = $cus->get_all_customer();
                                                     <label class=" col-form-label">Product </label>
                                                   
                                                 
-                                                    <select class="js-example-basic-single col-sm-12" name="" id="" required>
+                                                    <select class="js-example-basic-single col-sm-12" name="filter_product" id="" required>
                                                     <option value="-1">Select Product</option>
                                                     <?php
                                                         foreach($res_prd as $item)
                                                       
-                                                        echo"<option value='$item->product_id'>$item->product_name</option>";
+                                                        echo"<option value='$item->product_name'>$item->product_name</option>";
                                                    ?>
                                                 </select>
                                                 </div>
 
                                             </div>
 
-                                            <button type="submit" class="btn btn-primary">Search</button>
+                                            <button type="submit" name='filter' class="btn btn-primary">Search</button>
                                             <button type="reset" class="btn btn-inverse">CLEAR</button>
                                         </form>
                                     </div>
@@ -218,53 +223,54 @@ $res_cus = $cus->get_all_customer();
 
                                     <div class="card-block">
                                         <div class="dt-responsive table-responsive">
-                                            <table id="basic-btn" class="table table-striped table-bordered nowrap">
+                                            <table id="table34" class="table table-striped table-bordered nowrap ">
                                                 <thead>
                                                     <tr>
                                                         <th>DATE</th>
                                                         <th>Ref No</th>
                                                         <th>Product Code</th>
-                                                        <th>Group</th>
-                                                        <th>Type</th>
                                                         <th>Product Name</th>
 
-                                                        <th>Supplier</th>
-                                                        <th>Location</th>
+                                                        <th>Customer</th>
+
+
+                                                       
                                                         <th>Quantity</th>
-                                                        <th>Cost Price</th>
-                                                        <th>Disc %</th>
-                                                        <th>Discount</th>
-                                                        <th>Total</th>
+                                                        <th>Sales Price</th>
+                                                 
+                                                      
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Tiger Nixon</td>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
-                                                        <td>2011/04/25</td>
-                                                        <td>$320,800</td>
-                                                        <td>Tiger Nixon</td>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
-                                                        <td>2011/04/25</td>
-                                                        <td>$320,800</td>
-                                                        <td>$320,800</td>
-                                                    </tr>
+                                                    <?php
+                                                        foreach($res_invoice as $item){
+                                                            echo"
+                                                            <tr>
+                                                            <td>$item->salesinvoice_date</td>
+                                                            <td>$item->salesinvoice_ref</td>
+                                                            <td>$item->product_code</td>
+                                                            <td>$item->product_name</td>
+                                                            <td>$item->customer_name</td>
+
+                                                            <td>$item->si_item_qty</td>
+                                                            <td>$item->si_item_price</td>
+                                                          
+                                                            
+                                                            </tr>
+                                                            ";
+                                                        }
+
+                                                    ?>
+                                                    
 
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>Name</th>
-                                                        <th>Position</th>
-                                                        <th>Office</th>
-                                                        <th>Age</th>
-                                                        <th>Start date</th>
-                                                        <th>Salary</th>
+                                                        <th colspan="5">Totals:</th>
+                                                        <th></th>
+                                                        <th></th>
                                                     </tr>
-                                                </tfoot>
+                                                    </tfoot>
                                             </table>
                                         </div>
                                     </div>
@@ -280,3 +286,35 @@ $res_cus = $cus->get_all_customer();
                             ?>
 
                             <!-- ------------------------------------------------------------------------------------------------- -->
+
+                            <script>
+
+$(document).ready(function () {
+						$('#table34').DataTable({
+							"searching": true,
+                            "LengthChange": true,
+                            
+                            "lengthMenu": [10, 15, 25, 50, 100, "All"],
+                            "iDisplayLength": 10,
+                                                    //"pageLength": 40,
+							"scrollX": true,
+							"paging": true,
+							"info": true,
+                            dom: 'Bfrtip',
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+							drawCallback: () => {
+								const table = $('#table34').DataTable();
+								const tableData = table.rows({
+										search: 'applied'
+									}).data().toArray();
+								const totals = tableData.reduce((total, rowData) => {
+										total[0] += parseFloat(rowData[5]);
+										total[1] += parseFloat(rowData[6]);
+										return total;
+									}, [0, 0]);
+								$(table.column(5).footer()).text(totals[0]);
+								$(table.column(6).footer()).text(totals[1]);
+							}
+						})
+					});				
+                            </script>

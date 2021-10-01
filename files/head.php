@@ -591,7 +591,7 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../reports/sales_report.php " >
+                                        <a href="../reports/sales_invoice_report.php " >
                                             <span class="pcoded-mtext">Sales Report </span>
                                         </a>
                                     </li>
