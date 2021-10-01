@@ -230,7 +230,82 @@ if($result->num_rows==0){
 }
 }
 
+function sales_invoice_report(){
+    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
 
+    $result=$this->db->query($sql);
+   //  echo $sql;
+    $salesinvoice_arr=array();
+
+    while($row=$result->fetch_array()){
+        $salesinvoice3=new sales_invoice();
+
+        $salesinvoice3->salesinvoice_date=$row['salesinvoice_date'];
+        $salesinvoice3->salesinvoice_ref=$row['salesinvoice_ref'];
+        $salesinvoice3->product_code=$row['product_code'];
+        $salesinvoice3->product_name=$row['product_name'];
+        $salesinvoice3->customer_name=$row['customer_name'];
+        $salesinvoice3->si_item_qty=$row['si_item_qty'];
+        $salesinvoice3->si_item_price=$row['si_item_price'];
+        $salesinvoice3->si_item_discount=$row['si_item_discount'];
+       // $salesinvoice3->si_item_total=$row[''];
+
+       $salesinvoice_arr[]= $salesinvoice3;
+
+    }
+
+    return  $salesinvoice_arr;
+}
+
+function sales_invoice_report_filter(){
+
+    $filter_cus=$_POST['filter_cus'];
+    $filter_product=$_POST['filter_product'];
+    $filter_startdt=$_POST['filter_startdt'];
+    $filter_enddt=$_POST['filter_enddt'];
+
+
+    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid 
+    JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
+
+    if($filter_cus!=-1){
+        $sql.=" and customer_name='$filter_cus'";
+    }
+    if($filter_product!=-1){
+        $sql.=" and product_name='$filter_product'";
+    }
+    if($filter_startdt!='' && $filter_enddt!=''){
+        $sql.="and salesinvoice_date BETWEEN  '".$_POST['filter_startdt']."' AND '".$_POST['filter_enddt']."' "; 
+      
+    }
+
+    $result=$this->db->query($sql);
+   echo $sql;
+    $salesinvoice_arr=array();
+
+    while($row=$result->fetch_array()){
+        $salesinvoice3=new sales_invoice();
+
+        $salesinvoice3->salesinvoice_date=$row['salesinvoice_date'];
+        $salesinvoice3->salesinvoice_ref=$row['salesinvoice_ref'];
+        $salesinvoice3->product_code=$row['product_code'];
+        $salesinvoice3->product_name=$row['product_name'];
+        $salesinvoice3->customer_name=$row['customer_name'];
+        $salesinvoice3->si_item_qty=$row['si_item_qty'];
+        $salesinvoice3->si_item_price=$row['si_item_price'];
+        $salesinvoice3->si_item_discount=$row['si_item_discount'];
+       // $salesinvoice3->si_item_total=$row[''];
+
+       $salesinvoice_arr[]= $salesinvoice3;
+
+    }
+
+    return  $salesinvoice_arr;
+
+
+
+
+}
 
 
 
