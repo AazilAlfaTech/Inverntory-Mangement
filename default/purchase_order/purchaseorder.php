@@ -71,10 +71,13 @@ class purchaseorder{
     
         }
 
+        // -------------------------------------------------------------------------------------------------------
     function get_all_purchaseorder(){
         //$sql="SELECT * FROM purchase_order WHERE purchaseorder_status='ACTIVE' ";
         $sql="SELECT purchase_order.purchaseorder_id ,purchase_order.purchaseorder_ref ,purchase_order.purchaserorder_requestid, purchase_order.purchaseorder_status ,purchase_order.purchaseorder_date,
-        supplier.supplier_name FROM purchase_order INNER JOIN `purchase_request` ON purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id    
+        supplier.supplier_name 
+        FROM purchase_order 
+        INNER JOIN `purchase_request` ON purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id    
          INNER JOIN supplier ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaseorder_status='ACTIVE' ";
         $result=$this->db->query($sql);
        // echo $sql;
@@ -93,6 +96,9 @@ class purchaseorder{
         }
         return $array_purchaseorder;
     }
+
+
+// -----------------------------------------------------------------------------------------------------------
 
     function get_purchaseorder_by_id($ORDERID){
        // $sql="SELECT * FROM purchase_order WHERE purchaseorder_status='ACTIVE' AND purchaseorder_id=$ORDERID";
@@ -130,10 +136,116 @@ class purchaseorder{
     
 
     }
+// -----REPORT---------------------------------------------------------------------------------------------
+
+
+function get_all_purchaseorder_for_report(){
+    // $sql="SELECT * FROM purchase_order WHERE purchaseorder_status='ACTIVE' ";
+    $sql="SELECT purchase_order.purchaseorder_ref ,purchase_order.purchaseorder_date, supplier.supplier_name,product.product_code,product.product_name,purchase_order_item.po_item_qty 
+    ,purchase_order_item.po_item_price,purchase_order_item.po_item_discount, product_group.group_name,product_type.ptype_name
+     FROM purchase_order INNER JOIN purchase_request ON purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id    
+     INNER JOIN supplier ON purchase_request.purchaserequest_supplier=supplier.supplier_id 
+     JOIN purchase_order_item ON purchase_order.purchaseorder_id = purchase_order_item.po_item_orderid 
+     JOIN product ON purchase_order_item.po_item_productid = product.product_id
+     JOIN product_group ON  product.product_group = product_group.group_id
+     JOIN product_type ON  product.product_type = product_type.ptype_id
+     
+
+
+     WHERE purchaseorder_status='ACTIVE' ";
+
+    $result=$this->db->query($sql);
+   // echo $sql;
+    $array_purchaseorder=array();
+    while($row=$result->fetch_array()){
+        $puchasorder1=new purchaseorder();
+
+      
+        $puchasorder1->purchaseorder_ref=$row['purchaseorder_ref'];
+  
+        $puchasorder1->purchaseorder_date=$row['purchaseorder_date'];
+        $puchasorder1->supplier_name1=$row['supplier_name'];
+        $puchasorder1->product_code=$row['product_code'];
+        $puchasorder1->product_name=$row['product_name'];
+        $puchasorder1->po_item_qty=$row['po_item_qty'];
+        $puchasorder1->po_item_price=$row['po_item_price'];
+        $puchasorder1->po_item_discount=$row['po_item_discount'];
+        $puchasorder1->group_name=$row['group_name'];
+        $puchasorder1->ptype_name=$row['ptype_name'];
+
+        $array_purchaseorder[]=$puchasorder1;
+    }
+    return $array_purchaseorder;
+
+
+}
+
+
+// --------------------------------------------
+
+
+function filter_purchaseorder(){
+
+    $filter_sup=$_POST['filter_sup'];
+    $filter_product=$_POST['filter_product'];
+    $filter_startdt=$_POST['filter_startdt'];
+    $filter_enddt=$_POST['filter_enddt'];
+
+
+
+    $sql="SELECT purchase_order.purchaseorder_ref ,purchase_order.purchaseorder_date, supplier.supplier_name,product.product_code,product.product_name,purchase_order_item.po_item_qty 
+    ,purchase_order_item.po_item_price,purchase_order_item.po_item_discount, product_group.group_name,product_type.ptype_name
+     FROM purchase_order INNER JOIN purchase_request ON purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id    
+     INNER JOIN supplier ON purchase_request.purchaserequest_supplier=supplier.supplier_id 
+     JOIN purchase_order_item ON purchase_order.purchaseorder_id = purchase_order_item.po_item_orderid 
+     JOIN product ON purchase_order_item.po_item_productid = product.product_id
+     JOIN product_group ON  product.product_group = product_group.group_id
+     JOIN product_type ON  product.product_type = product_type.ptype_id
+     
+
+
+     WHERE purchaseorder_status='ACTIVE' ";
+
+
+    if($filter_sup!=-1){
+        $sql.=" and customer_name='$filter_sup'";
+    }
+    if($filter_product!=-1){
+        $sql.=" and product_name='$filter_product'";
+    }
+    if($filter_startdt!='' && $filter_enddt!=''){
+        $sql.="and salesinvoice_date BETWEEN  '".$_POST['filter_startdt']."' AND '".$_POST['filter_enddt']."' "; 
+      
+    }
+
+    $result=$this->db->query($sql);
+   // echo $sql;
+    $array_purchaseorder=array();
+    while($row=$result->fetch_array()){
+        $puchasorder1=new purchaseorder();
+
+      
+        $puchasorder1->purchaseorder_ref=$row['purchaseorder_ref'];
+  
+        $puchasorder1->purchaseorder_date=$row['purchaseorder_date'];
+        $puchasorder1->supplier_name1=$row['supplier_name'];
+        $puchasorder1->product_code=$row['product_code'];
+        $puchasorder1->product_name=$row['product_name'];
+        $puchasorder1->po_item_qty=$row['po_item_qty'];
+        $puchasorder1->po_item_price=$row['po_item_price'];
+        $puchasorder1->po_item_discount=$row['po_item_discount'];
+        $puchasorder1->group_name=$row['group_name'];
+        $puchasorder1->ptype_name=$row['ptype_name'];
+
+        $array_purchaseorder[]=$puchasorder1;
+    }
+    return $array_purchaseorder;
+
 
 }
 
 
 
+}
 
 ?>
