@@ -221,8 +221,9 @@ function filter_purchaseorder(){
     $result=$this->db->query($sql);
    // echo $sql;
     $array_purchaseorder=array();
+    $puchasorder1=new purchaseorder();
     while($row=$result->fetch_array()){
-        $puchasorder1=new purchaseorder();
+ 
 
       
         $puchasorder1->purchaseorder_ref=$row['purchaseorder_ref'];
@@ -237,7 +238,9 @@ function filter_purchaseorder(){
         $puchasorder1->group_name=$row['group_name'];
         $puchasorder1->ptype_name=$row['ptype_name'];
 
-        $array_purchaseorder[]=$puchasorder1;
+        $t = clone     $puchasorder1;
+        $array_purchaseorder[]=$t;
+
     }
     return $array_purchaseorder;
 
