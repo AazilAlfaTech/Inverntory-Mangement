@@ -3,7 +3,7 @@
 
 
 
-include_once "../../files/head.php";
+
 include_once "../supplier/supplier.php";
 $sup = new supplier();
 $res_sup = $sup->get_all_supplier();
@@ -28,6 +28,13 @@ include_once "../customer/customer.php";
 $cus = new customer();
 $res_cus = $cus->get_all_customer();
 
+include_once "../sales_dispatch/sales_dispatch.php";
+$salesdispatch5=new sales_dispatch();
+$res_dispatch=$salesdispatch5->sales_dispatch_report();
+
+if(isset($_POST['filter'])){
+    $res_dispatch=$salesdispatch5->sales_dispatch_report_filter ($_POST);
+}
 
 
 
@@ -35,6 +42,7 @@ $res_cus = $cus->get_all_customer();
 
 
 
+include_once "../../files/head.php";
 
 
 ?>
@@ -83,7 +91,7 @@ $res_cus = $cus->get_all_customer();
 
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>GRN Report</h5>
+                                    <h5>Sales Dispatch Report</h5>
                                     <span></span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -98,7 +106,7 @@ $res_cus = $cus->get_all_customer();
 
                                     <div class="card-block">
 
-                                        <form action=" " method="POST" id="submitgroup">
+                                        <form action="dispatch_report.php " method="POST" id="submitgroup">
 
 
 
@@ -106,108 +114,39 @@ $res_cus = $cus->get_all_customer();
                                                 <div class="col-sm-4">
                                                     <label class=" col-form-label">From</label>
 
-                                                    <input type="date" class="form-control" name="groupcode" pattern="" id="gr_code" placeholder="" >
-                                                    <div class="col-form-label" id="">
+                                                    <input type="date" class="form-control" name="filter_startdt" pattern="" id="gr_code" placeholder="" >
+                                                    
                                                     </div>
                                                 </div>
 
                                                 <div class="col-sm-4">
                                                     <label class=" col-form-label">To</label>
-                                                    <input type="date" name="groupname" class="form-control" id="gr_name" >
-                                                    <div class="col-form-label" id="namecheck_msg" style="display:none;">
+                                                    <input type="date" name="filter_enddt" class="form-control" id="gr_name" >
+                                                   
                                                     </div>
 
                                                 </div>
-
                                                 <div class="col-sm-4">
-                                                    <label class=" col-form-label">Customer</label>
-                                                 
-
-                                                    <select class="js-example-basic-single col-sm-12" name="" id="" required>
-                                                    <option value="-1">Select Customer</option>
-                                                    <?php
-                                                        foreach($res_cus as $item)
-                                                      
-                                                        echo"<option value='$item->customer_id '>$item->customer_name</option>";
-                                                   ?>
-                                                </select>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <div class="col-sm-3">
-                                                    <label class=" col-form-label">Group</label>
-
-                                                   
-                                                    <select class="js-example-basic-single col-sm-12 " name="" id="">
-
-                                                    <option value="-1">Select Group</option>
-                                                    <?php
-                                                        foreach($res_grp as $item)
-                                                      
-                                                        echo"<option value='$item->group_id '>$item->group_name</option>";
-                                                   ?>
-
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <label class=" col-form-label">Type</label>
-                                          
-                                                    <select class="js-example-basic-single col-sm-12 " name="" id="">
-                                                    <option value="-1">Select Type</option>
-                                                    <?php
-                                                        foreach($res_typ as $item)
-                                                      
-                                                        echo"<option value='$item->ptype_id '>$item->ptype_name</option>";
-                                                   ?>
-
-
-
-                                                    </select>
-                                               
-                                                   
-
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <label class=" col-form-label">Location</label>
-                                                
-                                                    <select class="js-example-basic-single col-sm-12 " name="" id="">
-                                                    <option value="-1">Select Location</option>
-                                                    <?php
-                                                        foreach($res_loc as $item)
-                                                      
-                                                        echo"<option value='$item->location_id '>$item->location_name</option>";
-                                                   ?>
-
-
-                                                    </select>
-                                                
-                                               
-
-                                                </div>
-
-                                                
-                                                <div class="col-sm-3">
                                                     <label class=" col-form-label">Product </label>
                                                   
                                                 
-                                                    <select class="js-example-basic-single col-sm-12" name="" id="" required>
+                                                    <select class="js-example-basic-single col-sm-12" name="filter_product" id="" required>
                                                     <option value="-1">Select Product</option>
                                                     <?php
                                                         foreach($res_prd as $item)
                                                       
-                                                        echo"<option value='$item->product_id'>$item->product_name</option>";
+                                                        echo"<option value='$item->product_name'>$item->product_name</option>";
                                                    ?>
                                                 </select>
                                                 </div>
 
+                                                
+                                                </div>
+
                                             </div>
 
-                                            <button type="submit" class="btn btn-primary">Search</button>
+
+                                            <button type="submit" name="filter" class="btn btn-primary">Search</button>
                                             <button type="reset" class="btn btn-inverse">CLEAR</button>
                                         </form>
                                     </div>
@@ -227,33 +166,35 @@ $res_cus = $cus->get_all_customer();
                                                         <th>Sales Inv No.</th>
                                                         <th>Product Code</th>   
                                                         <th>Product Name</th>
-                                                        <th>Location</th>
+                                                        <!-- <th>Location</th> -->
                                             
                                                         <th>Quantity</th>
                                                    
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Tiger Nixon</td>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
-                                                        <td>2011/04/25</td>
-                                                        <td>$320,800</td>
-                                                        <td>Tiger Nixon</td>
+                                                    <?php
+                                                        foreach($res_dispatch as $item){
+                                                            echo"
+                                                            <tr>
+                                                        <td>$item->salesdispatch_date</td>
+                                                        <td>$item->salesdispatch_ref</td>
+                                                        <td>$item->salesinvoice_ref</td>
+                                                        <td>$item->product_code</td>
+                                                        <td>$item->product_name</td>
+                                                        <td>$item->sd_item_qty</td>
+                                                       
                                                        
                                                     </tr>
+                                                            ";
+                                                        }
+                                                    ?>
+                                                    
 
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>Name</th>
-                                                        <th>Position</th>
-                                                        <th>Office</th>
-                                                        <th>Age</th>
-                                                        <th>Start date</th>
-                                                        <th>Salary</th>
+                                                        
                                                     </tr>
                                                 </tfoot>
                                             </table>

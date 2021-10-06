@@ -1,8 +1,6 @@
 <?php
 
 
-
-
 include_once "../../files/head.php";
 include_once "../supplier/supplier.php";
 $sup = new supplier();
@@ -30,12 +28,12 @@ $res_cus = $cus->get_all_customer();
 
 include_once "../sales_invoice/sales_invoice.php";
 $sales_invoice4=new sales_invoice();
-$res_invoice=$sales_invoice4->sales_invoice_report();
+$res_invoice=$sales_invoice4->sales_report();
 //print_r($res_invoice);
 //exit;
 
 if(isset($_POST['filter'])){
-    $res_invoice=$sales_invoice4->sales_invoice_report_filter($_POST);
+    $res_invoice=$sales_invoice4-> sales_report_filter($_POST);
 }
 
 
@@ -104,7 +102,7 @@ if(isset($_POST['filter'])){
 
                                     <div class="card-block">
 
-                                        <form action="sales_invoice_report.php" method="POST" >
+                                        <form action="sales_report.php" method="POST" >
 
 
 
@@ -229,14 +227,13 @@ if(isset($_POST['filter'])){
                                                         <th>DATE</th>
                                                         <th>Ref No</th>
                                                         <th>Product Code</th>
-                                                        <th>Group</th>
-                                                        <th>Type</th>
+                                                        
                                                         <th>Product Name</th>
 
 
                                                         <th>Customer</th>
 
-
+                                                        <th>Location</th>
                                                        
                                                         <th>Quantity</th>
                                                         <th>Dicount%</th>
@@ -254,14 +251,12 @@ if(isset($_POST['filter'])){
                                                             <td>$item->salesinvoice_date</td>
                                                             <td>$item->salesinvoice_ref</td>
                                                             <td>$item->product_code</td>
-                                                            <td>$item->group_name</td>
                                                             
-                                                            <td>$item->ptype_name</td>
                                                             <td>$item->product_name</td>
                                                             <td>$item->customer_name</td>
-
+                                                            <td></td>
                                                             <td>$item->si_item_qty</td>
-                                                            <td>$item->si_item_discount</td>
+                                                           
                                                             <td>$item->si_item_discount_amount</td>
                                                             <td>$item->si_item_price</td>
                                                             <td>$item->si_item_total</td>
@@ -276,12 +271,12 @@ if(isset($_POST['filter'])){
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th colspan="7">Totals:</th>
+                                                        <th colspan="6">Totals:</th>
                                                         <th></th>
                                                         <th></th>
                                                         <th></th>
                                                         <th></th>
-                                                        <th></th>
+                                                        
                                                 </tr>
                                                 </tfoot>
                                             </table>
@@ -320,20 +315,23 @@ $(document).ready(function () {
 										search: 'applied'
 									}).data().toArray();
 								const totals = tableData.reduce((total, rowData) => {
-										total[0] += parseFloat(rowData[7]);
-									//	total[1] += parseFloat(rowData[8]);
-                                        total[2] += parseFloat(rowData[9]);
-                                    //    total[3] += parseFloat(rowData[10]);
-                                        total[4] += parseFloat(rowData[10]);
+										total[0] += parseFloat(rowData[6]);
+										total[1] += parseFloat(rowData[7]);
+                                        total[2] += parseFloat(rowData[8]);
+                                       total[3] += parseFloat(rowData[9]);
+                                       
                                        
 										return total;
-									}, [0, 0,0,0,0]);
-								$(table.column(7).footer()).text(totals[0]);
-								//$(table.column(8).footer()).text(totals[1]);
-                                $(table.column(9).footer()).text(totals[2]);
-                               // $(table.column(10).footer()).text(totals[3]);
-                                 $(table.column(11).footer()).text(totals[4]);
+									}, [0, 0,0,0]);
+								$(table.column(6).footer()).text(totals[0]);
+								$(table.column(7).footer()).text(totals[1]);
+                                $(table.column(8).footer()).text(totals[2]);
+                                $(table.column(9).footer()).text(totals[3]);
+                               //  $(table.column(11).footer()).text(totals[4]);
 							}
 						})
 					});				
                             </script>
+
+
+?>

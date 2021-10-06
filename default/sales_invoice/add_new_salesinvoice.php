@@ -165,9 +165,6 @@ include_once "../../files/head.php";
                                                 <option value="">Select Payment method</option>
                                                 <option value="cash">Cash </option>
                                                 <option value="credit ">Credit </option>
-
-
-
                                             </select>
 
                                         </div>
@@ -183,6 +180,17 @@ include_once "../../files/head.php";
 
                                         </div>
                                     </div>
+                                    <!-- <div class="form-group row payment" >
+                                        <div class="col-sm-6">
+                                        <label class=" col-form-label">Amount Recieved</label>
+                                        <input type="text" class="form-control">
+                                        </div>
+                                        <div class="col-sm-6">
+                                        <label class=" col-form-label">Balance</label>
+                                        <input type="text" class="form-control">
+                                        </div>
+
+                                    </div> -->
                                 </div>
                                     
                                 <div class="card-block">
@@ -253,11 +261,13 @@ include_once "../../files/head.php";
 $( document ).ready(function() {
 
     $(".paytype").hide();
+    $(".payment").hide();
     $(".paymethod").change(function() {
         var paymethod= $(".paymethod").val();
     //    console.log(paymethod);
         if( paymethod=="cash"){
             $(".paytype").show();
+            $(".payment").show();
         }
     });
 
@@ -282,12 +292,17 @@ $("#sinv_customer").change(function() {
                  '<td >' + i_data[i].salesorder_ref + '</td>' +
                  '<td >' + i_data[i].salesorder_date + '</td>' +
       
-                 '<td><button type="button" class="btn btn-success btn-mini btnadd" onclick="add_to_list(' + i_data[i].salesorder_id +',this)" ><i class="icofont icofont-plus"></i></button>\
-                 <button type="button" class="btn btn-danger btn-mini btndel" onclick="removelist(' + i_data[i].salesorder_id +',this)"><i class="icofont icofont-ui-delete"></i> </button>'+
+                 '<td><div class="form-group row"><button type="button" class="btn btn-success btn-mini btnadd" onclick="add_to_list(' + i_data[i].salesorder_id +',this)" ><i class="fa fa-check-square"></i></button>\
+                 <button type="button" class="btn btn-danger btn-mini btndel" onclick="removelist(' + i_data[i].salesorder_id +',this)"><i class="fa fa-trash-alt"></i> </button>'+
+                 '<div class="border-checkbox-group border-checkbox-group-primary statuscheckbox">'+
+                    '<input class="border-checkbox stat" type="checkbox" value="pending" >'+
+                   ' <label class="border-checkbox-label" for="checkbox1">Primary</label></div></div>'+
                   '</td>'+
                 '</tr>';
             $("#tbody").append(txt);
             $(".btndel").hide();
+            $(".statuscheckbox").hide();
+
 
         
 
@@ -341,7 +356,7 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
             <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].so_itemqty +"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
-            <select name='Price[]' id='productprice' class='input-borderless price'>\
+            <select name='Price[]'  class='input-borderless price productprice'>\
             <option value='"+item_data[o].so_itemprice+"'>"+item_data[o].so_itemprice+"</option>\
             </select>\
             <input class='form-control input-sm subtotal '   type='hidden' name='Orderid[]' value='"+ item_data[o].so_subtotal+"'>\
@@ -350,7 +365,7 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
             <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+ item_data[o].so_itemdiscount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
         </td>\
         <td class='table-edit-view'><span class='tabledit-span'></span>\
-            <select name='Status[]' id='productstatus' class='input-borderless status'>\
+            <select name='Status[]'  class='input-borderless status productstatus'>\
             <option value='"+item_data[o].so_itemstatus+"' selected='selected'>"+item_data[o].so_itemstatus+"</option>\
             </select>\
         </td>\
@@ -370,6 +385,8 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
 
         $(btn).parent().find(".btnadd").hide();
         $(btn).parent().find(".btndel").show();
+        $(btn).parent().find(".statuscheckbox").show();
+       
      
          });
     });
@@ -402,6 +419,20 @@ function removelist(orderid,btn2){
     });
             $(btn2).parent().find(".btnadd").show();
         $(btn2).parent().find(".btndel").hide();
+        $(btn2).parent().find(".statuscheckbox").hide();
+       $(btn2).parent().find(".statuscheckbox").val();
+        $(btn2).parent().find(".stat").change(function(){
+            statuss=$(".stat").val()
+             console.log("statuss")
+            if (this.checked) {
+    console.log("Checkbox is checked..");
+    statuss=$(".stat").val();
+    console.log(statuss)
+  } else {
+    console.log("Checkbox is not checked..");
+  }
+        });
+       
     }
 </script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>

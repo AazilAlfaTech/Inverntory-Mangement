@@ -8,7 +8,7 @@ class fifocalculation{
     public $fifo_purchaseitemid;
     public $fifo_salesitemid;
     public $fifo_soldqty;
-    public $fifo_remainingqty;
+   
     public $fifo_soldcost;
     public $db;
 
@@ -61,7 +61,7 @@ class fifocalculation{
                             $fiforemainingqty= $grnremainingqty -  $fifosalesqty;
                             $fifocost = $grnitemunitprice;
 
-                            $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_purchaseitemid,fifo_salesitemid,fifo_soldqty,fifo_remainingqty,fifo_soldcost) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fiforemainingqty,$fifocost)";
+                            $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_purchaseitemid,fifo_salesitemid,fifo_soldqty,fifo_soldcost) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fifocost)";
                             $this->db->query($sql_fifo);
 
                             $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_costprice) VALUES ('SALES',$salesinvoiceitemid,$productid,-$fifosalesqty,$fifocost)";
@@ -111,7 +111,7 @@ class fifocalculation{
                                     $fiforemainingqty= $grnremainingqty -  $fifosalesqty;
                                     //$fifocost = $grnitemunitprice*$fifosalesqty;
                                    
-                                    $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_purchaseitemid,fifo_salesitemid,fifo_soldqty,fifo_remainingqty,fifo_soldcost) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fiforemainingqty,$fifocost)";
+                                    $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_purchaseitemid,fifo_salesitemid,fifo_soldqty,fifo_soldcost) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fiforemainingqty,$fifocost)";
                                     $this->db->query($sql_fifo);
                                  //   echo $sql_fifo;      
                                     $sql_grn_item="UPDATE grn_item SET grn_item_remain_qty= $fiforemainingqty WHERE grn_item_id=$grnitemid ";
