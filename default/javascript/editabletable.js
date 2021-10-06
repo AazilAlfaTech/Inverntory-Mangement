@@ -102,10 +102,10 @@
         console.log(statusval);
       
         //execute fuction to show the pricelevel dropdownlist
-        getpricelevel(id1,statusval);
+        getpricelevel(id1);
+       // getstatus(id1);
 
-        //execute function to show the status dropdown
-        $("#productstatus").append("<option value='INACTIVE'>INACTIVE</option>");
+        
 
         //--->add the original entry data to attribute original_entry
         //--->applicable only to input tag
@@ -308,30 +308,28 @@ row.find(".discount").on("keypress",function(e)
 
 });
 
-function getpricelevel(e,d){
+function getpricelevel(e){
   //  console.log("getpricelevel");
     console.log(e);
     $.get("../ajax/ajaxsales.php?type=get_pricelevels",{productid:e},function(data)
     {
       console.log(data);
       var d=JSON.parse(data); 
-      $("#productprice").html("");
+      $(".productprice").html("");
+     // $(".productstatus").html("");
       $.each(d,function(i,x)
       {
         console.log(i);
         console.log(x);
-        $("#productprice").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
+        $(".productprice").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
+      
       });
     });
-
+   
     //append status dropdown
-  
-        
-    
-       
-    
-    // $("#productstatus").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
+    $(".productstatus").append("<option value='INACTIVE'>inactive </option>");
 }
+
 
 function cal_totquantity(){
     console.log("quantity");

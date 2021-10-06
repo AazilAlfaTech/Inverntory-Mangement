@@ -537,7 +537,7 @@
                             </li>
 
 <!-- --------------------------------------REPORTS---------------------------------------------------------------------------- -->
-<li class="pcoded-hasmenu">
+                            <li class="pcoded-hasmenu">
                                 <a href="javascript:void(0)">
                                     <span class="pcoded-micon"><i class="fa fa-file-text-o"></i></span>
                                     <span class="pcoded-mtext">Reports</span>
@@ -547,35 +547,33 @@
                                 <ul class="pcoded-submenu">
                                     <!-- -------------------------- -->
                                 <li class="pcoded-hasmenu">
-                                <a href="javascript:void(0)">
-                           
-                                    <span class="pcoded-mtext">Purchase Report</span>
-                               
-                                </a>
-                                <ul class="pcoded-submenu">
-                                    <li class="">
-                                        <a href="../reports/purchase_order_ report.php " >
-                                            <span class="pcoded-mtext">Purchase Order Report </span>
+                                        <a href="javascript:void(0)">
+                                
+                                            <span class="pcoded-mtext">Purchase Report</span>
+                                    
                                         </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="../reports/grn_report.php " >
-                                            <span class="pcoded-mtext">Goods Received Note Report </span>
-                                        </a>
-                                    </li>
+                                        <ul class="pcoded-submenu">
+                                            <li class="">
+                                                <a href="../reports/purchase_order_ report.php " >
+                                                    <span class="pcoded-mtext">Purchase Order Report </span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="../reports/grn_report.php " >
+                                                    <span class="pcoded-mtext">Goods Received Note Report </span>
+                                                </a>
+                                            </li>
 
-                                    <li class=" ">
-                                        <a href="../reports/manage_supplier.php " >
-                                            <span class="pcoded-mtext">Goods Received Note Report </span>
-                                        </a>
-                                    </li>
-                                  
+                                            <li class=" ">
+                                                <a href="../reports/manage_supplier.php " >
+                                                    <span class="pcoded-mtext">Goods Received Note Report </span>
+                                                </a>
+                                            </li>
+                                        
 
-                                </ul>
-                            </li>
+                                        </ul>
+                                </li>
                           
-                                  
-
                                 </ul>
 
 
@@ -597,7 +595,36 @@
                                     </li>
                                     <li class=" ">
                                         <a href="../reports/dispatch_report.php " >
-                                            <span class="pcoded-mtext">Salaes Dispatch Report</span>
+                                            <span class="pcoded-mtext">Sales Dispatch Report</span>
+                                        </a>
+                                    </li>
+
+                                 
+                                  
+
+                                </ul>
+                            </li>
+                          
+                                  
+
+                                </ul>
+                                <ul class="pcoded-submenu">
+                                    <!-- -------------------------- -->
+                                <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)">
+                           
+                                    <span class="pcoded-mtext">Inventory Report</span>
+                               
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class="">
+                                        <a href="../reports/stock_report.php " >
+                                            <span class="pcoded-mtext">Stock Report </span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="../reports/cost_reportcost_report.php " >
+                                            <span class="pcoded-mtext">Cost Report</span>
                                         </a>
                                     </li>
 
