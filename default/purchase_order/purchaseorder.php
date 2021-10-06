@@ -208,7 +208,7 @@ function filter_purchaseorder(){
 
 
     if($filter_sup!=-1){
-        $sql.=" and customer_name='$filter_sup'";
+        $sql.=" and supplier_name='$filter_sup'";
     }
     if($filter_product!=-1){
         $sql.=" and product_name='$filter_product'";

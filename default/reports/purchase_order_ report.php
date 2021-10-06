@@ -36,11 +36,6 @@ if(isset($_POST['filter'])){
 
 
 
-
-
-
-
-
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
 
@@ -132,7 +127,7 @@ if(isset($_POST['filter'])){
                                                     <?php
                                                         foreach($res_sup as $item)
                                                       
-                                                        echo"<option value='$item->supplier_id '>$item->supplier_name</option>";
+                                                        echo"<option value='$item->supplier_name '>$item->supplier_name</option>";
                                                    ?>
                                                 </select>
 
