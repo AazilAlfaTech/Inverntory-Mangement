@@ -41,9 +41,9 @@
            // var tot = quants * prc;
            var disc= row.find(".discount").val();
                         var subtot= parseFloat(quants * prc * disc/100);
-                        console.log(subtot);
+                        //console.log(subtot);
                         var tot = parseFloat(quants * prc - subtot);
-                        console.log(tot);
+                       // console.log(tot);
             row.find(".total").attr("value",tot);
         });
 
@@ -95,14 +95,16 @@
         //type hidden changes to type text to make it editable
         tbl_row.find('.row_data')
         .attr('readonly', false)
+     
 
         //get product id
         var id1=tbl_row.find(".productid").val();
         var statusval=tbl_row.find(".status").val();
-        console.log(statusval);
-      
+
+        tbl_row.find(".productprice").find('option').not(':selected').remove();
         //execute fuction to show the pricelevel dropdownlist
-        getpricelevel(id1);
+        getpricelevel(id1,statusval);
+      //  qty_validate(id1);
        // getstatus(id1);
 
         
@@ -149,6 +151,9 @@ $(document).on('click', '.btn_save', function(event)
 
             
         }); 
+        //$(this).find('option').not(':selected').remove();
+
+        tbl_row.find(".status").find('option').not(':selected').remove();
 
             //remove textbox border
         tbl_row.find('input').addClass('input-borderless');
@@ -304,18 +309,55 @@ row.find(".discount").on("keypress",function(e)
     {row.find(".msg3").css("display", "none");}
  });
 
+ 
+
+ 
+
 
 
 });
 
-function getpricelevel(e){
+$(document).on('click', '.btn_edit', function(){
+    var row1=$(this).closest('tr');
+    console.log("location");
+    invoiceloc=$(".dispatchloc").val();
+    console.log("location-"+invoiceloc);
+    inv_id=row1.find(".productid").val();
+    console.log(inv_id);
+    qty_sale=row1.find(".qtycheck ").val();
+    $.get("../ajax/ajaxpurchase.php?type=get_sum_remainingqty",{prodid:inv_id,loc_id:invoiceloc},function(data)
+    {
+      console.log(data);
+      var d=JSON.parse(data); 
+      remaing_qty=d.grn_qty;
+    console.log("remaining qty"+remaing_qty);
+     
+    //  return remaing_qty;
+    });
+
+    row1.find(".qtycheck").on("keypress",function()
+{
+    if(remaing_qty == 0){
+        console.log("Please type a qty");
+    }else if(remaing_qty < qty_sale){
+        console.log("Required stock not available");
+    }else if(remaing_qty > qty_sale)
+        {console.log("Stock availanle");
+    }
+    
+ });
+
+
+});
+
+function getpricelevel(e,stat){
   //  console.log("getpricelevel");
     console.log(e);
     $.get("../ajax/ajaxsales.php?type=get_pricelevels",{productid:e},function(data)
     {
       console.log(data);
       var d=JSON.parse(data); 
-      $(".productprice").html("");
+      //$(".productprice").html("");
      // $(".productstatus").html("");
       $.each(d,function(i,x)
       {
@@ -325,9 +367,30 @@ function getpricelevel(e){
       
       });
     });
-   
+    //$('.productstatus option:not(:first)').remove();
     //append status dropdown
-    $(".productstatus").append("<option value='INACTIVE'>inactive </option>");
+    
+    if(stat=='COMPLETE'){
+        $(".productstatus").append("<option value='PENDING'>PENDING</option>");
+    }else if(stat=='PENDING'){
+        $(".productstatus").append("<option value='COMPLETE'>COMPLETE</option>");
+    }
+    
+}
+
+
+    function  qty_validate(id1){
+    invoiceloc=$(".dispatchloc").val();
+    console.log("location-"+invoiceloc);
+    $.get("../ajax/ajaxpurchase.php?type=get_sum_remainingqty",{prodid:id1,loc_id:invoiceloc},function(data)
+    {
+      console.log(data);
+      var d=JSON.parse(data); 
+      remaing_qty=d.grn_qty;
+    
+      
+    });
+    
 }
 
 

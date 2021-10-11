@@ -11,6 +11,7 @@ class sales_invoice{
     public $salesinvoice_cashmethod;
     public $salesinvoice_date;
     public $salesinvoice_status;
+    PUBLIC $si_item_currentstatus;
     
     
  
@@ -59,6 +60,11 @@ function edit_sales_invoice($salesinvoice_id){
 }
 
 //-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------
 
 function delete_sales_invoice($salesinvoice_id){
 
@@ -216,17 +222,23 @@ function si_code($salesinvoice_date){
 //=====================================================================================================================================
 
 function sales_invoice_status($salesinvoicestatus){
-    $sql1="SELECT * FROM sales_invoice_item WHERE si_item_invoiceid=$salesinvoicestatus AND si_item_status='ACTIVE'";
+    $sql1="SELECT * FROM sales_invoice_item WHERE (si_item_invoiceid=$salesinvoicestatus AND si_item_currentstatus='NEW' ) OR (si_item_invoiceid=$salesinvoicestatus AND si_item_currentstatus='PENDING' ) OR (si_item_invoiceid=$salesinvoicestatus AND si_item_currentstatus='COMPLETE' )";
     $result=$this->db->query($sql1);
-   // echo $sql1;
+   echo $sql1;
+//    $sql3="SELECT * FROM sales_invoice_item WHERE (si_item_invoiceid=$salesinvoicestatus AND si_item_currentstatus='NEW' ) OR (si_item_invoiceid=$salesinvoicestatus AND si_item_currentstatus='COMPLETE' )";
+//    $result2=$this->db->query($sql3);
 
 if($result->num_rows==0){
-    $sql2="UPDATE sales_invoice SET salesinvoice_status='INACTIVE' WHERE salesinvoice_id =$salesinvoicestatus";
+    $sql2="UPDATE sales_invoice SET salesinvoice_currentstatus='COMPLETE' WHERE salesinvoice_id =$salesinvoicestatus";
     $this->db->query($sql2);
-    //echo $sql2;
+    echo $sql2;
     return true;
-}else{
-    return false;
+}else if($result->num_rows!=0) {
+    $sql2="UPDATE sales_invoice SET salesinvoice_currentstatus='PENDING' WHERE salesinvoice_id =$salesinvoicestatus";
+    $this->db->query($sql2);
+    echo $sql2;
+    return true;
+  
 }
 }
 
