@@ -190,7 +190,8 @@ function filter_purchaseorder(){
     $filter_product=$_POST['filter_product'];
     $filter_startdt=$_POST['filter_startdt'];
     $filter_enddt=$_POST['filter_enddt'];
-
+    $filter_grp=$_POST['filter_grp'];
+    $filter_type=$_POST['filter_type'];
 
 
     $sql="SELECT purchase_order.purchaseorder_ref ,purchase_order.purchaseorder_date, supplier.supplier_name,product.product_code,product.product_name,purchase_order_item.po_item_qty 
@@ -213,6 +214,14 @@ function filter_purchaseorder(){
     if($filter_product!=-1){
         $sql.=" and product_name='$filter_product'";
     }
+
+    if($filter_grp!=-1){
+        $sql.=" and group_name='$filter_grp'";
+    }
+    if($filter_type!=-1){
+        $sql.=" and ptype_name='$filter_type'";
+    }
+
     if($filter_startdt!='' && $filter_enddt!=''){
         $sql.="and salesinvoice_date BETWEEN  '".$_POST['filter_startdt']."' AND '".$_POST['filter_enddt']."' "; 
       
@@ -237,6 +246,7 @@ function filter_purchaseorder(){
         $puchasorder1->po_item_discount=$row['po_item_discount'];
         $puchasorder1->group_name=$row['group_name'];
         $puchasorder1->ptype_name=$row['ptype_name'];
+        // $puchasorder1->po_finalprice=round(($row['sq_item_qty']*$row['sq_item_price'])-($row['sq_item_qty']*$row['sq_item_price']*$row['sq_item_discount']/100),2);
 
         $t = clone     $puchasorder1;
         $array_purchaseorder[]=$t;

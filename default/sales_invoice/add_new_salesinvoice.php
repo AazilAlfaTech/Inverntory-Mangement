@@ -153,10 +153,36 @@ include_once "../../files/head.php";
 
                                         </div>
                                 </div>
+
+                                      <!-- Modal static-->
+                                      <button type="button" class="btn btn-default waves-effect" data-toggle="modal" data-target="#default-Modal">Static</button>
+                                                                <div class="modal fade" id="default-Modal" tabindex="-1" role="dialog">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title">Modal title</h4>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <h5>Static Modal</h5>
+                                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing lorem impus dolorsit.onsectetur adipiscing</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                                                                                <button type="button" class="btn btn-primary waves-effect waves-light ">Save changes</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <!-- Modal large-->
                                  <!-- end of card 1 -->
                                 <!-- </div> -->
                            
-                                <div class="card-block">
+                                <!-- <div class="card-block">
                                     <div class="form-group row">
 
                                         <div class="col-sm-6">
@@ -180,18 +206,7 @@ include_once "../../files/head.php";
 
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group row payment" >
-                                        <div class="col-sm-6">
-                                        <label class=" col-form-label">Amount Recieved</label>
-                                        <input type="text" class="form-control">
-                                        </div>
-                                        <div class="col-sm-6">
-                                        <label class=" col-form-label">Balance</label>
-                                        <input type="text" class="form-control">
-                                        </div>
-
-                                    </div> -->
-                                </div>
+                                </div> -->
                                     
                                 <div class="card-block">
                                     
@@ -292,11 +307,8 @@ $("#sinv_customer").change(function() {
                  '<td >' + i_data[i].salesorder_ref + '</td>' +
                  '<td >' + i_data[i].salesorder_date + '</td>' +
       
-                 '<td><div class="form-group row"><button type="button" class="btn btn-success btn-mini btnadd" onclick="add_to_list(' + i_data[i].salesorder_id +',this)" ><i class="fa fa-check-square"></i></button>\
-                 <button type="button" class="btn btn-danger btn-mini btndel" onclick="removelist(' + i_data[i].salesorder_id +',this)"><i class="fa fa-trash-alt"></i> </button>'+
-                 '<div class="border-checkbox-group border-checkbox-group-primary statuscheckbox">'+
-                    '<input class="border-checkbox stat" type="checkbox" value="pending" >'+
-                   ' <label class="border-checkbox-label" for="checkbox1">Primary</label></div></div>'+
+                 '<td><button type="button" class="btn btn-success btn-mini btnadd" onclick="add_to_list(' + i_data[i].salesorder_id +',this)" ><i class="fa fa-plus"></i></button>\
+                 <button type="button" class="btn btn-danger btn-mini btndel" onclick="removelist(' + i_data[i].salesorder_id +',this)"><i class="fa fa-trash"></i> </button>'+
                   '</td>'+
                 '</tr>';
             $("#tbody").append(txt);
