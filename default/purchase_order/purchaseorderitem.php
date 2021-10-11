@@ -23,9 +23,7 @@ class purchaseorderitem{
 function insert_POitem1($orderid){
 
    $list=0;
-
-
-    
+  
    foreach($_POST['Quantity'] as $item){
     $sql="INSERT INTO purchase_order_item (po_item_qty,po_item_productid,po_item_discount,po_item_price,po_item_orderid) VALUES 
     ('".$_POST['Quantity'][$list]."','".$_POST['Product'][$list]."','".$_POST['Discount'][$list]."','".$_POST['Price'][$list]."',$orderid)";

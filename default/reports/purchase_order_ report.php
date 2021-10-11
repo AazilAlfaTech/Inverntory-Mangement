@@ -140,13 +140,13 @@ if(isset($_POST['filter'])){
                                                     <label class=" col-form-label">Group</label>
 
                                                    
-                                                    <select class="js-example-basic-single col-sm-12 " name="" id="">
+                                                    <select class="js-example-basic-single col-sm-12 " name="filter_grp" id="">
 
                                                     <option value="-1">Select Group</option>
                                                     <?php
                                                         foreach($res_grp as $item)
                                                       
-                                                        echo"<option value='$item->group_id '>$item->group_name</option>";
+                                                        echo"<option value='$item->group_name '>$item->group_name</option>";
                                                    ?>
 
                                                     </select>
@@ -155,12 +155,12 @@ if(isset($_POST['filter'])){
                                                 <div class="col-sm-3">
                                                     <label class=" col-form-label">Type</label>
                                           
-                                                    <select class="js-example-basic-single col-sm-12 " name="" id="">
+                                                    <select class="js-example-basic-single col-sm-12 " name="filter_type" id="">
                                                     <option value="-1">Select Type</option>
                                                     <?php
                                                         foreach($res_typ as $item)
                                                       
-                                                        echo"<option value='$item->ptype_id '>$item->ptype_name</option>";
+                                                        echo"<option value='$item->ptype_name '>$item->ptype_name</option>";
                                                    ?>
 
 

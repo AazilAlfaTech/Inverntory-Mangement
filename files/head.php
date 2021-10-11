@@ -564,11 +564,11 @@
                                         </a>
                                     </li>
 
-                                    <li class=" ">
+                                    <!-- <li class=" ">
                                         <a href="../reports/manage_supplier.php " >
                                             <span class="pcoded-mtext">Goods Received Note Report </span>
                                         </a>
-                                    </li>
+                                    </li> -->
                                   
 
                                 </ul>

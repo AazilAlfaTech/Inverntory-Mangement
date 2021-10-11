@@ -94,7 +94,7 @@ $res_prd = $prd->getall_product2()
 
                                     <div class="card-block">
 
-                                        <form action=" " method="POST" id="submitgroup">
+                                        <form action="grn_report.php " method="POST" id="submitgroup">
 
 
 
