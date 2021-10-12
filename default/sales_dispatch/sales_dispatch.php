@@ -4,13 +4,13 @@ include_once "../../files/config.php";
 class sales_dispatch{ 
 
     public $salesdispatch_id;
-    public $salesdispatch_si_id;
+    
     public $salesdispatch_customer;
     public $salesdispatch_ref;
     public $salesdispatch_paymethod;
     public $salesdispatch_date;
     public $salesdispatch_status;
-    
+    public $salesdispatch_loc;
     
     
  
@@ -31,8 +31,8 @@ function __construct(){
 
 function insert_sales_dispatch(){
 
-    $sql="INSERT INTO sales_dispatch (salesdispatch_ref,salesdispatch_date,salesdispatch_customer)
-    VALUES('$this->salesdispatch_ref','$this->salesdispatch_date','$this->salesdispatch_customer')";
+    $sql="INSERT INTO sales_dispatch (salesdispatch_loc,salesdispatch_ref,salesdispatch_date,salesdispatch_customer)
+    VALUES('$this->salesdispatch_loc','$this->salesdispatch_ref','$this->salesdispatch_date','$this->salesdispatch_customer')";
       // echo $sql;
        $this->db->query($sql);
     $sd_id=$this->db->insert_id;

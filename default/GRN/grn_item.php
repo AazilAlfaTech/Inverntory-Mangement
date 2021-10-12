@@ -74,6 +74,7 @@
                 $SQL="SELECT grn_item.grn_item_id, grn_item.grn_item_grnid, grn_item.grn_item_productid, grn_item.grn_item_qty, grn_item.grn_item_price, grn_item.grn_item_discount, product.product_name FROM grn_item 
                 INNER JOIN product ON grn_item.grn_item_productid=product.product_id WHERE grn_item_grnid=$id AND grn_item_status='ACTIVE'";
                 $result=$this->db->query($SQL);
+                echo $SQL;
                 $grn_iten_array=array();
                 $prod=new product();
                 while($row=$result->fetch_array())
@@ -95,8 +96,9 @@
                 return $grn_item_array;
             }
 
-            function item_remaining_stock_productid($productid){
-                $sql="SELECT SUM(grn_item_remain_qty) AS totqty FROM grn_item WHERE grn_item_productid= $productid";
+            function item_remaining_stock_productid($productid,$locationid){
+                //$sql="SELECT SUM(grn_item_remain_qty) AS totqty FROM grn_item WHERE grn_item_productid= $productid ";
+                $sql="SELECT SUM(grn_item_remain_qty) AS totqty FROM grn JOIN grn_item ON grn.grn_id=grn_item.grn_item_grnid WHERE grn.grn_received_loc=$productid AND grn_item.grn_item_productid=$locationid";
                 $result_qty=$this->db->query($sql);
                 $row=$result_qty->fetch_array();
                  

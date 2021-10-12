@@ -46,30 +46,36 @@ function insert_sales_dispatch_item1($sd_id){
     foreach($_POST['Quantity'] as $item){
         $sql="INSERT INTO sales_dispatch_item (sd_item_qty,sd_item_invoiceid,sd_item_productid,sd_item_price,sd_item_discount,sd_item_saledispatch_id)VALUES 
         ('".$_POST['Quantity'][$list]."','".$_POST['Orderid'][$list]."','".$_POST['Product'][$list]."','".$_POST['Price'][$list]."','".$_POST['Discount'][$list]."',$sd_id)";
-     
-       $this->db->query($sql);
-        if($_POST['Product'][$list]>0){
+         $this->db->query($sql);
+        // echo $sql;
+
+         
+        if($_POST['Product'][$list]>0)
+        {
+            //get the inventory valuation type of product( FIFO/AVCO)
             $sql_product="SELECT product_inventory_val FROM product WHERE product_id='".$_POST['Product'][$list]."'";
             $res_inventory=$this->db->query($sql_product);
-           //echo $sql_product;
             $row_item=$res_inventory->fetch_array();
             $inventory=$row_item['product_inventory_val'];
-           // echo  $inventory;
+         
 
             if($inventory=='FIFO'){
+                echo'FIFO';
             $fifoitem-> insert_fifo($_POST['Quantity'][$list],$_POST['Product'][$list],$sd_id);
                
             }else if($inventory=='AVCO'){
+                    echo 'AVCO';
                 $res=$fifoitem->insert_avco($_POST['Quantity'][$list],$_POST['Product'][$list],$sd_id);
             
             }
         }
 
       
-       $salesinvoiceitem5->delete_sales_invoice_item($_POST['InvoiceItemid'][$list]);
+       $salesinvoiceitem5->update_salesinvoice_item_currentstatus($_POST['InvoiceItemid'][$list],$_POST['CurrentStatus'][$list]);
        $salesinvoice5->sales_invoice_status($_POST['Orderid'][$list]);
        $list++;
     }
+   
     return true;
 
 }
