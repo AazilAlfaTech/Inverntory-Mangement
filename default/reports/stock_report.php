@@ -3,7 +3,7 @@
 
 
 
-include_once "../../files/head.php";
+
 include_once "../supplier/supplier.php";
 $sup = new supplier();
 $res_sup = $sup->get_all_supplier();
@@ -24,16 +24,21 @@ include_once "../product/product.php";
 $prd = new product();
 $res_prd = $prd->getall_product2();
 
-include_once "../purchase_order/purchaseorder.php";
-$phc_ordr = new purchaseorder();
-$res_pchorder = $phc_ordr->get_all_purchaseorder_for_report();
+include_once "../customer/customer.php";
+$cus = new customer();
+$res_cus = $cus->get_all_customer();
 
+include_once "../stock/stock.php";
+$stock_item=new stock();
+$res_stock=$stock_item->stock_report();
 
 if(isset($_POST['filter'])){
-    $res_pchorder = $phc_ordr->filter_purchaseorder($_POST);
-
+    $res_stock=$stock_item->stock_report_filter($_POST);
 }
 
+
+
+include_once "../../files/head.php";
 
 
 ?>
@@ -50,7 +55,7 @@ if(isset($_POST['filter'])){
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Purchase Order Report</h4>
+                                    <h4>Stock Report</h4>
 
                                 </div>
                             </div>
@@ -82,7 +87,7 @@ if(isset($_POST['filter'])){
 
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Purchase Order Report</h5>
+                                    <h5>Stock Report</h5>
                                     <span></span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -97,50 +102,34 @@ if(isset($_POST['filter'])){
 
                                     <div class="card-block">
 
-                                        <form action="purchase_order_ report.php" method="POST" id="">
+                                        <form action="stock_report.php" method="POST" >
 
 
 
                                             <div class="form-group row">
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-6">
                                                     <label class=" col-form-label">From</label>
 
-                                                    <input type="date" class="form-control" name="filter_startdt" pattern="" id="filter_startdt" placeholder="" >
-                                                    <div class="col-form-label" id="">
-                                                    </div>
+                                                    <input type="date" class="form-control" name="filter_startdt" pattern="" id="gr_code" placeholder="" >
+                                                  
                                                 </div>
 
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-6">
                                                     <label class=" col-form-label">To</label>
-                                                    <input type="date" name="filter_enddt" class="form-control" id="filter_enddt" >
-                                                    <div class="col-form-label" id="filter_enddt" style="display:none;">
-                                                    </div>
+                                                    <input type="date" name="filter_enddt" class="form-control" id="gr_name" >
+                                                    
 
                                                 </div>
 
-                                                <div class="col-sm-4">
-                                                    <label class=" col-form-label">Suplier</label>
-                                                 
-
-                                                    <select class="js-example-basic-single col-sm-12" name="filter_sup" id="" required>
-                                                    <option value="-1">Select Supplier</option>
-                                                    <?php
-                                                        foreach($res_sup as $item)
-                                                      
-                                                        echo"<option value='$item->supplier_name '>$item->supplier_name</option>";
-                                                   ?>
-                                                </select>
-
-                                                </div>
-
+                                                
                                             </div>
 
                                             <div class="form-group row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <label class=" col-form-label">Group</label>
 
                                                    
-                                                    <select class="js-example-basic-single col-sm-12 " name="filter_grp" id="">
+                                                    <select class="js-example-basic-single col-sm-12 " name="filter_group" id="">
 
                                                     <option value="-1">Select Group</option>
                                                     <?php
@@ -152,7 +141,7 @@ if(isset($_POST['filter'])){
                                                     </select>
                                                 </div>
 
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <label class=" col-form-label">Type</label>
                                           
                                                     <select class="js-example-basic-single col-sm-12 " name="filter_type" id="">
@@ -171,30 +160,14 @@ if(isset($_POST['filter'])){
 
                                                 </div>
 
-                                                <!-- <div class="col-sm-3">
-                                                    <label class=" col-form-label">Location</label>
                                                 
-                                                    <select class="js-example-basic-single col-sm-12 " name="" id="">
-                                                    <option value="-1">Select Location</option>
-                                                    <?php
-                                                        foreach($res_loc as $item)
-                                                      
-                                                        echo"<option value='$item->location_id '>$item->location_name</option>";
-                                                   ?>
-
-
-                                                    </select>
-                                                
-                                               
-
-                                                </div> -->
 
                                                 
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-4">
                                                     <label class=" col-form-label">Product </label>
                                                   
                                                 
-                                                    <select class="js-example-basic-single col-sm-12" name="filter_product" id="filter_product" required>
+                                                    <select class="js-example-basic-single col-sm-12" name="filter_product" id="" required>
                                                     <option value="-1">Select Product</option>
                                                     <?php
                                                         foreach($res_prd as $item)
@@ -206,7 +179,7 @@ if(isset($_POST['filter'])){
 
                                             </div>
 
-                                            <button type="submit" name="filter" class="btn btn-primary">Search</button>
+                                            <button type="submit" name='filter' class="btn btn-primary">Search</button>
                                             <button type="reset" class="btn btn-inverse">CLEAR</button>
                                         </form>
                                     </div>
@@ -218,60 +191,79 @@ if(isset($_POST['filter'])){
 
                                     <div class="card-block">
                                         <div class="dt-responsive table-responsive">
-                                            <table id="basic-btn" class="table table-striped table-bordered nowrap">
+                                            <table id="table34" class="table table-striped table-bordered nowrap ">
                                                 <thead>
                                                     <tr>
-                                                        <th>DATE</th>
+                                                        <th>Date</th>
                                                         <th>Ref No</th>
-                                                        <th>Product Code</th>
                                                         <th>Group</th>
                                                         <th>Type</th>
+                                                        <th>Product Code</th>
                                                         <th>Product Name</th>
-
-                                                        <th>Supplier</th>
-                                                        <!-- <th>Location</th> -->
-                                                        <th>Quantity</th>
-                                                        <th>Cost Price</th>
-                                                        <th>Disc %</th>
-                                                        <th>Discount</th>
-                                                        <th>Total</th>
+                                                        
+                                                        <th>Cost/sales price</th>
+                                                        <th>Qty IN</th>
+                                                        <th>Qty OUT</th>
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <?php
-                                                        foreach($res_pchorder as $item){
-                                                            echo"
+                                                    <?php
+                                                        foreach($res_stock as $item){
+                                                            if($item->stock_transactiontype=='GRN'){
+                                                                echo"
                                                             <tr>
-                                                            <td>$item->purchaseorder_date</td>
-                                                            <td>$item->purchaseorder_ref</td>
-                                                            <td>$item->product_code</td>
+                                                            <td>$item->date</td>
+                                                            <td>$item->REFNO</td>
                                                             <td>$item->group_name</td>
                                                             <td>$item->ptype_name</td>
-
+                                                            
+                                                            <td>$item->product_code</td>
                                                             <td>$item->product_name</td>
-                                                            <td>$item->supplier_name1</td>   
-                                                        
-                                                            <td>$item->po_item_qty</td>
-                                                            <td>$item->po_item_price</td>
-                                                            <td>$item->po_item_discount</td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td>$item->stock_costprice</td>
+                                                            <td>$item->stock_qty</td>
+                                                           <td>0</td>
+                                                         
+                                                           
+                                                            
                                                             </tr>
                                                             ";
+                                                            }elseif($item->stock_transactiontype=='SALES'){
+                                                                echo"
+                                                                <tr>
+                                                                <td>$item->date</td>
+                                                                <td>$item->REFNO</td>
+                                                                <td>$item->group_name</td>
+                                                                <td>$item->ptype_name</td>
+                                                                
+                                                                <td>$item->product_code</td>
+                                                                <td>$item->product_name</td>
+                                                                <td>$item->stock_costprice</td>
+                                                                <td>0</td>
+                                                                <td>" . substr($item->stock_qty, 1) . "</td>
+                                                              
+                                                               
+                                                             
+                                                               
+                                                                
+                                                                </tr>";
+                                                            }
+
+                                                            
+                                                            
                                                         }
 
                                                     ?>
+                                                    
 
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>Name</th>
-                                                        <th>Position</th>
-                                                        <th>Office</th>
-                                                        <th>Age</th>
-                                                        <th>Start date</th>
-                                                        <th>Salary</th>
-                                                    </tr>
+                                                        <th colspan="7">Totals:</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        
+                                                </tr>
                                                 </tfoot>
                                             </table>
                                         </div>
@@ -288,3 +280,41 @@ if(isset($_POST['filter'])){
                             ?>
 
                             <!-- ------------------------------------------------------------------------------------------------- -->
+
+                            <script>
+
+$(document).ready(function () {
+						$('#table34').DataTable({
+							"searching": true,
+                            "lengthChange": true,
+                     
+                            "iDisplayLength": 10,
+                                                    //"pageLength": 40,
+							"scrollX": true,
+							"paging": true,
+							"info": true,
+                            dom: 'Bfrtip',
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+							drawCallback: () => {
+								const table = $('#table34').DataTable();
+								const tableData = table.rows({
+										search: 'applied'
+									}).data().toArray();
+								const totals = tableData.reduce((total, rowData) => {
+										total[0] += parseFloat(rowData[7]);
+										total[1] += parseFloat(rowData[8]);
+                                    //    total[2] += parseFloat(rowData[9]);
+                                    //    total[3] += parseFloat(rowData[10]);
+                                       // total[4] += parseFloat(rowData[10]);
+                                       
+										return total;
+									}, [0,0]);
+								$(table.column(7).footer()).text(totals[0]);
+								$(table.column(8).footer()).text(totals[1]);
+                                //$(table.column(9).footer()).text(totals[2]);
+                               // $(table.column(10).footer()).text(totals[3]);
+                                 //$(table.column(11).footer()).text(totals[4]);
+							}
+						})
+					});				
+                            </script>

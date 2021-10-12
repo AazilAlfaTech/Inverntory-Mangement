@@ -22,11 +22,21 @@ $res_loc = $loc->get_all_location();
 
 include_once "../product/product.php";
 $prd = new product();
-$res_prd = $prd->getall_product2()
+$res_prd = $prd->getall_product2();
 
+include_once "../customer/customer.php";
+$cus = new customer();
+$res_cus = $cus->get_all_customer();
 
+include_once "../sales_invoice/sales_invoice.php";
+$sales_invoice4=new sales_invoice();
+$res_invoice=$sales_invoice4->sales_invoice_report();
+//print_r($res_invoice);
+//exit;
 
-
+if(isset($_POST['filter'])){
+    $res_invoice=$sales_invoice4->sales_invoice_report_filter($_POST);
+}
 
 
 
@@ -47,7 +57,7 @@ $res_prd = $prd->getall_product2()
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>GRN Report</h4>
+                                    <h4>Sales Report</h4>
 
                                 </div>
                             </div>
@@ -79,7 +89,7 @@ $res_prd = $prd->getall_product2()
 
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>GRN Report</h5>
+                                    <h5>Sales Report</h5>
                                     <span></span>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
@@ -94,7 +104,7 @@ $res_prd = $prd->getall_product2()
 
                                     <div class="card-block">
 
-                                        <form action="grn_report.php " method="POST" id="submitgroup">
+                                        <form action="sales_invoice_report.php" method="POST" >
 
 
 
@@ -102,29 +112,27 @@ $res_prd = $prd->getall_product2()
                                                 <div class="col-sm-4">
                                                     <label class=" col-form-label">From</label>
 
-                                                    <input type="date" class="form-control" name="groupcode" pattern="" id="gr_code" placeholder="" >
-                                                    <div class="col-form-label" id="">
-                                                    </div>
+                                                    <input type="date" class="form-control" name="filter_startdt" pattern="" id="gr_code" placeholder="" >
+                                                  
                                                 </div>
 
                                                 <div class="col-sm-4">
                                                     <label class=" col-form-label">To</label>
-                                                    <input type="date" name="groupname" class="form-control" id="gr_name" >
-                                                    <div class="col-form-label" id="namecheck_msg" style="display:none;">
-                                                    </div>
+                                                    <input type="date" name="filter_enddt" class="form-control" id="gr_name" >
+                                                    
 
                                                 </div>
 
                                                 <div class="col-sm-4">
-                                                    <label class=" col-form-label">Suplier</label>
+                                                    <label class=" col-form-label">Customer</label>
                                                  
 
-                                                    <select class="js-example-basic-single col-sm-12" name="" id="" required>
-                                                    <option value="-1">Select Supplier</option>
+                                                    <select class="js-example-basic-single col-sm-12" name="filter_cus" id="" >
+                                                    <option value="-1">Select Customer</option>
                                                     <?php
-                                                        foreach($res_sup as $item)
+                                                        foreach($res_cus as $item)
                                                       
-                                                        echo"<option value='$item->supplier_id '>$item->supplier_name</option>";
+                                                        echo"<option value='$item->customer_name '>$item->customer_name</option>";
                                                    ?>
                                                 </select>
 
@@ -137,13 +145,13 @@ $res_prd = $prd->getall_product2()
                                                     <label class=" col-form-label">Group</label>
 
                                                    
-                                                    <select class="js-example-basic-single col-sm-12 " name="" id="">
+                                                    <select class="js-example-basic-single col-sm-12 " name="filter_group" id="">
 
                                                     <option value="-1">Select Group</option>
                                                     <?php
                                                         foreach($res_grp as $item)
                                                       
-                                                        echo"<option value='$item->group_id '>$item->group_name</option>";
+                                                        echo"<option value='$item->group_name '>$item->group_name</option>";
                                                    ?>
 
                                                     </select>
@@ -152,12 +160,12 @@ $res_prd = $prd->getall_product2()
                                                 <div class="col-sm-3">
                                                     <label class=" col-form-label">Type</label>
                                           
-                                                    <select class="js-example-basic-single col-sm-12 " name="" id="">
+                                                    <select class="js-example-basic-single col-sm-12 " name="filter_type" id="">
                                                     <option value="-1">Select Type</option>
                                                     <?php
                                                         foreach($res_typ as $item)
                                                       
-                                                        echo"<option value='$item->ptype_id '>$item->ptype_name</option>";
+                                                        echo"<option value='$item->ptype_name '>$item->ptype_name</option>";
                                                    ?>
 
 
@@ -191,19 +199,19 @@ $res_prd = $prd->getall_product2()
                                                     <label class=" col-form-label">Product </label>
                                                   
                                                 
-                                                    <select class="js-example-basic-single col-sm-12" name="" id="" required>
+                                                    <select class="js-example-basic-single col-sm-12" name="filter_product" id="" required>
                                                     <option value="-1">Select Product</option>
                                                     <?php
                                                         foreach($res_prd as $item)
                                                       
-                                                        echo"<option value='$item->product_id'>$item->product_name</option>";
+                                                        echo"<option value='$item->product_name'>$item->product_name</option>";
                                                    ?>
                                                 </select>
                                                 </div>
 
                                             </div>
 
-                                            <button type="submit" class="btn btn-primary">Search</button>
+                                            <button type="submit" name='filter' class="btn btn-primary">Search</button>
                                             <button type="reset" class="btn btn-inverse">CLEAR</button>
                                         </form>
                                     </div>
@@ -215,7 +223,7 @@ $res_prd = $prd->getall_product2()
 
                                     <div class="card-block">
                                         <div class="dt-responsive table-responsive">
-                                            <table id="basic-btn" class="table table-striped table-bordered nowrap">
+                                            <table id="table34" class="table table-striped table-bordered nowrap ">
                                                 <thead>
                                                     <tr>
                                                         <th>DATE</th>
@@ -225,42 +233,56 @@ $res_prd = $prd->getall_product2()
                                                         <th>Type</th>
                                                         <th>Product Name</th>
 
-                                                        <th>Supplier</th>
-                                                        <th>Location</th>
+
+                                                        <th>Customer</th>
+
+
+                                                       
                                                         <th>Quantity</th>
-                                                        <th>Cost Price</th>
-                                                        <th>Disc %</th>
+                                                        <th>Dicount%</th>
                                                         <th>Discount</th>
+                                                        <th>Sales Price</th>
                                                         <th>Total</th>
+                                                      
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Tiger Nixon</td>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
-                                                        <td>2011/04/25</td>
-                                                        <td>$320,800</td>
-                                                        <td>Tiger Nixon</td>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
-                                                        <td>2011/04/25</td>
-                                                        <td>$320,800</td>
-                                                        <td>$320,800</td>
-                                                    </tr>
+                                                    <?php
+                                                        foreach($res_invoice as $item){
+                                                            echo"
+                                                            <tr>
+                                                            <td>$item->salesinvoice_date</td>
+                                                            <td>$item->salesinvoice_ref</td>
+                                                            <td>$item->product_code</td>
+                                                            <td>$item->group_name</td>
+                                                            
+                                                            <td>$item->ptype_name</td>
+                                                            <td>$item->product_name</td>
+                                                            <td>$item->customer_name</td>
+
+                                                            <td>$item->si_item_qty</td>
+                                                            <td>$item->si_item_discount</td>
+                                                            <td>$item->si_item_discount_amount</td>
+                                                            <td>$item->si_item_price</td>
+                                                            <td>$item->si_item_total</td>
+                                                            
+                                                            </tr>
+                                                            ";
+                                                        }
+
+                                                    ?>
+                                                    
 
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>Name</th>
-                                                        <th>Position</th>
-                                                        <th>Office</th>
-                                                        <th>Age</th>
-                                                        <th>Start date</th>
-                                                        <th>Salary</th>
-                                                    </tr>
+                                                        <th colspan="7">Totals:</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                </tr>
                                                 </tfoot>
                                             </table>
                                         </div>
@@ -277,3 +299,41 @@ $res_prd = $prd->getall_product2()
                             ?>
 
                             <!-- ------------------------------------------------------------------------------------------------- -->
+
+                            <script>
+
+$(document).ready(function () {
+						$('#table34').DataTable({
+							"searching": true,
+                            "lengthChange": true,
+                     
+                            "iDisplayLength": 10,
+                                                    //"pageLength": 40,
+							"scrollX": true,
+							"paging": true,
+							"info": true,
+                            dom: 'Bfrtip',
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+							drawCallback: () => {
+								const table = $('#table34').DataTable();
+								const tableData = table.rows({
+										search: 'applied'
+									}).data().toArray();
+								const totals = tableData.reduce((total, rowData) => {
+										total[0] += parseFloat(rowData[7]);
+									//	total[1] += parseFloat(rowData[8]);
+                                        total[2] += parseFloat(rowData[9]);
+                                    //    total[3] += parseFloat(rowData[10]);
+                                        total[4] += parseFloat(rowData[10]);
+                                       
+										return total;
+									}, [0, 0,0,0,0]);
+								$(table.column(7).footer()).text(totals[0]);
+								//$(table.column(8).footer()).text(totals[1]);
+                                $(table.column(9).footer()).text(totals[2]);
+                               // $(table.column(10).footer()).text(totals[3]);
+                                 $(table.column(11).footer()).text(totals[4]);
+							}
+						})
+					});				
+                            </script>
