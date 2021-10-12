@@ -47,6 +47,7 @@ function insert_sales_dispatch_item1($sd_id){
         $sql="INSERT INTO sales_dispatch_item (sd_item_qty,sd_item_invoiceid,sd_item_productid,sd_item_price,sd_item_discount,sd_item_saledispatch_id)VALUES 
         ('".$_POST['Quantity'][$list]."','".$_POST['Orderid'][$list]."','".$_POST['Product'][$list]."','".$_POST['Price'][$list]."','".$_POST['Discount'][$list]."',$sd_id)";
          $this->db->query($sql);
+        // echo $sql;
 
          
         if($_POST['Product'][$list]>0)
@@ -59,9 +60,11 @@ function insert_sales_dispatch_item1($sd_id){
          
 
             if($inventory=='FIFO'){
+                echo'FIFO';
             $fifoitem-> insert_fifo($_POST['Quantity'][$list],$_POST['Product'][$list],$sd_id);
                
             }else if($inventory=='AVCO'){
+                    echo 'AVCO';
                 $res=$fifoitem->insert_avco($_POST['Quantity'][$list],$_POST['Product'][$list],$sd_id);
             
             }
@@ -69,9 +72,10 @@ function insert_sales_dispatch_item1($sd_id){
 
       
        $salesinvoiceitem5->update_salesinvoice_item_currentstatus($_POST['InvoiceItemid'][$list],$_POST['CurrentStatus'][$list]);
-       $salesinvoice5->sales_invoice_status($_POST['InvoiceItemid'][$list]);
+       $salesinvoice5->sales_invoice_status($_POST['Orderid'][$list]);
        $list++;
     }
+   
     return true;
 
 }

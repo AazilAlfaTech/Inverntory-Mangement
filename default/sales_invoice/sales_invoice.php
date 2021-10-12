@@ -194,7 +194,7 @@ function si_code($salesinvoice_date){
 
     function get_all_sales_invoice_bycustomer($cusid){
 
-        $sql="SELECT * FROM  sales_invoice WHERE salesinvoice_customer=$cusid AND sales_invoice.salesinvoice_status='ACTIVE'" ;     
+        $sql="SELECT * FROM  sales_invoice WHERE (salesinvoice_customer=$cusid AND salesinvoice_currentstatus='PENDING') OR (salesinvoice_customer=$cusid AND salesinvoice_currentstatus='NEW')" ;     
         $result=$this->db->query($sql);
     
         $sales_invoice_array=array(); //array created
@@ -221,22 +221,24 @@ function si_code($salesinvoice_date){
 
 //=====================================================================================================================================
 
-function sales_invoice_status($salesinvoicestatus){
-    $sql1="SELECT * FROM sales_invoice_item WHERE (si_item_invoiceid=$salesinvoicestatus AND si_item_currentstatus='NEW' ) OR (si_item_invoiceid=$salesinvoicestatus AND si_item_currentstatus='PENDING' ) OR (si_item_invoiceid=$salesinvoicestatus AND si_item_currentstatus='COMPLETE' )";
+function sales_invoice_status($salesinvoicID){
+    $sql1="SELECT * FROM sales_invoice_item WHERE si_item_invoiceid=$salesinvoicID AND si_item_currentstatus='PENDING' ";
     $result=$this->db->query($sql1);
-   echo $sql1;
+    $ROWSSS=$result->num_rows;
+    //echo $ROWSSS;
+ //  echo $sql1;
 //    $sql3="SELECT * FROM sales_invoice_item WHERE (si_item_invoiceid=$salesinvoicestatus AND si_item_currentstatus='NEW' ) OR (si_item_invoiceid=$salesinvoicestatus AND si_item_currentstatus='COMPLETE' )";
 //    $result2=$this->db->query($sql3);
 
 if($result->num_rows==0){
-    $sql2="UPDATE sales_invoice SET salesinvoice_currentstatus='COMPLETE' WHERE salesinvoice_id =$salesinvoicestatus";
+    $sql2="UPDATE sales_invoice SET salesinvoice_currentstatus='COMPLETE' WHERE salesinvoice_id =$salesinvoicID";
     $this->db->query($sql2);
-    echo $sql2;
+    //echo $sql2;
     return true;
-}else if($result->num_rows!=0) {
-    $sql2="UPDATE sales_invoice SET salesinvoice_currentstatus='PENDING' WHERE salesinvoice_id =$salesinvoicestatus";
+}else  {
+    $sql2="UPDATE sales_invoice SET salesinvoice_currentstatus='PENDING' WHERE salesinvoice_id =$salesinvoicID";
     $this->db->query($sql2);
-    echo $sql2;
+    //echo $sql2;
     return true;
   
 }

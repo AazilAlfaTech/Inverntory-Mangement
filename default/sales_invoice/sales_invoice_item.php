@@ -181,7 +181,7 @@ function get_all_sales_invoice_invoiceid($si_invoiceid ){
     $sql="SELECT sales_invoice_item.si_itemid ,sales_invoice_item.si_item_invoiceid,sales_invoice_item.si_item_orderid,
     sales_invoice_item.si_item_productid,sales_invoice_item.si_item_price,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_discount,
     product.product_name
-    FROM sales_invoice_item JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE (si_item_currentstatus='PENDING' AND sales_invoice_item.si_item_invoiceid = $si_invoiceid) ";
+    FROM sales_invoice_item JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE si_item_currentstatus='PENDING' AND sales_invoice_item.si_item_invoiceid = $si_invoiceid ";
    // echo $sql;
     $result=$this->db->query($sql);
 

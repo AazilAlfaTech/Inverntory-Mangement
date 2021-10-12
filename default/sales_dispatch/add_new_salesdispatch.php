@@ -26,6 +26,7 @@ if(isset($_POST['sdis_date'])){
     $sales_dispatch2->salesdispatch_ref=$sales_dispatch2->sd_code($_POST['sdis_date']);
     $dispatchid=$sales_dispatch2->insert_sales_dispatch();
     $salesdispatchitem->insert_sales_dispatch_item1($dispatchid);
+  
     
 }
 
@@ -102,7 +103,7 @@ include_once "../../files/head.php";
                                                     <label class=" col-form-label">Location</label>
                                                 
                                                     <select class="js-example-basic-single col-sm-12 dispatchloc " name="sdis_loc" >
-                                                    <option value="-1">Select Location</option>
+                                                    <option value=" ">Select Location</option>
                                                     <?php
                                                         foreach($res_loc as $item)
                                                       
@@ -164,15 +165,7 @@ include_once "../../files/head.php";
                                     
                                 <div class="card-block">
 
-                                    <table class="table  table-striped table-bordered">
-                                        <thead>
-                                           <th>ID</th>
-                                           <th>Status</th>
-                                        </thead>
-                                        <tbody class="invoicetable">
-
-                                        </tbody>
-                                    </table>
+                                    
                                     
                                     <div class="table-responsive">
 
@@ -180,7 +173,7 @@ include_once "../../files/head.php";
                                             <thead>
                                                 <tr>
                                                     
-                                                    <th>OrderID</th>
+                                                    <th>InvoiceID</th>
                                                     <th>Product</th>
                                                     <th>Qty</th>
                                                     <th>Price</th>
@@ -239,10 +232,16 @@ include_once "../../files/head.php";
 
 //get the list of invoices
 $("#sinv_customer").change(function() {
+
+    if( $(".dispatchloc").val()==''){
+        alert("Please select location");
+
+    }else{
+
     var customer_id = $("#sinv_customer").val();
     
      $.get("../ajax/ajaxsales.php?type=get_sales_invoice_of_customer", { invoicecustomer: customer_id }, function(data) {
-        
+        //console.log(data);
          //remove invoice table
          $("#tbody").html("");
          //remove dispatch item table
@@ -274,6 +273,7 @@ $("#sinv_customer").change(function() {
 
           });
      });
+    }
 });
 
 //add the items of the selected invoice to the dispatch table
@@ -281,7 +281,7 @@ function add_to_list(invoice,btn){
 $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice }, function(data) {
          
         var item_data = JSON.parse(data);
-
+            console.log(data);
         
         $.each(item_data, function(o, p) {
 
@@ -295,13 +295,13 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
             <input class='form-control input-sm productid '   type='hidden' name='Product[]' value='"+ item_data[o].si_item_productid+"'>\
         </td>\
         <td ><span class='tabledit-span'></span>\
-            <input class='input-borderless input-sm row_data quantity qtycheck'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].si_item_qty +"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
+            <input class='input-borderless input-sm row_data quantity qtycheck'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].si_item_qty +"'><div style='color: red; display: none' class='msg1'>Digits only</div><span class='qtymsg'></span>\
         </td>\
         <td ><span class='tabledit-span'></span>\
            <select name='Price[]'  class='input-borderless price productprice'>\
             <option value='"+item_data[o].si_item_price +"'>"+item_data[o].si_item_price +"</option>\
         </select>\
-            <input class='form-control input-sm subtotal '   type='hidden' name='Orderid[]' value='"+ item_data[o].si_item_subtotal+"'>\
+            <input class='form-control input-sm subtotal '   type='hidden' value='"+ item_data[o].si_item_subtotal+"'>\
         </td>\
         <td ><span class='tabledit-span'></span>\
             <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+ item_data[o].si_item_discount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
@@ -367,17 +367,7 @@ function statuschange(id,checkbox1){
             if($(this).text()==id)
             {
             
-            $(".invoicetable").append(
-                "<tr>\
-                <td >\
-            <input class='form-control '   type='text' name='statusid[]' value='"+ $(this).text()+"'>\
-        </td>\
-        <td ><span class='tabledit-span'></span>\
-            <input class='form-control'   type='text' readonly  name='statustype[]' value='PENDING'><div style='color: red; display: none' class='msg1'>Digits only</div>\
-        </td>\
-                </tr>/"
-                
-            );
+           
                 
             var option = $('<option></option>').attr("value", "PENDING").text("PENDING");
             $(this).parent().parent().children().children('.productstatus').empty().append(option);

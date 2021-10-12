@@ -20,13 +20,13 @@
             var quants = row.find(".quantity").val();
             var prc = row.find(".price").val();
             
-            console.log(prc);
+            //console.log(prc);
            // var tot = quants * prc;
            var disc= row.find(".discount").val();
                         var subtot= parseFloat(quants * prc * disc/100);
-                        console.log(subtot);
+                        //console.log(subtot);
                         var tot = parseFloat(quants * prc - subtot);
-                        console.log(tot);
+                        //console.log(tot);
             row.find(".total").attr("value",tot);
         });
 
@@ -319,30 +319,56 @@ row.find(".discount").on("keypress",function(e)
 
 $(document).on('click', '.btn_edit', function(){
     var row1=$(this).closest('tr');
-    console.log("location");
+   // console.log("location");
     invoiceloc=$(".dispatchloc").val();
-    console.log("location-"+invoiceloc);
+   // console.log("location-"+invoiceloc);
     inv_id=row1.find(".productid").val();
-    console.log(inv_id);
-    qty_sale=row1.find(".qtycheck ").val();
+    //console.log(inv_id);
+    //qty_sale=row1.find(".qtycheck ").val();
+  //  console.log(qty_sale);
     $.get("../ajax/ajaxpurchase.php?type=get_sum_remainingqty",{prodid:inv_id,loc_id:invoiceloc},function(data)
     {
-      console.log(data);
+     //console.log(data);
       var d=JSON.parse(data); 
+
       remaing_qty=d.grn_qty;
-    console.log("remaining qty"+remaing_qty);
+      
+    // console.log("remaining qty "+remaing_qty);
+    // if(remaing_qty == 0){
+    //     console.log("Please type a qty");
+    
+    //     row1.find(".qtymsg").html("Not available")
+    // }else if(remaing_qty < qty_sale){
+    //     console.log("Required stock not available");
+       
+    //     row1.find(".qtymsg").html("Not available")
+    // }else if(remaing_qty > qty_sale)
+    //     {console.log("Stock availanle");
+       
+    //     row1.find(".qtymsg").html("Available")
+    // }
      
     //  return remaing_qty;
     });
 
-    row1.find(".qtycheck").on("keypress",function()
+    $("table").on("keyup", ".qtycheck",function()
 {
-    if(remaing_qty == 0){
-        console.log("Please type a qty");
-    }else if(remaing_qty < qty_sale){
+
+     console.log("remaining qty "+remaing_qty);
+    
+    var row1=$(this).closest('tr');
+    //row1.find(".qtymsg").html().remove();
+    qty_sale1=row1.find(".qtycheck ").val();
+    console.log(qty_sale1);
+    if(qty_sale1==""){
+        console.log("Stockempty");
+        // row1.find(".qtymsg").html("qty is 0")
+    }else if(remaing_qty < qty_sale1){
         console.log("Required stock not available");
-    }else if(remaing_qty > qty_sale)
+        row1.find(".qtymsg").html("Not available")
+    }else if(remaing_qty > qty_sale1)
         {console.log("Stock availanle");
+        row1.find(".qtymsg").html(" available")
     }
     
  });
@@ -350,19 +376,21 @@ $(document).on('click', '.btn_edit', function(){
 
 });
 
+
+
 function getpricelevel(e,stat){
   //  console.log("getpricelevel");
-    console.log(e);
+  //  console.log(e);
     $.get("../ajax/ajaxsales.php?type=get_pricelevels",{productid:e},function(data)
     {
-      console.log(data);
+    //  console.log(data);
       var d=JSON.parse(data); 
       //$(".productprice").html("");
      // $(".productstatus").html("");
       $.each(d,function(i,x)
       {
-        console.log(i);
-        console.log(x);
+        // console.log(i);
+        // console.log(x);
         $(".productprice").append("<option value='"+d[i].pricelevel_price+"'> "+d[i].pricelevel_price+" </option>");
       
       });
