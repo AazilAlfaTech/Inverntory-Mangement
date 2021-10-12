@@ -18,6 +18,7 @@
     {
         $result_po2=$po1-> get_purchaseorder_by_id($_GET["view"]);
         $result_grn1=$po1->get_purchaseorder_by_id($_GET["view"]);
+
         $result_grn2=$grn1-> get_all_grn_by_poid($_GET["view"]);
     }
 
@@ -25,15 +26,17 @@
     $result_location1=$location1->get_all_location();
 
     // insert grn details
-    if(isset($_POST["grnpurchorderid"]))
+    if(isset($_POST["save"]))
     {
-        $grn1->grn_puch_order_id=$_POST["grnpurchorderid"];
+        $grn1->grn_puch_orderid=$_POST["grnpurchorderid"];
         $grn1->grn_received_loc=$_POST["grnrecievedloc"];
         $grn1->grn_date=$_POST["grndate"];
+        $grn1->grn_current_status=$_POST["grn_current_status"];
         $grn1->grn_ref_no=$grn1->grn_code($_POST["grndate"]);
-
+       
         $result_grn1=$grn1->insert_grn();
         $grn_item1->insert_grnitem($result_grn1);
+        $po1-> po_status($_POST["grnpurchorderid"]);
     }
 
    
@@ -134,6 +137,17 @@
                             </div>    
                 <!-- ....................................................................................................... -->
                             <div class="card">
+                                <div class="card-header">
+                                    <h5>Add New GRN</h5>
+
+                                    <div class="card-header-right">
+                        <ul class="list-unstyled card-option">
+                            <li><i class="feather icon-maximize full-card"></i></li>
+                            <li><i class="feather icon-plus minimize-card"></i></li>
+                            <!-- <li><i class="feather icon-trash-2 close-card"></i></li> -->
+                        </ul>
+                    </div>
+                                </div>
                                 <div class="card-block">
 
                                     <form method="POST" action="add_new_GRN.php">
@@ -143,7 +157,7 @@
                                                 if(isset($_GET['view'])):?>
                                                 
                                                     
-                                                    <input type='hidden' class='form-control' value=<?=$_GET['view']?> name='grnpurchorderid' required>
+                                                    <input type='text' class='form-control' value=<?=$_GET['view']?> name='grnpurchorderid'>
                           
 
                                                     <div class='col-sm-6'>
@@ -162,13 +176,13 @@
                                         </div>         
                                         <div class='form-group row'>
 
-                                            <div class='col-sm-6'>
+                                            <div class='col-sm-4'>
                                                 <label class='col-form-label'> GRN Date</label>
-                                                <input class='form-control' type='date' name='grndate' value="<?php echo date('Y-m-d');?>">
+                                                <input class='form-control' type='date' name='grndate' value="<?php echo date('Y-m-d');?>" required>
                                             </div>
-                                            <div class='col-sm-6'>
+                                            <div class='col-sm-4'>
                                                 <label class='col-form-label' name='grnrecievedloc'>Received location</label>
-                                                <select class='js-example-basic-single col-sm-12' name='grnrecievedloc'>
+                                                <select class='js-example-basic-single col-sm-12' name='grnrecievedloc' required>
                                                    <?php 
                                                     foreach($result_location1 as $item)
                                                     
@@ -178,9 +192,17 @@
                                                 </select>
 
                                             </div>
+                                            <div class='col-sm-4'>
+                                                <label class='col-form-label' name='grn_current_status'>Status</label>
+                                                <select class='js-example-basic-single col-sm-12' name='grn_current_status' required>
+                                                <option value='COMPLETE'>Complete</option>
+                                                <option value='PENDING'>Pending</option>
+                                                </select>
+
+                                            </div>
 
                                         </div>
-                                                </div>    
+                                    <!-- </div>     -->
 
                                 
                                         <br>
@@ -199,10 +221,11 @@
                                                         <th>Price</th>
                                                         <th>Discount</th>
                                                         <th>Total</th>
+                                                        <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody class='itembody'>
                                                     <?php if(isset($_GET['view'])):?>
                                                         <?php   foreach($result_grn2 as $item):?>  
                                                             <tr>                                                                  <tr>
@@ -216,6 +239,8 @@
                                                                 </td>
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?=$item->purchaseorder_itemprice?></span>
                                                                     <input class='input-borderless input-sm row_data price' type='text' readonly  name='grn_itemprice[]' value='<?=$item->purchaseorder_itemprice?>'><div style="color: red; display: none" class="msg2">Digits only</div>
+                                                                    <input class='form-control input-sm subtotal'   type='hidden'  value='<?=$item->purchaseorder_itemsubtotal?>'> 
+
                                                                 </td>
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?=$item->purchaseorder_itemdiscount?></span>
                                                                     <input class='input-borderless input-sm row_data discount' type='text' readonly  name='grn_item_discount[]' value='<?=$item->purchaseorder_itemdiscount?>'><div style="color: red; display: none" class="msg3">Digits only</div>
@@ -223,6 +248,9 @@
                                                                             
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?=$item->purchaseorder_itemfinalprice ?></span>
                                                                     <input class='input-borderless input-sm row_data total'   type='text' readonly value='<?=$item->purchaseorder_itemfinalprice ?>'>
+                                                                </td>
+                                                                <td class='table-edit-view'>                                                                    
+                                                                    <input class='input-borderless input-sm row_data total'   type='text' value="ACTIVE">
                                                                 </td>
                                                                 <td>
                                                                     <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
@@ -235,23 +263,24 @@
                                                     <?php endif ;?>        
                                                 </tbody>
                                             </table>
-                                                <!-- <div class="card">   -->
+                                        </div>
+                                                <div class="card">  
                                                     
                                                     
                                                     <table class="table table-responsive invoice-table invoice-total">
                                                         <tbody class="pricelist">
                                                             <tr>
                                                                 <th> Total Quantity :</th>
-                                                                <td ><input type="text" id="total_quan" name="totqty" class="form-control form-control-sm" ></td>
+                                                                <td ><input type="text" id="total_quan" name="totqty" class="form-control form-control-sm" readonly></td>
                                                             </tr>
                                                             <tr>
                                                                 <th> Sub Total :</th>
-                                                                <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber"></td>
+                                                                <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber" readonly></td>
                                                             </tr>
-                                                            <tr>
+                                                            <!-- <tr>
                                                                 <th> Total Discount :</th>
-                                                                <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " ></td>
-                                                            </tr>
+                                                                <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " readonly></td>
+                                                            </tr> -->
                                                         
                                                             <tr class="text-info">
                                                                 <td>
@@ -260,13 +289,13 @@
                                                                 </td>
                                                                 <td>
                                                                     <hr>
-                                                                    <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control"></h5>
+                                                                    <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control" readonly></h5>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                            </div>
+                                            <!-- </div> -->
 
 
 
@@ -276,11 +305,11 @@
                                             <button type="submit" name="save" class="btn btn-primary">Submit</button>
                                         </div>
                                     </form>
-                                </div>
+                                <!-- </div>
 
                                 </div>
 
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -303,6 +332,7 @@
 include_once "../../files/foot.php";
 
 ?>
+<script type="text/javascript" src="../javascript/purchase/grn.js"></script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>
 
 

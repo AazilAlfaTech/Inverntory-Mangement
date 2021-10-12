@@ -168,7 +168,7 @@ include_once "../../files/head.php";
                         <div class='form-group row'>
                             <!-- top form start -->
                             <!-- purchase request id -->
-                            <input type='text'  class='form-control' value=<?=$_GET['view'] ?> name='purchaseorderrequest' required>
+                            <input type='hidden'  class='form-control' value=<?=$_GET['view'] ?> name='purchaseorderrequest' required>
                             
 
                             <div class='col-sm-4'>
@@ -189,11 +189,11 @@ include_once "../../files/head.php";
                             <br>
 
                         <!-- add product from -->
-                        <div class="form-group row additemform">
+                        <div class="form-group row productform">
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <label class=" col-form-label">Select Product</label>
-                                <select class="form-control "  id="porder_itemproductid" > 
+                                <select class="js-example-basic-single col-sm-12 product_level"  id="porder_itemproductid" > 
 
                                     <option value="-1 ">Select product</option>
                                     <?php
@@ -212,31 +212,41 @@ include_once "../../files/head.php";
 
                             <div class="col-sm-2">
 
+                                <label class=" col-form-label">Product batch</label>
+                                <input type="text" class="form-control product_batch" placeholder="" name="pr_batch" id="preq_prodbatch"  >
+                            </div>
+                            
+                            <div class="col-sm-2">
+
                                 <label class=" col-form-label">Price</label>
-                                <input type="text" class="form-control" placeholder="0.00" name="pr_itemprice" id="porder_itemprice" onkeyup="cal_prd_total()" >
+                                <input type="text" class="form-control price_add" placeholder="0.00" name="pr_itemprice" id="porder_itemprice" >
+                                <div style="color: red; display: none" class="msg3">Digits only</div>
                             </div>
 
                             <div class="col-sm-2">
 
                                 <label class=" col-form-label">Qty</label>
-                                <input type="number" class="form-control" placeholder="0.00" name="pr_itemqty" id="porder_itemqty" onkeyup="cal_prd_total()" >
+                                <input type="number" class="form-control qty_add" placeholder="0.00" name="pr_itemqty" id="porder_itemqty" >
+                                <div style="color: red; display: none" class="msg1">Digits only</div>
                             </div>
 
                             <div class="col-sm-2">
 
                                 <label class=" col-form-label">Discount</label>
-                                <input type="text" class="form-control" placeholder="0.00" name="pr_itemdiscount" Id="porder_itemdiscount" value='0.00' onkeyup="cal_prd_total()" >
+                                <input type="text" class="form-control disc_add" placeholder="0.00" name="pr_itemdiscount" Id="porder_itemdiscount" value='0.00' >
+                                <div style="color: red; display: none" class="msg2">Digits only</div>
                             </div>
 
                             <div class="col-sm-2">
-
-                                <label class=" col-form-label">Total</label>
-                                <input type="text" class="form-control" placeholder="0.00" name="pr_itemfinalprice"  id="porder_itemfinalprice" disabled>
+                            <label class=" col-form-label">Total</label>
+                                                <input type="text" class="form-control totaladd" placeholder="0.00" name="pr_itemfinalprice" id="porder_itemfinalprice" disabled>
+                                <!-- <label class=" col-form-label">Total</label>
+                                <input type="text" class="form-control totaladd" placeholder="0.00" name="pr_itemfinalprice"  id="porder_itemfinalprice" disabled> -->
                             </div>
 
                         </div>
                                 <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
-                                <button class="btn btn-inverse">CLEAR</button>
+                                <button type="button" class="btn btn-inverse reset">CLEAR</button>
                         <!-- add product form end -->
 
                             <br>
@@ -270,15 +280,16 @@ include_once "../../files/head.php";
                                         <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='<?=$item->pr_item_qty ?>'><div style="color: red; display: none" class="msg1">Digits only</div>
                                         </td>
                                         <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_price ?></span>
+                                            <input class='form-control input-sm subtotal'   type='hidden'  value='<?=$item->pr_item_subtotal?>'> 
                                             <input class='input-borderless input-sm row_data price'   type='text' readonly name='Price[]' value='<?= $item->pr_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
-                                            </td>
-                                            <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_discount ?></span>
+                                        </td>
+                                        <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_discount ?></span>
                                             <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='<?= $item->pr_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
                                             
-                                            <td class='table-edit-view'><span class='tabledit-span'><?=$item->item_discount ?></span>
+                                        <td class='table-edit-view'><span class='tabledit-span'><?=$item->item_discount ?></span>
                                             <input class='input-borderless input-sm row_data total'   type='text' readonly value='<?=$item->item_discount ?>'>
                                             
-                                            </td>
+                                        </td>
                                         
                                         
                                         <td>
@@ -305,16 +316,16 @@ include_once "../../files/head.php";
                                 <tbody class="pricelist">
                                     <tr>
                                         <th> Total Quantity :</th>
-                                        <td ><input type="text" id="total_quan" name="totqty" class="form-control form-control-sm" ></td>
+                                        <td ><input type="text" id="total_quan" name="totqty" class="form-control form-control-sm" readonly ></td>
                                     </tr>
                                     <tr>
                                         <th> Sub Total :</th>
-                                        <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber"></td>
+                                        <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber" readonly></td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <th> Total Discount :</th>
                                         <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " ></td>
-                                    </tr>
+                                    </tr> -->
                                    
                                     <tr class="text-info">
                                         <td>
@@ -323,7 +334,7 @@ include_once "../../files/head.php";
                                         </td>
                                         <td>
                                             <hr>
-                                            <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control"></h5>
+                                            <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control" readonly></h5>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -351,89 +362,6 @@ include_once "../../files/foot.php";
 
 ?>
 
-
-<script>
-    function edit_purchorder(PR_id)
-    {
-        window.location.href="add_new_purchase_order.php?view="+PR_id;
-    }
-</script>
-<script>
-    function cal_prd_total(){
-        var pprice = $("#porder_itemprice").val();
-        var pqty =$("#porder_itemqty").val();
-        var pdis = $("#porder_itemdiscount").val(); 
-
-
-        var tot = parseFloat(pprice)*parseFloat(pqty)*parseFloat(pdis)/100
-
-        ftot =  parseFloat(pprice)*parseFloat(pqty) - parseFloat(tot)
-        $("#porder_itemfinalprice").val(ftot);
-    }
-
-// -------------------------------------------------------------------------------------------------------------------------
-
-$("#add_prbtn").click(function(){
-
-add_products();
-clear_products();
-cal_totquantity();
-cal_totprice();
-cal_totdiscount();
-final_total();
-
-});
-
-// ---------------------------------------------------------------------------------------------------------------------
-function add_products()
-{
-
-   
-    
-    var pr_prod=$("#porder_itemproductid option:selected").val();
-    var pr_prod_name=$("#porder_itemproductid option:selected").text(); //dropdown
-    var p_price=$("#porder_itemprice").val();
-    var p_qty=$("#porder_itemqty").val();
-    var p_dis=$("#porder_itemdiscount").val();
-    var p_tot= $("#porder_itemfinalprice").val();
-    productsubtotal=parseFloat(p_price*p_qty);
-    if($("#porder_itemproductid").val()=='' || $("#porder_itemprice").val()==''|| $("#porder_itemqty").val()==''  || $("#porder_itemdiscount").val()==''){
-         alert("Fill all the fields in item info");
-     } else{
-   
-    $(".itembody").append("<tr><td><input  class='form-control input-sm  ' type='hidden' name='Product[]' value='"+pr_prod+"'> <span class='tabledit-span'>"+ pr_prod_name +" </span></td><td><input class='input-borderless input-sm row_data quantity' type='text' readonly name='Quantity[]' value='"+p_qty+"'><div style='color: red; display: none' class='msg1'>Digits only</div><input class='form-control input-sm subtotal'   type='hidden'  value='"+productsubtotal+"'></td><td><input class='input-borderless input-sm row_data price'  type='text' readonly name='Price[]' value='"+p_price+"'><div style='color: red; display: none' class='msg2'>Digits only</div>  </td><td><input class='input-borderless input-sm row_data discount' type='text' readonly name='Discount[]' value='"+p_dis+"'><div style='color: red; display: none' class='msg1'>Digits only</div></td> <td><input  class='input-borderless input-sm row_data total ' type='text' readonly  value='"+p_tot+"'></td><td><span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span><span class='btn_deleterow'><button  class='btn btn-mini btn-danger' type='button'>Delete</button></span><span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span><span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Reset</button></span></td> </tr>");
-     
-
-     $(".btn_save").hide();
-    $(".btn_cancel").hide();
-     }
-}
-
-// ----------------------------------------------------------------------------------------------------------------
-
-
-function clear_products()
-{
-
-   
-
-    $("#porder_itemproductid option:selected").text(""); //dropdown
-    $("#porder_itemprice").val("");
-    $("#porder_itemqty").val("");
-    $("#porder_itemdiscount").val("");
-    $("#porder_itemfinalprice").val("");
-    
-  
-
-
-}
-
-// function delete_row(row){
-//         $(row).parent().parent().parent().remove();
-//         console.log("rowww");    }
-
-
-
-
-</script>
+<script type="text/javascript" src="../javascript/purchase.js"></script>
+<script type="text/javascript" src="../javascript/purchase/purchase_order.js"></script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>

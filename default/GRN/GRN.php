@@ -9,7 +9,8 @@
         public $grn_puch_orderid;	
         public $grn_ref_no;
         public $grn_received_loc;	
-        public $grn_status;	
+        public $grn_status;
+        public $grn_current_status;
         public $grn_date;
         public $db;
 
@@ -22,8 +23,8 @@
         // Add a new grn.....................................................................................................
         function insert_grn()
         {
-            $SQL="INSERT INTO grn (grn_puch_orderid,grn_received_loc,grn_date,grn_ref_no) VALUES
-            ('$this->grn_puch_orderid','$this->grn_received_loc','$this->grn_date','$this->grn_ref_no')";
+            $SQL="INSERT INTO grn (grn_puch_orderid,grn_received_loc,grn_date,grn_ref_no,grn_current_status) VALUES
+            ('$this->grn_puch_orderid','$this->grn_received_loc','$this->grn_date','$this->grn_ref_no','$this->grn_current_status')";
             $this->db->query($SQL);
             // echo $SQL;
             $grnid=$this->db->insert_id;
@@ -224,6 +225,7 @@
                 $grn_po->purchaseorder_qty=$row["po_item_qty"];
                 $grn_po->purchaseorder_itemprice=$row["po_item_price"];
                 $grn_po->purchaseorder_itemdiscount=$row["po_item_discount"];
+                $grn_po->purchaseorder_itemsubtotal=round(($row['po_item_qty']*$row['po_item_price']),2);
                 // $grn_po->purchaseorder_itemfinalprice=$row["po_item_finalprice"];
                 $grn_po->purchaseorder_itemfinalprice=round(($row['po_item_qty']*$row['po_item_price'])-($row['po_item_qty']*$row['po_item_price']*$row['po_item_discount']/100),2);
                 $grn_po->purchaseorder_itemname=$row["product_name"];

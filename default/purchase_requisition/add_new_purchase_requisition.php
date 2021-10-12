@@ -144,7 +144,7 @@
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Price</label>
-                                                <input type="text" class="form-control price_add" placeholder="" name="pr_itemprice" id="preq_itemprice"  >
+                                                <input type="text" class="form-control price_add" placeholder="0.00" name="pr_itemprice" id="preq_itemprice"  >
                                                 <div style="color: red; display: none" class="msg3">Digits only</div>
                                             </div>
 
@@ -152,14 +152,14 @@
 
                                                 <label class=" col-form-label">Qty</label>
                                                 <!-- <input type="number" class="form-control" placeholder="" name="pr_itemqty" id="preq_itemqty" onkeyup="cal_prd_total()" > -->
-                                                <input type="number" class="form-control qty_add" placeholder="" name="pr_itemqty" id="preq_itemqty" >
+                                                <input type="number" class="form-control qty_add" placeholder="0.00" name="pr_itemqty" id="preq_itemqty" >
                                                 <div style="color: red; display: none" class="msg1">Digits only</div>
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Discount</label>
-                                                <input type="text" class="form-control disc_add" placeholder="" name="pr_itemdiscount" Id="preq_itemdiscount" >
+                                                <input type="text" class="form-control disc_add" placeholder="0.00" name="pr_itemdiscount" Id="preq_itemdiscount" >
                                                 <div style="color: red; display: none" class="msg2">Digits only</div>
 
                                             </div>
@@ -167,7 +167,7 @@
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Total</label>
-                                                <input type="text" class="form-control totaladd" placeholder="" name="pr_itemfinalprice" id="preq_itemfinalprice" disabled>
+                                                <input type="text" class="form-control totaladd" placeholder="0.00" name="pr_itemfinalprice" id="preq_itemfinalprice" disabled>
                                             </div>
 
                                         </div>

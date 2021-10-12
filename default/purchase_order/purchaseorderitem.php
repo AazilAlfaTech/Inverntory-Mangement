@@ -119,6 +119,16 @@ function get_all_POitem($purch_order_id){
      echo true;
  }
 
+ function update_purchase_orderitem($so_itemid){
+
+    $sql="UPDATE purchase_order_item SET po_item_status='INACTIVE' WHERE po_item_id = $so_itemid ";
+    //echo $sql;
+    $this->db->query($sql);
+    echo true;
+
+
+}
+
 
 }
 ?>

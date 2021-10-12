@@ -6,6 +6,13 @@ include_once "customer_group.php";
     $customergroup1 = new customergroup();
     
     //code to insert and update data............................................................... 
+    
+    if(isset($_POST["submit"]))
+{
+    $group1->import_customer_group();
+    
+}
+    
     if (isset($_POST["cust_grcode"]))
     {
         $customergroup1->customergroup_code = $_POST["cust_grcode"];

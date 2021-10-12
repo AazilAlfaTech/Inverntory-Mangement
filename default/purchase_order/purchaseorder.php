@@ -75,7 +75,7 @@ class purchaseorder{
         //$sql="SELECT * FROM purchase_order WHERE purchaseorder_status='ACTIVE' ";
         $sql="SELECT purchase_order.purchaseorder_id ,purchase_order.purchaseorder_ref ,purchase_order.purchaserorder_requestid, purchase_order.purchaseorder_status ,purchase_order.purchaseorder_date,
         supplier.supplier_name FROM purchase_order INNER JOIN `purchase_request` ON purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id    
-         INNER JOIN supplier ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaseorder_status='ACTIVE' ";
+         INNER JOIN supplier ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaseorder_status='ACTIVE' OR  purchaseorder_status='PENDING' ";
         $result=$this->db->query($sql);
        // echo $sql;
         $array_purchaseorder=array();
@@ -131,6 +131,46 @@ class purchaseorder{
 
     }
 
+    function purchase_order_status($orderidstatus)
+    {
+        $sql1="SELECT * FROM purchase_order_item WHERE po_item_orderid=$orderidstatus AND po_item_status='ACTIVE'";
+        $result=$this->db->query($sql1);
+        echo $sql1;
+    
+    if($result->num_rows==0){
+        $sql2="UPDATE purchase_order SET purchaseorder_status='COMPLETED' WHERE purchaseorder_id=$orderidstatus";
+        $this->db->query($sql2);
+        echo $sql2;
+        return true;
+    }else{
+        $sql2="UPDATE  purchase_order SET purchaseorder_status='SEMIUTILIZED' WHERE purchaseorder_id=$orderidstatus";
+        $this->db->query($sql2);
+        echo $sql2;
+        return true;
+    }
+    }
+
+    function po_status($statusid)
+    {
+        $sql1="SELECT * FROM grn WHERE grn_puch_orderid=$statusid AND grn_current_status='COMPLETE'";
+        $result=$this->db->query($sql1);
+        echo $sql1;
+
+        if($result->num_rows>0)
+        {
+        $sql2="UPDATE purchase_order SET purchaseorder_status='COMPLETED' WHERE purchaseorder_id=$statusid";
+        $this->db->query($sql2);
+        echo $sql2;
+        return true;
+        }
+        else
+        {
+            $sql3="UPDATE  purchase_order SET purchaseorder_status='PENDING' WHERE purchaseorder_id=$statusid";
+            $this->db->query($sql3);
+            echo $sql3;
+            return true;
+        }
+    }
 }
 
 
