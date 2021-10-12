@@ -60,9 +60,9 @@ class avco{
     }
 
 
-    function insert_stock(){
-        $sql="INSERT INTO stock(stock_id,stock_transactiontype, stock_transactiotypeid, stock_productid, stock_qty,stock_costpric) VALUES ()";
-    }
+    
+
+
 }
  
 ?>
