@@ -232,12 +232,7 @@ if(isset($_POST['filter'])){
                                                         <th>Group</th>
                                                         <th>Type</th>
                                                         <th>Product Name</th>
-
-
                                                         <th>Customer</th>
-
-
-                                                       
                                                         <th>Quantity</th>
                                                         <th>Dicount%</th>
                                                         <th>Discount</th>
@@ -327,7 +322,7 @@ $(document).ready(function () {
                                         total[4] += parseFloat(rowData[10]);
                                        
 										return total;
-									}, [0, 0,0,0,0]);
+									}, [0, 0,0]);
 								$(table.column(7).footer()).text(totals[0]);
 								//$(table.column(8).footer()).text(totals[1]);
                                 $(table.column(9).footer()).text(totals[2]);

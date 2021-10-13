@@ -85,4 +85,37 @@ $.get("../ajax/ajaxsales.php?type=get_sales_order_item", { sales_item: i }, func
      });
 
 }
+
+function statuschange(id,checkbox1){
+    console.log(id);
+    //statuss=$(".stat").val();
+    //console.log(statuss)
+    $(".itembody .table-edit .salesorder").each(function() {
+        console.log($(this).text());
+        if($(this).text()==id){
+           // $(this).parent().parent().remove();
+         //  console.log($(".itembody .itemstatus .productstatus").val());
+        //    $(".itembody .itemstatus .productstatus").val("PENDING");
+        //   $(".itembody .itemstatus .productstatus").html("PENDING");
+         var option = $('<option></option>').attr("value", "PENDING").text("PENDING");
+         // console.log ($(this).parent().parent().children().children('.productstatus').val());
+$(this).parent().parent().children().children('.productstatus').empty().append(option);
+          //$("#table_headers td:eq(2)").html("new");
+        }
+    });
+}
+
+
+$(".invoicetable").append(
+                "<tr>\
+                <td >\
+            <input class='form-control '   type='hidden' name='Product[]' value='"+ $(this).text()+"'>\
+        </td>\
+        <td ><span class='tabledit-span'></span>\
+            <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='COMPLETED'><div style='color: red; display: none' class='msg1'>Digits only</div>\
+        </td>\
+                </tr>/"
+                
+            );
+
 </script>
