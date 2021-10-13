@@ -251,7 +251,7 @@ function filter_purchaseorder(){
 
     }
     return $array_purchaseorder;
-
+}
 
     function purchase_order_status($orderidstatus)
     {
@@ -295,8 +295,5 @@ function filter_purchaseorder(){
     }
 }
 
-
-
-}
 
 ?>
