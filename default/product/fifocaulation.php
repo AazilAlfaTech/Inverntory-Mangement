@@ -66,7 +66,7 @@ class fifocalculation{
 
                             $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_costprice) VALUES ('SALES',$salesinvoiceitemid,$productid,-$fifosalesqty,$fifocost)";
                             $this->db->query( $sql_stock);
-                            // echo $sql_fifo;
+                             echo $sql_stock;
                             $sql_grn_item="UPDATE grn_item SET grn_item_remain_qty= $fiforemainingqty WHERE grn_item_id=$grnitemid ";
                             $this->db->query( $sql_grn_item);
                           //  echo  $sql_grn_item;

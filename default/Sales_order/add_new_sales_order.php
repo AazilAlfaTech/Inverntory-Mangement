@@ -255,7 +255,7 @@ include_once "../../files/head.php";
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Qty</label>
-                                                <input type="text" class="form-control qty_add " placeholder="" name="soitemqty" id="soitem_qty">
+                                                <input type="text" class="form-control qty_add" placeholder="" name="soitemqty" id="soitem_qty">
                                                 <div style="color: red; display: none" class="msg1">Digits only</div>
                                             </div>
 
