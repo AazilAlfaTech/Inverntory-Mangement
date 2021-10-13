@@ -1,5 +1,9 @@
+$(".error_fields").hide();
+$(".itemalert").hide();
+
 $("#add_prbtn").click(function()
 {
+    
     add_products();
     clear_products();
     cal_totquantity();
@@ -8,6 +12,11 @@ $("#add_prbtn").click(function()
     final_total();
 });
 
+function invalidMessage(){
+    console.log("invalidmessage");
+    $(".itemalert").show();
+
+}
 $(".reset").click(function()
 {
     clear_products();
@@ -17,7 +26,8 @@ $(".reset").click(function()
 function add_products()
 {
     if($("#sq_itemproductid").val()=='' || $("#sq_itemprice").val()==''|| $("#sq_itemqty").val()=='' ){
-     alert("Please fill all the fields");
+    // alert("Please fill all the fields");
+     $(".error_fields").show().delay( 1000 ).fadeOut( 1000 );
  } else{
 
 
@@ -67,6 +77,7 @@ function add_products()
 
 function clear_products()
 {
+
     $("#sq_itemprice").val("");
     $("#sq_itemqty").val("");
     $("#sq_itemdiscount").val("");
