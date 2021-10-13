@@ -28,7 +28,7 @@
     <!-- C:\xampp\htdocs\shahee\Inventory1\files\bower_components\customized\editabletable.css -->
 
 <!-- Data Table Css -->
-<link rel="stylesheet" type="text/css" href="..\..\files\bower_components\datatables.net-bs4\css\dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="..\..\files\bower_components\datatables.net-bs4\css\dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="..\..\files\assets\pages\data-table\css\buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="..\..\files\bower_components\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="..\..\files\assets\pages\data-table\extensions\autofill\css\autoFill.dataTables.min.css">
@@ -405,18 +405,18 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../purchase_requisition/manage_purchase_requisition.php" target="_blank">
+                                        <a href="../purchase_requisition/manage_purchase_requisition.php" target="">
                                             <span class="pcoded-mtext">Manage Purchase Requisition</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../purchase_order/manage_purchase_order.php" target="_blank" >
+                                        <a href="../purchase_order/manage_purchase_order.php" target="" >
                                             <span class="pcoded-mtext">Mange Purchase Order </span>
                                         </a>
                                     </li>
                                     
                                     <li class="">
-                                        <a href="../GRN/manage_GRN.php " target="_blank"> 
+                                        <a href="../GRN/manage_GRN.php " target=""> 
                                             <span class="pcoded-mtext">Manage GRN</span>
                                         </a>
                                     </li>
@@ -433,24 +433,24 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../sales_quotation/manage_sales_quotation.php" target="_blank">
+                                        <a href="../sales_quotation/manage_sales_quotation.php" target="">
                                             <span class="pcoded-mtext">Sales Quatation</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../sales_order/manage_sales_order.php" target="_blank" >
+                                        <a href="../sales_order/manage_sales_order.php" target="" >
                                             <span class="pcoded-mtext">Sales Order </span>
                                         </a>
                                     </li>
 
                                     <li class=" ">
-                                        <a href="../sales_invoice/manage_sales_invoice.php" target="_blank" >
+                                        <a href="../sales_invoice/manage_sales_invoice.php" target="" >
                                             <span class="pcoded-mtext">Sales Invoice </span>
                                         </a>
                                     </li>
 
                                     <li class=" ">
-                                        <a href="../sales_dispatch/manage_salesdispatch.php" target="_blank" >
+                                        <a href="../sales_dispatch/manage_salesdispatch.php" target="" >
                                             <span class="pcoded-mtext">Sales Dispatch </span>
                                         </a>
                                     </li>
@@ -468,12 +468,12 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../supplier_group/manage_supplier_group.php " target="_blank" >
+                                        <a href="../supplier_group/manage_supplier_group.php " target="" >
                                             <span class="pcoded-mtext">Manage Supplier Group</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../supplier/manage_supplier.php " target="_blank" >
+                                        <a href="../supplier/manage_supplier.php " target="" >
                                             <span class="pcoded-mtext">Manage Supplier </span>
                                         </a>
                                     </li>
