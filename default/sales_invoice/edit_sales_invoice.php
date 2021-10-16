@@ -149,16 +149,16 @@ include_once "../../files/head.php";
 
                                 <div class="table-responsive">
 
-                                    <table class="table table-bordered " id="mytable">
+                                    <table class="table1 table  table-bordered " id="mytable">
                                         <thead class="table-primary">
                                             <tr>
-                                                <th style="width:10%">Product</th>
-                                                <th style="width:10%">Qty</th>
-                                                <th style="width:10%">Price</th>
-                                                <th style="width:10%">Discount</th>
-                                                <th style="width:10%">Total</th>
-                                                <th style="width:10%">Status</th>
-                                                <th style="width:10%">Action</th>
+                                                <th>Product</th>
+                                                <th>Qty</th>
+                                                <th>Price</th>
+                                                <th>Discount</th>
+                                                <th>Total</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
 
                                             </tr>
                                         </thead>
