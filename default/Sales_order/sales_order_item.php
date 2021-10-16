@@ -1,7 +1,7 @@
 <?php
 include_once "../../files/config.php";
 include_once "../sales_quotation/sales_quatation_item.php";
-
+include_once "../sales_quotation/sales_quatation_item.php";
 class sales_orderitem{ 
 
     public $so_itemid;
@@ -32,7 +32,6 @@ function __construct(){
 function insert_sales_orderitem($orderid){
     //$sq_item=new sales_quotationitem();
 
-
    $list=0;
     
    foreach($_POST['Quantity'] as $item){
@@ -41,6 +40,7 @@ function insert_sales_orderitem($orderid){
    
   //  echo $sql;
         $this->db->query($sql);
+
 
         //$sq_item->delete_sqitem($_POST['Quoteid'][$list]);
        $list++;
@@ -154,9 +154,9 @@ function get_sales_orderitem_by_id($id){
     return $sales_orderitem_item;
 }
 
-function update_sales_orderitem($so_itemid){
+function update_sales_orderitem($so_itemid,$status){
 
-    $sql="UPDATE sales_orderitem SET so_itemstatus='INACTIVE' WHERE so_itemid = $so_itemid ";
+    $sql="UPDATE sales_orderitem SET so_item_currentstatus=$status WHERE so_itemid = $so_itemid ";
     //echo $sql;
     $this->db->query($sql);
     echo true;

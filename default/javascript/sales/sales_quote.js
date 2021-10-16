@@ -1,5 +1,9 @@
-$(".error_fields").hide();
+$( document ).ready(function() {
+    console.log("sales quotation");
+    $(".error_fields").hide();
 $(".itemalert").hide();
+});
+
 
 $("#add_prbtn").click(function()
 {
@@ -23,21 +27,22 @@ $(".reset").click(function()
 });
 
 // ................................function to append the products..............................
-function add_products()
-{
+function add_products(){
+var sq_prod=$("#sq_itemproductid option:selected").val();
+var sq_prod_name=$("#sq_itemproductid option:selected").text(); //dropdown
+var sq_price=$("#sq_itemprice").val();
+var sq_qty=$("#sq_itemqty").val();
+var sq_dis=$("#sq_itemdiscount").val();
+var sq_fprice=$("#sq_itemfinalprice").val();
+sq_subtotal=parseFloat(sq_price * sq_qty)
+
     if($("#sq_itemproductid").val()=='' || $("#sq_itemprice").val()==''|| $("#sq_itemqty").val()=='' ){
     // alert("Please fill all the fields");
      $(".error_fields").show().delay( 1000 ).fadeOut( 1000 );
  } else{
 
 
-    var sq_prod=$("#sq_itemproductid option:selected").val();
-    var sq_prod_name=$("#sq_itemproductid option:selected").text(); //dropdown
-    var sq_price=$("#sq_itemprice").val();
-    var sq_qty=$("#sq_itemqty").val();
-    var sq_dis=$("#sq_itemdiscount").val();
-    var sq_fprice=$("#sq_itemfinalprice").val();
-    sq_subtotal=parseFloat(sq_price * sq_qty)
+   
     console.log(sq_prod_name);
     
      $("#tbody").append("<tr>\

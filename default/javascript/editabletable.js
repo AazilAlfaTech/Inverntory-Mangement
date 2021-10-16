@@ -215,8 +215,18 @@ $(document).on('click', '.btn_deleterow', function(event) {
     cal_totprice();
    // cal_totdiscount();
     final_total();
+    updateRowOrder();
 
 });
+var i=0;
+function updateRowOrder(){
+  console.log("update");
+   $('.level_no').each(function(i){
+     $(this).val(i+1);
+   });
+   console.log(i);
+}
+
 
 $(document).on('click', '.deletedata', function(event) {
     var tbl_row = $(this).closest('tr');

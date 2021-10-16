@@ -75,10 +75,15 @@ include_once "../sales_invoice/sales_invoice.php";
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    
                                                     <th>Reference No</th>
                                                     <th>Date </th>
                                                     <th>Customer</th>
+                                                    <th>Status</th>
+                                                    <th>Total</th>
+                                                    <th>Paid</th>
+                                                    <th>Balance</th>
+                                                    <th>PaymentStatus</th>
                                                     <th>Action</th>
 
                                                 </tr>
@@ -90,11 +95,16 @@ include_once "../sales_invoice/sales_invoice.php";
 
                                                                     echo"
                                                                     <tr>
-                                                                        <td>#</td>
+                                                                        
                                                                         <td>$item->salesinvoice_ref  </td>
                                                                         <td>$item->salesinvoice_date </td>
-                                                                        <td>$item->salesinvoice_customer </td>
-                                                                     
+                                                                        <td>$item->salesinvoice_customer_name </td>
+                                                                        <td>$item->salesinvoice_currentstatus</td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+
                                                                                                                                                                  
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
                                                                         <button type='button' id='edit_pr' onclick='view_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>

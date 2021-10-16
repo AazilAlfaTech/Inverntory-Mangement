@@ -172,7 +172,7 @@ include_once "../../files/head.php";
                                         <table class="table table-striped table-bordered" >
                                             <thead>
                                                 <tr>
-                                                    
+                                                    <th>#</th>
                                                     <th>InvoiceID</th>
                                                     <th>Product</th>
                                                     <th>Qty</th>
@@ -277,16 +277,47 @@ $("#sinv_customer").change(function() {
 });
 
 //add the items of the selected invoice to the dispatch table
+var counter=0;
 function add_to_list(invoice,btn){
+    //availableqty;  
+    invoiceloc=$(".dispatchloc").val();
+   
 $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice }, function(data) {
          
         var item_data = JSON.parse(data);
             console.log(data);
         
-        $.each(item_data, function(o, p) {
+            $.each(item_data, function(o, p) {
+                $.get("../ajax/ajaxpurchase.php?type=get_sum_remainingqty",{prodid:item_data[o].si_item_productid,loc_id:invoiceloc},function(data)
+    {
+     console.log(data);
+      var d=JSON.parse(data); 
+
+      remaing_qty=d.grn_qty;
+  
+     console.log("remaining qty "+remaing_qty);
+    if(remaing_qty == 0 || remaing_qty==null ){
+        console.log("Please type a qty");
+        availableqty='Not available';
+    
+        
+    }else if(remaing_qty <  item_data[o].si_item_qty){
+        console.log("Required stock not available");
+        availableqty= item_data[o].si_item_qty+'available'
+       
+        
+    }else if(remaing_qty >item_data[o].si_item_qty)
+        {console.log("Stock availanle");
+         availableqty= item_data[o].si_item_qty+'available'
+      
+    }
+     
+    //  return remaing_qty;
+    counter++;
 
           $(".itembody").append(
                 "<tr>\
+                <td><input type='text' class='level_no input-borderless' name='level_no[]' readonly  value='"+counter+"'></td>\
                <td class='table-edit'><span class='salesorder'>"+ item_data[o].si_item_invoiceid+"</span>\
             <input class='form-control input-sm orderid'   type='hidden' name='Orderid[]' value='"+ item_data[o].si_item_invoiceid+"'>\
             <input class='form-control input-sm orderid'   type='hidden' name='InvoiceItemid[]' value='"+ item_data[o].si_itemid+"'>\
@@ -295,7 +326,7 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
             <input class='form-control input-sm productid '   type='hidden' name='Product[]' value='"+ item_data[o].si_item_productid+"'>\
         </td>\
         <td ><span class='tabledit-span'></span>\
-            <input class='input-borderless input-sm row_data quantity qtycheck'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].si_item_qty +"'><div style='color: red; display: none' class='msg1'>Digits only</div><span class='qtymsg'></span>\
+            <input class='input-borderless input-sm row_data quantity qtycheck'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].si_item_qty +"'><div style='color: red; display: none' class='msg1'>Digits only</div><span class='qtymsg'>"+ availableqty+"</span>\
         </td>\
         <td ><span class='tabledit-span'></span>\
            <select name='Price[]'  class='input-borderless price productprice'>\
@@ -321,6 +352,9 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
             <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>\
         </td>\
         </tr>");
+    
+      
+          
         //hide buttons of editable table
         $(".btn_save").hide();
         $(".btn_cancel").hide();
@@ -328,7 +362,7 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
         $(btn).parent().find(".btnadd").hide();
         $(btn).parent().find(".btndel").show();
         $(btn).parent().find(".statuscheckbox").show();
-       
+    });
         
          });
     });
