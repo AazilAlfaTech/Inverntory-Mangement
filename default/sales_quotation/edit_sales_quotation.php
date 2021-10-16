@@ -149,7 +149,7 @@
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Discount</label>
-                                                <input type="text" class="form-control disc_add" placeholder="0.00"  id="sq_itemdiscount" value="0.00" >
+                                                <input type="text" class="form-control disc_add" placeholder="0.00"  id="sq_itemdiscount"  >
                                                 <div style="color: red; display: none" class="msg2">Digits only</div>
                                             </div>
 
@@ -163,7 +163,7 @@
 
                                         <button type="button" class="btn btn-primary " id="add_prbtn"  >ADD</button>
                                         <button class="btn btn-inverse reset" type="button" >CLEAR</button>
-
+                                        <span class='error_fields'><div class="alert alert-success background-success p-1" style="width:180px;height:30px">Please fill all the fields</div></span>
                                         <br>
                                         <br>
 
@@ -297,74 +297,6 @@
 
 
  <script>
-    
-//     //..........................Click the add button...............................................................
-//     $(".add_prbtn").click(function()
-//     {
-//         console.log("dd");
-//         add_products();
-//         clear_products();
-//         cal_totquantity();
-//         cal_totprice();
-//         cal_totdiscount();
-//         final_total();
-//     });
-
-//     // ................................function to append the products..............................
-//     function add_products()
-//     {
-//         var sq_prod=$("#sq_itemproductid option:selected").val();
-//         var sq_prod_name=$("#sq_itemproductid option:selected").text(); //dropdown
-//         var sq_price=$("#sq_itemprice").val();
-//         var sq_qty=$("#sq_itemqty").val();
-//         var sq_dis=$("#sq_itemdiscount").val();
-//         var sq_fprice=$("#sq_itemfinalprice").val();
-//         sq_subtotal=parseFloat(sq_price*sq_qty);
-
-        
-//          $(".tbody").append("<tr>\
-//          <td class='table-edit-view'>"+ sq_prod_name +"\
-//             <input  class='form-control input-sm productid ' type='hidden' name='sq_item_productid[]' value='"+sq_prod+"'>\
-//         </td>\
-//         <td class='table-edit-view'>\
-//             <input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='"+sq_qty+"'> <div style='color: red; display: none' class='msg1'>'Digits only'</div>\
-//         </td>\
-//         <td class='table-edit-view'>\
-//         <select  id='productprice' class='input-borderless price' name='sq_item_price1[]'>\
-//         <option value='"+sq_price+"'>"+sq_price+"</option>\
-//         </select>\
-//         <input class='form-control input-sm subtotal'   type='hidden'  value='"+sq_subtotal+"'>\
-//         </td> \
-//         <td class='table-edit-view'>\
-//             <input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='"+sq_dis+"'><div style='color: red; display: none' class='msg3'>'Digits only'</div>\
-//         </td>\
-//         <td class='table-edit-view'>\
-//             <input  class='input-borderless input-sm row_data total ' type='text' readonly  value='"+sq_fprice+"'>\
-//         </td>\
-//         <td>\
-//             <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
-//             <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
-//             <span class='btn_cancel'><button class='btn btn-mini btn-danger ' type='button'>Cancel</button></span>\
-//             <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>\
-//         </td>\
-//         </tr>");
-         
- 
-//          $(".btn_save").hide();
-//         $(".btn_cancel").hide();
-
-//     }
-
-//     // function to clear the products
-    
-//     function clear_products()
-//     {
-//         $("#sq_itemproductid option:selected").text(""); //dropdown
-//         $("#sq_itemprice").val("");
-//         $("#sq_itemqty").val("");
-//         $("#sq_itemdiscount").val("");
-//         $("#sq_itemfinalprice").val("");
-//     }
 
     $(document).on('click', '.deletedata1', function(event) {
     var tbl_row = $(this).closest('tr');

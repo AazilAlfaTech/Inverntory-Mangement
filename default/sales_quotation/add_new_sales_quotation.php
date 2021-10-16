@@ -18,9 +18,14 @@
     if(isset($_POST["salesquotcustomer"]))
     
     {
+        
+        $sales_quot1->salesquot_customer=$_POST["salesquotcustomer"];
+        $sales_quot1->salesquot_date=$_POST["salesquotdate"];
+        $sales_quot1->salesquot_ref=$sales_quot1->salesquot_code($_POST["salesquotdate"]);
         if(!isset($_POST['sq_item_productid'])){
-            echo "No items";
-            echo"<script>invalidMessage()</script>";
+          
+            
+             echo"<script>alert('No items selected!'); </script>";
 
         }else{
 
@@ -65,7 +70,8 @@
                                     <li class="breadcrumb-item">
                                         <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Widget</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_quotation/manage_sales_quotation.php">SalesQuotation</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_quotation/add_new_sales_quotation.php">Add</a> </li>
                                 </ul>
                             </div>
                         </div>
