@@ -1,8 +1,6 @@
 <?php
 
-include_once "city.php";
-
-
+include_once "../city/city.php";
 
 include_once "../district/district.php";
 $district1 = new district();

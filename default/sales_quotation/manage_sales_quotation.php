@@ -16,7 +16,7 @@ if(isset($_GET['d_id']))
     else
     {
        
-        $msg_2="Sales order already in use therefore cannot delete";
+        $msg_2="Sales quotation already in use therefore cannot delete";
     }
 }
 
@@ -47,7 +47,7 @@ include_once "../../files/head.php";
                                     <li class="breadcrumb-item">
                                         <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Widget</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_quotation/manage_sales_quotation.php">SalesQuote</a> </li>
                                 </ul>
                             </div>
                         </div>
@@ -56,9 +56,9 @@ include_once "../../files/head.php";
                 <!-- Page-header end -->
 
                 <div class="d-flex flex-row-reverse">
-<a href="add_new_sales_quotation.php">
+                    <a href="add_new_sales_quotation.php">
                     <button class="btn btn-mat btn-primary ">Add sales Quotation</i></button>
-</a>
+                    </a>
                 </div>
 
 
@@ -91,9 +91,10 @@ include_once "../../files/head.php";
                                         <table id="autofill" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Reference No</th>-
+                                                    <th>Reference No</th>
                                                     <th>Date </th>
                                                     <th>Customer</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
 
                                                 </tr>
@@ -102,12 +103,16 @@ include_once "../../files/head.php";
                                                 <?php
                                                         foreach ($result_sales as $item)
                                                         {
-                                                            echo
+                                                            if($item->salesquot_currentstatus=='NEW'){
+                                                                echo
                                                             "<tr>
                                                            
                                                                 <td>$item->salesquot_ref</td>
                                                                 <td>$item->salesquot_date</td>
                                                                 <td>$item->salesquot_customer_name</td>
+
+                                                                
+                                                                <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->salesquot_currentstatus</label></td>
 
                                                                 <td>
                                                                     <div class='btn-group btn-group-sm' style='float: none;'>
@@ -118,6 +123,29 @@ include_once "../../files/head.php";
                                                                     </div>
                                                                 </td>
                                                             </tr> ";
+                                                                
+                                                            }else if($item->salesquot_currentstatus=='COMPLETE'){
+                                                                echo
+                                                            "<tr>
+                                                           
+                                                                <td>$item->salesquot_ref</td>
+                                                                <td>$item->salesquot_date</td>
+                                                                <td>$item->salesquot_customer_name</td>
+
+                                                                
+                                                                <td><label class='badge badge-info' >$item->salesquot_currentstatus</label></td>
+
+                                                                <td>
+                                                                    <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                    <button type='button' id='edit_pr' onclick='view_sq($item->salesquot_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>
+                                                                        
+                                                                        <button type='button'  onclick='delete_sq($item->salesquot_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o delete_group_name'></span></button>
+                                               
+                                                                    </div>
+                                                                </td>
+                                                            </tr> ";
+                                                            }
+                                                            
                                                         }
                                                     ?>
                                         

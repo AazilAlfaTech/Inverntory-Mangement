@@ -16,7 +16,20 @@
 
  
     if(isset($_POST["salesquotcustomer"]))
+    
     {
+        
+        $sales_quot1->salesquot_customer=$_POST["salesquotcustomer"];
+        $sales_quot1->salesquot_date=$_POST["salesquotdate"];
+        $sales_quot1->salesquot_ref=$sales_quot1->salesquot_code($_POST["salesquotdate"]);
+        if(!isset($_POST['sq_item_productid'])){
+          
+            
+             echo"<script>alert('No items selected!'); </script>";
+
+        }else{
+
+        
         $sales_quot1->salesquot_customer=$_POST["salesquotcustomer"];
         $sales_quot1->salesquot_date=$_POST["salesquotdate"];
         $sales_quot1->salesquot_ref=$sales_quot1->salesquot_code($_POST["salesquotdate"]);
@@ -26,6 +39,7 @@
       // echo "<script type='text/javascript'>alert('Successful - Record Updated!'); window.location.href = '../sales_quotation/manage_sales_quotation.php';</script>";
 
        header("location:../sales_quotation/manage_sales_quotation.php");
+        }
     }
     
     include_once "../../files/head.php";
@@ -56,7 +70,8 @@
                                     <li class="breadcrumb-item">
                                         <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Widget</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_quotation/manage_sales_quotation.php">SalesQuotation</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_quotation/add_new_sales_quotation.php">Add</a> </li>
                                 </ul>
                             </div>
                         </div>
@@ -94,7 +109,7 @@
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Customer</label>
-                                                <select class="js-example-basic-single col-sm-12" name="salesquotcustomer" id="sq_customer" required>
+                                                <select class="js-example-basic-single col-sm-12" name="salesquotcustomer"  id="sq_customer" required>
                                                 <option value="">-Select Customer-</option>
 
                                                     <?php
@@ -163,12 +178,19 @@
                                         
                                             </div>
                                         </div>
-
+                                            
                                         <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
                                         <button type="button" class="btn btn-inverse reset">CLEAR</button>
+                                        <span class='error_fields'><div class="alert alert-success background-success p-1" style="width:180px;height:30px">Please fill all the fields</div></span>
 
                                         <br>
                                         <br>
+
+                                        <div class="itemalert">
+                                            <div class="alert alert-success background-success">
+                                                No items are selected!
+                                            </div>
+                                        </div>
 
 
                                         <div class="table-responsive">

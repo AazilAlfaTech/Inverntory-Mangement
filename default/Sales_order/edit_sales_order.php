@@ -119,7 +119,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Product</label>
-                                                <select class="js-example-basic-single col-sm-12" name="soitemproductid" id="soitem_productid">
+                                                <select class="js-example-basic-single col-sm-12 product_level" name="soitemproductid" id="soitem_productid">
                                                   
                                                         <option value="-1 ">Select product</option>
                                                             <?php
@@ -136,7 +136,8 @@ include_once "../../files/head.php";
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Price</label>
-                                                <select class="form-control pricelevel" name="soitemprice" id="soitem_price">
+                                                
+                                                <select class="form-control pricelevel" name="soitemprice" id="sq_itemprice" >
                                                     <option value=""> Pricelevel</option>
                                                 </select>
                                             </div>
@@ -171,13 +172,13 @@ include_once "../../files/head.php";
 
                                         <!-- Edit With Button card start -->
 
-                                            <div class="table-responsive">
+                                            <div class="">
 
                                                 <table class="table  table-bordered " id="mytable" >
                                                     <thead class="table-primary">
                                                         <tr>
                                                             <th>Product</th>
-                                                            <th>Qty</th>
+                                                            <th style='width:82px;height:47px'>Qty</th>
                                                             <th>Price</th>
                                                             <th>Discount</th>
                                                             <th>Total</th>
@@ -197,7 +198,11 @@ include_once "../../files/head.php";
                                                                 <input class=' input-borderless  input-sm row_data quantity'   type='text' readonly  name='Quantity_edit[]' value='<?=$item->so_itemqty ?>'><div style="color: red; display: none" class="msg1">Digits only</div>
                                                             </td>
                                                             <td class='table-edit-view'><span class='tabledit-span'><?= $item->so_itemprice ?></span>
-                                                                <input class=' input-borderless input-sm row_data price'   type='text' name='Price_edit[]' readonly  value='<?= $item->so_itemprice ?>'> <div style="color: red; display: none" class="msg2">Digits only</div>
+                                                                
+
+                                                                <select name='Price_edit[]'  class="input-borderless price productprice">
+                                                                        <option value="<?=$item->so_itemprice?>"><?=$item->so_itemprice?></option>
+                                                                        </select>
                                                                 <input class='form-control input-sm subtotal'   type='hidden'  value='<?=$item->so_subtotal?>'>
                                                             </td>
                                                             <td class='table-edit-view'><span class='tabledit-span'><?= $item->so_itemdiscount ?></span>
@@ -275,6 +280,15 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
+<script>
+     function preventBack() {
+    window.history.forward();
+  }
+  setTimeout("preventBack()", 0);
+  window.onunload = function() {
+    null
+  };
+</script>
 
 <script type="text/javascript" src="../javascript/sales.js"></script>
 <script type="text/javascript" src="../javascript/sales/sales_order.js"></script>

@@ -1,0 +1,48 @@
+.input-borderless {
+    background: transparent;
+    border: 0;
+    border-style: none;
+    border-color: transparent;
+    
+    outline: none;
+    outline-offset: 0;
+    box-shadow: none;
+   
+  }
+
+  .input-borderless[readonly]{
+    background-color:'#ffffff';
+  }
+
+  .input-border{
+
+    /* background: transparent; */
+    border: 1px solid #ccc;
+    padding-top: 0.5rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    display: block;
+    /* width: 100%; */
+
+  }
+
+
+.stNEW{
+  background-color: #04AA6D;
+}
+
+.stCOMPLETE{
+    background-color:#2196F3;
+}
+.labelstatus {
+  color: white;
+  padding: 8px;
+}
+table {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
+
+

@@ -13,13 +13,7 @@ class sales_invoice_item{
     public $si_item_discount;
     public $si_item_productid;
     public $si_item_status;
-    
-    
- 
-  
-
-
-
+    public $si_item_currentstatus;
     private $db;
 
  function __construct(){
@@ -45,7 +39,7 @@ function insert_sales_invoice_item1($so_id){
       //echo $sql;
        $this->db->query($sql);
        if($_POST['Status'][$list]=='INACTIVE'){
-        $orderitem5->update_sales_orderitem($_POST['Orderid'] [$list]);
+        //$orderitem5->update_sales_orderitem($_POST['Orderid'] [$list]); change function accordingly
        }
 
 
@@ -136,7 +130,7 @@ function update_salesinvoice_item_currentstatus($si_itemid,$status){
 function get_all_sales_invoice_item($si_itemid ){
 
     $sql="SELECT sales_invoice_item.si_itemid ,sales_invoice_item.si_item_invoiceid,sales_invoice_item.si_item_orderid,
-    sales_invoice_item.si_item_productid,sales_invoice_item.si_item_price,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_discount,
+    sales_invoice_item.si_item_productid,sales_invoice_item.si_item_price,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_discount,sales_invoice_item.si_item_currentstatus
     product.product_name
     FROM sales_invoice_item JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE sales_invoice_item.si_item_status='ACTIVE' AND sales_invoice_item.si_itemid = $si_itemid ";
   
@@ -156,8 +150,9 @@ function get_all_sales_invoice_item($si_itemid ){
         $sales_invoice_item_item->si_item_price=$row["si_item_price"];
         $sales_invoice_item_item->si_item_qty=$row["si_item_qty"];
         $sales_invoice_item_item->si_item_discount=$row["si_item_discount"];
+        $sales_invoice_item_item->si_item_currentstatus=$row['si_item_currentstatus'];
         $sales_invoice_item_item->si_item_subtotal=round(($row["si_item_price"]*$row["si_item_qty"]),2);
-        $sales_invoice_item_item->si_item_subtotal=round(($row["si_item_price"]*$row["si_item_qty"])-($row["si_item_price"]*$row["si_item_qty"]*$row["si_item_discount"]/100),2);
+        $sales_invoice_item_item->si_item_finaltotal=round(($row["si_item_price"]*$row["si_item_qty"])-($row["si_item_price"]*$row["si_item_qty"]*$row["si_item_discount"]/100),2);
       
         
         
@@ -179,7 +174,7 @@ function get_all_sales_invoice_item($si_itemid ){
 function get_all_sales_invoice_invoiceid($si_invoiceid ){
 
     $sql="SELECT sales_invoice_item.si_itemid ,sales_invoice_item.si_item_invoiceid,sales_invoice_item.si_item_orderid,
-    sales_invoice_item.si_item_productid,sales_invoice_item.si_item_price,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_discount,
+    sales_invoice_item.si_item_productid,sales_invoice_item.si_item_price,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_discount,sales_invoice_item.si_item_currentstatus,
     product.product_name
     FROM sales_invoice_item JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE si_item_currentstatus='PENDING' AND sales_invoice_item.si_item_invoiceid = $si_invoiceid ";
    // echo $sql;
@@ -199,6 +194,7 @@ function get_all_sales_invoice_invoiceid($si_invoiceid ){
         $sales_invoice_item_item->si_item_price=$row["si_item_price"];
         $sales_invoice_item_item->si_item_qty=$row["si_item_qty"];
         $sales_invoice_item_item->si_item_discount=$row["si_item_discount"];
+        $sales_invoice_item_item->si_item_currentstatus=$row['si_item_currentstatus'];
         $sales_invoice_item_item->si_item_subtotal=round(($row["si_item_price"]*$row["si_item_qty"]),2);
         $sales_invoice_item_item->si_item_finaltotal=round(($row['si_item_price']*$row['si_item_qty'])-($row['si_item_qty']*$row['si_item_price']*$row['si_item_discount']/100),2);
        
