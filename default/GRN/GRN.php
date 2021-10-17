@@ -159,7 +159,7 @@
             while($row=$result->fetch_array())
             {
                 $grn_po=new purchaseorder();
-                // $grn_po->purchaseorder_id=$row["purchaseorder_id"];
+                $grn_po->purchaseorder_id=$row["purchaseorder_id"];
                 // $grn_po->purchaseorder_requestid=$row["purchaseorder_requestid"];
                 $grn_po->purchaseorder_item_orderid=$row["po_item_orderid"];
                 $grn_po->purchaseorder_itemid=$row["po_item_productid"];
@@ -192,7 +192,7 @@
             $row=$result->fetch_array();
         
                 $grn_po=new GRN();
-                // $grn_po->purchaseorder_id=$row["purchaseorder_id"];
+                $grn_po->purchaseorder_id=$row["purchaseorder_id"];
                 // $grn_po->purchaseorder_requestid=$row["purchaseorder_requestid"];
                 $grn_po->purchaseorder_item_orderid=$row["po_item_orderid"];
                 $grn_po->purchaseorder_itemid=$row["po_item_productid"];
@@ -212,15 +212,16 @@
         function  get_all_grn_by_poid($id)
         {
             $SQL="SELECT *, product.product_name,product.product_inventory_val FROM purchase_order_item INNER JOIN product on purchase_order_item.po_item_productid=product.product_id
-             WHERE po_item_status='ACTIVE' AND 	po_item_orderid='$id'";
+             WHERE po_item_status='ACTIVE' AND 	po_item_currentstatus='PENDING' AND po_item_orderid='$id'";
             $result=$this->db->query($SQL);
             $grn_po_array=array();
 
             while($row=$result->fetch_array())
             {
                 $grn_po=new purchaseorder();
+                $grn_po->purchaseorder_item_id=$row["po_item_id"];
                 $grn_po->purchaseorder_item_orderid=$row["po_item_orderid"];
-                $grn_po->purchaseorder_itemid=$row["po_item_productid"];
+                $grn_po->purchaseorder_item_prodid=$row["po_item_productid"];
                 $grn_po->purchaseorder_productinventory=$row['product_inventory_val'];
                 $grn_po->purchaseorder_qty=$row["po_item_qty"];
                 $grn_po->purchaseorder_itemprice=$row["po_item_price"];

@@ -7,18 +7,15 @@
 
     $po1=new purchaseorder();
     $result_po=$po1->get_all_purchaseorder();
-    // $result_po2=$po1-> get_purch_byid($_GET["view"]);
     
     $grn1=new grn();
-    // $result_grn1=$grn1-> get_purchsup_by_prid($_GET["view"]);
-    // $result_grn2=$grn1-> get_all_grn_by_poid($_GET["view"]);
     $grn_item1=new grn_item();
 
     if(isset($_GET["view"]))
     {
-        $result_po2=$po1-> get_purchaseorder_by_id($_GET["view"]);
+        // to get the supplier name
         $result_grn1=$po1->get_purchaseorder_by_id($_GET["view"]);
-
+        // to get other details
         $result_grn2=$grn1-> get_all_grn_by_poid($_GET["view"]);
     }
 
@@ -31,12 +28,9 @@
         $grn1->grn_puch_orderid=$_POST["grnpurchorderid"];
         $grn1->grn_received_loc=$_POST["grnrecievedloc"];
         $grn1->grn_date=$_POST["grndate"];
-        $grn1->grn_current_status=$_POST["grn_current_status"];
         $grn1->grn_ref_no=$grn1->grn_code($_POST["grndate"]);
-       
         $result_grn1=$grn1->insert_grn();
         $grn_item1->insert_grnitem($result_grn1);
-        $po1-> po_status($_POST["grnpurchorderid"]);
     }
 
    
@@ -151,28 +145,20 @@
                                 <div class="card-block">
 
                                     <form method="POST" action="add_new_GRN.php">
-                                       
-                                        <div class='form-group row'>
-                                            <?php
-                                                if(isset($_GET['view'])):?>
-                                                
-                                                    
-                                                    <input type='text' class='form-control' value=<?=$_GET['view']?> name='grnpurchorderid'>
+                                    <?php if(isset($_GET['view'])):?>  
+                                        <div class='form-group row'> 
+                                                    <input type='hidden' class='form-control' value=<?=$_GET['view']?> name='grnpurchorderid'>
                           
 
                                                     <div class='col-sm-6'>
                                                         <label class='col-form-label' >PO ref no</label>
-                                                        <input class='form-control' id='po' type='text' name='purch_order' disabled='true' value=<?=$result_po2->purchaseorder_ref?>>
+                                                        <input class='form-control' id='po' type='text' name='purch_order' disabled='true' value=<?=$result_grn1->purchaseorder_ref?>>
                                                     </div>
 
                                                     <div class='col-sm-6'>
                                                         <label class='col-form-label' >Supplier</label>
                                                         <input class='form-control' id='po_supp' type='text' disabled='true' value=<?=$result_grn1->supplier_name1?>>
                                                     </div>
-                                       
-                                                <?php endif ;?>
-                                                
-                                            
                                         </div>         
                                         <div class='form-group row'>
 
@@ -194,7 +180,7 @@
                                             </div>
                                             <div class='col-sm-4'>
                                                 <label class='col-form-label' name='grn_current_status'>Status</label>
-                                                <select class='js-example-basic-single col-sm-12' name='grn_current_status' required>
+                                                <select class='js-example-basic-single col-sm-12'>
                                                 <option value='COMPLETE'>Complete</option>
                                                 <option value='PENDING'>Pending</option>
                                                 </select>
@@ -231,8 +217,11 @@
                                                             <tr>                                                                  <tr>
                                                                 <!-- <td scope='row'>1</td> -->
                                                                 <td class='table-edit-view'><span class=''><?=$item->purchaseorder_itemname?></span>
-                                                                    <input class='form-control input-sm' type='hidden' name='grn_itemid[]' value='<?=$item->purchaseorder_itemid?>'>
-                                                                    <input class='form-control input-sm' type='text' name='grn_itemid_inventory[]' value='<?=$item->purchaseorder_productinventory?>'>
+                                                                    <input class='form-control input-sm' type='text' name='grn_itemid[]' value='<?=$item->purchaseorder_item_prodid?>'>
+                                                                    <input class='form-control input-sm' type='text' name='po_id[]' value='<?=$item->purchaseorder_item_orderid?>'>
+                                                                    <input class='form-control input-sm' type='text' name='poitem_id[]' value='<?=$item->purchaseorder_item_id?>'>
+
+                                                                    <input class='form-control input-sm' type='hidden' name='grn_itemid_inventory[]' value='<?=$item->purchaseorder_productinventory?>'>
                                                                 </td>
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?=$item->purchaseorder_qty?></span>
                                                                     <input class='input-borderless input-sm row_data quantity' type='text' readonly  name='grn_item_qty[]' value='<?=$item->purchaseorder_qty?>'><div style="color: red; display: none" class="msg1">Digits only</div>
@@ -249,8 +238,10 @@
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?=$item->purchaseorder_itemfinalprice ?></span>
                                                                     <input class='input-borderless input-sm row_data total'   type='text' readonly value='<?=$item->purchaseorder_itemfinalprice ?>'>
                                                                 </td>
-                                                                <td class='table-edit-view'>                                                                    
-                                                                    <input class='input-borderless input-sm row_data total'   type='text' value="ACTIVE">
+                                                                <td class='itemstatus'><span class='tabledit-span'></span>
+                                                                    <select name='CurrentStatus[]'  class='input-borderless status productstatus'>
+                                                                    <option value='COMPLETE' selected='selected'>COMPLETE</option>
+                                                                    </select>
                                                                 </td>
                                                                 <td>
                                                                     <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
@@ -304,6 +295,7 @@
                                         <div class="d-flex flex-row-reverse">
                                             <button type="submit" name="save" class="btn btn-primary">Submit</button>
                                         </div>
+                                        <?php endif ;?>
                                     </form>
                                 <!-- </div>
 

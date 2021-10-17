@@ -116,7 +116,7 @@
                                         <hr>
                                         <div class="form-group productform row">
 
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Product</label>
                                                 <select class="js-example-basic-single col-sm-12 product_level" name="pr_itemproductid" id="preq_itemproductid"> 
 
@@ -135,11 +135,11 @@
 
                                             </div>
 
-                                            <div class="col-sm-2">
+                                            <!-- <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Product batch</label>
                                                 <input type="text" class="form-control product_batch" placeholder="" name="pr_batch" id="preq_prodbatch"  >
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-sm-2">
 
@@ -247,23 +247,23 @@
 
 
 
-function cal_prd_total(){
+// function cal_prd_total(){
 
    
 
 
-    var pprice = $("#preq_itemprice").val();
-    var pqty =$("#preq_itemqty").val();
-    var pdis = $("#preq_itemdiscount").val(); 
+//     var pprice = $("#preq_itemprice").val();
+//     var pqty =$("#preq_itemqty").val();
+//     var pdis = $("#preq_itemdiscount").val(); 
    
     
-   var tot = parseFloat(pprice)*parseFloat(pqty)*parseFloat(pdis)/100
+//    var tot = parseFloat(pprice)*parseFloat(pqty)*parseFloat(pdis)/100
 
-    ftot =  parseFloat(pprice)*parseFloat(pqty) - parseFloat(tot)
+//     ftot =  parseFloat(pprice)*parseFloat(pqty) - parseFloat(tot)
 
 
 
-    $("#preq_itemfinalprice").val(ftot);
+//     $("#preq_itemfinalprice").val(ftot);
 
  
 
@@ -279,7 +279,7 @@ function cal_prd_total(){
 
 
 
-}
+// }
 
 
 
@@ -287,3 +287,4 @@ function cal_prd_total(){
 <script type="text/javascript" src="../javascript/purchase.js"></script>
 <script type="text/javascript" src="../javascript/purchase/purchase_req.js"></script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>
+<!-- <script type="text/javascript" src="../javascript/purchase/purchase_req.js"></script> -->

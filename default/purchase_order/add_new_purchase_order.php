@@ -38,10 +38,10 @@ if(isset($_POST['purchaseorderdate'])){
     $Purch_reqid=$purchaseorder2->insert_purchaseorder();
     $purchaseorderitem2->insert_POitem1($Purch_reqid);
     $purchase_request2->inactive_purchreq_status($_POST['purchaseorderrequest']);
-    echo '<pre>';
-    print_r($purchase_request2);
+    // echo '<pre>';
+    // print_r($purchase_request2);
     $purchase_request_item2->inactive_purchasereq_item($_POST['purchaseorderrequest']);
-   header("location:../purchase_order/manage_purchase_order.php?success=1");
+    header("location:../purchase_order/manage_purchase_order.php?success=1");
 
 
 }
@@ -257,7 +257,7 @@ include_once "../../files/head.php";
 
                         <div class='table-responsive'>
 
-                            <table class='table  table-bordered'  id='example-2'  >
+                            <table class='table  table-striped table-bordered'  id='example-2'  >
                                 <thead class='table-primary'>
                                     <tr>
                                     
@@ -286,8 +286,8 @@ include_once "../../files/head.php";
                                         <td class='table-edit-view'><span class='tabledit-span'><?= $item->pr_item_discount ?></span>
                                             <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='<?= $item->pr_item_discount ?>'> <div style="color: red; display: none" class="msg3">Digits only</div>
                                             
-                                        <td class='table-edit-view'><span class='tabledit-span'><?=$item->item_discount ?></span>
-                                            <input class='input-borderless input-sm row_data total'   type='text' readonly value='<?=$item->item_discount ?>'>
+                                        <td class='table-edit-view'><span class='tabledit-span'><?=$item->pr_item_finalprice?></span>
+                                            <input class='input-borderless input-sm row_data total'   type='text' readonly value='<?=$item->pr_item_finalprice ?>'>
                                             
                                         </td>
                                         

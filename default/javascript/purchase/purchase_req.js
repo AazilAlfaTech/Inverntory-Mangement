@@ -39,7 +39,8 @@
             $("#tbody").append("<tr>\
                 <td class='table-edit-view'>"+1+"</td>\
                 <td class='table-edit-view'>\
-                    <input  class='form-control input-sm productid' type='hidden' name='pr_item_productid[]' value='"+pr_prod+"'>\
+                    <input  class='input-borderless input-sm productid' type='hidden'readonly name='pr_item_productid[]' value='"+pr_prod+"'>\
+                    <input  class='input-borderless input-sm productid' type='text' readonly name='' value='"+pr_prod_name+"'>\
                 </td>\
                 <td class='table-edit-view'>\
                     <input class='input-borderless input-sm row_data price'  type='text' readonly name='pr_item_price[]' value='"+p_price+"'>\
@@ -60,7 +61,7 @@
                     <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>\
                     <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>\
                 </td>\
-                </tr class='table-edit-view'>");
+                </tr>");
             $(".btn_save").hide();
             $(".btn_cancel").hide();
         }

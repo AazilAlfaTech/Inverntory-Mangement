@@ -12,6 +12,7 @@ class purchaseorderitem{
     public $po_item_discount;
     public $po_item_finalprice;
     public $po_item_status;
+    public $po_item_currentstatus;
     public $db;
 
 
@@ -123,6 +124,16 @@ function get_all_POitem($purch_order_id){
     //echo $sql;
     $this->db->query($sql);
     echo true;
+
+
+}
+
+function update_po_item_currentstatus($po_itemid,$status){
+
+    $sql="UPDATE purchase_order_item SET po_item_currentstatus='$status' WHERE po_item_id = $po_itemid ";
+    echo $sql;
+    $this->db->query($sql);
+    return true;
 
 
 }

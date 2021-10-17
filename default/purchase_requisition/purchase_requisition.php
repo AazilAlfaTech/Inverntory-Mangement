@@ -9,6 +9,7 @@ include_once "../../files/config.php";
       public  $purchaserequest_date;
       public  $purchaserequest_supplier;
       public  $purchaserequest_status;
+      public  $purchaserequest_currentstatus;
 
       
       
@@ -228,7 +229,7 @@ function delete_purchaserequest($purchaserequest_id){
 
     function inactive_purchreq_status($purchasereq_id)
     {
-        $sql="UPDATE  purchase_request SET purchaserequest_status='INACTIVE' WHERE purchaserequest_id=$purchasereq_id ";
+        $sql="UPDATE  purchase_request SET purchaserequest_currentstatus='COMPLETED' WHERE purchaserequest_id=$purchasereq_id ";
         echo $sql;
         $this->db->query($sql);
         return true;
@@ -236,7 +237,7 @@ function delete_purchaserequest($purchaserequest_id){
 
     function approved_purchreq_status($purchasereq_id)
     {
-        $sql="UPDATE  purchase_request SET purchaserequest_status='APPROVED' WHERE purchaserequest_id=$purchasereq_id ";
+        $sql="UPDATE  purchase_request SET purchaserequest_currentstatus='APPROVED' WHERE purchaserequest_id=$purchasereq_id ";
         echo $sql;
         $this->db->query($sql);
         return true;
