@@ -26,8 +26,13 @@ $error_msg="";
 if(isset($_POST['sodate'])){
 
     if(!isset($_POST['Quantity'])){
-        $error_msg="Products are not added to the order list";
-        echo "Products are not added to the order list";
+        $error_msg=" <div class='alert alert-success background-success'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <i class='icofont icofont-close-line-circled text-white'></i>
+        </button>
+        <strong>No items are selected  </strong> 
+    </div>";
+      //  echo "Products are not added to the order list";
     }else{
     $sales_order2->salesorder_customer=$_POST['socustomer'];
     $sales_order2->salesorder_date=$_POST['sodate'];
@@ -36,15 +41,19 @@ if(isset($_POST['sodate'])){
     $salesorderid=$sales_order2->insert_sales_order();
    
     $sales_orderitem2->insert_sales_orderitem($salesorderid);
-    $sales_quotation2->update_salequote_status($_POST['soquoteid']);
+    if(isset($_POST['soquoteid'])){
+    $sales_quotation2->update_currentstatus_salesquote($_POST['soquoteid']);
     $sales_quotationitem2->update_sqitem($_POST['soquoteid']);
+    }
    header("location:../sales_order/manage_sales_order.php");
+   //header( "Location: {$_SERVER['REQUEST_URI']}", true, 303 );
+   exit();
     }
 }
 
 //getall sales quotation
             
-  $result_salesquote=$sales_quotation2->get_all_sales_quotation();
+  $result_salesquote=$sales_quotation2->get_all_sales_quotation_salesorder();
 
 
   if(isset($_GET['view'])){
@@ -171,12 +180,7 @@ include_once "../../files/head.php";
                                 <div class="card-block">
                                     <?php
                                            
-                                                echo" <div class='alert alert-success background-success'>
-                                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                                    <i class='icofont icofont-close-line-circled text-white'></i>
-                                                </button>
-                                                <strong> <?= $error_msg ?> </strong> 
-                                            </div>";
+                                         echo   $error_msg;
                                            
                                     ?>
                                 
@@ -210,9 +214,18 @@ include_once "../../files/head.php";
                                                 <select class="js-example-basic-single col-sm-12" name="socustomer" id="so_customer" required>
                                                     <option value="">Select customer</option>
                                                     <?php
-                                                    foreach($result_customer as $item){
-                                                        echo"<option value='$item->customer_id'>$item->customer_name</option>";
-                                                        }   
+                                                    
+                                                        
+                                                        
+                                                        foreach($result_customer  as $item){
+                                                        // echo"<option value='$item->group_id'>$item->group_name</option>"
+                                                        // if(!isset($_POST['Quantity'])){
+                                                            if($item->customer_id==$_POST['socustomer']){
+			                                        echo "<option value='$item->customer_id' selected='selected'>$item->customer_name</option>";}
+                                                
+                                                    else{
+                                                    echo"<option value='$item->customer_id'>$item->customer_name</option>";}
+                                                            }
                                                     ?>
                                                 </select>
                                             </div>
@@ -276,7 +289,8 @@ include_once "../../files/head.php";
 
                                         <button type="button" class="btn btn-primary add">ADD</button>
                                         <button type="button" class="btn btn-inverse reset">CLEAR</button>
-
+                                        <!-- <span class='error_fields'><div class="alert alert-success background-success p-1" style="width:180px;height:30px">Please fill all the fields</div></span> -->
+                                        <span class='error_fields'><label class="label label-md label-danger" >Please fill all the fields</label></span>
                                         <br>
                                         <br>
 
@@ -309,7 +323,7 @@ include_once "../../files/head.php";
                                                                 <td class='table-edit-view'><span class='tabledit-span'><?= $item->sq_item_price ?></span>
                                                                     <!-- <input class=' input-borderless input-sm row_data price'   type='text' name='Price[]' readonly  value='<?= $item->sq_item_price ?>'> <div style="color: red; display: none" class="msg2">Digits only</div> -->
                                                                     <input class='form-control input-sm subtotal'   type='hidden'  value='<?=$item->sq_item_subtotal?>'>
-                                                                    <select name="Price[]" id="productprice" class="input-borderless price">
+                                                                    <select name="Price[]"  class='input-borderless price productprice'>
                                                                         <option value="<?=$item->sq_item_price?>"><?=$item->sq_item_price?></option>
                                                                     </select>
                                                                 </td>
@@ -386,6 +400,15 @@ include_once "../../files/foot.php";
 
 
 ?>
+<script>
+     function preventBack() {
+    window.history.forward();
+  }
+  setTimeout("preventBack()", 0);
+  window.onunload = function() {
+    null
+  };
+</script>
 <script type="text/javascript" src="../javascript/sales.js"></script>
 <script type="text/javascript" src="../javascript/sales/sales_order.js"></script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>

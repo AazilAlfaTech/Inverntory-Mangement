@@ -125,8 +125,8 @@ include_once "../../files/head.php";
                                                             <td>$item->purchaserequest_date</td>
                                                             <td>$item->supplier_name</atd>
 
-                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                            <button type='button' onclick='edit_purchorder($item->purchaserequest_id)'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='icofont icofont-ui-edit'></span></button>
+                                                            <td><div class='btn-group btn-group-sm' style='float: none;'> 
+                                                            <button type='button' onclick='edit_purchorder($item->purchaserequest_id)'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><i class='fa fa-plus'></i></button>
                                                             
                                                             
                                                         </div></td>

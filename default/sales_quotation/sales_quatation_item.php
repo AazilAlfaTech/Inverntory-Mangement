@@ -66,9 +66,9 @@ function edit_sq_item()
 
 //-------------------------------------------------------------------------------------------------------------------
 
-function delete_sales_quotationitem($so_itemid){
+function delete_sales_quotationitem($sq_itemid){
 
-    $sql="UPDATE sales_quotationitem SET sq_item_status='INACTIVE' WHERE so_itemid = $so_itemid ";
+    $sql="UPDATE sales_quotationitem SET sq_item_status='INACTIVE' WHERE so_itemid = $sq_itemid ";
     //echo $sql;
     $this->db->query($sql);
     return true;
@@ -78,6 +78,15 @@ function delete_sales_quotationitem($so_itemid){
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------
+function update_status_complete($sq_itemid ){
+    $sql="UPDATE sales_quotationitem SET sq_item_currentstatus='COMPLETE' WHERE so_itemid = $sq_itemid ";
+    //echo $sql;
+    $this->db->query($sql);
+    return true;
+
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------
 
 
 function get_all_sales_quotationitem(){

@@ -3,6 +3,13 @@ function edit_purchorder(SQ_id)
 {
     window.location.href="add_new_sales_order.php?view="+SQ_id;
 }
+$( document ).ready(function() {
+    console.log("sales quotation");
+    $(".error_fields").hide();
+$(".itemalert").hide();
+$( ".alert" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+});
+
 
 // $(".productform").on("keyup", ".quantitytext, .pricetext, .discounttext", function() {
 //         console.log("hhiii");
@@ -36,6 +43,13 @@ clearrows();
 
 function addrows(){
 
+
+if($("#soitem_productid").val()=='' || $("#soitem_price").val()==''|| $("#soitem_qty").val()=='' ){
+    // alert("Please fill all the fields");
+    console.log("empty");
+     $(".error_fields").show().delay( 1000 ).fadeOut( 1000 );
+ }else{
+
 //getvalues
 productid=$("#soitem_productid option:selected").val();
 productname=$("#soitem_productid option:selected").text();
@@ -55,7 +69,7 @@ $(".itembody").append("<tr>\
         <input class='input-borderless input-sm row_data quantity'   type='text' readonly  name='Quantity[]' value='"+productquantity+"'><div style='color: red; display: none' class='msg1'>Digits only</div>\
     </td>\
     <td class='table-edit-view'>\
-        <select name='Price[]' id='productprice' class='input-borderless price'>\
+        <select name='Price[]'  class='input-borderless price productprice'>\
             <option value='"+productprice+"'>"+productprice+"</option>\
         </select>\
         <input class='form-control input-sm subtotal'   type='hidden'  value='"+productsubtotal+"'>\
@@ -63,12 +77,7 @@ $(".itembody").append("<tr>\
     <td class='table-edit-view'>\
         <input class='input-borderless input-sm row_data discount'   type='text' readonly name='Discount[]' value='"+productdiscount+"'> <div style='color: red; display: none' class='msg3'>Digits only</div>\
     </td>\
-    <td class='table-edit-view'><span class='tabledit-span'></span>\
-            <select name='Status[]' id='productstatus' class='input-borderless status'>\
-            <option value='"+item_data[o].so_itemstatus+"' selected='selected'>"+item_data[o].so_itemstatus+"</option>\
-            </select>\
-        </td>\
-    <td class='table-edit-view'>\
+   <td class='table-edit-view'>\
         <input class='input-borderless input-sm row_data total'   type='text' readonly value='"+producttotal+"'>\
     </td>\
     <td>\
@@ -79,9 +88,11 @@ $(".itembody").append("<tr>\
     </td>\
 </tr>\
 ");
+ 
 
 $(".btn_cancel").hide();
 $(".btn_save").hide();
+ }
 }
 function clearrows(){
 //$("#soitem_productid option:selected").text("");
