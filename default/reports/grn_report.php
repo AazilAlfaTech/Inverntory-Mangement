@@ -22,7 +22,11 @@ $res_loc = $loc->get_all_location();
 
 include_once "../product/product.php";
 $prd = new product();
-$res_prd = $prd->getall_product2()
+$res_prd = $prd->getall_product2();
+
+include_once "../GRN/GRN.php";
+$grn1 = new grn();
+$res_grn = $grn1->grn_report();
 
 
 
@@ -235,21 +239,29 @@ $res_prd = $prd->getall_product2()
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Tiger Nixon</td>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
-                                                        <td>2011/04/25</td>
-                                                        <td>$320,800</td>
-                                                        <td>Tiger Nixon</td>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
-                                                        <td>2011/04/25</td>
-                                                        <td>$320,800</td>
-                                                        <td>$320,800</td>
-                                                    </tr>
+                                                <?php
+                                                        foreach($res_grn as $item){
+                                                            echo"
+                                                            <tr>
+                                                            <td>$item->grn_date</td>
+                                                            <td>$item->grn_ref_no</td>
+                                                            <td>$item->product_code</td>
+                                                            <td>$item->group_name</td>
+                                                            <td>$item->ptype_name</td>
+
+                                                            <td>$item->grn_product_name</td>
+                                                            <td>$item->supplier_name1</td>   
+                                                            <td></td>
+                                                            <td>$item->grn_item_qty</td>
+                                                            <td>$item->grn_item_price</td>
+                                                            <td>$item->grn_item_discount</td>
+                                                           
+                                                            <td></td>
+                                                            </tr>
+                                                            ";
+                                                        }
+
+                                                    ?>
 
                                                 </tbody>
                                                 <tfoot>
