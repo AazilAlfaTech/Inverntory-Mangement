@@ -17,15 +17,30 @@
     $product_item1 = new purchase_request_item();
    
 // --------------------------------------------------------------------------------------------------------------------
-
-    if(isset($_POST["purchaserequestsupplier"]))
+// insert a purchase order
+    $error_msg="";
+    if(isset($_POST["pr_itemprice"]))
     {
-        $purchase1->purchaserequest_supplier=$_POST["purchaserequestsupplier"];
-        $purchase1->purchaserequest_date=$_POST["purchaserequestdate"];
-        $purchase1->purchaserequest_ref= $purchase1->pr_code1($_POST["purchaserequestdate"]);
+        if(isset($_POST['pr_item_price']))
+        {
+            $error_msg=" <div class='alert alert-success background-success'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <i class='icofont icofont-close-line-circled text-white'></i>
+            </button>
+            <strong>No items are selected  </strong> 
+            </div>";
+        }
+        else
+        {
+            $purchase1->purchaserequest_supplier=$_POST["purchaserequestsupplier"];
+            $purchase1->purchaserequest_date=$_POST["purchaserequestdate"];
+            $purchase1->purchaserequest_ref= $purchase1->pr_code1($_POST["purchaserequestdate"]);
 
-        $pr_id=$purchase1->insert_purchaserequest();
-        $product_item1->insert_purchaserequest_item($pr_id );
+            $pr_id=$purchase1->insert_purchaserequest();
+            $product_item1->insert_purchaserequest_item($pr_id );
+        }
+        // header("location:../purchase_requisition/manage_purchase_requisition.php");
+
     }
 
     // if(isset($_GET['edit_pr'])){
@@ -87,7 +102,11 @@
                                 </div>
 
                                 <div class="card-block">
-
+                                    <?php
+                                           
+                                           echo   $error_msg;
+                                             
+                                      ?>
                                     <form action="add_new_purchase_requisition.php" method="POST">
                                         <div class="form-group row">
                                             <div class="col-sm-6">

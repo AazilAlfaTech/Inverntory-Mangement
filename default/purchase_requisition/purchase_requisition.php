@@ -146,7 +146,8 @@ function insert_purchaserequest(){
 function get_all_purchaserequest(){
 
     //$sql="SELECT * FROM purchase_request WHERE purchaserequest_status='ACTIVE' ";
-    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE' ";
+    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,purchase_request.purchaserequest_currentstatus,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
+    ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE'";
     $result=$this->db->query($sql);
 
     $purchaserequest_array=array(); //array created
@@ -160,7 +161,36 @@ function get_all_purchaserequest(){
         $purchaserequest_item->supplier_name=$row["supplier_name"]; //name of the supplier
         $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
         $purchaserequest_item->purchaserequest_ref=$row["purchaserequest_ref"];
-        
+        $purchaserequest_item->purchaserequest_currentstatus=$row["purchaserequest_currentstatus"];
+
+        $purchaserequest_array[]=$purchaserequest_item;
+    }
+
+    return $purchaserequest_array;
+}
+
+
+// Get all the unutilized purchase requisition
+function get_all_new_purchaserequest(){
+
+    //$sql="SELECT * FROM purchase_request WHERE purchaserequest_status='ACTIVE' ";
+    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,purchase_request.purchaserequest_currentstatus,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
+    ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE' AND purchaserequest_currentstatus='NEW'";
+    $result=$this->db->query($sql);
+
+    $purchaserequest_array=array(); //array created
+
+    while($row=$result->fetch_array()){
+
+        $purchaserequest_item = new purchaserequest();
+
+        $purchaserequest_item->purchaserequest_id=$row["purchaserequest_id"];
+        $purchaserequest_item->purchaserequest_supplier=$row["purchaserequest_supplier"];
+        $purchaserequest_item->supplier_name=$row["supplier_name"]; //name of the supplier
+        $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
+        $purchaserequest_item->purchaserequest_ref=$row["purchaserequest_ref"];
+        $purchaserequest_item->purchaserequest_currentstatus=$row["purchaserequest_currentstatus"];
+
         $purchaserequest_array[]=$purchaserequest_item;
     }
 
@@ -174,7 +204,8 @@ function get_all_purchaserequest(){
 function get_purchaserequest_by_id($purchaserequestid){
 
     //$sql="SELECT * FROM purchase_request WHERE purchaserequest_id = $purchaserequestid";
-    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_id = $purchaserequestid";
+    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_currentstatus,purchase_request.purchaserequest_date ,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
+    ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_id = $purchaserequestid";
     //echo $sql;
     $result=$this->db->query($sql);
     $row=$result->fetch_array();
@@ -186,7 +217,7 @@ function get_purchaserequest_by_id($purchaserequestid){
     $purchaserequest_item->supplier_name=$row["supplier_name"];
     $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
     $purchaserequest_item->purchaserequest_ref =$row["purchaserequest_ref"];
-
+    $purchaserequest_item->purchaserequest_currentstatus=$row["purchaserequest_currentstatus"];
        
     return $purchaserequest_item;
 }
@@ -216,12 +247,18 @@ function edit_purchaserequest($purchaserequestid){
 
 function delete_purchaserequest($purchaserequest_id){
 
-    $sql="UPDATE purchase_request SET purchaserequest_status='INACTIVE' WHERE purchaserequest_id=$purchaserequest_id ";
-    //echo $sql;
-    $this->db->query($sql);
-    return true;
+    $sql="SELECT *FROM purchase_order WHERE purchaserorder_requestid=$purchaserequest_id";
+    $result=$this->db->query($sql);
 
-
+    if($result->num_rows==0)
+    {
+        $sql="UPDATE purchase_request SET purchaserequest_status='INACTIVE' WHERE purchaserequest_id=$purchaserequest_id ";
+    // echo $sql;
+        $this->db->query($sql);
+        return true;
+    }
+    else
+    return false;
 }
 
 
@@ -229,7 +266,7 @@ function delete_purchaserequest($purchaserequest_id){
 
     function inactive_purchreq_status($purchasereq_id)
     {
-        $sql="UPDATE  purchase_request SET purchaserequest_currentstatus='COMPLETED' WHERE purchaserequest_id=$purchasereq_id ";
+        $sql="UPDATE  purchase_request SET purchaserequest_currentstatus='COMPLETE' WHERE purchaserequest_id=$purchasereq_id ";
         echo $sql;
         $this->db->query($sql);
         return true;

@@ -6,7 +6,7 @@
     include_once "../location/location.php";
 
     $po1=new purchaseorder();
-    $result_po=$po1->get_all_purchaseorder();
+    $result_po=$po1->get_all_new_purchaseorder();
     
     $grn1=new grn();
     $grn_item1=new grn_item();

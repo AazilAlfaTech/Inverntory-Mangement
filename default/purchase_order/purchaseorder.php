@@ -5,6 +5,7 @@ class purchaseorder{
     public $purchaseorder_ref;
     public $purchaserorder_requestid;
     public $purchaseorder_status;
+    public $purchaseorder_currentstatus;
     public $purchaseorder_date;
     public $supplier_name1;
     private $db;
@@ -74,9 +75,9 @@ class purchaseorder{
         // -------------------------------------------------------------------------------------------------------
     function get_all_purchaseorder(){
         //$sql="SELECT * FROM purchase_order WHERE purchaseorder_status='ACTIVE' ";
-        $sql="SELECT purchase_order.purchaseorder_id ,purchase_order.purchaseorder_ref ,purchase_order.purchaserorder_requestid, purchase_order.purchaseorder_status ,purchase_order.purchaseorder_date,
+        $sql="SELECT purchase_order.purchaseorder_id ,purchase_order.purchaseorder_ref ,purchase_order.purchaserorder_requestid, purchase_order.purchaseorder_status, purchase_order.purchaseorder_currentstatus  ,purchase_order.purchaseorder_date,
         supplier.supplier_name FROM purchase_order INNER JOIN `purchase_request` ON purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id    
-         INNER JOIN supplier ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaseorder_status='ACTIVE' AND  purchaseorder_currentstatus='PENDING' ";
+        INNER JOIN supplier ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE (purchaseorder_status='ACTIVE' AND purchaseorder_currentstatus='NEW') OR (purchaseorder_status='ACTIVE' AND purchaseorder_currentstatus='PENDING') OR (purchaseorder_status='ACTIVE' AND purchaseorder_currentstatus='COMPLETE')";
         $result=$this->db->query($sql);
        // echo $sql;
         $array_purchaseorder=array();
@@ -87,6 +88,32 @@ class purchaseorder{
             $puchasorder1->purchaseorder_ref=$row['purchaseorder_ref'];
             $puchasorder1->purchaserorder_requestid=$row['purchaserorder_requestid'];
             $puchasorder1->purchaseorder_status=$row['purchaseorder_status'];
+            $puchasorder1->purchaseorder_currentstatus=$row['purchaseorder_currentstatus'];
+            $puchasorder1->purchaseorder_date=$row['purchaseorder_date'];
+            $puchasorder1->supplier_name1=$row['supplier_name'];
+
+            $array_purchaseorder[]=$puchasorder1;
+        }
+        return $array_purchaseorder;
+    }
+
+    // Get all new and pending purchase orders
+    function get_all_new_purchaseorder(){
+        //$sql="SELECT * FROM purchase_order WHERE purchaseorder_status='ACTIVE' ";
+        $sql="SELECT purchase_order.purchaseorder_id ,purchase_order.purchaseorder_ref ,purchase_order.purchaserorder_requestid, purchase_order.purchaseorder_status, purchase_order.purchaseorder_currentstatus  ,purchase_order.purchaseorder_date,
+        supplier.supplier_name FROM purchase_order INNER JOIN `purchase_request` ON purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id    
+        INNER JOIN supplier ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE (purchaseorder_status='ACTIVE' AND purchaseorder_currentstatus='NEW') OR (purchaseorder_status='ACTIVE' AND purchaseorder_currentstatus='PENDING')";
+        $result=$this->db->query($sql);
+       // echo $sql;
+        $array_purchaseorder=array();
+        while($row=$result->fetch_array()){
+            $puchasorder1=new purchaseorder();
+
+            $puchasorder1->purchaseorder_id=$row['purchaseorder_id'];
+            $puchasorder1->purchaseorder_ref=$row['purchaseorder_ref'];
+            $puchasorder1->purchaserorder_requestid=$row['purchaserorder_requestid'];
+            $puchasorder1->purchaseorder_status=$row['purchaseorder_status'];
+            $puchasorder1->purchaseorder_currentstatus=$row['purchaseorder_currentstatus'];
             $puchasorder1->purchaseorder_date=$row['purchaseorder_date'];
             $puchasorder1->supplier_name1=$row['supplier_name'];
 
@@ -100,7 +127,7 @@ class purchaseorder{
 
     function get_purchaseorder_by_id($ORDERID){
        // $sql="SELECT * FROM purchase_order WHERE purchaseorder_status='ACTIVE' AND purchaseorder_id=$ORDERID";
-        $sql="SELECT purchase_order.purchaseorder_id ,purchase_order.purchaseorder_ref ,purchase_order.purchaserorder_requestid, purchase_order.purchaseorder_status ,purchase_order.purchaseorder_date,
+        $sql="SELECT purchase_order.purchaseorder_id ,purchase_order.purchaseorder_ref ,purchase_order.purchaserorder_requestid, purchase_order.purchaseorder_status, purchase_order.purchaseorder_currentstatus  ,purchase_order.purchaseorder_date,
         supplier.supplier_name FROM `purchase_order` INNER JOIN `purchase_request` ON purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id    
          INNER JOIN supplier ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaseorder_status='ACTIVE' AND purchaseorder_id=$ORDERID";
         $result=$this->db->query($sql);
@@ -113,6 +140,7 @@ class purchaseorder{
             $puchasorder1->purchaseorder_ref=$row['purchaseorder_ref'];
             $puchasorder1->purchaserorder_requestid=$row['purchaserorder_requestid'];
             $puchasorder1->purchaseorder_status=$row['purchaseorder_status'];
+            $puchasorder1->purchaseorder_currentstatus=$row['purchaseorder_currentstatus'];
             $puchasorder1->purchaseorder_date=$row['purchaseorder_date'];
             $puchasorder1->supplier_name1=$row['supplier_name'];
            

@@ -46,7 +46,7 @@ if(isset($_POST['purchaseorderdate'])){
 
 }
 
-$purchase_request_res=$purchase_request2->get_all_purchaserequest();
+$purchase_request_res=$purchase_request2->get_all_new_purchaserequest();
 
 include_once "../../files/head.php";
 

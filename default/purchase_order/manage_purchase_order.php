@@ -78,7 +78,7 @@ include_once "../../files/head.php";
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                     <i class='icofont icofont-close-line-circled text-white'></i>
                 </button>
-                <strong>New group added successfully</strong> 
+                <strong>New purchase order added successfully</strong> 
             </div>";
             }
             ?>
@@ -88,7 +88,7 @@ include_once "../../files/head.php";
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                     <i class='icofont icofont-close-line-circled text-white'></i>
                 </button>
-                <strong>Group details updated successfully</strong> 
+                <strong>Purchase orderdetails updated successfully</strong> 
             </div>";
             }
             ?>
@@ -144,33 +144,55 @@ include_once "../../files/head.php";
                                                     <th>Reference</th>
                                                     <th>Date</th>
                                                     <th>Supplier</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    foreach($result_PO as $item){
+                                                    foreach($result_PO as $item)
+                                                    {
                                                         echo"
                                                         <tr>
                                                         <td>$item->purchaseorder_id</td>
                                                         <td>$item->purchaseorder_ref</td>
                                                         <td>$item->purchaseorder_date</td>
-                                                        <td>$item->supplier_name1</td>
-                                                        <td style='white-space: nowrap, width: 1%;'>
-                                                        <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
-                                                            <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                <a href='viewpurchaseorder.php?view=$item->purchaseorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
-                                                                <a href='edit_purch_order.php?edit=$item->purchaseorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></a>
-                                                                <button type='button'  onclick='deleteorder($item->purchaseorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                                                
-                                                            </div>
-                                                        </td>
-                                                        
-                                                        </tr>
-                                                        
-                                                        ";
-
+                                                        <td>$item->supplier_name1</td>";
+                                                        if($item->purchaseorder_currentstatus=='NEW'|| $item->purchaseorder_currentstatus=='PENDING')
+                                                        {
+                                                            echo"
+                                                            <td>$item->purchaseorder_currentstatus</td>
+                                                            <td style='white-space: nowrap, width: 1%;'>
+                                                            <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
+                                                                <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                    <a href='viewpurchaseorder.php?view=$item->purchaseorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
+                                                                    <a href='edit_purch_order.php?edit=$item->purchaseorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></a>
+                                                                    <button type='button'  onclick='deleteorder($item->purchaseorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
+                                                                    
+                                                                </div>
+                                                            </td>
+                                                            
+                                                            </tr>
+                                                            
+                                                            ";
+                                                        }
+                                                        elseif($item->purchaseorder_currentstatus=='COMPLETE')
+                                                        {
+                                                            echo"
+                                                            <td>$item->purchaseorder_currentstatus</td>
+                                                            <td style='white-space: nowrap, width: 1%;'>
+                                                            <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
+                                                                <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                    <a href='viewpurchaseorder.php?view=$item->purchaseorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
+                                                                    
+                                                                </div>
+                                                            </td>
+                                                            
+                                                            </tr>
+                                                            
+                                                            ";
+                                                        }
                                                     }
 
 
