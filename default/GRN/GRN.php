@@ -257,8 +257,8 @@
         //     return $purchaserequest_item;
         // }
 
-            return $purchaserequest_item;
-        }
+        //     return $purchaserequest_item;
+        // }
     
 
 // ------------REPORT--------------------------------------------------------------------------------------------
