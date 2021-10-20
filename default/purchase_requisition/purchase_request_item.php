@@ -11,6 +11,7 @@ class purchase_request_item{
     public $pr_item_discount;
     public $pr_item_finalprice;
     public $pr_item_status;
+    public $pr_item_currentstatus;
     public $db;
 
     function __construct()
@@ -100,7 +101,8 @@ function get_all_item_by_requestid($purch_req_id){
     $PR_item1->pr_item_discount=$row['pr_item_discount'];
     $PR_item1->pr_item_subtotal=round(($row['pr_item_qty']*$row['pr_item_price']),2);
     $PR_item1->item_discount=round($row['pr_item_price']-($row['pr_item_price']*$row['pr_item_discount']/100),2);
-   
+    $PR_item1->pr_item_finalprice=round(($row['pr_item_qty']*$row['pr_item_price'])-($row['pr_item_qty']*$row['pr_item_price']*$row['pr_item_discount']/100),2);
+
     $item_array[]= $PR_item1;
     }
     return $item_array;
@@ -138,6 +140,15 @@ function edit_PR_item(){
     return true;
 
 }
+
+function inactive_purchasereq_item($purch_req_id)
+    {
+        
+        $sql="UPDATE purchase_request_item SET pr_item_currentstatus='COMPLETED' WHERE pr_item_requestid=$purch_req_id";
+        $this->db->query($sql);
+        echo $sql; 
+       
+    }
 }
 
 

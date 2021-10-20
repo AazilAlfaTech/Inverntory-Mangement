@@ -1,57 +1,52 @@
 <?php
 
-    include_once "purchase_requisition.php";
     include_once "../supplier/supplier.php";
-    include_once "../product/product.php";
-    include_once "purchase_request_item.php";
-
     $supplier1 = new supplier();
-
     $sup=$supplier1->get_all_supplier();
     // print_r($sup);
 
-     $product1 = new product();     
-     $prod=$product1->getall_product2();
-
+    include_once "../product/product.php";
+    $product1 = new product();     
+    $prod=$product1->getall_product2();
     //  print_r($prod);
 
-     $product_item1 = new purchase_request_item();
+    include_once "purchase_requisition.php";
+    $purchase1 = new purchaserequest();
 
- 
+    include_once "purchase_request_item.php";
+    $product_item1 = new purchase_request_item();
+   
 // --------------------------------------------------------------------------------------------------------------------
+// insert a purchase order
+    $error_msg="";
+    if(isset($_POST["pr_itemprice"]))
+    {
+        if(isset($_POST['pr_item_price']))
+        {
+            $error_msg=" <div class='alert alert-success background-success'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <i class='icofont icofont-close-line-circled text-white'></i>
+            </button>
+            <strong>No items are selected  </strong> 
+            </div>";
+        }
+        else
+        {
+            $purchase1->purchaserequest_supplier=$_POST["purchaserequestsupplier"];
+            $purchase1->purchaserequest_date=$_POST["purchaserequestdate"];
+            $purchase1->purchaserequest_ref= $purchase1->pr_code1($_POST["purchaserequestdate"]);
 
+            $pr_id=$purchase1->insert_purchaserequest();
+            $product_item1->insert_purchaserequest_item($pr_id );
+        }
+        // header("location:../purchase_requisition/manage_purchase_requisition.php");
 
-    $purchase1 = new purchaserequest(); 
+    }
 
-    if(isset($_POST["purchaserequestsupplier"]))
-{
-    $purchase1->purchaserequest_supplier=$_POST["purchaserequestsupplier"];
-    $purchase1->purchaserequest_date=$_POST["purchaserequestdate"];
-    $purchase1->purchaserequest_ref= $purchase1->pr_code1($_POST["purchaserequestdate"]);
+    // if(isset($_GET['edit_pr'])){
+    //   $purchase1= $purchase1->get_purchaserequest_by_id($_GET['edit_pr']);
 
-    $pr_id=$purchase1->insert_purchaserequest();
-
-    $product_item1->insert_purchaserequest_item($pr_id );
-
-
-}
-
-if(isset($_GET['edit_pr'])){
-  $purchase1= $purchase1->get_purchaserequest_by_id($_GET['edit_pr']);
-
-
-}
-
-
-// ------------------------------------------------------------------------------------------------------------
-        // $pr_coe = $purchase1->pr_code();
-        
-
-
-        // echo $pr_coe;
-
-
-include_once "../../files/head.php";
+    include_once "../../files/head.php";
 
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
@@ -107,29 +102,24 @@ include_once "../../files/head.php";
                                 </div>
 
                                 <div class="card-block">
-
+                                    <?php
+                                           
+                                           echo   $error_msg;
+                                             
+                                      ?>
                                     <form action="add_new_purchase_requisition.php" method="POST">
-
-
-
-
                                         <div class="form-group row">
-
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Select Supplier</label>
                                                 <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier" required>
 
-                                                    <option value=" ">Select supplier</option>
+                                                    <option value="">-Select supplier-</option>
                                                     <?php
                                                         foreach($sup as $item)
-                                                      
-                                                        if($item->supplier_id ==$purchase1->purchaserequest_supplier )   
-			                                        echo "<option value='$item->supplier_id' selected='selected'>$item->supplier_name</option>";
-                                                    else
-                                                    echo"<option value='$item->supplier_id'>$item->supplier_name</option>";
+			                                        
+                                                        echo "<option value='$item->supplier_id'>$item->supplier_name</option>";
+                                                    
                                                     ?>
-
-
                                                 </select>
 
                                             </div>
@@ -138,18 +128,18 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="date" name="purchaserequestdate" id="" value="<?=$purchase1->purchaserequest_date ?>" required>
+                                                <input class="form-control" type="date" name="purchaserequestdate" id="txtDate" value="<?php echo date('Y-m-d');?>" required>
                                             </div>
 
                                         </div>
                                         <hr>
-                                        <div class="form-group row">
+                                        <div class="form-group productform row">
 
                                             <div class="col-sm-4">
                                                 <label class=" col-form-label">Select Product</label>
-                                                <select class="js-example-basic-single col-sm-12" name="pr_itemproductid" id="preq_itemproductid" > 
+                                                <select class="js-example-basic-single col-sm-12 product_level" name="pr_itemproductid" id="preq_itemproductid"> 
 
-                                                    <option value="-1 ">Select product</option>
+                                                    <option value="-1">Select product</option>
                                                     <?php
                                                  foreach($prod as $item)
       
@@ -164,38 +154,45 @@ include_once "../../files/head.php";
 
                                             </div>
 
+                                            <!-- <div class="col-sm-2">
+
+                                                <label class=" col-form-label">Product batch</label>
+                                                <input type="text" class="form-control product_batch" placeholder="" name="pr_batch" id="preq_prodbatch"  >
+                                            </div> -->
+
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Price</label>
-                                                <input type="text" class="form-control" placeholder="" 
-                                                name="pr_itemprice" id="preq_itemprice" onkeyup="cal_prd_total()" >
+                                                <input type="text" class="form-control price_add" placeholder="0.00" name="pr_itemprice" id="preq_itemprice"  >
+                                                <div style="color: red; display: none" class="msg3">Digits only</div>
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Qty</label>
-                                                <input type="number" class="form-control" placeholder=""
-                                                name="pr_itemqty" id="preq_itemqty" onkeyup="cal_prd_total()" >
+                                                <!-- <input type="number" class="form-control" placeholder="" name="pr_itemqty" id="preq_itemqty" onkeyup="cal_prd_total()" > -->
+                                                <input type="number" class="form-control qty_add" placeholder="0.00" name="pr_itemqty" id="preq_itemqty" >
+                                                <div style="color: red; display: none" class="msg1">Digits only</div>
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Discount</label>
-                                                <input type="text" class="form-control" placeholder=""
-                                                name="pr_itemdiscount" Id="preq_itemdiscount" onkeyup="cal_prd_total()" >
+                                                <input type="text" class="form-control disc_add" placeholder="0.00" name="pr_itemdiscount" Id="preq_itemdiscount" >
+                                                <div style="color: red; display: none" class="msg2">Digits only</div>
+
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Total</label>
-                                                <input type="text" class="form-control" placeholder=""
-                                                name="pr_itemfinalprice" id="preq_itemfinalprice" disabled>
+                                                <input type="text" class="form-control totaladd" placeholder="0.00" name="pr_itemfinalprice" id="preq_itemfinalprice" disabled>
                                             </div>
 
                                         </div>
 
                                         <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
-                                        <button class="btn btn-inverse">CLEAR</button>
+                                        <button type="button" class="btn btn-inverse reset">CLEAR</button>
 
                                         <br>
                                         <br>
@@ -212,70 +209,55 @@ include_once "../../files/head.php";
                                                         <th>Qty</th>
                                                         <th>Discount</th>
                                                         <th>Total</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tbody">
 
-                                                
-                                             
-                
-                                                                                            </tbody>
+                                               </tbody>
                                             </table>
-                                                 <!-- final values-->
-                                                 <table class="table table-responsive invoice-table invoice-total">
-                                <tbody class="pricelist">
-                                    <tr>
-                                        <th> Total Quantity :</th>
-                                        <td ><input type="text" id="total_quan" name="totqty" class="form-control form-control-sm" ></td>
-                                    </tr>
-                                    <tr>
-                                        <th> Sub Total :</th>
-                                        <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber"></td>
-                                    </tr>
-                                    <tr>
-                                        <th> Total Discount :</th>
-                                        <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " ></td>
-                                    </tr>
+                                            <!-- final values-->
+                                            <table class="table table-responsive invoice-table invoice-total">
+                                                <tbody class="pricelist">
+                                                    <tr>
+                                                        <th> Total Quantity :</th>
+                                                        <td ><input type="text" id="total_quan" name="totqty" class="form-control form-control-sm" readonly></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th> Sub Total :</th>
+                                                        <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber" readonly></td>
+                                                    </tr>
+                                                    <!-- <tr>
+                                                        <th> Total Discount :</th>
+                                                        <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " ></td>
+                                                    </tr> -->
                                    
-                                    <tr class="text-info">
-                                        <td>
-                                            <hr>
-                                            <h5 class="text-primary">Total :</h5>
-                                        </td>
-                                        <td>
-                                            <hr>
-                                            <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control"></h5>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                                    <tr class="text-info">
+                                                        <td>
+                                                            <hr>
+                                                            <h5 class="text-primary">Total :</h5>
+                                                        </td>
+                                                        <td>
+                                                            <hr>
+                                                            <h5 class="text-primary"><input type="text" id="total_final" name="nettot"  class="form-control" readonly></h5>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
 
-
-
-                                          
                                         <div class="d-flex flex-row-reverse">
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </form>
-
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
-
-
-
                 </div>
+<?php
 
-
-
-                <?php
-
-include_once "../../files/foot.php";
+    include_once "../../files/foot.php";
 
 ?>
 
@@ -284,23 +266,23 @@ include_once "../../files/foot.php";
 
 
 
-function cal_prd_total(){
+// function cal_prd_total(){
 
    
 
 
-    var pprice = $("#preq_itemprice").val();
-    var pqty =$("#preq_itemqty").val();
-    var pdis = $("#preq_itemdiscount").val(); 
+//     var pprice = $("#preq_itemprice").val();
+//     var pqty =$("#preq_itemqty").val();
+//     var pdis = $("#preq_itemdiscount").val(); 
    
     
-   var tot = parseFloat(pprice)*parseFloat(pqty)*parseFloat(pdis)/100
+//    var tot = parseFloat(pprice)*parseFloat(pqty)*parseFloat(pdis)/100
 
-    ftot =  parseFloat(pprice)*parseFloat(pqty) - parseFloat(tot)
+//     ftot =  parseFloat(pprice)*parseFloat(pqty) - parseFloat(tot)
 
 
 
-    $("#preq_itemfinalprice").val(ftot);
+//     $("#preq_itemfinalprice").val(ftot);
 
  
 
@@ -316,83 +298,12 @@ function cal_prd_total(){
 
 
 
-}
-
-// -------------------------------------------------------------------------------------------------------------------------
-
-$("#add_prbtn").click(function(){
-
-    add_products();
-    clear_products();
-   
-});
-
-// ---------------------------------------------------------------------------------------------------------------------
-function add_products()
-    {
-
-       
-   
-        var pr_prod=$("#preq_itemproductid option:selected").val();
-        var pr_prod_name=$("#preq_itemproductid option:selected").text(); //dropdown
-        var p_price=$("#preq_itemprice").val();
-        var p_qty=$("#preq_itemqty").val();
-        var p_dis=$("#preq_itemdiscount").val();
-        var p_tot= $("#preq_itemfinalprice").val();
-        
-        // var tcost=(parseFloat(cost)* parseFloat(wght)* parseFloat(qty)).toFixed(3); //total
-       
-        // var tprice=parseFloat(sprice)*parseFloat(wght)* parseFloat(qty);
-        // tprice.toFixed(3);
-        productsubtotal=parseFloat(p_price*p_qty);
-    if($("#preq_itemproductid").val()=='' || $("#preq_itemprice").val()==''|| $("#preq_itemqty").val()==''  || $("#preq_itemdiscount").val()==''){
-         alert("Fill all the fields in item info");
-     } else{
-         $("#tbody").append("<tr><td >"+1+"</td><td><input  class='form-control input-sm  ' type='hidden' name='pr_item_productid[]' value='"+pr_prod+"'> <span class='tabledit-span'>"+ pr_prod_name +" </span></td><td><input class='input-borderless input-sm row_data price'  type='text' readonly name='pr_item_price[]' value='"+p_price+"'>  </td><td><input class='input-borderless input-sm row_data quantity' type='text' readonly name='pr_item_qty[]' value='"+p_qty+"'> </td><td><input class='input-borderless input-sm row_data discount' type='text' readonly name='pr_item_discount[]' value='"+p_dis+"'></td> <td><input  class='input-borderless input-sm row_data total ' type='text' readonly name='pr_item_finalprice[]' value='"+p_tot+"'></td>      <td><span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span> <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span><span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span> <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span></td>   </tr>");
-         
- 
-         $(".btn_save").hide();
-        $(".btn_cancel").hide();
-     }
-
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-
-
-    function clear_products()
-    {
-
-       
-   
-        $("#preq_itemproductid option:selected").text(""); //dropdown
-       $("#preq_itemprice").val("");
-      $("#preq_itemqty").val("");
-        $("#preq_itemdiscount").val("");
-        $("#preq_itemfinalprice").val("");
-        
-      
-
-
-    }
-
-
-    
-    function edit_pr(edit_pr) {
-
-
-window.location.href = "add_new_purchase_requisition.php?edit_pr=" + edit_pr;
-
-
-
-}
-
-
-
-// ========================================================================================================================
-
+// }
 
 
 
 </script>
+<script type="text/javascript" src="../javascript/purchase.js"></script>
+<script type="text/javascript" src="../javascript/purchase/purchase_req.js"></script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>
+<!-- <script type="text/javascript" src="../javascript/purchase/purchase_req.js"></script> -->

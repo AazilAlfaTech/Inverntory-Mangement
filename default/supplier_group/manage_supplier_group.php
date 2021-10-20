@@ -4,6 +4,13 @@ include_once "supplier_group.php";
 
     $suppliergroup1 = new supplier_group();
 
+    // import supplier group
+    if(isset($_POST["submit"]))
+    {
+        $group1->import_supplier_group();
+        
+    }
+
 
     if (isset($_POST["sup_grcode"]))
     {

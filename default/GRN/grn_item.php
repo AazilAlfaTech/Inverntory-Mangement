@@ -2,6 +2,8 @@
         include_once "../../files/config.php";
         include_once "../product/product.php";
         include_once "../stock/avco.php";
+        include_once "../purchase_order/purchaseorder.php";
+        include_once "../purchase_order/purchaseorderitem.php";
         class grn_item
         {
             public $grn_item_id;
@@ -26,6 +28,8 @@
             function insert_grnitem($id)
             {
                 $avco_product2=new avco();
+                $purchaseorderitem5=new purchaseorderitem();
+                $purchaseorder5=new purchaseorder();
                 $grn_list=0;
             
                foreach($_POST['grn_itemid'] as $item)
@@ -47,7 +51,8 @@
                             $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_costprice) VALUES ('GRN',$id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."',$costprice)";
                         $this->db->query( $sql_stock);
                     }
-                   
+                    $purchaseorderitem5->update_po_item_currentstatus($_POST['poitem_id'][$grn_list],$_POST['CurrentStatus'][$grn_list]);
+                    $purchaseorder5->purchase_order_status($_POST['po_id'][$grn_list]);
 
                     $grn_list++;
                 }
