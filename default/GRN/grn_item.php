@@ -92,6 +92,9 @@
                 $grn->grn_item_qty=$row["grn_item_qty"];
                 $grn->grn_item_price=$row["grn_item_price"];
                 $grn->grn_item_dis=$row["grn_item_discount"];
+                //afaz
+                //$sales_orderitem_item->so_subtotal=round(($row["so_itemqty"]*$row["so_itemprice"]),2);
+                $grn->grn_item_subtotoal=round(($row["grn_item_qty"] * $row["grn_item_price"]),2);
                 $grn->grn_item_finalprice=round(($row["grn_item_price"] * $row["grn_item_qty"]) - ($row["grn_item_price"] *$row["grn_item_qty"]* $row["grn_item_discount"]/100),2);
                 // $grn->grn_item_finalprice=$row["grn_item_price"];
                 // $grn->grn_item_status=$row["grn_item_status"];
