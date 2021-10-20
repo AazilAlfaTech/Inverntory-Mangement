@@ -6,7 +6,7 @@
     class GRN
     {
         public $grn_id;
-        public $grn_puch_orderid;	
+        public $grn_puch_order_id;	
         public $grn_ref_no;
         public $grn_received_loc;	
         public $grn_status;	
@@ -22,8 +22,8 @@
         // Add a new grn.....................................................................................................
         function insert_grn()
         {
-            $SQL="INSERT INTO grn (grn_puch_orderid,grn_received_loc,grn_date,grn_ref_no) VALUES
-            ('$this->grn_puch_orderid','$this->grn_received_loc','$this->grn_date','$this->grn_ref_no')";
+            $SQL="INSERT INTO grn (grn_puch_order_id,grn_received_loc,grn_date,grn_ref_no) VALUES
+            ('$this->grn_puch_order_id','$this->grn_received_loc','$this->grn_date','$this->grn_ref_no')";
             $this->db->query($SQL);
             // echo $SQL;
             $grnid=$this->db->insert_id;
@@ -104,8 +104,8 @@
         function get_all_grn()
         {
              //$SQL="SELECT * FROM grn WHERE grn_status='ACTIVE'";
-            $SQL="SELECT grn.grn_id,grn.grn_puch_orderid,grn.grn_ref_no,grn.grn_received_loc,grn.grn_status,grn.grn_date,supplier.supplier_name
-            FROM grn INNER JOIN purchase_order on grn.grn_puch_orderid=purchase_order.purchaseorder_id INNER JOIN purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
+            $SQL="SELECT grn.grn_id,grn.grn_puch_order_id,grn.grn_ref_no,grn.grn_received_loc,grn.grn_status,grn.grn_date,supplier.supplier_name
+            FROM grn INNER JOIN purchase_order on grn.grn_puch_order_id=purchase_order.purchaseorder_id INNER JOIN purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
             INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE grn_status='ACTIVE'";
             // echo $SQL;
             $result=$this->db->query($SQL);
@@ -115,7 +115,7 @@
             {
                 $grn=new GRN();
                 $grn->grn_id=$row["grn_id"];
-                $grn->grn_puch_orderid=$row["grn_puch_orderid"];
+                $grn->grn_puch_order_id=$row["grn_puch_order_id"];
                 $grn->grn_ref_no=$row["grn_ref_no"];
                 $grn->grn_received_loc=$row["grn_received_loc"];
                 $grn->grn_status=$row["grn_status"];
@@ -136,7 +136,7 @@
             $row=$result->fetch_array();
             $grn=new GRN();
             $grn->grn_id=$row["grn_id"];
-            $grn->grn_puch_orderid=$row["grn_puch_orderid"];
+            $grn->grn_puch_order_id=$row["grn_puch_order_id"];
             $grn->grn_ref_no=$row["grn_ref_no"];
             $grn->grn_received_loc=$row["grn_received_loc"];
             $grn->grn_status=$row["grn_status"];
@@ -149,7 +149,7 @@
         {
             $SQL="SELECT purchase_order.purchaseorder_id,purchase_order.purchaserorder_requestid,purchase_order_item.po_item_orderid,
             purchase_order_item.po_item_productid,purchase_order_item.po_item_qty,purchase_order_item.po_item_price,purchase_order_item.po_item_discount,purchase_order_item.po_item_finalprice,purchase_request.purchaserequest_supplier,supplier.supplier_name
-            FROM grn INNER JOIN purchase_order on grn.grn_puch_orderid=purchase_order.purchaseorder_id INNER JOIN purchase_order_item on purchase_order.purchaseorder_id=purchase_order_item.po_item_orderid inner join purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
+            FROM grn INNER JOIN purchase_order on grn.grn_puch_order_id=purchase_order.purchaseorder_id INNER JOIN purchase_order_item on purchase_order.purchaseorder_id=purchase_order_item.po_item_orderid inner join purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
             INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE  	purchaseorder_status='ACTIVE' AND  	purchaseorder_id='$id'";
             $result=$this->db->query($SQL);
             // echo ($SQL);
@@ -184,7 +184,7 @@
         {
             $SQL="SELECT grn.grn_id,purchase_order.purchaseorder_id,purchase_order.purchaserorder_requestid,purchase_order_item.po_item_orderid,
             purchase_order_item.po_item_productid,purchase_order_item.po_item_qty,purchase_order_item.po_item_price,purchase_order_item.po_item_discount,purchase_order_item.po_item_finalprice,purchase_request.purchaserequest_supplier,supplier.supplier_name
-            FROM grn INNER JOIN purchase_order on grn.grn_puch_orderid=purchase_order.purchaseorder_id INNER JOIN purchase_order_item on purchase_order.purchaseorder_id=purchase_order_item.po_item_orderid inner join purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
+            FROM grn INNER JOIN purchase_order on grn.grn_puch_order_id=purchase_order.purchaseorder_id INNER JOIN purchase_order_item on purchase_order.purchaseorder_id=purchase_order_item.po_item_orderid inner join purchase_request on purchase_order.purchaserorder_requestid=purchase_request.purchaserequest_id
             INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE grn_status='ACTIVE' AND grn_id='$id'";
             $result=$this->db->query($SQL);
             // echo ($SQL);

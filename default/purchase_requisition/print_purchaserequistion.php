@@ -1,17 +1,28 @@
 <?php
-include_once "../sales_order/sales_order.php";
-$sales_order2=new sales_order();
-include_once "../sales_order/sales_order_item.php";
-$sales_orderitem2=new sales_orderitem();
+
+
+include_once "../purchase_requisition/purchase_requisition.php";
+include_once "../purchase_requisition/purchase_request_item.php";
+
+$purchaserequest1 = new purchaserequest();
+$purchaserequestitem1 = new purchase_request_item();
+
+if(isset($_GET['view_pr'])){
+
+   $purchase_request = $purchaserequest1->get_purchaserequest_by_id($_GET['view_pr']);
+    
+   $purchasereq_item = $purchaserequestitem1->get_all_item_by_requestid($_GET['view_pr']);
+
+   //print_r($purchasereq_item);
+
+}
+
+
+//$purchaserequestitem1 = new purchase_request_item();
+
+
+
 include_once "../../files/print_head.php";
-
-
-$sales_order2=$sales_order2->get_salesorder_by_id($_GET['view']);
-$sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
-
-
-// print_r($result_pr_products)
-
 
 ?>
 
@@ -45,7 +56,7 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                 <div class="card-block">
                                     <div class="row invoive-info">
                                         <div class="col-md-4 col-xs-12 invoice-client-info">
-                                            <h6>Customer: <?=$sales_order2->salesorder_customer_name ?> </h6>
+                                            <h6>Supplier: <?=$purchase_request->supplier_name ?> </h6>
                                             <table
                                                 class="table table-responsive invoice-table invoice-order table-borderless">
                                                 <tbody>
@@ -62,11 +73,11 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                           
                                         </div>
                                         <div class="col-md-4 col-sm-6">
-                                            <h6>Date : <?=$sales_order2->salesorder_date  ?> </h6>
+                                            <h6>Date : <?=$purchase_request->purchaserequest_date ?> </h6>
                                  
                                         </div>
                                         <div class="col-md-4 col-sm-6">
-                                            <h6 class="m-b-20">Refference Number: <span><?=$sales_order2->salesorder_ref?></span></h6>
+                                            <h6 class="m-b-20">Refference Number: <span><?=$purchase_request->purchaserequest_ref ?></span></h6>
                                        
                                           
                                         </div>
@@ -74,9 +85,9 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="table-responsive">
-                                                <table class="table  ">
+                                                <table class="table  invoice-detail-table">
                                                     <thead>
-                                                        <tr class="">
+                                                        <tr class="thead-default">
                                                             <th>Product </th>
                                                             <th>Quantity</th>
                                                             <th>Price </th>
@@ -87,17 +98,17 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                                     <tbody>
 
                                                     <?php
-                                                foreach ($sales_orderitem_res as $item)
+                                                foreach ($purchasereq_item as $item)
                                                     {
                                                         echo
                                                         "
                                                         <tr>
-                                                            <td>$item->so_itemproduct_name </td>
-                                                            <td><input class='input-borderless quantity' readonly type='text' value='$item->so_itemqty'> </td>
-                                                            <td><input class='input-borderless price' readonly type='text' value='$item->so_itemprice'></td>
-                                                            <td><input class='input-borderless discount ' readonly type='text' value='$item->so_itemdiscount'></td>
-                                     <input class='input-borderless subtotal' readonly type='hidden' value='$item->so_subtotal'>
-                                                            <td><input class='input-borderless total' readonly type='text' value='$item->so_finaltotal'></td>
+                                                            <td>$item->product_name </td>
+                                                            <td><input class='input-borderless quantity' readonly type='text' value='$item->pr_item_qty'> </td>
+                                                            <td><input class='input-borderless price' readonly type='text' value='$item->pr_item_price'></td>
+                                                            <td><input class='input-borderless discount ' readonly type='text' value='$item->pr_item_discount'>
+                                                            <input class='input-borderless subtotal' readonly type='hidden' value='$item->pr_item_subtotal'></td>
+                                                            <td><input class='input-borderless total' readonly type='text' value='$item->item_discount'></td>
 
                                                         </tr>
                                                  
@@ -112,14 +123,14 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <table class="table table-responsive invoice-table invoice-total">
-                                                <tbody>
+                                            <tbody>
                                                     <tr>
                                                         <th>Total quantity :</th>
                                                         <td><span></span><input class='input-borderless autonumber' id="total_quan" readonly type='text' value=''></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Sub Total :</th>
-                                                        <td><span>Rs.</span><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' data-a-sign="Rs. "></td>
+                                                        <td><span>Rs.</span><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' ></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Discount :</th>
@@ -145,9 +156,9 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                             <!-- Invoice card end -->
                             <div class="row text-center" id = "print-btn">
                                 <div class="col-sm-12 invoice-btn-group text-center">
-                                    <button type="button"
+                                    <button type ="button"
                                         class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20"onclick="window.print()">Print</button>
-                                    <a href = "manage_sales_order.php"
+                                    <a href ="print_purchaserequistion.php""
                                         class="btn btn-danger waves-effect m-b-10 btn-sm waves-light">Cancel</a>
                                 </div>
                             </div>
@@ -166,7 +177,7 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
 
 <?php
 
-        include_once "../../files/print_foot.php";
+        include_once "../../files/foot.php";
 
         ?>
 

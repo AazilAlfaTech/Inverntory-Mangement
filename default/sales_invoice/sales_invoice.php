@@ -11,7 +11,7 @@ class sales_invoice{
     public $salesinvoice_cashmethod;
     public $salesinvoice_date;
     public $salesinvoice_status;
-    PUBLIC $si_item_currentstatus;
+    PUBLIC $salesinvoice_currentstatus;
     
     
  
@@ -82,7 +82,7 @@ function delete_sales_invoice($salesinvoice_id){
 
 function get_all_sales_invoice(){
 
-    $sql="SELECT sales_invoice.salesinvoice_id,sales_invoice.salesinvoice_customer,sales_invoice.salesinvoice_ref,sales_invoice.salesinvoice_paymethod,sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_status,customer.customer_name FROM sales_invoice JOIN customer ON sales_invoice.salesinvoice_customer=customer.customer_id WHERE sales_invoice.salesinvoice_status='ACTIVE'";
+    $sql="SELECT sales_invoice.salesinvoice_id,sales_invoice.salesinvoice_customer,sales_invoice.salesinvoice_ref,sales_invoice.salesinvoice_paymethod,sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_status,sales_invoice.salesinvoice_currentstatus,customer.customer_name FROM sales_invoice JOIN customer ON sales_invoice.salesinvoice_customer=customer.customer_id WHERE sales_invoice.salesinvoice_status='ACTIVE'";
   
     $result=$this->db->query($sql);
 
@@ -94,11 +94,14 @@ function get_all_sales_invoice(){
 
         $sales_invoice_item->salesinvoice_id=$row["salesinvoice_id"];
         
-        $sales_invoice_item->salesinvoice_customer=$row["salesinvoice_customer"];
+        $sales_invoice_item->salesinvoice_date=$row["salesinvoice_date"];
+         $sales_invoice_item->salesinvoice_customer=$row["salesinvoice_customer"];
+         $sales_invoice_item->salesinvoice_customer_name=$row["customer_name"];
         $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
         $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
         // $sales_invoice_item->salesinvoice_cashmethod=$row["salesinvoice_cashmethod"];
         $sales_invoice_item->salesinvoice_status=$row["salesinvoice_status"];
+        $sales_invoice_item->salesinvoice_currentstatus=$row["salesinvoice_currentstatus"];
 
         
         
@@ -117,7 +120,7 @@ function get_all_sales_invoice(){
 
 function get_sales_invoice_by_id($salesinvoice_id){
 
-    $sql="SELECT sales_invoice.salesinvoice_id,sales_invoice.salesinvoice_customer,sales_invoice.salesinvoice_ref,sales_invoice.salesinvoice_paymethod,sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_status,customer.customer_name FROM sales_invoice JOIN customer ON sales_invoice.salesinvoice_customer=customer.customer_id WHERE sales_invoice.salesinvoice_status='ACTIVE' AND  sales_invoice.salesinvoice_id = $salesinvoice_id";
+    $sql="SELECT sales_invoice.salesinvoice_id,sales_invoice.salesinvoice_customer,sales_invoice.salesinvoice_ref,sales_invoice.salesinvoice_paymethod,sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_status,sales_invoice.salesinvoice_currentstatus,customer.customer_name FROM sales_invoice JOIN customer ON sales_invoice.salesinvoice_customer=customer.customer_id WHERE sales_invoice.salesinvoice_status='ACTIVE' AND  sales_invoice.salesinvoice_id = $salesinvoice_id";
 
     //echo $sql;
     $result=$this->db->query($sql);
@@ -131,6 +134,7 @@ function get_sales_invoice_by_id($salesinvoice_id){
     $sales_invoice_item->salesinvoice_customer_name=$row["customer_name"];
     $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
     $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
+    $sales_invoice_item->salesinvoice_currentstatus=$row["salesinvoice_currentstatus"];
     //$sales_invoice_item->salesinvoice_cashmethod=$row["salesinvoice_cashmethod"];
     // $sales_invoice_item->salesinvoice_status=$row["salesinvoice_status"];
        
@@ -210,6 +214,7 @@ function si_code($salesinvoice_date){
             $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
             //$sales_invoice_item->salesinvoice_cashmethod=$row["salesinvoice_cashmethod"];
             $sales_invoice_item->salesinvoice_status=$row["salesinvoice_status"];
+            $sales_invoice_item->salesinvoice_currentstatus=$row["salesinvoice_currentstatus"];
     
             
             

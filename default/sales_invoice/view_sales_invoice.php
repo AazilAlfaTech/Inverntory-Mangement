@@ -110,7 +110,7 @@ foreach ($result_sales_in_item as $item) {
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <table class="table table-responsive invoice-table invoice-total">
+                                        <table class="table table-responsive invoice-table invoice-total">
                                                 <tbody>
                                                     <tr>
                                                         <th>Total quantity :</th>
@@ -131,7 +131,7 @@ foreach ($result_sales_in_item as $item) {
                                                         </td>
                                                         <td>
                                                             <hr>
-                                                            <h5 class="text-primary"><span>Rs.</span><input class='input-borderless' id="total_final" readonly type='text' value='$item->si_itemqty'></h5>
+                                                            <h5 class="text-primary"><span>Rs.</span><input class='input-borderless' id="total_final" readonly type='text' value='$item->so_itemqty'></h5>
                                                         </td>
                                                     </tr>
                                                 </tbody>

@@ -87,6 +87,9 @@
                 $grn->grn_item_qty=$row["grn_item_qty"];
                 $grn->grn_item_price=$row["grn_item_price"];
                 $grn->grn_item_dis=$row["grn_item_discount"];
+                //afaz
+                //$sales_orderitem_item->so_subtotal=round(($row["so_itemqty"]*$row["so_itemprice"]),2);
+                $grn->grn_item_subtotoal=round(($row["grn_item_qty"] * $row["grn_item_price"]),2);
                 $grn->grn_item_finalprice=round(($row["grn_item_price"] * $row["grn_item_qty"]) - ($row["grn_item_price"] *$row["grn_item_qty"]* $row["grn_item_discount"]/100),2);
                 // $grn->grn_item_finalprice=$row["grn_item_price"];
                 // $grn->grn_item_status=$row["grn_item_status"];
@@ -99,6 +102,7 @@
             function item_remaining_stock_productid($productid,$locationid){
                 //$sql="SELECT SUM(grn_item_remain_qty) AS totqty FROM grn_item WHERE grn_item_productid= $productid ";
                 $sql="SELECT SUM(grn_item_remain_qty) AS totqty FROM grn JOIN grn_item ON grn.grn_id=grn_item.grn_item_grnid WHERE grn.grn_received_loc=$productid AND grn_item.grn_item_productid=$locationid";
+               // echo $sql;
                 $result_qty=$this->db->query($sql);
                 $row=$result_qty->fetch_array();
                  

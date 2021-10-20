@@ -9,6 +9,7 @@ class sales_quotation
     public $salesquot_ref;
     public $salesquot_date;
     public $salesquot_status;
+    public $salesquot_currentstatus;
 
 
 
@@ -108,32 +109,36 @@ function edit_sales_quotation($salesquotation_id){
 
 //-------------------------------------------------------------------------------------------------------------------
 
-function delete_sales_quotation($salesquotation_id)
+function  delete_sales_quotation($salesquotation_id)
 {
 
-    $sql1="";
-    $result=$this->db->query($sql1);
-    if($result->num_rows==0)
-    {
+    
         $sql="UPDATE sales_quotation SET salesquot_status='INACTIVE' WHERE salesquot_id=$salesquotation_id ";
         //echo $sql;
         $this->db->query($sql);
 
         return true;
-    }
-    else
-    return false;
+    
 
 }
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------
+function update_currentstatus_salesquote($quoteid){
+    $sql="UPDATE sales_quotation SET salesquot_currentstatus='COMPLETE' WHERE salesquot_id=$quoteid ";
+    //echo $sql;
+    $this->db->query($sql);
+
+    return true;
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------
 
 
 function get_all_sales_quotation(){
 
     $sql="SELECT sales_quotation.salesquot_id,sales_quotation.salesquot_customer,sales_quotation.salesquot_ref,sales_quotation.salesquot_date,
-    sales_quotation.salesquot_status,customer.customer_name FROM sales_quotation INNER JOIN customer ON sales_quotation.salesquot_customer=customer.customer_id WHERE salesquot_status='ACTIVE'";
+    sales_quotation.salesquot_currentstatus,sales_quotation.salesquot_status,customer.customer_name FROM sales_quotation INNER JOIN customer ON sales_quotation.salesquot_customer=customer.customer_id WHERE salesquot_status='ACTIVE'";
   
     $result=$this->db->query($sql);
 
@@ -149,6 +154,37 @@ function get_all_sales_quotation(){
         $sales_quotation_item->salesquot_ref=$row["salesquot_ref"];
         $sales_quotation_item->salesquot_date=$row["salesquot_date"];
         $sales_quotation_item->salesquot_status=$row["salesquot_status"];
+
+        $sales_quotation_item->salesquot_currentstatus=$row["salesquot_currentstatus"];
+
+        
+        
+        $sales_quotation_array[]=$sales_quotation_item;
+    }
+
+    return $sales_quotation_array;
+}
+function get_all_sales_quotation_salesorder(){
+
+    $sql="SELECT sales_quotation.salesquot_id,sales_quotation.salesquot_customer,sales_quotation.salesquot_ref,sales_quotation.salesquot_date,
+    sales_quotation.salesquot_currentstatus,sales_quotation.salesquot_status,customer.customer_name FROM sales_quotation INNER JOIN customer ON sales_quotation.salesquot_customer=customer.customer_id WHERE salesquot_currentstatus='NEW'";
+  
+    $result=$this->db->query($sql);
+
+    $sales_quotation_array=array(); //array created
+   
+    while($row=$result->fetch_array()){
+
+        $sales_quotation_item = new sales_quotation();
+
+        $sales_quotation_item->salesquot_id=$row["salesquot_id"];
+        $sales_quotation_item->salesquot_customer=$row["salesquot_customer"];
+        $sales_quotation_item->salesquot_customer_name=$row["customer_name"];
+        $sales_quotation_item->salesquot_ref=$row["salesquot_ref"];
+        $sales_quotation_item->salesquot_date=$row["salesquot_date"];
+        $sales_quotation_item->salesquot_status=$row["salesquot_status"];
+
+        $sales_quotation_item->salesquot_currentstatus=$row["salesquot_currentstatus"];
 
         
         

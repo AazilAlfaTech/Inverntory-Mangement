@@ -70,7 +70,8 @@ include_once "../../files/head.php";
                                     <li class="breadcrumb-item">
                                         <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Widget</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_invoice/manage_sales_invoice.php">SalesInvoice</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_invoice/edit_sales_invoice.php">Edit</a> </li>
                                 </ul>
                             </div>
                         </div>
@@ -104,57 +105,31 @@ include_once "../../files/head.php";
 
                                         <div class="form-group row">
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-3">
                                                 <label class=" col-form-label"> Sales Invoice</label>
                                                 <input class="form-control" type="text" readonly='true' value=<?= $result_sales_in->salesinvoice_ref ?>>
 
                                             </div>
 
-                                            <input class="form-control" type="hidden" readonly='true' name="puchorderid" value=<?= $result_sales_in->salesinvoice_id ?>>
+                                            <input class="form-control" type="hidden" readonly='true' name="salesinvoiceid" value=<?= $result_sales_in->salesinvoice_id ?>>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-3">
                                                 <label class=" col-form-label">Customer</label>
                                                 <input class="form-control" type="text" readonly='true' value="<?= $result_sales_in->salesinvoice_customer_name ?>">
                                             </div>
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-3">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="text" name="salesinvoice_id" readonly='true' value=<?= $result_sales_in->salesinvoice_id ?>>
+                                                <input class="form-control" type="date" name="salesinvoice_id" readonly='true' value=<?= $result_sales_in->salesinvoice_date ?>>
                                                 
                                             </div>
-                                        </div>
-
-                                        <div class="form-group row">
-
-                                            <div class="col-sm-4">
-                                                <label class=" col-form-label">Payment Methord</label>
-                                                <select class="js-example-basic-single col-sm-12" name="sinvpaymethod">
-
-                                                    <option value="cash">Cash </option>
-                                                    <option value="credit ">Credit </option>
-
-
-
-                                                </select>
-
+                                            <div class="col-sm-3">
+                                                <label class=" col-form-label">Payment Method</label>
+                                                <input class="form-control" type="text" name="salesinvoice_id" readonly='true' value=<?= $result_sales_in->salesinvoice_paymethod ?>>
                                             </div>
 
-                                            <div class="col-sm-4">
-                                        <label class=" col-form-label">Payment type</label>
-                                            <select class="js-example-basic-single col-sm-12" name="sinvpaymethodcash" >
-
-                                                <option value="cash">Cash </option>
-                                                <option value="card"> Card</option>
-                                                <option value="bank ">Bank Tranfer </option>
-                                                <option value="cheque "> Cheque</option>
-
-
-
-                                            </select>
                                         </div>
 
-                                        </div>
-
-                                       
+                                        
 
                
 
@@ -168,10 +143,13 @@ include_once "../../files/head.php";
 
 
                                 <!-- Edit With Button card start -->
+                                <div class="card-block">
+
+                                
 
                                 <div class="table-responsive">
 
-                                    <table class="table  table-bordered " id="mytable">
+                                    <table class="table1 table  table-bordered " id="mytable">
                                         <thead class="table-primary">
                                             <tr>
                                                 <th>Product</th>
@@ -179,6 +157,7 @@ include_once "../../files/head.php";
                                                 <th>Price</th>
                                                 <th>Discount</th>
                                                 <th>Total</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
 
                                             </tr>
@@ -196,21 +175,29 @@ include_once "../../files/head.php";
                                                             <input class=' input-borderless  input-sm row_data quantity' type='text' readonly name='Quantity_edit[]' value='<?= $item->si_item_qty ?>'>
                                                             <div style="color: red; display: none" class="msg1">Digits only</div>
                                                         </td>
-                                                        <td class='table-edit-view'><span class='tabledit-span'><?= $item->si_item_price ?></span>
-                                                            <input class=' input-borderless input-sm row_data price' type='text' name='Price_edit[]' readonly value='<?= $item->si_item_price ?>'>
-                                                            <div style="color: red; display: none" class="msg2">Digits only</div>
-
+                                                        
+                                                        <td class='table-edit-view'><span class='tabledit-span'></span>
+                                                            <select name='Price_edit[]'  class='input-borderless price productprice'>
+                                                            <option value='<?= $item->si_item_price ?>'><?= $item->si_item_price ?></option>
+                                                            </select>
+                                                            <input class='form-control input-sm subtotal '   type='hidden'  value='<?= $item->si_item_subtotal ?>'>
                                                         </td>
                                                         <td class='table-edit-view'><span class='tabledit-span'><?= $item->si_item_discount ?></span>
                                                             <input class=' input-borderless input-sm row_data discount' type='text' name='Discount_edit[]' readonly value='<?= $item->si_item_discount ?>'>
                                                             <div style="color: red; display: none" class="msg3">Digits only</div>
+                                                        </td>
                                                         <td class='table-edit-view'><span class='tabledit-span'><?= $item->si_item_finaltotal ?></span>
-                                                            <input class=' input-borderless input-sm  total' type='text' readonly value='<?= $item->si_item_finaltotal ?>'>
+                                                            <input class=' input-borderless   total' type='text' readonly value=<?= $item->si_item_finaltotal ?>>
+                                                        </td>
+                                                        <td class='table-edit-view'><span class='tabledit-span'></span>
+                                                            <select name='Status[]'  class='input-borderless status productstatus'>
+                                                            <option value='<?= $item->si_item_currentstatus ?>' selected='selected'><?= $item->si_item_currentstatus ?></option>
+                                                            </select>
                                                         </td>
                                                         <td>
                                                             <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
                                                             <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
-                                                            <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
+                                                            <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Reset</button></span>
                                                             <span class='deletedata'><button class='btn btn-mini btn-danger ' type='button'>Delete</button></span>
                                                         </td>
 
@@ -225,7 +212,7 @@ include_once "../../files/head.php";
 
                                 </div>
 
-
+                                
                                 <!-- final values-->
                                 <table class="table table-responsive invoice-table invoice-total">
                                     <tbody class="pricelist">
@@ -247,6 +234,8 @@ include_once "../../files/head.php";
                                                 <hr>
                                                 <h5 class="text-primary">Total :</h5>
                                             </td>
+                                            <td>
+                                            <hr>
                                             <h5 class="text-primary"><input type="text" id="total_final" name="nettot" class="form-control"></h5>
                                             </td>
                                         </tr>
@@ -258,7 +247,7 @@ include_once "../../files/head.php";
                                     <button type="submit" name="save" class="btn btn-primary">Submit</button>
                                 </div>
                                 </form>
-
+                                </div>
 
                             </div>
 
