@@ -268,7 +268,8 @@ function grn_report()
     JOIN product ON grn_item.grn_item_productid= product.product_id
     JOIN product_group ON product_group.group_id = product.product_id
     JOIN product_type ON  product.product_type = product_type.ptype_id
-    -- JOIN purchase_order on grn.grn_puch_orderid=purchase_order.purchaseorder_id
+    -- JOIN purchase_order on grn.grn_puch_orderid = purchase_order.purchaseorder_id
+  
    
 
     
@@ -286,12 +287,14 @@ function grn_report()
         $grn->grn_received_loc=$row["grn_received_loc"];
         $grn->grn_status=$row["grn_status"];
         $grn->grn_date=$row["grn_date"];
-        $grn->grn_supplier=$row["supplier_name"];
-        $grn->grn_product_name =$row["product_name"];
+        // $grn->grn_supplier=$row["supplier_name"];
+      
+      
         $grn->grn_item_qty =$row["grn_item_qty"];
         $grn->grn_item_price =$row["grn_item_price"];
         $grn->grn_item_discount =$row["grn_item_discount"];
         $grn->product_code =$row["product_code"];
+        $grn->product_name =$row["product_name"];
         $grn->group_name =$row["group_name"];
         $grn->ptype_name =$row["ptype_name"];
 
@@ -299,6 +302,82 @@ function grn_report()
     }
     return $grn_array;
 }
+
+
+
+// --------------------------------------------
+
+
+function filter_grn(){
+
+    $filter_sup=$_POST['filter_sup'];
+    $filter_product=$_POST['filter_product'];
+    $filter_startdt=$_POST['filter_startdt'];
+    $filter_enddt=$_POST['filter_enddt'];
+    $filter_grp=$_POST['filter_grp'];
+    $filter_type=$_POST['filter_type'];
+
+
+    $sql="SELECT grn.grn_id,grn.grn_puch_orderid,grn.grn_ref_no,grn.grn_received_loc,grn.grn_status,grn.grn_date,
+    grn_item.grn_item_productid,product.product_name,product.product_code,product_group.group_name,grn_item.grn_item_qty,grn_item.grn_item_price,
+    grn_item.grn_item_discount,product_type.ptype_name
+    FROM grn 
+    JOIN grn_item ON grn.grn_id = grn_item.grn_item_grnid
+    JOIN product ON grn_item.grn_item_productid= product.product_id
+    JOIN product_group ON product_group.group_id = product.product_id
+    JOIN product_type ON  product.product_type = product_type.ptype_id
+
+
+     WHERE purchaseorder_status='ACTIVE' ";
+
+
+    if($filter_sup!=-1){
+        $sql.=" and supplier_name='$filter_sup'";
+    }
+    if($filter_product!=-1){
+        $sql.=" and product_name='$filter_product'";
+    }
+
+    if($filter_grp!=-1){
+        $sql.=" and group_name='$filter_grp'";
+    }
+    if($filter_type!=-1){
+        $sql.=" and ptype_name='$filter_type'";
+    }
+
+    if($filter_startdt!='' && $filter_enddt!=''){
+        $sql.="and salesinvoice_date BETWEEN  '".$_POST['filter_startdt']."' AND '".$_POST['filter_enddt']."' "; 
+      
+    }
+
+    $result=$this->db->query($sql);
+    $grn_array=array();
+
+    while($row=$result->fetch_array())
+    {
+        $grn=new GRN();
+        $grn->grn_id=$row["grn_id"];
+        $grn->grn_puch_orderid=$row["grn_puch_orderid"];
+        $grn->grn_ref_no=$row["grn_ref_no"];
+        $grn->grn_received_loc=$row["grn_received_loc"];
+        $grn->grn_status=$row["grn_status"];
+        $grn->grn_date=$row["grn_date"];
+        // $grn->grn_supplier=$row["supplier_name"];
+      
+      
+        $grn->grn_item_qty =$row["grn_item_qty"];
+        $grn->grn_item_price =$row["grn_item_price"];
+        $grn->grn_item_discount =$row["grn_item_discount"];
+        $grn->product_code =$row["product_code"];
+        $grn->product_name =$row["product_name"];
+        $grn->group_name =$row["group_name"];
+        $grn->ptype_name =$row["ptype_name"];
+
+        $grn_array[]=$grn;
+    }
+    return $grn_array;
+}
+
 
     }
 ?>

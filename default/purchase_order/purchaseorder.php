@@ -150,6 +150,7 @@ function get_all_purchaseorder_for_report(){
      JOIN product_group ON  product.product_group = product_group.group_id
      JOIN product_type ON  product.product_type = product_type.ptype_id
      
+     
 
 
      WHERE purchaseorder_status='ACTIVE' ";
