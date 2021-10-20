@@ -223,7 +223,7 @@ include_once "../../files/head.php";
                                             <table class="table table-striped table-bordered" id="example-2">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
+                                                
                                                         <th>Product</th>
                                                         <th>Price</th>
                                                         <th>Qty</th>
@@ -238,7 +238,7 @@ include_once "../../files/head.php";
                                                         <tr>   
                                                         
 
-                                                        <td></td>
+                                                      
                                                         <td class='table-edit-view'><span class=''><?= $item->product_name?></span>
                                                                     <input class='form-control input-sm  '   type='hidden' name='Product[]' value='<?= $item->pr_item_productid ?>'>
                                                                     <input class='form-control input-sm  '   type='hidden' name='pr_item_id[]' value='<?= $item->pr_item_id ?>'>

@@ -131,6 +131,49 @@ include_once "../../files/head.php";
                                             </div>
 
                                         </div>
+                                        <div class="form-group row">
+
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">From</label>
+                                                <select class="js-example-basic-single col-sm-12" name="inter_loc_transferfrom" id="inter_loc_transferfrom" required>
+
+                                                    <option value=" ">Select Location</option>
+                                                    <?php
+                                                    foreach ($res_loc as $item)
+
+                                                        if ($item->location_id == $res_inter_loc1->purchaserequest_supplier)
+                                                            echo "<option value='$item->location_id' selected='selected'>$item->location_name</option>";
+                                                        else
+                                                            echo "<option value='$item->location_id'>$item->location_name</option>";
+                                                    ?>
+
+
+                                                </select>
+
+                                            </div>
+
+
+
+                                            <div class="col-sm-6">
+                                                <label class=" col-form-label">To</label>
+                                                <select class="js-example-basic-single col-sm-12" name="inter_loc_transferto" id="inter_loc_transferto" required>
+
+                                                    <option value=" ">Select Location</option>
+                                                    <?php
+                                                    foreach ($res_loc as $item)
+
+                                                        if ($item->location_id == $res_inter_loc1->purchaserequest_supplier)
+                                                            echo "<option value='$item->location_id' selected='selected'>$item->location_name</option>";
+                                                        else
+                                                            echo "<option value='$item->location_id'>$item->location_name</option>";
+                                                    ?>
+
+
+                                                </select>
+                                            </div>
+
+                                        </div>
+
                                         <hr>
 
                                         <div class="form-group row">
@@ -178,49 +221,7 @@ include_once "../../files/head.php";
 
 </div>
 
-                                        <div class="form-group row">
-
-                                            <div class="col-sm-6">
-                                                <label class=" col-form-label">From</label>
-                                                <select class="js-example-basic-single col-sm-12" name="inter_loc_transferfrom" id="inter_loc_transferfrom" required>
-
-                                                    <option value=" ">Select Location</option>
-                                                    <?php
-                                                    foreach ($res_loc as $item)
-
-                                                        if ($item->location_id == $res_inter_loc1->purchaserequest_supplier)
-                                                            echo "<option value='$item->location_id' selected='selected'>$item->location_name</option>";
-                                                        else
-                                                            echo "<option value='$item->location_id'>$item->location_name</option>";
-                                                    ?>
-
-
-                                                </select>
-
-                                            </div>
-
-
-
-                                            <div class="col-sm-6">
-                                                <label class=" col-form-label">To</label>
-                                                <select class="js-example-basic-single col-sm-12" name="inter_loc_transferto" id="inter_loc_transferto" required>
-
-                                                    <option value=" ">Select Location</option>
-                                                    <?php
-                                                    foreach ($res_loc as $item)
-
-                                                        if ($item->location_id == $res_inter_loc1->purchaserequest_supplier)
-                                                            echo "<option value='$item->location_id' selected='selected'>$item->location_name</option>";
-                                                        else
-                                                            echo "<option value='$item->location_id'>$item->location_name</option>";
-                                                    ?>
-
-
-                                                </select>
-                                            </div>
-
-                                        </div>
-
+                                        
 
 
                                  

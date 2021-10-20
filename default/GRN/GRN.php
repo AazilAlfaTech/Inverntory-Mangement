@@ -9,7 +9,8 @@
         public $grn_puch_order_id;	
         public $grn_ref_no;
         public $grn_received_loc;	
-        public $grn_status;	
+        public $grn_status;
+        public $grn_current_status;
         public $grn_date;
         public $db;
 
@@ -22,8 +23,10 @@
         // Add a new grn.....................................................................................................
         function insert_grn()
         {
-            $SQL="INSERT INTO grn (grn_puch_order_id,grn_received_loc,grn_date,grn_ref_no) VALUES
-            ('$this->grn_puch_order_id','$this->grn_received_loc','$this->grn_date','$this->grn_ref_no')";
+
+            $SQL="INSERT INTO grn (grn_puch_orderid,grn_received_loc,grn_date,grn_ref_no,grn_current_status) VALUES
+            ('$this->grn_puch_orderid','$this->grn_received_loc','$this->grn_date','$this->grn_ref_no','$this->grn_current_status')";
+
             $this->db->query($SQL);
             // echo $SQL;
             $grnid=$this->db->insert_id;
@@ -120,7 +123,7 @@
                 $grn->grn_received_loc=$row["grn_received_loc"];
                 $grn->grn_status=$row["grn_status"];
                 $grn->grn_date=$row["grn_date"];
-              $grn->grn_supplier=$row["supplier_name"];
+                $grn->grn_supplier=$row["supplier_name"];
 
                 $grn_array[]=$grn;
             }
@@ -158,7 +161,7 @@
             while($row=$result->fetch_array())
             {
                 $grn_po=new purchaseorder();
-                // $grn_po->purchaseorder_id=$row["purchaseorder_id"];
+                $grn_po->purchaseorder_id=$row["purchaseorder_id"];
                 // $grn_po->purchaseorder_requestid=$row["purchaseorder_requestid"];
                 $grn_po->purchaseorder_item_orderid=$row["po_item_orderid"];
                 $grn_po->purchaseorder_itemid=$row["po_item_productid"];
@@ -191,7 +194,7 @@
             $row=$result->fetch_array();
         
                 $grn_po=new GRN();
-                // $grn_po->purchaseorder_id=$row["purchaseorder_id"];
+                $grn_po->purchaseorder_id=$row["purchaseorder_id"];
                 // $grn_po->purchaseorder_requestid=$row["purchaseorder_requestid"];
                 $grn_po->purchaseorder_item_orderid=$row["po_item_orderid"];
                 $grn_po->purchaseorder_itemid=$row["po_item_productid"];
@@ -211,19 +214,21 @@
         function  get_all_grn_by_poid($id)
         {
             $SQL="SELECT *, product.product_name,product.product_inventory_val FROM purchase_order_item INNER JOIN product on purchase_order_item.po_item_productid=product.product_id
-             WHERE po_item_status='ACTIVE' AND 	po_item_orderid='$id'";
+             WHERE po_item_status='ACTIVE' AND 	po_item_currentstatus='PENDING' AND po_item_orderid='$id'";
             $result=$this->db->query($SQL);
             $grn_po_array=array();
 
             while($row=$result->fetch_array())
             {
                 $grn_po=new purchaseorder();
+                $grn_po->purchaseorder_item_id=$row["po_item_id"];
                 $grn_po->purchaseorder_item_orderid=$row["po_item_orderid"];
-                $grn_po->purchaseorder_itemid=$row["po_item_productid"];
+                $grn_po->purchaseorder_item_prodid=$row["po_item_productid"];
                 $grn_po->purchaseorder_productinventory=$row['product_inventory_val'];
                 $grn_po->purchaseorder_qty=$row["po_item_qty"];
                 $grn_po->purchaseorder_itemprice=$row["po_item_price"];
                 $grn_po->purchaseorder_itemdiscount=$row["po_item_discount"];
+                $grn_po->purchaseorder_itemsubtotal=round(($row['po_item_qty']*$row['po_item_price']),2);
                 // $grn_po->purchaseorder_itemfinalprice=$row["po_item_finalprice"];
                 $grn_po->purchaseorder_itemfinalprice=round(($row['po_item_qty']*$row['po_item_price'])-($row['po_item_qty']*$row['po_item_price']*$row['po_item_discount']/100),2);
                 $grn_po->purchaseorder_itemname=$row["product_name"];
@@ -234,20 +239,24 @@
         }
 
         // join the pr table and supplier............................................................................
-        function get_purchsup_by_prid($pr_id){
+        // function get_purchsup_by_prid($pr_id){
 
-            $sql="SELECT * FROM purchase_request INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE' AND purchaserequest_supplier='$pr_id' ";
-            //echo $sql;
-            $result=$this->db->query($sql);
-            $row=$result->fetch_array();
-            // $supp=new supplier ();
-            $purchaserequest_item = new purchaserequest();
+        //     $sql="SELECT * FROM purchase_request INNER JOIN supplier on purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE' AND purchaserequest_supplier='$pr_id' ";
+        //     //echo $sql;
+        //     $result=$this->db->query($sql);
+        //     $row=$result->fetch_array();
+        //     // $supp=new supplier ();
+        //     $purchaserequest_item = new purchaserequest();
         
-            $purchaserequest_item->purchaserequest_=$row["purchaserequest_date"];
-            $purchaserequest_item->purchaserequest_suppid=$row["purchaserequest_supplier"];
-            $purchaserequest_item->purchaserequest_suppname=$row["supplier_name"];
-            $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
+        //     $purchaserequest_item->purchaserequest_=$row["purchaserequest_date"];
+        //     $purchaserequest_item->purchaserequest_suppid=$row["purchaserequest_supplier"];
+        //     $purchaserequest_item->purchaserequest_suppname=$row["supplier_name"];
+        //     $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
         
+
+        //     return $purchaserequest_item;
+        // }
+
             return $purchaserequest_item;
         }
     

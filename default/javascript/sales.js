@@ -133,6 +133,7 @@ $( document ).ready(function() {
 
     
     });
+    
     $(".product_level").change(function(){
         var product_id=$(".product_level").val();
         //console.log(product_id);
