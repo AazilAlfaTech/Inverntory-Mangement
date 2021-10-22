@@ -222,7 +222,7 @@ if(isset($_POST['filter'])){
 
                                     <div class="card-block">
                                         <div class="dt-responsive table-responsive">
-                                            <table id="basic-btn" class="table table-striped table-bordered nowrap">
+                                            <table id="table34" class="table table-striped table-bordered nowrap">
                                                 <thead>
                                                     <tr>
                                                         <th>DATE</th>
@@ -253,12 +253,12 @@ if(isset($_POST['filter'])){
                                                             <td>$item->ptype_name</td>
 
                                                             <td>$item->product_name</td>
-                                                            <td></td>   
-                                                            <td></td>
+                                                            <td>$item->grn_supplier</td>   
+                                                            <td>$item->grn_location</td>
                                                             <td>$item->grn_item_qty</td>
                                                             <td>$item->grn_item_price</td>
                                                             <td>$item->grn_item_discount</td>
-                                                           
+                                                            <td></td>
                                                             <td></td>
                                                             </tr>
                                                             ";
@@ -292,3 +292,42 @@ if(isset($_POST['filter'])){
                             ?>
 
                             <!-- ------------------------------------------------------------------------------------------------- -->
+
+
+                            <script>
+
+$(document).ready(function () {
+						$('#table34').DataTable({
+							"searching": true,
+                            "lengthChange": true,
+                     
+                            "iDisplayLength": 10,
+                                                    //"pageLength": 40,
+							"scrollX": true,
+							"paging": true,
+							"info": true,
+                            dom: 'Bfrtip',
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+							drawCallback: () => {
+								const table = $('#table34').DataTable();
+								const tableData = table.rows({
+										search: 'applied'
+									}).data().toArray();
+								const totals = tableData.reduce((total, rowData) => {
+										total[0] += parseFloat(rowData[6]);
+										total[1] += parseFloat(rowData[7]);
+                                        total[2] += parseFloat(rowData[8]);
+                                       total[3] += parseFloat(rowData[9]);
+                                       
+                                       
+										return total;
+									}, [0, 0,0,0]);
+								$(table.column(6).footer()).text(totals[0]);
+								$(table.column(7).footer()).text(totals[1]);
+                                $(table.column(8).footer()).text(totals[2]);
+                                $(table.column(9).footer()).text(totals[3]);
+                               //  $(table.column(11).footer()).text(totals[4]);
+							}
+						})
+					});				
+                            </script>
