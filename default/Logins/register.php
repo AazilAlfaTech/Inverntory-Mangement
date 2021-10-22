@@ -98,17 +98,22 @@ include_once "../../files/head.php";
                                 </div>
                                  
                             </div>
-                                 <div class="dropdown">
-                                    <button class="dropbtn">Roles</button>
-                                    <div class="dropdown-content">
-                                        <a href="#">Admin</a>
-                                        <a href="#">Sales_rep</a>
-                                        <a href="#">Customer</a>
-                                    </div>
+                                 <div class="col-sm-4">
+                                     <label for="" class = "col-form-label" >Roles </label>
+                                     <select name="" id="" class = "form-control">
+                                         <option value = "Admin"> Admin</option>
+                                         <option value = "Vendor"> Vendor</option>
+                                         <option value = "Customer"> Customer</option>
+                                     </select>
+
+                                 </div>
                                 </div>
                                 <br>
                                 <br>
-                                <button type="submit" class="btn btn-primary ">Register</button>                             
+                                <div>
+                                    <button type="submit" class="btn btn-primary ">Register</button>  
+                                </div>
+                                                           
                                 
                             </form>
 
