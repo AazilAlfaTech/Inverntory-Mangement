@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if(!isset($_SESSION["user"])){
+
+  header("location:../Logins/login1.php");
+  exit;
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -222,7 +234,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="auth-normal-sign-in.htm">
+                                        <a href="../Logins/logout.php">
                                             <i class="feather icon-log-out"></i> Logout
                                         </a>
                                     </li>
