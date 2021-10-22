@@ -110,7 +110,10 @@ include_once "../../files/head.php";
                                 </div>
                                 <br>
                                 <br>
-                                <button type="submit" class="btn btn-primary ">Register</button>                             
+                                <div>
+                                    <button type="submit" class="btn btn-primary ">Register</button>  
+                                </div>
+                                                           
                                 
                             </form>
 
