@@ -67,16 +67,7 @@ include_once "../../files/head.php";
                                 </div>";
                                 }
                                 ?>
-                                <?php
-                                if(isset($_GET['success_edit'])) {
-                                    echo"<div class='alert alert-info background-info'>
-                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                        <i class='icofont icofont-close-line-circled text-white'></i>
-                                    </button>
-                                    <strong>Group details updated successfully</strong> 
-                                </div>";
-                                }
-                                ?>
+                                
                                 <?php
                                 if(isset($_GET['delete_success'])) {
                                     echo"<div class='alert alert-danger background-danger'>
@@ -87,26 +78,8 @@ include_once "../../files/head.php";
                                 </div>";
                                 }
                                 ?>
-                                <?php
-                                if(isset($_GET['delete_g'])) {
-                                    echo"<div class='alert alert-danger background-danger'>
-                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                        <i class='icofont icofont-close-line-circled text-white'></i>
-                                    </button>
-                                    <strong>$msg_2</strong> 
-                                </div>";
-                                }
-                                ?>
-                                <?php
-                                if(isset($_GET['notsuccess'])) {
-                                    echo"<div class='alert alert-danger background-danger'>
-                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                        <i class='icofont icofont-close-line-circled text-white'></i>
-                                    </button>
-                                    <strong>The code or the name already exists.Please try again</strong> 
-                                </div>";
-                                }
-                                ?>
+                                
+                                
                                 <!-- //ALERT MESSAGES END................... -->
                             <!-- Autofill table start -->
                             <div class="card">
