@@ -113,16 +113,7 @@ include_once "../sales_invoice/sales_invoice.php";
                                 </div>";
                                 }
                                 ?>
-                                <?php
-                                if(isset($_GET['notsuccess'])) {
-                                    echo"<div class='alert alert-danger background-danger'>
-                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                        <i class='icofont icofont-close-line-circled text-white'></i>
-                                    </button>
-                                    <strong>The code or the name already exists.Please try again</strong> 
-                                </div>";
-                                }
-                                ?>
+                               
                                 <!-- //ALERT MESSAGES END................... -->
                             <!-- Autofill table start -->
                             <div class="card">
