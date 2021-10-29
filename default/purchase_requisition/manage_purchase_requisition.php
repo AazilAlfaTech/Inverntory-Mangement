@@ -179,7 +179,7 @@ include_once "../../files/head.php";
                                                                         <td>$item->purchaserequest_ref   </td>
                                                                         <td>$item->purchaserequest_date</td>
                                                                         <td>$item->supplier_name  </td>
-                                                                        <td>$item->purchaserequest_currentstatus</td>
+                                                                        <td><lable class='badge' st$item->purchaserequest_currentstatus>$item->purchaserequest_currentstatus</label></td>
 
                                                                       
                                                                      
@@ -205,10 +205,11 @@ include_once "../../files/head.php";
                                                             <td>$item->purchaserequest_ref   </td>
                                                             <td>$item->purchaserequest_date</td>
                                                             <td>$item->supplier_name  </td>
-                                                            <td>$item->purchaserequest_currentstatus</td>
+                                                            <td><label class='badge' st$item->purchaserequest_currentstatus>$item->purchaserequest_currentstatus<label></td>
 
                                                             <td><div class='btn-group btn-group-sm' style='float: none;'>
                                                             <button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>
+                                                            <button type='button'  onclick='delete_pr($item->purchaserequest_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
                                                             </td> 
                                                         </tr>";
                                                     }

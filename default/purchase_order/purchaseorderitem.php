@@ -82,7 +82,7 @@ function get_all_POitem($purch_order_id){
         $PO_item->product_name=$row["product_name"];
         $PO_item->po_item_qty=$row['po_item_qty'];
         $PO_item->po_item_price=$row['po_item_price'];
-        $PO_item->po_totalprice=round($row['po_item_qty']*$row['po_item_price'],2);
+        $PO_item->po_item_subtotal=round($row['po_item_qty']*$row['po_item_price'],2);
         $PO_item->po_item_discount=$row['po_item_discount'];
        $PO_item->po_item_finalprice=round(($row['po_item_qty']*$row['po_item_price'])-($row['po_item_qty']*$row['po_item_price']*$row['po_item_discount']/100),2);
        

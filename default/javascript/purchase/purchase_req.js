@@ -4,11 +4,59 @@
         window.location.href = "add_new_purchase_requisition.php?edit_pr=" + edit_pr;  
     }
 
+    // ......................
+    $( document ).ready(function() {
+
+        $(".error_fields").hide();
+    $(".itemalert").hide();
+    $( ".alert" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+    });
+
+    $(document).on('click', '.deletedata', function(event) {
+        var tbl_row = $(this).closest('tr');
+        console.log ("deletedata");
+    
+        var deleteitemid= tbl_row.find(".productid").val();
+        console.log (deleteitemid);
+    
+        var confirm_msg=confirm("Are you sure you want delete the item?");
+            if(confirm_msg==true){
+                //ajax request
+                $.ajax({
+                    url:'../purchase_requisition/handle_delete_pr.php',
+                    type:'POST',
+                    data:{id:deleteitemid},
+                    success:function(response){
+                        if(response==true){
+                            console.log('Item deleted successfully');
+                            tbl_row.css('background','tomato');
+                            tbl_row.fadeOut(800,function(){
+                                tbl_row.remove();
+                                cal_totquantity();
+                                cal_totprice();
+                                cal_totdiscount();
+                                final_total();
+                            });
+                        }else{
+                            console.log('Invalid ID.');
+                        }
+                    }
+                     
+                });
+            }
+       
+    
+    });
+
 // Function that runs when you click the add buttom
     $("#add_prbtn").click(function(){
 
         add_products();
         clear_products();
+        cal_totquantity();
+        cal_totprice();
+        cal_totdiscount();
+        final_total();
        
     });
 
@@ -31,13 +79,14 @@
         preq_subtotal=parseFloat(p_price*p_qty);
         console.log(pr_prod_name);
 
-        if($("#preq_itemproductid").val()=='' || $("#preq_itemprice").val()==''|| $("#preq_itemqty").val()==''  || $("#preq_itemdiscount").val()==''){
-         alert("Fill all the fields in item info");
+        if($("#preq_itemproductid").val()=='' || $("#preq_itemprice").val()==''|| $("#preq_itemqty").val()==''){
+        //  alert("Fill all the fields in item info");
+        console.log("empty");
+        $(".error_fields").show().delay( 1000 ).fadeOut( 1000 );
         } 
         else
         {
             $("#tbody").append("<tr>\
-                <td class='table-edit-view'>"+1+"</td>\
                 <td class='table-edit-view'>\
                     <input  class='input-borderless input-sm productid' type='hidden'readonly name='pr_item_productid[]' value='"+pr_prod+"'>\
                     <input  class='input-borderless input-sm productid' type='text' readonly name='' value='"+pr_prod_name+"'>\

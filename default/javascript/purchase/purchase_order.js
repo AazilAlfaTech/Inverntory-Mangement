@@ -2,8 +2,45 @@ function edit_purchorder(PR_id)
     {
         window.location.href="add_new_purchase_order.php?view="+PR_id;
     }
-
-$("#add_prbtn").click(function(){
+    
+    // 
+    $(document).on('click', '.deletedata', function(event) {
+        var tbl_row = $(this).closest('tr');
+        console.log ("deletedata");
+    
+        var deleteitemid= tbl_row.find(".productid").val();
+        console.log (deleteitemid);
+    
+        var confirm_msg=confirm("Are you sure you want delete the item?");
+            if(confirm_msg==true){
+                //ajax request
+                $.ajax({
+                    url:'../purchase_order/handle_delete.php',
+                    type:'POST',
+                    data:{id:deleteitemid},
+                    success:function(response){
+                        if(response==true){
+                            console.log('Item deleted successfully');
+                            tbl_row.css('background','tomato');
+                            tbl_row.fadeOut(800,function(){
+                                tbl_row.remove();
+                                cal_totquantity();
+                                cal_totprice();
+                                cal_totdiscount();
+                                final_total();
+                            });
+                        }else{
+                            console.log('Invalid ID.');
+                        }
+                    }
+                     
+                });
+            }
+       
+    
+    });
+// Function that runs when you click the add buttom
+    $("#add_prbtn").click(function(){
 
     add_products();
     clear_products();
@@ -12,6 +49,12 @@ $("#add_prbtn").click(function(){
     cal_totdiscount();
     final_total();
     
+    });
+    
+    // Function that runs when you click the clear button
+    $(".reset").click(function()
+    {
+        clear_products();
     });
     
     // ---------------------------------------------------------------------------------------------------------------------
@@ -27,8 +70,11 @@ $("#add_prbtn").click(function(){
         var p_dis=$("#porder_itemdiscount").val();
         var p_tot= $("#porder_itemfinalprice").val();
         productsubtotal=parseFloat(p_price*p_qty);
-        if($("#porder_itemproductid").val()=='' || $("#porder_itemprice").val()==''|| $("#porder_itemqty").val()==''  || $("#porder_itemdiscount").val()==''){
-             alert("Fill all the fields in item info");
+        if($("#porder_itemproductid").val()=='' || $("#porder_itemprice").val()==''|| $("#porder_itemqty").val()==''){
+            //  alert("Fill all the fields in item info");
+            console.log("empty");
+            $(".error_fields").show().delay( 1000 ).fadeOut( 1000 );
+            
          } else{
        
         $(".itembody").append("<tr>\

@@ -30,7 +30,19 @@
         $grn1->grn_date=$_POST["grndate"];
         $grn1->grn_ref_no=$grn1->grn_code($_POST["grndate"]);
         $result_grn1=$grn1->insert_grn();
-        $grn_item1->insert_grnitem($result_grn1);
+        $res_insert=$grn_item1->insert_grnitem($result_grn1);
+
+        //code for insert alert validations
+        if($res_insert==true)
+        {              
+            echo "insert done";
+            header("location:../GRN/manage_GRN.php?success=1");
+        }
+        elseif($res_insert==false)
+        {
+            echo"false";
+            header("location:../GRN/manage_GRN.php?notsuccess=1");
+        }
     }
 
    
@@ -180,7 +192,7 @@
                                             </div>
                                             <div class='col-sm-4'>
                                                 <label class='col-form-label' name='grn_current_status'>Status</label>
-                                                <select class='js-example-basic-single col-sm-12'>
+                                                <select class='js-example-basic-single col-sm-12 c_status'>
                                                 <option value='COMPLETE'>Complete</option>
                                                 <option value='PENDING'>Pending</option>
                                                 </select>
@@ -328,9 +340,26 @@ include_once "../../files/foot.php";
 <script type="text/javascript" src="../javascript/editabletable.js"></script>
 
 
-<script>
+<!-- <script>
      function po_details(po)
     {
         window.location.href="add_new_GRN.php?view="+po;
     }
-</script>
+
+    $(".c_status").change(function()
+    {
+        var St=$(".c_status").val();
+        // console.log(St);
+        if(St=='PENDING')
+        { 
+            console.log("HI");
+            var option = $('<option></option>').attr("value", "PENDING").text("PENDING");
+            $('.productstatus').empty().append(option);
+        }
+        else
+        {
+            var option = $('<option></option>').attr("value", "COMPLETE").text("COMPLETE");
+            $('.productstatus').empty().append(option);
+        }
+    });
+</script> -->
