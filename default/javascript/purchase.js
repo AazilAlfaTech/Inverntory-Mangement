@@ -1,3 +1,11 @@
+    $( document ).ready(function() 
+    {
+      console.log("HELLO");
+      $(".error_fields").hide();
+      // $(".itemalert").hide();
+      // $( ".alert" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+    });
+
    $("#PO_request").change(function(){
             console.log("hi");
             var request_id=$("#PO_request").val();
@@ -15,6 +23,7 @@
                 
             });
         });
+
     
         $("#PO_request").change(function()
       {
@@ -96,7 +105,7 @@ $( document ).ready(function() {
       });
 
     //validate only numbers....................................................................................
-    $(".productform").on("keyup", ".qty_add, .disc_add ,.price_add", function(event)
+    $(".productform").on("keydown", ".qty_add, .disc_add ,.price_add", function(event)
     {
       // console.log("validation123")
   
@@ -141,20 +150,22 @@ $( document ).ready(function() {
         }
       });
   
-      //validate only numbers for discount
-      row.find(".disc_add").on("keypress",function(e)
-      {
-          console.log("validation456")
+    //validate only numbers for discount
+    row.find(".disc_add").on("keypress",function(e)
+    {
       
-          var charCode = (e.which) ? e.which : event.keyCode    
-          
-          if(String.fromCharCode(charCode).match(/[^0-9]/g)){  
-              row.find(".msg2").css("display", "inline"); 
-            
-              return false;  
-          }else
-          {row.find(".msg2").css("display", "none");}
-      }); 
+        var charCode = (e.which) ? e.which : event.keyCode    
+      
+    if(e.which != 8 && e.which != 0 
+        && (e.which < 48 || e.which > 57) 
+        && e.charCode != 46){  
+        row.find(".msg2").css("display", "inline"); 
+        return false;  
+    }else
+    {row.find(".msg2").css("display", "none");}
+ });
+
+    
     });
 
 

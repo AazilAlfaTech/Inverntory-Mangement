@@ -56,6 +56,16 @@
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
+                        <?php
+                            if(isset($_GET['success'])) {
+                                echo"<div class='alert alert-success background-success'>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <i class='icofont icofont-close-line-circled text-white'></i>
+                                </button>
+                                <strong>New GRN added successfully</strong> 
+                            </div>";
+                            }
+                        ?>
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
@@ -96,8 +106,7 @@
                                                                 <td>
                                                                     <div class='btn-group btn-group-sm' style='float: none;'>
                                                                     <button type='button' id='edit_pr' onclick='view_grn($item->grn_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-eye'></i></button>
-                                                                        <button type='button' onclick='GRN_details($item->grn_id)'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button>
-                                                                        <button type='button'  onclick='del_group($item->grn_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-trash-o'></i></button>
+                                                                        
                                                
                                                                     </div>
                                                                 </td>
@@ -131,4 +140,7 @@ include_once "../../files/foot.php";
         // window.location.href="view_grn.php?view="+grn;
         window.location.href="print_grn.php?view="+grn;
     }
+
+    $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
+
 </script>

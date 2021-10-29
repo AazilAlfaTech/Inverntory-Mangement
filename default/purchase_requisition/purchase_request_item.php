@@ -31,9 +31,9 @@ class purchase_request_item{
     
     {
 
-    $sql="INSERT INTO purchase_request_item (pr_item_requestid,pr_item_productid,pr_item_qty,pr_item_price,pr_item_discount,pr_item_finalprice)
+    $sql="INSERT INTO purchase_request_item (pr_item_requestid,pr_item_productid,pr_item_qty,pr_item_price,pr_item_discount)
     VALUES($pr,'".$_POST['pr_item_productid'][$product_list]."','".$_POST['pr_item_qty'][$product_list]."','".$_POST['pr_item_price'][$product_list]."'
-    ,'".$_POST['pr_item_discount'][$product_list]."','".$_POST['pr_item_finalprice'][$product_list]."')
+    ,'".$_POST['pr_item_discount'][$product_list]."')
     ";
        echo $sql;
        $this->db->query($sql);
@@ -46,7 +46,7 @@ class purchase_request_item{
 // ====================================================================================================================
 
 function get_all_product_by_pr_id($purch_req_id){
-    $sql="SELECT purchase_request_item.pr_item_id ,purchase_request_item.pr_item_requestid ,purchase_request_item.pr_item_productid , purchase_request_item.pr_item_qty , purchase_request_item.pr_item_price ,purchase_request_item.pr_item_discount ,product.product_name FROM purchase_request_item INNER JOIN product ON purchase_request_item.pr_item_productid=product.product_id WHERE pr_item_requestid=$purch_req_id";
+    $sql="SELECT purchase_request_item.pr_item_id ,purchase_request_item.pr_item_requestid ,purchase_request_item.pr_item_productid , purchase_request_item.pr_item_qty , purchase_request_item.pr_item_price ,purchase_request_item.pr_item_discount ,product.product_name FROM purchase_request_item INNER JOIN product ON purchase_request_item.pr_item_productid=product.product_id WHERE pr_item_requestid=$purch_req_id AND pr_item_status='ACTIVE'";
 
     $result=$this->db->query($sql);
 
@@ -63,7 +63,8 @@ function get_all_product_by_pr_id($purch_req_id){
     $PR_item1->pr_item_qty=$row['pr_item_qty'];
     $PR_item1->pr_item_price=$row['pr_item_price'];
     $PR_item1->pr_item_discount=$row['pr_item_discount'];
-    
+    $PR_item1->pr_item_subtotal=round(($row['pr_item_qty']*$row['pr_item_price']),2);
+
      $PR_item1->pr_item_finalprice=round(($row['pr_item_qty']*$row['pr_item_price'])-($row['pr_item_qty']*$row['pr_item_price']*$row['pr_item_discount']/100),2);
 
 
@@ -84,7 +85,7 @@ function get_all_product_by_pr_id($purch_req_id){
 
 
 function get_all_item_by_requestid($purch_req_id){
-    $sql="SELECT purchase_request_item.pr_item_id ,purchase_request_item.pr_item_requestid ,purchase_request_item.pr_item_productid , purchase_request_item.pr_item_qty , purchase_request_item.pr_item_price ,purchase_request_item.pr_item_discount ,product.product_name FROM purchase_request_item INNER JOIN product ON purchase_request_item.pr_item_productid=product.product_id WHERE pr_item_requestid=$purch_req_id";
+    $sql="SELECT purchase_request_item.pr_item_id ,purchase_request_item.pr_item_requestid ,purchase_request_item.pr_item_productid , purchase_request_item.pr_item_qty , purchase_request_item.pr_item_price ,purchase_request_item.pr_item_discount ,product.product_name FROM purchase_request_item INNER JOIN product ON purchase_request_item.pr_item_productid=product.product_id WHERE pr_item_requestid=$purch_req_id AND pr_item_status='ACTIVE'";
     $result=$this->db->query($sql);
     $item_array=array();
     //echo $sql;
@@ -126,8 +127,8 @@ function edit_PR_item(){
 
     $list=0;
 
-    foreach($_POST['Quantity'] as $item){
-        $sql="UPDATE purchase_request_item SET pr_item_qty='".$_POST['Quantity'][$list]."',pr_item_price ='".$_POST['Price'][$list]."',pr_item_discount='".$_POST['Discount'][$list]."'
+    foreach($_POST['pr_item_qty'] as $item){
+        $sql="UPDATE purchase_request_item SET pr_item_qty='".$_POST['pr_item_qty'][$list]."',pr_item_price ='".$_POST['pr_item_price'][$list]."',pr_item_discount='".$_POST['pr_item_discount'][$list]."'
         
         WHERE pr_item_id='".$_POST['pr_item_id'][$list]."' ";
 
@@ -141,13 +142,21 @@ function edit_PR_item(){
 
 }
 
-function inactive_purchasereq_item($purch_req_id)
+    function inactive_purchasereq_item($purch_req_id)
     {
         
         $sql="UPDATE purchase_request_item SET pr_item_currentstatus='COMPLETED' WHERE pr_item_requestid=$purch_req_id";
         $this->db->query($sql);
         echo $sql; 
        
+    }
+
+    function delete_PRitem($PR_id)
+    {
+        $sql="UPDATE  purchase_request_item SET pr_item_status='INACTIVE' WHERE pr_item_id=$PR_id ";
+        $this->db->query($sql);
+        //echo $sql; 
+        echo true;
     }
 }
 

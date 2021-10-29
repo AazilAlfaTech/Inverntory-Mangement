@@ -56,7 +56,7 @@ include_once "../../files/head.php";
 
                 <div class="d-flex flex-row-reverse">
 <a href="add_new_purchase_Order.php">
-                    <button class="btn btn-mat btn-primary ">Add New Purchas Order</i></button>
+                    <button class="btn btn-mat btn-primary ">Add New Purchase Order</i></button>
 </a>
                 </div>
 
@@ -226,4 +226,7 @@ include_once "../../files/foot.php";
 
 
     }
+
+    $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
+
 </script>

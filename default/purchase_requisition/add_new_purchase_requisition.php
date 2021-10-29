@@ -19,9 +19,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 // insert a purchase order
     $error_msg="";
-    if(isset($_POST["pr_itemprice"]))
+    if(isset($_POST["purchaserequestsupplier"]))
     {
-        if(isset($_POST['pr_item_price']))
+        if(!isset($_POST['pr_item_price']))
         {
             $error_msg=" <div class='alert alert-success background-success'>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -29,22 +29,34 @@
             </button>
             <strong>No items are selected  </strong> 
             </div>";
+            
         }
         else
-        {
+        {          
             $purchase1->purchaserequest_supplier=$_POST["purchaserequestsupplier"];
             $purchase1->purchaserequest_date=$_POST["purchaserequestdate"];
             $purchase1->purchaserequest_ref= $purchase1->pr_code1($_POST["purchaserequestdate"]);
 
             $pr_id=$purchase1->insert_purchaserequest();
-            $product_item1->insert_purchaserequest_item($pr_id );
+        //    $product_item1->insert_purchaserequest_item($pr_id );
+
+            $res_insert=$product_item1->insert_purchaserequest_item($pr_id );
+
+            //code for insert alert validations
+            if($res_insert==true)
+            {              
+                echo "insert done";
+                header("location:../purchase_requisition/manage_purchase_requisition.php?success=1");
+            }
+            elseif($res_insert==false)
+            {
+                echo"false";
+                header("location:../purchase_requisition/manage_purchase_requisition.php?notsuccess=1");
+            }
+            
         }
-        // header("location:../purchase_requisition/manage_purchase_requisition.php");
 
     }
-
-    // if(isset($_GET['edit_pr'])){
-    //   $purchase1= $purchase1->get_purchaserequest_by_id($_GET['edit_pr']);
 
     include_once "../../files/head.php";
 
@@ -116,9 +128,14 @@
                                                     <option value="">-Select supplier-</option>
                                                     <?php
                                                         foreach($sup as $item)
-			                                        
+                                                        if($item->supplier_id==$_POST['purchaserequestsupplier'])
+                                                        {
+                                                            echo "<option value='$item->supplier_id' selected='selected'>$item->supplier_name</option>";
+                                                        }
+                                                        else
+                                                        {
                                                         echo "<option value='$item->supplier_id'>$item->supplier_name</option>";
-                                                    
+                                                        }
                                                     ?>
                                                 </select>
 
@@ -171,14 +188,14 @@
 
                                                 <label class=" col-form-label">Qty</label>
                                                 <!-- <input type="number" class="form-control" placeholder="" name="pr_itemqty" id="preq_itemqty" onkeyup="cal_prd_total()" > -->
-                                                <input type="number" class="form-control qty_add" placeholder="0.00" name="pr_itemqty" id="preq_itemqty" >
+                                                <input type="text" class="form-control qty_add" placeholder="0.00" name="pr_itemqty" id="preq_itemqty" >
                                                 <div style="color: red; display: none" class="msg1">Digits only</div>
                                             </div>
 
                                             <div class="col-sm-2">
 
                                                 <label class=" col-form-label">Discount</label>
-                                                <input type="text" class="form-control disc_add" placeholder="0.00" name="pr_itemdiscount" Id="preq_itemdiscount" >
+                                                <input type="text" class="form-control disc_add" placeholder="0.00" name="pr_itemdiscount" Id="preq_itemdiscount" value=''>
                                                 <div style="color: red; display: none" class="msg2">Digits only</div>
 
                                             </div>
@@ -193,6 +210,7 @@
 
                                         <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
                                         <button type="button" class="btn btn-inverse reset">CLEAR</button>
+                                        <span class='error_fields'><label class="label label-md label-danger" >Please fill all the fields</label></span>
 
                                         <br>
                                         <br>
@@ -203,7 +221,7 @@
                                             <table class="table table-striped table-bordered" id="example-2">
                                                 <thead  class='table-primary'>
                                                     <tr>
-                                                        <th>#</th>
+                                                        <!-- <th>#</th> -->
                                                         <th>Product</th>
                                                         <th>Price</th>
                                                         <th>Qty</th>

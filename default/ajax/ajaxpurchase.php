@@ -24,5 +24,27 @@ function get_sum_remainingqty(){
     echo json_encode($result_stock);
 }
 
+function get_prod_byloc()
+{
+    include_once "../GRN/grn.php";
+    $grn_item3= new grn_item();
+    $result_prod=$grn_item3->grnitem_by_loc($_GET['loc_id']);
+    echo json_encode($result_prod);
 
+}
+function get_productbatchby_prodid()
+{
+    include_once "../GRN/grn_item.php";
+    $grn_item4= new grn_item();
+    $result_prodbatch=$grn_item4->get_prodbatch_byprod($_GET['prodid']);
+    echo json_encode($result_prodbatch);
+}
+
+function get_productqty_prodbatch()
+{
+    include_once "../GRN/grn_item.php";
+    $grn_item5= new grn_item();
+    $result_prodqty=$grn_item5->get_grnqty_byprodbatch($_GET['prod_batch']);
+    echo json_encode($result_prodqty);
+}
 ?>

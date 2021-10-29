@@ -98,23 +98,23 @@ include_once "../../files/head.php";
                                                     <tbody>
 
                                                     <?php
-                                                foreach ($purchasereq_item as $item)
-                                                    {
-                                                        echo
-                                                        "
-                                                        <tr>
-                                                            <td>$item->product_name </td>
-                                                            <td><input class='input-borderless quantity' readonly type='text' value='$item->pr_item_qty'> </td>
-                                                            <td><input class='input-borderless price' readonly type='text' value='$item->pr_item_price'></td>
-                                                            <td><input class='input-borderless discount ' readonly type='text' value='$item->pr_item_discount'>
-                                                            <input class='input-borderless subtotal' readonly type='hidden' value='$item->pr_item_subtotal'></td>
-                                                            <td><input class='input-borderless total' readonly type='text' value='$item->item_discount'></td>
+                                                        foreach ($purchasereq_item as $item)
+                                                        {
+                                                            echo
+                                                            "
+                                                            <tr>
+                                                                <td>$item->product_name </td>
+                                                                <td><input class='input-borderless quantity' readonly type='text' value='$item->pr_item_qty'> </td>
+                                                                <td><input class='input-borderless price' readonly type='text' value='$item->pr_item_price'></td>
+                                                                <td><input class='input-borderless discount ' readonly type='text' value='$item->pr_item_discount'>
+                                                                <input class='input-borderless subtotal' readonly type='hidden' value='$item->pr_item_subtotal'></td>
+                                                                <td><input class='input-borderless total' readonly type='text' value='$item->item_discount'></td>
 
-                                                        </tr>
-                                                 
-                                                  ";
-                                                    }
-                                                  ?>
+                                                            </tr>
+                                                    
+                                                        ";
+                                                        }
+                                                     ?>
                                                     </tbody>
                                                 </table>
                                             </div>
