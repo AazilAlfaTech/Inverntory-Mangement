@@ -22,7 +22,7 @@ if(isset($_GET['view_pr'])){
 
 
 
-include_once "../../files/head.php";
+include_once "../../files/print_head.php";
 
 ?>
 
@@ -98,23 +98,23 @@ include_once "../../files/head.php";
                                                     <tbody>
 
                                                     <?php
-                                                        foreach ($purchasereq_item as $item)
-                                                        {
-                                                            echo
-                                                            "
-                                                            <tr>
-                                                                <td>$item->product_name </td>
-                                                                <td><input class='input-borderless quantity' readonly type='text' value='$item->pr_item_qty'> </td>
-                                                                <td><input class='input-borderless price' readonly type='text' value='$item->pr_item_price'></td>
-                                                                <td><input class='input-borderless discount ' readonly type='text' value='$item->pr_item_discount'>
-                                                                <input class='input-borderless subtotal' readonly type='hidden' value='$item->pr_item_subtotal'></td>
-                                                                <td><input class='input-borderless total' readonly type='text' value='$item->item_discount'></td>
+                                                foreach ($purchasereq_item as $item)
+                                                    {
+                                                        echo
+                                                        "
+                                                        <tr>
+                                                            <td>$item->product_name </td>
+                                                            <td><input class='input-borderless quantity' readonly type='text' value='$item->pr_item_qty'> </td>
+                                                            <td><input class='input-borderless price' readonly type='text' value='$item->pr_item_price'></td>
+                                                            <td><input class='input-borderless discount ' readonly type='text' value='$item->pr_item_discount'>
+                                                            <input class='input-borderless subtotal' readonly type='hidden' value='$item->pr_item_subtotal'></td>
+                                                            <td><input class='input-borderless total' readonly type='text' value='$item->item_discount'></td>
 
-                                                            </tr>
-                                                    
-                                                        ";
-                                                        }
-                                                     ?>
+                                                        </tr>
+                                                 
+                                                  ";
+                                                    }
+                                                  ?>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -154,12 +154,12 @@ include_once "../../files/head.php";
                                 </div>
                             </div>
                             <!-- Invoice card end -->
-                            <div class="row text-center">
+                            <div class="row text-center" id = "print-btn">
                                 <div class="col-sm-12 invoice-btn-group text-center">
-                                    <a href ="print_purchaserequistion.php"
-                                        class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20"onclick="window.print()">Print</a>
-                                    <button type="button"
-                                        class="btn btn-danger waves-effect m-b-10 btn-sm waves-light">Cancel</button>
+                                    <button type ="button"
+                                        class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20"onclick="window.print()">Print</button>
+                                    <a href ="print_purchaserequistion.php""
+                                        class="btn btn-danger waves-effect m-b-10 btn-sm waves-light">Cancel</a>
                                 </div>
                             </div>
                         </div>

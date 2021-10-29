@@ -51,7 +51,7 @@ function import_supplier_group()
     // Gets the extension of the file selected
     $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
     print_r($a);
-    if($a='xlsx')
+    if($a=='xlsx')
     {
         // include the class excel libraray
         require ("../import/import_excel/PHPExcel.php");
@@ -76,18 +76,41 @@ function import_supplier_group()
                 // echo"$name";
                 if($suppliergroup_code!='')
                 {
-                    // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
-                    $sql="INSERT INTO supplier_group (suppliergroup_code,suppliergroup_name) VALUES ('$suppliergroup_code','$suppliergroup_name')";
-                    $this->db->query($sql);
+                    $sql1="SELECT * FROM supplier_group WHERE suppliergroup_status='ACTIVE' AND suppliergroup_code='$CODE' OR suppliergroup_name='$NAME'";
+                    $res_code=$this->db->query($sql1);
+
+                    if($res_code->num_rows==0)
+                    {
+                        // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
+                        $sql="INSERT INTO supplier_group (suppliergroup_code,suppliergroup_name) VALUES ('$suppliergroup_code','$suppliergroup_name')";
+                        $this->db->query($sql);
+                        $msg=1;
+                    }
+                    else
+                    {
+                        $msg1=2;
+                    }
                 }
             }
+            if(isset($msg))
+            {
+                // echo "Successful";
+                    header("location:../supplier_group/manage_supplier_group.php?success=1");
+
+            }
+            if(isset($msg1))
+            {
+            // echo "Unsuccessful";
+                header("location:../supplier_group/manage_supplier_group.php?notsuccess=1");
+
+            }
         }      
-        return true;     
+           
     }
     else 
     {
-        return false;
-        // echo "Invalid file format";
+        // return false;
+        echo "Invalid file format";
     }
 }
 
@@ -219,6 +242,28 @@ function get_supplier_group_by_name($supplier_groupname){
 
        
     return $supplier_group_item;
+}
+
+function return_sup_groupid($sup_groupname){
+    $sql="SELECT suppliergroup_id FROM supplier_group WHERE suppliergroup_name='$sup_groupname'";
+    $result=$this->db->query($sql);
+    echo '<pre>';
+    print_r($result);
+   
+    if ($result->num_rows > 0) 
+    {
+        // output data of each row
+        $row=$result->fetch_array();
+        $sup_group_id=$row["suppliergroup_id"]; 
+        return $sup_group_id;
+        // print_r($group_id);
+    }
+    else
+    {
+        
+        echo "invalid group!";
+        // return false;
+    }
 }
 
 

@@ -4,16 +4,30 @@
 include_once "purchase_requisition.php";
 
     $purchasereq1 = new purchaserequest();
-
     $result_pr=$purchasereq1->get_all_purchaserequest();
 
     // print_r($result_pr);
-
-
-
-    if(isset($_GET['edit_pr'])){
-        $purchasereq1=$purchasereq1->get_purchaserequest_by_id($_GET['edit_pr']);
+    if(isset($_GET['d_id']))
+{
+    $res_delete=$purchasereq1->delete_purchaserequest($_GET['d_id']);
+    
+    //code for delete validations
+    if($res_delete==true)
+    {
+        header("location:../purchase_requisition/manage_purchase_requisition.php?delete_success=1");
+        }
+        else
+        {
+            $msg_2="Purchase requisition already in use therefore cannot delete";
+        } 
     }
+
+    if(isset($_GET['edit_pr']))
+    {
+        $purchasereq1=$purchasereq1->get_purchaserequest_by_id($_GET['edit_pr']);
+
+    }
+
 
 
 
@@ -73,6 +87,58 @@ include_once "../../files/head.php";
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
+                            <!-- ALERT MESSAGE START -->
+                            <?php
+                                if(isset($_GET['success'])) {
+                                    echo"<div class='alert alert-success background-success'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>New Purchase Requisition added successfully</strong> 
+                                </div>";
+                                }
+                                ?>
+                                 <?php
+                                if(isset($_GET['success_edit'])) {
+                                    echo"<div class='alert alert-info background-info'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>Purchase requisition details updated successfully</strong> 
+                                </div>";
+                                }
+                                ?>
+                                <?php
+                                if(isset($_GET['delete_success'])) {
+                                    echo"<div class='alert alert-danger background-danger'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>Deleted successful</strong> 
+                                </div>";
+                                }
+                                ?>
+                                <?php
+                                if(isset($_GET['delete_PO'])) {
+                                    echo"<div class='alert alert-danger background-danger'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>$msg_2</strong> 
+                                </div>";
+                                }
+                                ?>
+                                <?php
+                                if(isset($_GET['notsuccess'])) {
+                                    echo"<div class='alert alert-danger background-danger'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>The code or the name already exists.Please try again</strong> 
+                                </div>";
+                                }
+                            ?>
+                            <!-- ALERT MESSAGE END -->
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">
@@ -95,6 +161,7 @@ include_once "../../files/head.php";
                                                     <th>Reference No</th>
                                                     <th>Date </th>
                                                     <th>Supplier</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
 
                                                 </tr>
@@ -102,14 +169,18 @@ include_once "../../files/head.php";
                                             <tbody>
                                             <?php
 
-                                                 foreach($result_pr as $item){
-                                                                    echo"
+                                                 foreach($result_pr as $item)
+                                                 {
+                                                    if($item->purchaserequest_currentstatus=='NEW')
+                                                    { 
+                                                        echo"
                                                                     <tr>
                                                                     <td>$item->purchaserequest_id   </td>
                                                                         <td>$item->purchaserequest_ref   </td>
                                                                         <td>$item->purchaserequest_date</td>
                                                                         <td>$item->supplier_name  </td>
-                                                                     
+                                                                        <td><lable class='badge' st$item->purchaserequest_currentstatus>$item->purchaserequest_currentstatus</label></td>
+
                                                                       
                                                                      
                                                                      
@@ -125,8 +196,24 @@ include_once "../../files/head.php";
                                                                        
                                                                     </tr>
                                                                     ";
-                                                                        }
+                                                    }
+                                                    elseif($item->purchaserequest_currentstatus=='COMPLETE')
+                                                    {
+                                                        echo"
+                                                        <tr>
+                                                        <td>$item->purchaserequest_id   </td>
+                                                            <td>$item->purchaserequest_ref   </td>
+                                                            <td>$item->purchaserequest_date</td>
+                                                            <td>$item->supplier_name  </td>
+                                                            <td><label class='badge' st$item->purchaserequest_currentstatus>$item->purchaserequest_currentstatus<label></td>
 
+                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>
+                                                            <button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>
+                                                            <button type='button'  onclick='delete_pr($item->purchaserequest_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
+                                                            </td> 
+                                                        </tr>";
+                                                    }
+                                                }
                                                 ?>
 
                                                 </tfoot>
@@ -180,7 +267,7 @@ include_once "../../files/foot.php";
                             function view_pr(view_pr) {
 
 
-                                window.location.href = "view_puchase_requisition.php?view_pr=" + view_pr;
+                                window.location.href = "print_purchaserequistion.php?view_pr=" + view_pr;
 
 
                             }

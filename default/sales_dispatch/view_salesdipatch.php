@@ -1,28 +1,21 @@
 <?php
 
+//include_once "../../files/head.php";
+include_once "sales_dispatch.php";
+include_once "sales_dispatch_item.php";
 
-include_once "../purchase_requisition/purchase_requisition.php";
-include_once "../purchase_requisition/purchase_request_item.php";
+$sales_disp3=new sales_dispatch();
 
-$purchaserequest1 = new purchaserequest();
-$purchaserequestitem1 = new purchase_request_item();
+$sales_disp_item3=new sales_dispatch_item();
 
-if(isset($_GET['view_pr'])){
-
-   $purchase_request = $purchaserequest1->get_purchaserequest_by_id($_GET['view_pr']);
-    
-   $purchasereq_item = $purchaserequestitem1->get_all_item_by_requestid($_GET['view_pr']);
-
-   //print_r($purchasereq_item);
-
-}
-
-
-//$purchaserequestitem1 = new purchase_request_item();
+$sales_disp3=$sales_disp3->get_sales_dispatch_by_id($_GET["view_sq"]);
+$sales_disp_item3=$sales_disp_item3->get_sales_dispatch_item_by_id($_GET["view_sq"]);
 
 
 
-include_once "../../files/head.php";
+
+include_once "../../files/print_head.php";
+
 
 ?>
 
@@ -56,7 +49,7 @@ include_once "../../files/head.php";
                                 <div class="card-block">
                                     <div class="row invoive-info">
                                         <div class="col-md-4 col-xs-12 invoice-client-info">
-                                            <h6>Supplier: <?=$purchase_request->supplier_name ?> </h6>
+                                            <h6>Customer: <?=$sales_disp3->salesdispatch_customer_name ?> </h6>
                                             <table
                                                 class="table table-responsive invoice-table invoice-order table-borderless">
                                                 <tbody>
@@ -73,11 +66,11 @@ include_once "../../files/head.php";
                                           
                                         </div>
                                         <div class="col-md-4 col-sm-6">
-                                            <h6>Date : <?=$purchase_request->purchaserequest_date ?> </h6>
+                                            <h6>Date : <?=$sales_disp3->ssalesdispatch_date ?> </h6>
                                  
                                         </div>
                                         <div class="col-md-4 col-sm-6">
-                                            <h6 class="m-b-20">Refference Number: <span><?=$purchase_request->purchaserequest_ref ?></span></h6>
+                                            <h6 class="m-b-20">Refference Number: <span><?=$sales_disp3->salesdispatch_ref ?></span></h6>
                                        
                                           
                                         </div>
@@ -98,23 +91,23 @@ include_once "../../files/head.php";
                                                     <tbody>
 
                                                     <?php
-                                                        foreach ($purchasereq_item as $item)
-                                                        {
-                                                            echo
-                                                            "
-                                                            <tr>
-                                                                <td>$item->product_name </td>
-                                                                <td><input class='input-borderless quantity' readonly type='text' value='$item->pr_item_qty'> </td>
-                                                                <td><input class='input-borderless price' readonly type='text' value='$item->pr_item_price'></td>
-                                                                <td><input class='input-borderless discount ' readonly type='text' value='$item->pr_item_discount'>
-                                                                <input class='input-borderless subtotal' readonly type='hidden' value='$item->pr_item_subtotal'></td>
-                                                                <td><input class='input-borderless total' readonly type='text' value='$item->item_discount'></td>
+                                                foreach ($sales_disp_item3 as $item)
+                                                {
+                                                    echo
+                                                    "
+                                                    <tr>
+                                                        <td>$item->product_name </td>
+                                                        <td><input class='input-borderless quantity' readonly type='text' value='$item->sq_item_qty'> </td>
+                                                        <td><input class='input-borderless price' readonly type='text' value='$item->sq_item_price'></td>
+                                                        <td><input class='input-borderless discount ' readonly type='text' value='$item->sq_item_discount'></td>
+                                                        <input class='input-borderless subtotal' readonly type='hidden' value='$item->sq_item_subtotal'>
+                                                        <td><input class='input-borderless total' readonly type='text' value='$item->sq_item_finalprice'></td>
 
-                                                            </tr>
-                                                    
-                                                        ";
-                                                        }
-                                                     ?>
+                                                    </tr>
+                                             
+                                              ";
+                                                }
+                                                  ?>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -122,15 +115,15 @@ include_once "../../files/head.php";
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <table class="table table-responsive invoice-table invoice-total">
-                                            <tbody>
+                                        <table class="table table-responsive invoice-table invoice-total">
+                                                <tbody>
                                                     <tr>
                                                         <th>Total quantity :</th>
                                                         <td><span></span><input class='input-borderless autonumber' id="total_quan" readonly type='text' value=''></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Sub Total :</th>
-                                                        <td><span>Rs.</span><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' ></td>
+                                                        <td><span>Rs.</span><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' data-a-sign="Rs. "></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Discount :</th>
@@ -156,10 +149,10 @@ include_once "../../files/head.php";
                             <!-- Invoice card end -->
                             <div class="row text-center">
                                 <div class="col-sm-12 invoice-btn-group text-center">
-                                    <a href ="print_purchaserequistion.php"
-                                        class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20"onclick="window.print()">Print</a>
                                     <button type="button"
-                                        class="btn btn-danger waves-effect m-b-10 btn-sm waves-light">Cancel</button>
+                                        class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20 " onclick="window.print()">Print</button>
+                                    <a href = "manage_sales_quotation.php"
+                                        class="btn btn-danger waves-effect m-b-10 btn-sm waves-light">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -177,8 +170,8 @@ include_once "../../files/head.php";
 
 <?php
 
-        include_once "../../files/foot.php";
+        include_once "../../files/print_foot.php";
 
         ?>
-
-<script type="text/javascript" src="../javascript/editabletable.js"></script>
+     
+     <script type="text/javascript" src="../javascript/editabletable.js"></script>

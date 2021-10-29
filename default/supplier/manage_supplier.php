@@ -8,6 +8,14 @@ include_once "../supplier_group/supplier_group.php";
 
     $supplier1 = new supplier();
 
+// import supplier
+    
+     if(isset($_POST["submit"]))
+     {
+         $group1->import_supplier();
+         
+     }
+
 //insert a new supplier.........................................................
 if (isset($_POST["supcode"]))
 {

@@ -3,7 +3,7 @@ include_once "../sales_order/sales_order.php";
 $sales_order2=new sales_order();
 include_once "../sales_order/sales_order_item.php";
 $sales_orderitem2=new sales_orderitem();
-include_once "../../files/head.php";
+include_once "../../files/print_head.php";
 
 
 $sales_order2=$sales_order2->get_salesorder_by_id($_GET['view']);
@@ -143,12 +143,12 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                 </div>
                             </div>
                             <!-- Invoice card end -->
-                            <div class="row text-center">
+                            <div class="row text-center" id = "print-btn">
                                 <div class="col-sm-12 invoice-btn-group text-center">
                                     <button type="button"
-                                        class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20">Print</button>
-                                    <button type="button"
-                                        class="btn btn-danger waves-effect m-b-10 btn-sm waves-light">Cancel</button>
+                                        class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20"onclick="window.print()">Print</button>
+                                    <a href = "manage_sales_order.php"
+                                        class="btn btn-danger waves-effect m-b-10 btn-sm waves-light">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +166,7 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
 
 <?php
 
-        include_once "../../files/foot.php";
+        include_once "../../files/print_foot.php";
 
         ?>
 

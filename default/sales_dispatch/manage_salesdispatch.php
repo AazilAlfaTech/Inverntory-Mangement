@@ -121,8 +121,9 @@ include_once "../../files/head.php";
                                                             <td style='white-space: nowrap, width: 1%;'>
                                                                 <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
                                                                  <div class='btn-group btn-group-sm' style='float: none;'>
+
                                                                 <a href='viewsalesorder.php?view=$item->salesdispatch_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
-                                                              
+
                                                                 
                                                             </div>
                                                         </td>

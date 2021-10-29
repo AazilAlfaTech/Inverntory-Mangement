@@ -18,6 +18,13 @@ include_once "../salesrep/salesrep.php";
     //object of customer class
     $customer1 = new customer();
 
+    // import customer
+    if(isset($_POST["submit"]))
+    {
+        $group1->import_customer();
+        
+    }
+
 //insert/edit a new cutomer..................................................................
 if (isset($_POST["custcode"]))
 {
