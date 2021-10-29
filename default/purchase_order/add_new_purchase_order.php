@@ -30,7 +30,8 @@ if(isset($_GET["view"]))
 
 
 
-if(isset($_POST['purchaseorderdate'])){
+if(isset($_POST['purchaseorderdate']))
+{
     // $purchaseorder2->purchaserorder_requestid=$_POST['purchaseorderdate'];
     $purchaseorder2->purchaserorder_requestid=$_POST['purchaseorderrequest'];
     $purchaseorder2->purchaseorder_date=$_POST['purchaseorderdate'];
@@ -40,8 +41,15 @@ if(isset($_POST['purchaseorderdate'])){
     $purchase_request2->inactive_purchreq_status($_POST['purchaseorderrequest']);
     // echo '<pre>';
     // print_r($purchase_request2);
-    $purchase_request_item2->inactive_purchasereq_item($_POST['purchaseorderrequest']);
-    header("location:../purchase_order/manage_purchase_order.php?success=1");
+    $res_insert=$purchase_request_item2->inactive_purchasereq_item($_POST['purchaseorderrequest']);
+    //code for insert alert validations
+    if($res_insert==true){
+        echo "insert done";
+        header("location:../purchase_order/manage_purchase_order.php?success=1");
+    }elseif($res_insert==false){
+        echo"false";
+        header("location:../purchase_order/manage_purchase_order.php?notsuccess=1");
+    }
 
 
 }
@@ -191,7 +199,7 @@ include_once "../../files/head.php";
                         <!-- add product from -->
                         <div class="form-group row productform">
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-4">
                                 <label class=" col-form-label">Select Product</label>
                                 <select class="js-example-basic-single col-sm-12 product_level"  id="porder_itemproductid" > 
 
@@ -210,11 +218,6 @@ include_once "../../files/head.php";
 
                             </div>
 
-                            <div class="col-sm-2">
-
-                                <label class=" col-form-label">Product batch</label>
-                                <input type="text" class="form-control product_batch" placeholder="" name="pr_batch" id="preq_prodbatch"  >
-                            </div>
                             
                             <div class="col-sm-2">
 
@@ -226,7 +229,7 @@ include_once "../../files/head.php";
                             <div class="col-sm-2">
 
                                 <label class=" col-form-label">Qty</label>
-                                <input type="number" class="form-control qty_add" placeholder="0.00" name="pr_itemqty" id="porder_itemqty" >
+                                <input type="text" class="form-control qty_add" placeholder="0.00" name="pr_itemqty" id="porder_itemqty" >
                                 <div style="color: red; display: none" class="msg1">Digits only</div>
                             </div>
 
@@ -247,7 +250,9 @@ include_once "../../files/head.php";
                         </div>
                                 <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
                                 <button type="button" class="btn btn-inverse reset">CLEAR</button>
-                        <!-- add product form end -->
+                                <span class='error_fields'><label class="label label-md label-danger" >Please fill all the fields</label></span>
+
+                                <!-- add product form end -->
 
                             <br>
                             <br>
@@ -361,7 +366,15 @@ include_once "../../files/head.php";
 include_once "../../files/foot.php";
 
 ?>
-
+<!-- <script>
+      $( document ).ready(function() 
+    {
+      console.log("HELLO");
+      $(".error_fields").hide();
+      // $(".itemalert").hide();
+      // $( ".alert" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+    }); -->
+<!-- </script> -->
 <script type="text/javascript" src="../javascript/purchase.js"></script>
 <script type="text/javascript" src="../javascript/purchase/purchase_order.js"></script>
 <script type="text/javascript" src="../javascript/editabletable.js"></script>
