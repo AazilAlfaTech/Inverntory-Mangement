@@ -1,3 +1,55 @@
+<?php
+include_once ("user.php");
+session_start();
+$user1 = new user();
+
+$error_msg="";
+
+if(isset($_POST['user_email'])){
+
+    $login_user = new user();
+
+    $res = $login_user->ad_login($_POST['user_email'],$_POST['user_password']);
+
+    if($res==true){
+        
+        if($_SESSION["user"]["user_roleid"]==2){
+
+         
+          
+
+            if($result==null)
+            {header("location:../../default/customer/manage_customer.php");}
+         
+
+                
+            }
+           
+
+                    elseif($_SESSION["user"]["user_roleid"]==1){
+
+                      if($result==null)
+                      {header("location:..//.php");}
+                  
+                      
+                          
+                      }
+
+
+
+       else{
+
+        header("location:../.php");}
+    }
+    else{
+
+    }
+    $error_msg="Incorrect Username or Password.Please try again";
+}
+
+?>
+
+
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -18,6 +70,10 @@
 	<!--Custom styles-->
 	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
+
+
+
+
 <body>
 <div class="container">
 	<div class="d-flex justify-content-center h-100">
@@ -31,36 +87,38 @@
 				</div> -->
 			</div>
 			<div class="card-body">
-				<form>
+				<form method="POST">
+
+				<h6 class="text-center" style="color:red;"><?=$error_msg?></h6>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="username">
+						<input type="text" name="user_email" class="form-control" placeholder="username">
 						
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
-						<input type="password" class="form-control" placeholder="password">
+						<input type="password" name="user_password" class="form-control" placeholder="password">
 					</div>
-					<div class="row align-items-center remember">
+					<!-- <div class="row align-items-center remember">
 						<input type="checkbox">Remember Me
-					</div>
+					</div> -->
 					<div class="form-group">
 						<input type="submit" value="Login" class="btn float-right login_btn">
 					</div>
 				</form>
 			</div>
-			<div class="card-footer">
+			<!-- <div class="card-footer">
 				<div class="d-flex justify-content-center links">
 					Don't have an account?<a href="#">Sign Up</a>
 				</div>
 				<div class="d-flex justify-content-center">
 					<a href="#">Forgot your password?</a>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>
