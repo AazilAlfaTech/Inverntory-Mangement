@@ -9,7 +9,10 @@ $(".selectprovince").change(function()
     {
       console.log(data);
       var d=JSON.parse(data);
+      $("#selected_city").html("");
       $("#srep_district").html("");
+      $("#city_table").html("");
+      $("#srep_district").append("<option value=''>Select City</option>");
       $.each(d,function(i,x)
       {
         console.log(i);
@@ -36,9 +39,11 @@ $(".selectprovince").change(function()
                 txt=' <tr>'+
                 '<td id="city_id">'+i_data[i].city_id+'</td>'+
                 '<td id="city_name">'+i_data[i].city_name+'</td>'+
-                '<td><button type="button" class="btn btn-primary btnadd" onclick="add_city('+i_data[i].city_id+',this)"><i class="fa fa-check-square"></i></button>&nbsp;&nbsp; <button type="button" class="btn btn-danger btndel" onclick="remove_city('+i_data[i].city_id+',this)"><i class="fa fa-times-circle"></i></button></tr>';
+                '<td><button type="button" class="btn btn-mini btn-primary btnadd" onclick="add_city('+i_data[i].city_id+',this)"><i class="fa fa-check-square"></i></button>&nbsp;&nbsp; <button type="button" class="btn btn-mini btn-danger btndel" onclick="remove_city('+i_data[i].city_id+',this)"><i class="fa fa-times-circle"></i></button></tr>';
                 $("#city_table").append(txt);
                 $(".btndel").hide();
+
+
 
             })
         });
@@ -47,6 +52,7 @@ $(".selectprovince").change(function()
     // Adding the selected city to the table
     function add_city(salesrep_city_city,n1)
     {
+      
         // console.log(salesrep_city_city);
         $("#selected_city").append("<tr class='xyz"+salesrep_city_city+"'><td><input type='hidden' name='salesrep_city_city[]' value='"+salesrep_city_city+"'>"+salesrep_city_city+"</td></tr>");
         $(n1).parent().find(".btnadd").hide();

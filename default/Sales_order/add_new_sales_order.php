@@ -45,7 +45,7 @@ if(isset($_POST['sodate'])){
     $sales_quotation2->update_currentstatus_salesquote($_POST['soquoteid']);
     $sales_quotationitem2->update_sqitem($_POST['soquoteid']);
     }
-   header("location:../sales_order/manage_sales_order.php");
+   header("location:../sales_order/manage_sales_order.php?success=1");
    //header( "Location: {$_SERVER['REQUEST_URI']}", true, 303 );
    exit();
     }
@@ -401,13 +401,13 @@ include_once "../../files/foot.php";
 
 ?>
 <script>
-     function preventBack() {
-    window.history.forward();
-  }
-  setTimeout("preventBack()", 0);
-  window.onunload = function() {
-    null
-  };
+//      function preventBack() {
+//     window.history.forward();
+//   }
+//   setTimeout("preventBack()", 0);
+//   window.onunload = function() {
+//     null
+//   };
 </script>
 <script type="text/javascript" src="../javascript/sales.js"></script>
 <script type="text/javascript" src="../javascript/sales/sales_order.js"></script>

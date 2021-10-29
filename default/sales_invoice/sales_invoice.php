@@ -8,11 +8,13 @@ class sales_invoice{
     public $salesinvoice_customer;
     public $salesinvoice_ref;
     public $salesinvoice_paymethod;
-    public $salesinvoice_cashmethod;
+    //public $salesinvoice_cashmethod;
     public $salesinvoice_date;
     public $salesinvoice_status;
     PUBLIC $salesinvoice_currentstatus;
-    
+    public $salesinvoice_total;
+    public $salesinvoice_amountpaid;
+    public $salesinvoice_loc;
     
  
 
@@ -29,17 +31,28 @@ function __construct(){
 
 function insert_sales_invoice(){
 
-    $sql="INSERT INTO sales_invoice (salesinvoice_customer,salesinvoice_ref,salesinvoice_paymethod,salesinvoice_cashmethod,salesinvoice_date)
-    VALUES('$this->salesinvoice_customer','$this->salesinvoice_ref','$this->salesinvoice_paymethod','$this->salesinvoice_cashmethod','$this->salesinvoice_date')
+    $sql="INSERT INTO sales_invoice (salesinvoice_customer,salesinvoice_ref,salesinvoice_paymethod,salesinvoice_date,salesinvoice_total,salesinvoice_loc)
+    VALUES('$this->salesinvoice_customer','$this->salesinvoice_ref','$this->salesinvoice_paymethod','$this->salesinvoice_date','$this->salesinvoice_total','$this->salesinvoice_loc')
     ";
-       //echo $sql;
+       echo $sql;
        $this->db->query($sql);
     $so_id=$this->db->insert_id;
+
     return $so_id;
 
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
+
+function update_paidamount($amount,$salesinvoiceid){
+    $sql="UPDATE sales_invoice SET salesinvoice_amountpaid=salesinvoice_amountpaid+$amount WHERE salesinvoice_id=$salesinvoiceid   ";
+    $this->db->query($sql);
+    return true;
+}
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -82,7 +95,7 @@ function delete_sales_invoice($salesinvoice_id){
 
 function get_all_sales_invoice(){
 
-    $sql="SELECT sales_invoice.salesinvoice_id,sales_invoice.salesinvoice_customer,sales_invoice.salesinvoice_ref,sales_invoice.salesinvoice_paymethod,sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_status,sales_invoice.salesinvoice_currentstatus,customer.customer_name FROM sales_invoice JOIN customer ON sales_invoice.salesinvoice_customer=customer.customer_id WHERE sales_invoice.salesinvoice_status='ACTIVE'";
+    $sql="SELECT sales_invoice.salesinvoice_id,sales_invoice.salesinvoice_customer,sales_invoice.salesinvoice_ref,sales_invoice.salesinvoice_total,sales_invoice.salesinvoice_amountpaid,sales_invoice.salesinvoice_paymethod,sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_status,sales_invoice.salesinvoice_currentstatus,customer.customer_name FROM sales_invoice JOIN customer ON sales_invoice.salesinvoice_customer=customer.customer_id WHERE sales_invoice.salesinvoice_status='ACTIVE'";
   
     $result=$this->db->query($sql);
 
@@ -99,9 +112,22 @@ function get_all_sales_invoice(){
          $sales_invoice_item->salesinvoice_customer_name=$row["customer_name"];
         $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
         $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
-        // $sales_invoice_item->salesinvoice_cashmethod=$row["salesinvoice_cashmethod"];
+       
         $sales_invoice_item->salesinvoice_status=$row["salesinvoice_status"];
         $sales_invoice_item->salesinvoice_currentstatus=$row["salesinvoice_currentstatus"];
+        $sales_invoice_item->salesinvoice_total=$row["salesinvoice_total"];
+        $sales_invoice_item->salesinvoice_amountpaid=$row["salesinvoice_amountpaid"];
+        $sales_invoice_item->salesinvoice_balance=round(($row["salesinvoice_total"]-$row["salesinvoice_amountpaid"]),2);
+
+        if($row["salesinvoice_amountpaid"]==0.00){
+            $sales_invoice_item->salesinvoice_paystatus='NOTPAID';
+        }else if($row["salesinvoice_amountpaid"] < $row["salesinvoice_total"]){
+            $sales_invoice_item->salesinvoice_paystatus='PARTIAL';
+        }else if($row["salesinvoice_amountpaid"]== $row["salesinvoice_total"]){
+            $sales_invoice_item->salesinvoice_paystatus='PAID';
+        }else{
+            $sales_invoice_item->salesinvoice_paystatus='ERROR';
+        }
 
         
         

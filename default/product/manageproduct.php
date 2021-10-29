@@ -57,59 +57,70 @@ if(isset($_POST["submit"]))
 }
 
 
-
+$error_msg="";
 if (isset($_POST["productname"]))
 {
-    $product1->product_name=$_POST["productname"];
-    $product1->product_type=$_POST["prodtypeid"];
-    $product1->product_group=$_POST["productgroup"];
-    $product1->product_uom=$_POST["unitid"];
-    $product1->product_desc=$_POST["productdesc"];
-    $product1->product_inventory_val=$_POST["productval"];
-    $product1->product_batch=$_POST["productbatch"];
-
-    $product1->product_code = $product1->get_count($_POST["prodtypeid"],$_POST["productgroup"]);
-
-    // $product1->product_code= $codenumber;
-  
-
-
-
-    //....................................................
-    if(isset($_POST["product_id"]))
-    {
-        $res_edit= $product1->edit_product($_POST['product_id']);
-        $pricelevel1-> insert_pricelevel($_POST['product_id']);
-        $pricelevel1->update_pricelevel(); 
-        
-     
-            //code for insert validation
-            // if($res_edit==true){
-               
-            //     header("location:../product/manageproduct.php?success_edit=1");
-            // }elseif($res_edit==false){
-            //     header("location:../product/manageproduct.php?notsuccess=1");
-            // }
-    }else
-    {
-            $res_insert=$product1->insert_product();   
-            $pricelevel1-> insert_pricelevel( $res_insert);
-         
-            if($_POST["productval"]=='AVCO')
-            {
-                $avco_product1->insert_avco( $res_insert);
-                echo "AVCO DONE";
-            }
-            //code for insert validation
-            // if($res_insert==true){
-                
-              //  header("location:../product/manageproduct.php?success=1");
-            // }elseif($res_insert==false){
-            //     header("location:../product/manageproduct.php?notsuccess=1");
-            // }
+    if(!isset($_POST["level_price"])){
+        $error_msg=" <div class='alert alert-success background-success'>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <i class='icofont icofont-close-line-circled text-white'></i>
+        </button>
+        <strong>Please add pricelevel  </strong> 
+    </div>";;
+    
     }
+    
+    else{
+                $product1->product_name=$_POST["productname"];
+                $product1->product_type=$_POST["prodtypeid"];
+                $product1->product_group=$_POST["productgroup"];
+                $product1->product_uom=$_POST["unitid"];
+                $product1->product_desc=$_POST["productdesc"];
+                $product1->product_inventory_val=$_POST["productval"];
+                $product1->product_batch=$_POST["productbatch"];
+
+                $product1->product_code = $product1->get_count($_POST["prodtypeid"],$_POST["productgroup"]);
+
+                // $product1->product_code= $codenumber;
+            
 
 
+
+                //....................................................
+                if(isset($_POST["product_id"]))
+                {
+                    $res_edit= $product1->edit_product($_POST['product_id']);
+                    $pricelevel1-> insert_pricelevel($_POST['product_id']);
+                    $pricelevel1->update_pricelevel(); 
+                    
+                
+                        //code for insert validation
+                        // if($res_edit==true){
+                        
+                        //     header("location:../product/manageproduct.php?success_edit=1");
+                        // }elseif($res_edit==false){
+                        //     header("location:../product/manageproduct.php?notsuccess=1");
+                        // }
+                }else
+                {
+                        $res_insert=$product1->insert_product();   
+                        $pricelevel1-> insert_pricelevel( $res_insert);
+                    
+                        if($_POST["productval"]=='AVCO')
+                        {
+                            $avco_product1->insert_avco( $res_insert);
+                            echo "AVCO DONE";
+                        }
+                        //code for insert validation
+                        // if($res_insert==true){
+                            
+                        //  header("location:../product/manageproduct.php?success=1");
+                        // }elseif($res_insert==false){
+                        //     header("location:../product/manageproduct.php?notsuccess=1");
+                        // }
+                }
+
+        }
 }
 
 if(isset($_GET["view_product"]))
@@ -218,8 +229,9 @@ include_once "../../files/head.php";
                                         </ul>
                                     </div>
                                 </div>
-
+                                <?= $error_msg?>
                                 <div class="card-block" >
+                                   
 
                                     <form method="POST" action="manageproduct.php" enctype="multipart/form-data">
                                             <?php
@@ -341,19 +353,13 @@ include_once "../../files/head.php";
                                                     <div class="row col-sm-4">
                                                         <div class="col-sm-3"><label for="">Status</label></div>
                                                         <div class="col-sm-9">
-                                                            <div class="radio ">
-                                                                
-                                                                    <input type="radio" id="levelstatus" name="levelstatus[]" value="active"  >
-                                                                    ACTIVE
-                                                               
-                                                            </div>
-                                                            <div class="radio ">
-                                                                
-                                                                    <input type="radio" id="levelstatus" name="levelstatus[]" value="inactive"  >
-                                                                        INACTIVE
-                                                               
-                                                            </div>
-                            
+                                                            <select name=""  class="form-control" id="levelstatus">
+                                                                <option value="">Select Status</option>
+                                                                <option value="ACTIVE">ACTIVE</option>
+                                                                <option value="INACTIVE">INACTIVE</option>
+
+                                                            </select>
+                                                           
 
                                                         </div>
                                                     
@@ -633,28 +639,19 @@ function addlevelrows(){
   //get values
 
   var price=$("#levelprice").val();
-  var status= $("input[name='levelstatus']:checked").val();
+  var status= $("#levelstatus ").val();
 
   console.log(price);
   console.log(status);
 
-  if(status=='ACTIVE'){
-    row="<input type='radio' name='level_status[]'  value='ACTIVE'  checked='checked'>\
-    <i class='helper'></i>ACTIVE<input type='radio' name=''  value='INACTIVE'  >\
-    <i class='helper'></i>INACTIVE";
-  }else{
-    row="<input type='radio' name='level_status []'  value='ACTIVE'  >\
-    <i class='helper'></i>ACTIVE<input type='radio' name=''  value='INACTIVE'  checked='checked'>\
-    <i class='helper'></i>INACTIVE";
-  }
-  
+ 
   //append table rows
   $(".itembody").append("<tr>\
   <td><input type='text' class='level_no input-borderless' name='level_no[]' readonly  value='"+counter+"'></td>\
   <td><input type='text'  readonly name='level_price[]' class='input-borderless input-sm row_data levelprice' id='' value='"+price+"' required></td>\
-  <td><input type='radio' name='level_status[]'  value='ACTIVE' >\
-    <i class='helper'></i>ACTIVE<input type='radio' name='level_status[]'  value='INACTIVE' >\
-    <i class='helper'></i>INACTIVE</td>\
+  <td><select name='level_status[]' class='input-borderless levelstatus' >\
+  <option value='"+status+"'>"+status+"</option>\
+  </select>\
   <td>\
       <span class='btn_delete'><button class='btn btn-mini btn-danger' type='button'>Delete</button></span>\
       <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
@@ -663,9 +660,7 @@ function addlevelrows(){
 </tr>");
 
 }
-// $(document).ready(function(){
-//   $(".btn_delete").hide();
-//   $(".btn_edit").hide();
+  $(".btn_edit").hide();
 
   
 // });
@@ -705,6 +700,9 @@ $(document).on('click', '.btn_edit', function(event)
     //display textbox border
     tbl_row.find('input').removeClass('input-borderless');
        tbl_row.find('input').addClass('input-border');
+
+       var pricestatus=tbl_row.find(".levelstatus").val();
+       productpricestatus(pricestatus);
 
 });
 
@@ -813,7 +811,16 @@ $(".levelpricetext").on("keypress",function(e)
     });
 
 
+    function productpricestatus(statusprice){
+    console.log(statusprice);
+    if(statusprice=='ACTIVE'){
+        $(".levelstatus").append("<option value='INACTIVE'>INACTIVE</option>");
+    }else if(statusprice=='INACTIVE'){
+        $(".levelstatus").append("<option value='ACTIVE'>ACTIVE</option>");
+    }
+    
 
+}
 
 
 

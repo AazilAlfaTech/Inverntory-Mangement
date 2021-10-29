@@ -38,16 +38,15 @@ function insert_sales_invoice_item1($so_id){
         ('".$_POST['Quantity'][$list]."','".$_POST['Orderid'][$list]."','".$_POST['Product'][$list]."','".$_POST['Price'][$list]."','".$_POST['Discount'][$list]."',$so_id)";
       //echo $sql;
        $this->db->query($sql);
-       if($_POST['Status'][$list]=='INACTIVE'){
-        //$orderitem5->update_sales_orderitem($_POST['Orderid'] [$list]); change function accordingly
-       }
+       //update current status of sales order item
+       $orderitem5->update_sales_orderitem($_POST['OrderItemid'][$list],$_POST['Status'][$list]);
+         //update current status of sales invoice
 
-
-      
+      $order5->sales_order_status($_POST['Orderid'][$list]);
   
        $list++;
     }
-    $order5->sales_order_status($_POST['Orderid'][$list]);
+    
     return true;
 
 }

@@ -15,6 +15,15 @@ $(function(){
    
     $('#txtDate').attr('max', maxDate);
 });
+
+$( document ).ready(function() {
+   //hide error msg (error msg for not filling all the text boxes in add product)
+    $(".error_fields").hide();
+    // $(".itemalert").hide();
+    //hide alert msg for not selecting items before submission
+    $( ".alert" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+});
+
 //function to validate quantity
 
 function get_qty(){
@@ -90,10 +99,10 @@ $( document ).ready(function() {
             });
         });
     //validate only numbers....................................................................................
-    $(".productform").on("keyup", ".qty_add, .disc_add", function(event){
+    $(".productform").on("keydown", ".qty_add, .disc_add", function(event){
        
         
-    
+    console.log("keydown");
         row = $(this).closest(".row");
     
     
@@ -133,6 +142,8 @@ $( document ).ready(function() {
 
     
     });
+
+
     $(".product_level").change(function(){
         var product_id=$(".product_level").val();
         //console.log(product_id);

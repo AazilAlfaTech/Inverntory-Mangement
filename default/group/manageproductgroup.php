@@ -49,7 +49,7 @@ if(isset($_POST["groupcode"]))
             //code for edit valaidation
             if($res_edit==true){
                 "EDITING DONE";
-                header("location:../group/manageproductgroup.php?success_edit=1");
+                header("location:../group/manageproductgroup.php?1success_edit=");
             }elseif($res_edit==false){
                 echo "FALSE";
                 header("location:../group/manageproductgroup.php?notsuccess=1");

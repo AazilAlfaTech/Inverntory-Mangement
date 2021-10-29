@@ -156,8 +156,8 @@ function get_sales_orderitem_by_id($id){
 
 function update_sales_orderitem($so_itemid,$status){
 
-    $sql="UPDATE sales_orderitem SET so_item_currentstatus=$status WHERE so_itemid = $so_itemid ";
-    //echo $sql;
+    $sql="UPDATE sales_orderitem SET so_item_currentstatus='$status' WHERE so_itemid = $so_itemid ";
+    echo $sql;
     $this->db->query($sql);
     echo true;
 

@@ -3,7 +3,6 @@
     border: 0;
     border-style: none;
     border-color: transparent;
-    
     outline: none;
     outline-offset: 0;
     box-shadow: none;
@@ -11,7 +10,7 @@
   }
 
   .input-borderless[readonly]{
-    background-color:'#ffffff';
+    background-color:'#ffffff;
   }
 
   .input-border{
@@ -23,26 +22,32 @@
     padding-bottom: 0.5rem;
     padding-left: 0.75rem;
     display: block;
-    /* width: 100%; */
+    width:80%;
 
   }
 
+  .stNEW{
+    background-color: green
+  }
 
-.stNEW{
-  background-color: #04AA6D;
-}
+  .stPENDING{
+    background-color: rgb(164, 78, 235)
+  }
 
-.stCOMPLETE{
-    background-color:#2196F3;
-}
-.labelstatus {
-  color: white;
-  padding: 8px;
-}
-table {
-  table-layout: fixed;
-  word-wrap: break-word;
-}
+  .stCOMPLETED{
+    background-color: brown
+  }
 
+  .stNOTPAID{
+    background-color: rgb(247, 12, 12)
+  }
+  .stPARTIAL{
+    background-color: rgb(44, 42, 165)
+  }
+  .stPAID{
+    background-color: rgb(16, 139, 72)
+  }
 
-
+  .stERROR{
+    background-color: rgb(12, 12, 12)
+  }

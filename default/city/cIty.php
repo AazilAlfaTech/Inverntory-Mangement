@@ -13,7 +13,7 @@ public $city_province;
 public $city_district;
 public $city_status;
 public $city_date;
-
+public $district_name;
 private $db;
 
  //.............................................
@@ -151,7 +151,8 @@ function get_city_by_name($city_name){
 
 function get_city_by_district($city_district)
 {
-    $sql = "SELECT * FROM city WHERE city_district = '$city_district' ";
+    //$sql = "SELECT * FROM city WHERE city_district = '$city_district' ";
+    $sql="SELECT * FROM `city` JOIN district ON city.city_district=district.district_id WHERE city_district = '$city_district'";
     // echo $sql;
     $result = $this->db->query($sql);   
 
@@ -167,6 +168,7 @@ function get_city_by_district($city_district)
         $city_item->city_id=$row["city_id"];
         $city_item->city_code=$row["city_code"];
         $city_item->city_name=$row["city_name"];
+        $city_item->district_name=$row["district_name"];
 
     $city_array[] = $city_item;
 

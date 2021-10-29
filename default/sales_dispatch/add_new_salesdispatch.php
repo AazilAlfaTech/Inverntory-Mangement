@@ -99,11 +99,11 @@ include_once "../../files/head.php";
 
                                 <div class="card-block">
                                         <div class="form-group row">
-                                        <div class="col-sm-4">
+                                            <div class="col-sm-4">
                                                     <label class=" col-form-label">Location</label>
                                                 
                                                     <select class="js-example-basic-single col-sm-12 dispatchloc " name="sdis_loc" >
-                                                    <option value=" ">Select Location</option>
+                                                    <option value="">Select Location</option>
                                                     <?php
                                                         foreach($res_loc as $item)
                                                       
@@ -233,7 +233,7 @@ include_once "../../files/head.php";
 //get the list of invoices
 $("#sinv_customer").change(function() {
 
-    if( $(".dispatchloc").val()==''){
+    if( $(".dispatchloc").val()==""){
         alert("Please select location");
 
     }else{
@@ -296,19 +296,23 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
       remaing_qty=d.grn_qty;
   
      console.log("remaining qty "+remaing_qty);
-    if(remaing_qty == 0 || remaing_qty==null ){
-        console.log("Please type a qty");
-        availableqty='Not available';
+     if(remaing_qty == 0 || remaing_qty==null ){
+        remaing_qty=0;
+        //$(".qtymsg").append("<label class='badge badge-danger'><i class='icofont-delete' ></label>");
+
+        availableqty="<label class='badge badge-danger'><i class='fa fa-times'></i></label>";
     
         
     }else if(remaing_qty <  item_data[o].si_item_qty){
         console.log("Required stock not available");
-        availableqty= item_data[o].si_item_qty+'available'
-       
+        //$(".qtymsg").append("<label class='badge badge-danger'><i class='icofont-delete' ></label>");
+        availableqty= "<label class='badge badge-danger'><i class='fa fa-times'></i></label>";
+        
         
     }else if(remaing_qty >item_data[o].si_item_qty)
         {console.log("Stock availanle");
-         availableqty= item_data[o].si_item_qty+'available'
+            //$(".qtymsg").append("<label class='badge badge-success'><i class='icofont-delete' ></label>");
+availableqty="<label class='badge badge-success'><i class='fa fa-check'></i></label>";
       
     }
      
@@ -322,11 +326,11 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
             <input class='form-control input-sm orderid'   type='hidden' name='Orderid[]' value='"+ item_data[o].si_item_invoiceid+"'>\
             <input class='form-control input-sm orderid'   type='hidden' name='InvoiceItemid[]' value='"+ item_data[o].si_itemid+"'>\
         </td>\
-        <td ><span class='tabledit-span'>"+ item_data[o].si_item_productname+"</span>\
+        <td ><span class='tabledit-span'>"+ item_data[o].si_item_productname+"</span><label class='badge badge-md bg-primary itemqty'>("+remaing_qty+")</label>\
             <input class='form-control input-sm productid '   type='hidden' name='Product[]' value='"+ item_data[o].si_item_productid+"'>\
         </td>\
         <td ><span class='tabledit-span'></span>\
-            <input class='input-borderless input-sm row_data quantity qtycheck'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].si_item_qty +"'><div style='color: red; display: none' class='msg1'>Digits only</div><span class='qtymsg'>"+ availableqty+"</span>\
+        <div style='color: red; display: none' class='msg1'>Digits only</div><input class='input-borderless input-sm row_data quantity qtycheck'   type='text' readonly  name='Quantity[]' value='"+ item_data[o].si_item_qty +"'><span class='qtymsg'>"+availableqty+"</span>\
         </td>\
         <td ><span class='tabledit-span'></span>\
            <select name='Price[]'  class='input-borderless price productprice'>\
@@ -382,6 +386,10 @@ function removelist(orderid,btn2){
         $(btn2).parent().find(".btndel").hide();
         $(btn2).parent().find('.statuscheckbox').attr('checked', false); 
         $(btn2).parent().find(".statuscheckbox").hide();
+        cal_totquantity();
+        cal_totprice();
+        cal_totdiscount();
+        final_total();
        
 }
 //call funtion for the checkbox
@@ -427,7 +435,8 @@ function statuschange(id,checkbox1){
 
 $(".dispatchloc").change(function(){
     loc=$(".dispatchloc").val();
-    console.log(loc);
+    $("#tbody").html("");
+    $(".itembody").html("");
 
 
 });

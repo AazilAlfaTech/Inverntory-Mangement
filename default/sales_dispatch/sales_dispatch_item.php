@@ -49,7 +49,7 @@ function insert_sales_dispatch_item1($sd_id){
          $this->db->query($sql);
         // echo $sql;
 
-         
+     //function to update stock table ,fifo table
         if($_POST['Product'][$list]>0)
         {
             //get the inventory valuation type of product( FIFO/AVCO)
@@ -70,8 +70,9 @@ function insert_sales_dispatch_item1($sd_id){
             }
         }
 
-      
+      //update current status of sales invoice item
        $salesinvoiceitem5->update_salesinvoice_item_currentstatus($_POST['InvoiceItemid'][$list],$_POST['CurrentStatus'][$list]);
+     //update current status of sales invoice
        $salesinvoice5->sales_invoice_status($_POST['Orderid'][$list]);
        $list++;
     }

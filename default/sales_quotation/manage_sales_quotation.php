@@ -73,6 +73,58 @@ include_once "../../files/head.php";
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12">
+                            <!-- //ALERT MESSAGES START................... -->
+                                <?php
+                                if(isset($_GET['success'])) {
+                                    echo"<div class='alert alert-success background-success'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>New sales quotation added successfully</strong> 
+                                </div>";
+                                }
+                                ?>
+                                <?php
+                                if(isset($_GET['success_edit'])) {
+                                    echo"<div class='alert alert-info background-info'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>Sales quotation details updated successfully</strong> 
+                                </div>";
+                                }
+                                ?>
+                                <?php
+                                if(isset($_GET['delete_success'])) {
+                                    echo"<div class='alert alert-danger background-danger'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>Deleted successful</strong> 
+                                </div>";
+                                }
+                                ?>
+                                <?php
+                                if(isset($_GET['delete_g'])) {
+                                    echo"<div class='alert alert-danger background-danger'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>$msg_2</strong> 
+                                </div>";
+                                }
+                                ?>
+                                <?php
+                                if(isset($_GET['notsuccess'])) {
+                                    echo"<div class='alert alert-danger background-danger'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <i class='icofont icofont-close-line-circled text-white'></i>
+                                    </button>
+                                    <strong>The code or the name already exists.Please try again</strong> 
+                                </div>";
+                                }
+                                ?>
+                                <!-- //ALERT MESSAGES END................... -->
                             <!-- Autofill table start -->
                             <div class="card">
                                 <div class="card-header">

@@ -127,8 +127,9 @@ $(document).on('click', '.btn_save', function(event)
     {
         event.preventDefault();
         var tbl_row = $(this).closest('tr');
+        console.log("editable save");
 
-        if(tbl_row.find(".quantity").val() == '' || tbl_row.find(".price").val() == '' || tbl_row.find(".discount").val() == '' ){
+        if(tbl_row.find(".quantity").val() == '' || tbl_row.find(".price").val() == '' ){
             alert("Please fill all the fields");
 
         }else{
@@ -333,6 +334,7 @@ $(document).on('click', '.btn_edit', function(){
     invoiceloc=$(".dispatchloc").val();
    // console.log("location-"+invoiceloc);
     inv_id=row1.find(".productid").val();
+   // console.log( inv_id=row1.find(".itemqty").html());
     //console.log(inv_id);
     //qty_sale=row1.find(".qtycheck ").val();
   //  console.log(qty_sale);
@@ -343,22 +345,7 @@ $(document).on('click', '.btn_edit', function(){
 
       remaing_qty=d.grn_qty;
       
-    // console.log("remaining qty "+remaing_qty);
-    // if(remaing_qty == 0){
-    //     console.log("Please type a qty");
     
-    //     row1.find(".qtymsg").html("Not available")
-    // }else if(remaing_qty < qty_sale){
-    //     console.log("Required stock not available");
-       
-    //     row1.find(".qtymsg").html("Not available")
-    // }else if(remaing_qty > qty_sale)
-    //     {console.log("Stock availanle");
-       
-    //     row1.find(".qtymsg").html("Available")
-    // }
-     
-    //  return remaing_qty;
     });
 
     $("table").on("keyup", ".qtycheck",function()
@@ -369,17 +356,27 @@ $(document).on('click', '.btn_edit', function(){
     var row1=$(this).closest('tr');
     //row1.find(".qtymsg").html().remove();
     qty_sale1=row1.find(".qtycheck ").val();
-    console.log(qty_sale1);
-    if(qty_sale1==""){
+    //console.log(qty_sale1);
+    if(remaing_qty == 0 || remaing_qty==null || qty_sale1==""){
         console.log("Stockempty");
-        // row1.find(".qtymsg").html("qty is 0")
-    }else if(remaing_qty < qty_sale1){
-        console.log("Required stock not available");
-        row1.find(".qtymsg").html("Not available")
-    }else if(remaing_qty > qty_sale1)
-        {console.log("Stock availanle");
-        row1.find(".qtymsg").html(" available")
+        row1.find(".qtymsg").html("");
+        row1.find(".qtymsg").html("<label class='badge badge-danger'><i class='fa fa-times'></i></label>");
+
+       // availableqty="<label class='badge badge-danger'><i class='fa fa-times'></i></label>";
+    }else if(remaing_qty <= parseInt(qty_sale1)){
+        console.log("NO");
+        console.log(qty_sale1)
+        row1.find(".qtymsg").html("");
+        row1.find(".qtymsg").html("<label class='badge badge-danger'><i class='fa fa-times'></i></label>");
+        //availableqty="<label class='badge badge-danger'><i class='fa fa-times'></i></label>";
+    }else if(remaing_qty >= parseInt(qty_sale1))
+        {console.log("YES");
+        console.log(qty_sale1)
+        row1.find(".qtymsg").html("");
+        row1.find(".qtymsg").html("<label class='badge badge-success'><i class='fa fa-check'></i></label>");
+        //availableqty="<label class='badge badge-success'><i class='fa fa-check'></i></label>";
     }
+    
     
  });
 

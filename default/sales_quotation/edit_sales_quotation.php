@@ -26,10 +26,8 @@
         $sales_quot1->salesquot_date=$_POST["salesquotdate"];
         $sales_quot1->edit_sales_quotation($_POST["sq_id"]);
         $sales_quot_item1->insert_sales_quotationitem($_POST["sq_id"]);
-        header("location:../sales_quotation/manage_sales_quotation.php"); 
-        // print_r($a);
-        
         $sales_quot_item1->edit_sq_item();
+        header("location:../sales_quotation/manage_sales_quotation.php?success_edit=1"); 
     }
     include_once "../../files/head.php";
 

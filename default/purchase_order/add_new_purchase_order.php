@@ -105,7 +105,7 @@ include_once "../../files/head.php";
                                 <div class="card-block"  style="display: none;">
                                     <div class="dt-responsive table-responsive">
 
-                                        <table id="autofill" class="table table-striped table-bordered nowrap">
+                                        <table id="autofill" class="table table-striped table-bordered ">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>

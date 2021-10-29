@@ -1,6 +1,14 @@
 
 
-
+<script>
+      function preventBack() {
+    window.history.forward();
+  }
+  setTimeout("preventBack()", 0);
+  window.onunload = function() {
+    null
+  };
+</script>
 
 <!-- Required Jquery -->
 <script type="text/javascript" src="..\..\files\bower_components\jquery\js\jquery.min.js"></script>

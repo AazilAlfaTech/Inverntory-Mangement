@@ -138,8 +138,8 @@ function get_all_sales_order(){
         $sales_order_item->salesorder_customer_name=$row["customer_name"];
         $sales_order_item->salesorder_ref=$row["salesorder_ref"];
         $sales_order_item->salesorder_date=$row["salesorder_date"];
-       $sales_order_item->salesorder_status=$row["salesorder_status"];
-       $sales_order_item->salesorder_currentstatus=$row["salesorder_currentstatus"];
+        $sales_order_item->salesorder_status=$row["salesorder_status"];
+        $sales_order_item->salesorder_currentstatus=$row["salesorder_currentstatus"];
 
         
         
@@ -212,12 +212,12 @@ function get_sales_order_by_customer($x){
 }
 
 function sales_order_status($orderidstatus){
-    $sql1="SELECT * FROM sales_orderitem WHERE so_salesorderid=$orderidstatus AND salesorder_currentstatus='PENDIG'";
+    $sql1="SELECT * FROM sales_orderitem WHERE so_salesorderid=$orderidstatus AND so_item_currentstatus='PENDING'";
     $result=$this->db->query($sql1);
     echo $sql1;
 
 if($result->num_rows==0){
-    $sql2="UPDATE sales_order SET sales_order.salesorder_currentstatus='COMPLETED' WHERE salesorder_id=$orderidstatus";
+    $sql2="UPDATE sales_order SET sales_order.salesorer_cdurrentstatus='COMPLETED' WHERE salesorder_id=$orderidstatus";
     $this->db->query($sql2);
     echo $sql2;
     return true;
@@ -227,7 +227,20 @@ if($result->num_rows==0){
     echo $sql2;
     return true;
 }
+
+
 }
+//====================================================================================================================================
+function activate_salesorder($id2){
+    $sql="UPDATE sales_order SET sales_order.salesorer_cdurrentstatus='COMPLETED' WHERE salesorder_id=$id2";
+    $this->db->query($sql);
+        return true;
+    }
+
+function activate_salesorderitem($id){
+   
+}
+    
 
 
 
