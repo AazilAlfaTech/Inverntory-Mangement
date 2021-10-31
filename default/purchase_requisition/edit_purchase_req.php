@@ -122,23 +122,9 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
 
                                             <div class="col-sm-4">
-                                                <label class=" col-form-label">Select Supplier</label>
-                                                <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier" readonly>
-
-                                                    <option value=" ">Select supplier</option>
-                                                    <?php
-                                                        foreach($sup as $item)
-                                                      
-                                                        if($item->supplier_id ==$purchase1->purchaserequest_supplier )   
-
-			                                        echo "<option value='$item->supplier_id' selected='selected'>$item->supplier_name</option>";
-                                                    else
-                                                    echo"<option value='$item->supplier_id'>$item->supplier_name</option>";
-                                                    ?>
-
-
-                                                </select>
-
+                                            <label class=" col-form-label">Supplier</label>
+                                                <input class="form-control" type="text" name="purchaserequestsupplier" id="purchreq_supplier" value="<?=$purchase1->supplier_name ?>" readonly>
+                                                
                                             </div>
 
                                             <div class="col-sm-4">
