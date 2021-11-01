@@ -162,7 +162,8 @@ include_once "../../files/head.php";
                                                         if($item->purchaseorder_currentstatus=='NEW'|| $item->purchaseorder_currentstatus=='PENDING')
                                                         {
                                                             echo"
-                                                            <td>$item->purchaseorder_currentstatus</td>
+                                                            <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->purchaseorder_currentstatus</label></td>
+
                                                             <td style='white-space: nowrap, width: 1%;'>
                                                             <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
@@ -180,7 +181,9 @@ include_once "../../files/head.php";
                                                         elseif($item->purchaseorder_currentstatus=='COMPLETE')
                                                         {
                                                             echo"
-                                                            <td>$item->purchaseorder_currentstatus</td>
+                                                            
+                                                            <td><label class='badge badge-danger' >$item->purchaseorder_currentstatus</label></td>
+
                                                             <td style='white-space: nowrap, width: 1%;'>
                                                             <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
                                                                 <div class='btn-group btn-group-sm' style='float: none;'>

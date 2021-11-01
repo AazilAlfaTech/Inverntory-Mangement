@@ -46,7 +46,7 @@ class purchase_request_item{
 // ====================================================================================================================
 
 function get_all_product_by_pr_id($purch_req_id){
-    $sql="SELECT purchase_request_item.pr_item_id ,purchase_request_item.pr_item_requestid ,purchase_request_item.pr_item_productid , purchase_request_item.pr_item_qty , purchase_request_item.pr_item_price ,purchase_request_item.pr_item_discount ,product.product_name FROM purchase_request_item INNER JOIN product ON purchase_request_item.pr_item_productid=product.product_id WHERE pr_item_requestid=$purch_req_id AND pr_item_status='ACTIVE'";
+    $sql="SELECT purchase_request_item.pr_item_id ,purchase_request_item.pr_item_requestid ,purchase_request_item.pr_item_productid , purchase_request_item.pr_item_qty , purchase_request_item.pr_item_price ,purchase_request_item.pr_item_discount,purchase_request_item.pr_item_status,purchase_request_item.pr_item_currentstatus ,product.product_name FROM purchase_request_item INNER JOIN product ON purchase_request_item.pr_item_productid=product.product_id WHERE pr_item_requestid=$purch_req_id AND pr_item_status='ACTIVE'";
 
     $result=$this->db->query($sql);
 
@@ -153,7 +153,7 @@ function edit_PR_item(){
 
     function delete_PRitem($PR_id)
     {
-        $sql="UPDATE  purchase_request_item SET pr_item_status='INACTIVE' WHERE pr_item_id=$PR_id ";
+        $sql="UPDATE  purchase_request_item SET pr_item_status='INACTIVE',pr_item_currentstatus='CANCEL' WHERE pr_item_id=$PR_id ";
         $this->db->query($sql);
         //echo $sql; 
         echo true;
