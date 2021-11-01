@@ -14,15 +14,8 @@ if(isset($_POST['save'])){
     $sales_order2->edit_sales_order($_POST['salesorderid']);
     $sales_orderitem2->insert_sales_orderitem($_POST['salesorderid']);
     $sales_orderitem2->edit_sales_orderitem();
-    header("location:../sales_order/manage_sales_order.php");
-    // if($res_edit==true){
- 
-    //     header("location:../purchase_order/manage_purchase_order.php?success_edit=1");
-    // }elseif($res_edit==false){
-        
-    //     header("location:../purchase_order/manage_purchase_order.php?notsuccess=1");
-    // }
-
+    header("location:../sales_order/manage_sales_order.php?success_edit=1");
+  
    
 
 }else{

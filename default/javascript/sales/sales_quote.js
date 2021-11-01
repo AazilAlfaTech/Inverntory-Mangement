@@ -53,7 +53,7 @@ sq_subtotal=parseFloat(sq_price * sq_qty)
             <input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='"+sq_qty+"'> <div style='color: red; display: none' class='msg1'>'Digits only'</div>\
         </td>\
         <td class='table-edit-view'>\
-        <select  id='productprice' class='input-borderless price' name='sq_item_price1[]'>\
+        <select  class='input-borderless price productprice' name='sq_item_price1[]'>\
         <option value='"+sq_price+"'>"+sq_price+"</option>\
         </select>\
             <input class='form-control input-sm subtotal'   type='hidden'  value='"+sq_subtotal+"'>\

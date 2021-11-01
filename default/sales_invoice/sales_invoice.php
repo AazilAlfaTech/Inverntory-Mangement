@@ -8,11 +8,13 @@ class sales_invoice{
     public $salesinvoice_customer;
     public $salesinvoice_ref;
     public $salesinvoice_paymethod;
-    public $salesinvoice_cashmethod;
+    //public $salesinvoice_cashmethod;
     public $salesinvoice_date;
     public $salesinvoice_status;
     PUBLIC $salesinvoice_currentstatus;
-    
+    public $salesinvoice_total;
+    public $salesinvoice_amountpaid;
+    public $salesinvoice_loc;
     
  
 
@@ -29,17 +31,28 @@ function __construct(){
 
 function insert_sales_invoice(){
 
-    $sql="INSERT INTO sales_invoice (salesinvoice_customer,salesinvoice_ref,salesinvoice_paymethod,salesinvoice_cashmethod,salesinvoice_date)
-    VALUES('$this->salesinvoice_customer','$this->salesinvoice_ref','$this->salesinvoice_paymethod','$this->salesinvoice_cashmethod','$this->salesinvoice_date')
+    $sql="INSERT INTO sales_invoice (salesinvoice_customer,salesinvoice_ref,salesinvoice_paymethod,salesinvoice_date,salesinvoice_total,salesinvoice_loc)
+    VALUES('$this->salesinvoice_customer','$this->salesinvoice_ref','$this->salesinvoice_paymethod','$this->salesinvoice_date','$this->salesinvoice_total','$this->salesinvoice_loc')
     ";
-       //echo $sql;
+       echo $sql;
        $this->db->query($sql);
     $so_id=$this->db->insert_id;
+
     return $so_id;
 
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
+
+function update_paidamount($amount,$salesinvoiceid){
+    $sql="UPDATE sales_invoice SET salesinvoice_amountpaid=salesinvoice_amountpaid+$amount WHERE salesinvoice_id=$salesinvoiceid   ";
+    $this->db->query($sql);
+    return true;
+}
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -82,7 +95,7 @@ function delete_sales_invoice($salesinvoice_id){
 
 function get_all_sales_invoice(){
 
-    $sql="SELECT sales_invoice.salesinvoice_id,sales_invoice.salesinvoice_customer,sales_invoice.salesinvoice_ref,sales_invoice.salesinvoice_paymethod,sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_status,sales_invoice.salesinvoice_currentstatus,customer.customer_name FROM sales_invoice JOIN customer ON sales_invoice.salesinvoice_customer=customer.customer_id WHERE sales_invoice.salesinvoice_status='ACTIVE'";
+    $sql="SELECT sales_invoice.salesinvoice_id,sales_invoice.salesinvoice_customer,sales_invoice.salesinvoice_ref,sales_invoice.salesinvoice_total,sales_invoice.salesinvoice_amountpaid,sales_invoice.salesinvoice_paymethod,sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_status,sales_invoice.salesinvoice_currentstatus,customer.customer_name FROM sales_invoice JOIN customer ON sales_invoice.salesinvoice_customer=customer.customer_id WHERE sales_invoice.salesinvoice_status='ACTIVE'";
   
     $result=$this->db->query($sql);
 
@@ -99,9 +112,22 @@ function get_all_sales_invoice(){
          $sales_invoice_item->salesinvoice_customer_name=$row["customer_name"];
         $sales_invoice_item->salesinvoice_ref=$row["salesinvoice_ref"];
         $sales_invoice_item->salesinvoice_paymethod=$row["salesinvoice_paymethod"];
-        // $sales_invoice_item->salesinvoice_cashmethod=$row["salesinvoice_cashmethod"];
+       
         $sales_invoice_item->salesinvoice_status=$row["salesinvoice_status"];
         $sales_invoice_item->salesinvoice_currentstatus=$row["salesinvoice_currentstatus"];
+        $sales_invoice_item->salesinvoice_total=$row["salesinvoice_total"];
+        $sales_invoice_item->salesinvoice_amountpaid=$row["salesinvoice_amountpaid"];
+        $sales_invoice_item->salesinvoice_balance=round(($row["salesinvoice_total"]-$row["salesinvoice_amountpaid"]),2);
+
+        if($row["salesinvoice_amountpaid"]==0.00){
+            $sales_invoice_item->salesinvoice_paystatus='NOTPAID';
+        }else if($row["salesinvoice_amountpaid"] < $row["salesinvoice_total"]){
+            $sales_invoice_item->salesinvoice_paystatus='PARTIAL';
+        }else if($row["salesinvoice_amountpaid"]== $row["salesinvoice_total"]){
+            $sales_invoice_item->salesinvoice_paystatus='PAID';
+        }else{
+            $sales_invoice_item->salesinvoice_paystatus='ERROR';
+        }
 
         
         
@@ -352,7 +378,7 @@ function sales_invoice_report_filter(){
 }
 
 function sales_report(){
-    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
+    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount, location.location_name FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id JOIN location ON sales_invoice.salesinvoice_loc=location.location_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
     $result=$this->db->query($sql);
     //  echo $sql;
      $salesinvoice_arr=array();
@@ -364,7 +390,7 @@ function sales_report(){
          $salesinvoice3->salesinvoice_ref=$row['salesinvoice_ref'];
          $salesinvoice3->product_code=$row['product_code'];
          $salesinvoice3->product_name=$row['product_name'];
-         
+         $salesinvoice3->location_name=$row['location_name'];
          $salesinvoice3->customer_name=$row['customer_name'];
          $salesinvoice3->si_item_qty=$row['si_item_qty'];
          $salesinvoice3->si_item_price=$row['si_item_price'];
@@ -388,7 +414,7 @@ function sales_report_filter(){
    
     $filter_enddt=$_POST['filter_enddt'];
 
-    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
+    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount, location.location_name FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id JOIN location ON sales_invoice.salesinvoice_loc=location.location_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
 
     if($filter_cus!=-1){
         $sql.=" and customer_name='$filter_cus'";
@@ -413,7 +439,7 @@ function sales_report_filter(){
          $salesinvoice3->salesinvoice_ref=$row['salesinvoice_ref'];
          $salesinvoice3->product_code=$row['product_code'];
          $salesinvoice3->product_name=$row['product_name'];
-         
+         $salesinvoice3->location_name=$row['location_name'];
          $salesinvoice3->customer_name=$row['customer_name'];
          $salesinvoice3->si_item_qty=$row['si_item_qty'];
          $salesinvoice3->si_item_price=$row['si_item_price'];

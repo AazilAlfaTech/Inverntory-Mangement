@@ -254,7 +254,7 @@ if(isset($_POST['filter'])){
                                                             
                                                             <td>$item->product_name</td>
                                                             <td>$item->customer_name</td>
-                                                            <td></td>
+                                                            <td>$item->location_name</td>
                                                             <td>$item->si_item_qty</td>
                                                            
                                                             <td>$item->si_item_discount_amount</td>

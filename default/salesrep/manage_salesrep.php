@@ -201,28 +201,34 @@ include_once "../../files/head.php";
                                         </div>
 
 
-                                        <div class="table-responsive" style="width:50%; float:right;">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>City</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="city_table">
-                                            </tbody>   
-                                            </table>
-                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                            <div class="table-responsive" >
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>City</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="city_table">
+                                                </tbody>   
+                                                </table>
+                                            </div>
 
-                                        <!-- Table for selected city -->
+
+                                            </div>
+                                            <div class="col-sm-6">
+                                                   <!-- Table for selected city -->
 
                                         <div class="table-responsive">
-                                            <table class="table">
+                                            <table class="table " style="display: none;">
                                                 <thead>
                                                     <tr>
-                                                        <th>City</th>
-                                                       
+                                                    <th>#</th>
+                                                    
+                                                            
                                                     </tr>
                                                 </thead>
                                                 <tbody id="selected_city">
@@ -230,6 +236,15 @@ include_once "../../files/head.php";
                                             </table>
                                         </div>
                                 
+                                                
+                                            </div>
+
+                                        </div>
+
+
+                                      
+
+                                     
                     
 
                    
