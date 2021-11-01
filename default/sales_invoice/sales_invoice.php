@@ -378,7 +378,7 @@ function sales_invoice_report_filter(){
 }
 
 function sales_report(){
-    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
+    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount, location.location_name FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id JOIN location ON sales_invoice.salesinvoice_loc=location.location_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
     $result=$this->db->query($sql);
     //  echo $sql;
      $salesinvoice_arr=array();
@@ -390,7 +390,7 @@ function sales_report(){
          $salesinvoice3->salesinvoice_ref=$row['salesinvoice_ref'];
          $salesinvoice3->product_code=$row['product_code'];
          $salesinvoice3->product_name=$row['product_name'];
-         
+         $salesinvoice3->location_name=$row['location_name'];
          $salesinvoice3->customer_name=$row['customer_name'];
          $salesinvoice3->si_item_qty=$row['si_item_qty'];
          $salesinvoice3->si_item_price=$row['si_item_price'];
@@ -414,7 +414,7 @@ function sales_report_filter(){
    
     $filter_enddt=$_POST['filter_enddt'];
 
-    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
+    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount, location.location_name FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id JOIN location ON sales_invoice.salesinvoice_loc=location.location_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
 
     if($filter_cus!=-1){
         $sql.=" and customer_name='$filter_cus'";
@@ -439,7 +439,7 @@ function sales_report_filter(){
          $salesinvoice3->salesinvoice_ref=$row['salesinvoice_ref'];
          $salesinvoice3->product_code=$row['product_code'];
          $salesinvoice3->product_name=$row['product_name'];
-         
+         $salesinvoice3->location_name=$row['location_name'];
          $salesinvoice3->customer_name=$row['customer_name'];
          $salesinvoice3->si_item_qty=$row['si_item_qty'];
          $salesinvoice3->si_item_price=$row['si_item_price'];
