@@ -31,6 +31,9 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                         <div>
                             <!-- Invoice card start -->
                             <div class="card">
+                                <div class="card-block">
+                                    <div class="card-header"><h3>SALES ORDER INVOICE</h3></div>
+                                </div>
                                 <div class="row invoice-contact">
                                     <div class="col-md-8">
                                         <div class="invoice-box row">
@@ -53,7 +56,7 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                                     <tr>
                                                         <th>Status :</th>
                                                         <td>
-                                                            <span class="label label-warning">Pending</span>
+                                                            <span class="label label-warning"><?=$sales_order2->salesorder_currentstatus?></span>
                                                         </td>
                                                     </tr>
                                                 
@@ -96,7 +99,7 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                                             <td><input class='input-borderless quantity' readonly type='text' value='$item->so_itemqty'> </td>
                                                             <td><input class='input-borderless price' readonly type='text' value='$item->so_itemprice'></td>
                                                             <td><input class='input-borderless discount ' readonly type='text' value='$item->so_itemdiscount'></td>
-                                     <input class='input-borderless subtotal' readonly type='hidden' value='$item->so_subtotal'>
+                                                            <input class='input-borderless subtotal' readonly type='hidden' value='$item->so_subtotal'>
                                                             <td><input class='input-borderless total' readonly type='text' value='$item->so_finaltotal'></td>
 
                                                         </tr>
@@ -115,16 +118,13 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                                 <tbody>
                                                     <tr>
                                                         <th>Total quantity :</th>
-                                                        <td><span></span><input class='input-borderless autonumber' id="total_quan" readonly type='text' value=''></td>
+                                                        <td><input class='input-borderless autonumber' id="total_quan" readonly type='text' ></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Sub Total :</th>
-                                                        <td><span>Rs.</span><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' data-a-sign="Rs. "></td>
+                                                        <td><input class='input-borderless autonumber' id="total_price" readonly type='text' value='' ></td>
                                                     </tr>
-                                                    <tr>
-                                                        <th>Discount :</th>
-                                                        <td><span></span><input class='input-borderless autonumber' id="total_discount" readonly type='text' value=''></td>
-                                                    </tr>
+                                                   
                                                     <tr class="text-info">
                                                         <td>
                                                             <hr>
@@ -132,7 +132,7 @@ $sales_orderitem_res=$sales_orderitem2->get_all_sales_orderitem($_GET['view']);
                                                         </td>
                                                         <td>
                                                             <hr>
-                                                            <h5 class="text-primary"><span>Rs.</span><input class='input-borderless' id="total_final" readonly type='text' value='$item->so_itemqty'></h5>
+                                                            <h5 class="text-primary"><input class='input-borderless' id="total_final" readonly type='text' value=''></h5>
                                                         </td>
                                                     </tr>
                                                 </tbody>

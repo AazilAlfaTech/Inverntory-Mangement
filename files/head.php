@@ -446,7 +446,7 @@ if(!isset($_SESSION["user"])){
                                 <ul class="pcoded-submenu">
                                     <li class="">
                                         <a href="../sales_quotation/manage_sales_quotation.php" target="">
-                                            <span class="pcoded-mtext">Sales Quatation</span>
+                                            <span class="pcoded-mtext">Sales Quotation</span>
                                         </a>
                                     </li>
                                     <li class=" ">

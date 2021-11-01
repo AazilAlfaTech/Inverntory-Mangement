@@ -2,7 +2,7 @@
     include_once "../customer/customer.php";
     $cust1=new customer();
     $res_cust1=$cust1->get_all_customer();
-    // print_r($res);
+   
 
     include_once "../product/product.php";
     $product1=new product();
@@ -14,31 +14,33 @@
     include_once "sales_quatation_item.php";
     $sales_quot_item1=new sales_quotationitem();
 
- 
+    $error_msg="";
     if(isset($_POST["salesquotcustomer"]))
     
     {
+        if(!isset($_POST['sq_item_productid']))
+        {
+                $error_msg=" <div class='alert alert-success background-success'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <i class='icofont icofont-close-line-circled text-white'></i>
+                </button>
+                <strong>No items are selected  </strong> 
+                </div>";
+         
+        }else
+        {
+                $sales_quot1->salesquot_customer=$_POST["salesquotcustomer"];
+                $sales_quot1->salesquot_date=$_POST["salesquotdate"];
+                $sales_quot1->salesquot_ref=$sales_quot1->salesquot_code($_POST["salesquotdate"]);
+
+                $pr_id=$sales_quot1->insert_sales_quotation();
+                $sales_quot_item1->insert_sales_quotationitem($pr_id);
+                
         
-        $sales_quot1->salesquot_customer=$_POST["salesquotcustomer"];
-        $sales_quot1->salesquot_date=$_POST["salesquotdate"];
-        $sales_quot1->salesquot_ref=$sales_quot1->salesquot_code($_POST["salesquotdate"]);
-        if(!isset($_POST['sq_item_productid'])){
-          
-            
-             echo"<script>alert('No items selected!'); </script>";
 
-        }else{
-
-        
-        $sales_quot1->salesquot_customer=$_POST["salesquotcustomer"];
-        $sales_quot1->salesquot_date=$_POST["salesquotdate"];
-        $sales_quot1->salesquot_ref=$sales_quot1->salesquot_code($_POST["salesquotdate"]);
-
-       $pr_id=$sales_quot1->insert_sales_quotation();
-       $sales_quot_item1->insert_sales_quotationitem($pr_id);
-      // echo "<script type='text/javascript'>alert('Successful - Record Updated!'); window.location.href = '../sales_quotation/manage_sales_quotation.php';</script>";
-
-       header("location:../sales_quotation/manage_sales_quotation.php");
+                header("location:../sales_quotation/manage_sales_quotation.php?success=1");
+                exit();
+                
         }
     }
     
@@ -115,7 +117,11 @@
                                                     <?php
                                                         foreach($res_cust1 as $item)
                                                         
-                                                        echo"<option value='$item->customer_id'>$item->customer_name</option>";
+                                                        if($item->customer_id==$_POST['salesquotcustomer']){
+                                                            echo "<option value='$item->customer_id' selected='selected'>$item->customer_name</option>";}
+                                                        
+                                                            else{
+                                                            echo"<option value='$item->customer_id'>$item->customer_name</option>";}
                                                     ?>
                                                 </select>
 
@@ -186,11 +192,11 @@
                                         <br>
                                         <br>
 
-                                        <div class="itemalert">
-                                            <div class="alert alert-success background-success">
-                                                No items are selected!
-                                            </div>
-                                        </div>
+                                        <?php
+                                           
+                                           echo   $error_msg;
+                                             
+                                        ?>
 
 
                                         <div class="table-responsive">

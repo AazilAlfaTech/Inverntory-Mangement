@@ -3,11 +3,13 @@ function edit_purchorder(SQ_id)
 {
     window.location.href="add_new_sales_order.php?view="+SQ_id;
 }
+
+
 $( document ).ready(function() {
-    console.log("sales quotation");
-    $(".error_fields").hide();
-$(".itemalert").hide();
-$( ".alert" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
+   
+    // $(".error_fields").hide();
+    // $(".itemalert").hide();
+    // $( ".alert" ).fadeIn( 300 ).delay( 1500 ).fadeOut( 400 );
 });
 
 
