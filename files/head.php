@@ -645,24 +645,46 @@ if(!isset($_SESSION["user"])){
                                         </a>
                                     </li>
 
-                                 
-                                  
 
-                                </ul>
-                            </li>
-                          
+                           
                                   
 
                                 </ul>
 
                             </li>
+
+
+
+
+
+                            
                         </ul>
 
 
-
+                    
                       
                    
-                       
+                            <li class="pcoded-hasmenu">
+                                <a href="javascript:void(0)">
+                                    <span class="pcoded-micon"><i class="fa fa-user"></i></span>
+                                    <span class="pcoded-mtext">Manage User</span>
+                               
+                                </a>
+                                <ul class="pcoded-submenu">
+                                    <li class="">
+                                        <a href="../Logins/register.php " >
+                                            <span class="pcoded-mtext">Add New User</span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="../Logins/add_user_role.php"  >
+                                            <span class="pcoded-mtext">Add New User Role </span>
+                                        </a>
+                                    </li>
+                                  
+
+                                </ul>
+                            </li>
                       
                             
                        
