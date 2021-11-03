@@ -218,7 +218,7 @@ if(isset($_POST['filter'])){
 
                                     <div class="card-block">
                                         <div class="dt-responsive table-responsive">
-                                            <table id="basic-btn" class="table table-striped table-bordered nowrap">
+                                            <table id="table34" class="table table-striped table-bordered nowrap">
                                                 <thead>
                                                     <tr>
                                                         <th>DATE</th>
@@ -234,6 +234,7 @@ if(isset($_POST['filter'])){
                                                         <th>Cost Price</th>
                                                         <th>Disc %</th>
                                                         <th>Discount</th>
+                                                        
                                                         <th>Total</th>
                                                     </tr>
                                                 </thead>
@@ -252,10 +253,11 @@ if(isset($_POST['filter'])){
                                                             <td>$item->supplier_name1</td>   
                                                         
                                                             <td>$item->po_item_qty</td>
-                                                            <td>$item->po_item_price</td>
+                                                            <td class='text-right'>$item->po_item_price</td>
                                                             <td>$item->po_item_discount</td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td class='text-right'>". number_format((float)$item->po_item_discounttotal, 2, '.', '')."</td>
+                                                           
+                                                            <td class='text-right'>". number_format((float)$item->po_item_grandtotal, 2, '.', '')."</td>
                                                             </tr>
                                                             ";
                                                         }
@@ -265,12 +267,11 @@ if(isset($_POST['filter'])){
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>Name</th>
-                                                        <th>Position</th>
-                                                        <th>Office</th>
-                                                        <th>Age</th>
-                                                        <th>Start date</th>
-                                                        <th>Salary</th>
+                                                        <th colspan="7">Totals:</th>
+                                                        <th ></th>
+                                                        <th  colspan="3"></th>
+                                                        <th class='text-right'></th>
+                                                        
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -288,3 +289,41 @@ if(isset($_POST['filter'])){
                             ?>
 
                             <!-- ------------------------------------------------------------------------------------------------- -->
+
+
+                            <script>
+                                $(document).ready(function () {
+						$('#table34').DataTable({
+							"searching": true,
+                            "lengthChange": true,
+                     
+                            "iDisplayLength": 10,
+                                                    //"pageLength": 40,
+							"scrollX": true,
+							"paging": true,
+							"info": true,
+                            dom: 'Bfrtip',
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+							drawCallback: () => {
+								const table = $('#table34').DataTable();
+								const tableData = table.rows({
+										search: 'applied'
+									}).data().toArray();
+								const totals = tableData.reduce((total, rowData) => {
+										total[0] += parseFloat(rowData[7]);
+										total[1] += parseFloat(rowData[11]);
+                                    //    total[2] += parseFloat(rowData[9]);
+                                    //    total[3] += parseFloat(rowData[10]);
+                                       // total[4] += parseFloat(rowData[10]);
+                                       
+										return total;
+									}, [0,0]);
+								$(table.column(7).footer()).text(totals[0]);
+								$(table.column(11).footer()).text(totals[1]);
+                                //$(table.column(9).footer()).text(totals[2]);
+                               // $(table.column(10).footer()).text(totals[3]);
+                                 //$(table.column(11).footer()).text(totals[4]);
+							}
+						})
+					});		
+                            </script>

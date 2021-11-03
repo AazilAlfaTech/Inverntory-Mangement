@@ -181,10 +181,8 @@ function get_sales_dispatch_by_id($salesdispatch_id){
 //============================================================================================================================================
 
 function sales_dispatch_report(){
-    //with customer
-    //$sql="SELECT sales_dispatch.salesdispatch_date,sales_dispatch.salesdispatch_ref,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_dispatch_item.sd_item_qty FROM customer JOIN sales_dispatch ON customer.customer_id=sales_dispatch.salesdispatch_customer JOIN sales_dispatch_item ON sales_dispatch.salesdispatch_id=sales_dispatch_item.sd_item_saledispatch_id JOIN sales_invoice ON sales_dispatch_item.sd_item_invoiceid=sales_invoice.salesinvoice_id JOIN product ON sales_dispatch_item.sd_item_productid=product.product_id WHERE sales_dispatch_item.sd_item_status='ACTIVE'";
-    //without customer
-    $sql="SELECT sales_dispatch.salesdispatch_date,sales_dispatch.salesdispatch_ref,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, sales_dispatch_item.sd_item_qty FROM sales_dispatch JOIN sales_dispatch_item ON sales_dispatch.salesdispatch_id=sales_dispatch_item.sd_item_saledispatch_id JOIN sales_invoice ON sales_dispatch_item.sd_item_invoiceid=sales_invoice.salesinvoice_id JOIN product ON sales_dispatch_item.sd_item_productid=product.product_id WHERE sales_dispatch_item.sd_item_status='ACTIVE'";
+   
+    $sql="SELECT sales_dispatch.salesdispatch_date,sales_dispatch.salesdispatch_ref,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, sales_dispatch_item.sd_item_qty,location.location_name FROM sales_dispatch JOIN sales_dispatch_item ON sales_dispatch.salesdispatch_id=sales_dispatch_item.sd_item_saledispatch_id JOIN sales_invoice ON sales_dispatch_item.sd_item_invoiceid=sales_invoice.salesinvoice_id JOIN product ON sales_dispatch_item.sd_item_productid=product.product_id JOIN location ON sales_dispatch.salesdispatch_loc=location.location_id WHERE sales_dispatch_item.sd_item_status='ACTIVE'";
     $result=$this->db->query($sql);
     $array_dispatch=array();
 
@@ -197,7 +195,7 @@ function sales_dispatch_report(){
         $salesdispatch_item->product_code=$row['product_code'];
         $salesdispatch_item->product_name=$row['product_name'];
         $salesdispatch_item->sd_item_qty=$row['sd_item_qty'];
-        // $salesdispatch_item->=$row[''];
+        $salesdispatch_item->location_name=$row['location_name'];
         // $salesdispatch_item->=$row[''];
         // $salesdispatch_item->=$row[''];
 
@@ -211,11 +209,15 @@ function sales_dispatch_report_filter(){
     $filter_product=$_POST['filter_product'];
     $filter_startdt=$_POST['filter_startdt'];
     $filter_enddt=$_POST['filter_enddt'];
+    $filter_location=$_POST['filter_location'];
     
-    $sql="SELECT sales_dispatch.salesdispatch_date,sales_dispatch.salesdispatch_ref,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, sales_dispatch_item.sd_item_qty FROM sales_dispatch JOIN sales_dispatch_item ON sales_dispatch.salesdispatch_id=sales_dispatch_item.sd_item_saledispatch_id JOIN sales_invoice ON sales_dispatch_item.sd_item_invoiceid=sales_invoice.salesinvoice_id JOIN product ON sales_dispatch_item.sd_item_productid=product.product_id WHERE sales_dispatch_item.sd_item_status='ACTIVE'";
+    $sql="SELECT sales_dispatch.salesdispatch_date,sales_dispatch.salesdispatch_ref,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, sales_dispatch_item.sd_item_qty,location.location_name FROM sales_dispatch JOIN sales_dispatch_item ON sales_dispatch.salesdispatch_id=sales_dispatch_item.sd_item_saledispatch_id JOIN sales_invoice ON sales_dispatch_item.sd_item_invoiceid=sales_invoice.salesinvoice_id JOIN product ON sales_dispatch_item.sd_item_productid=product.product_id JOIN location ON sales_dispatch.salesdispatch_loc=location.location_id WHERE sales_dispatch_item.sd_item_status='ACTIVE'";
     
     if($filter_product!=-1){
         $sql.=" and product_name='$filter_product'";
+    }
+    if($filter_location!=-1){
+        $sql.=" and location_name='$filter_location'";
     }
     if($filter_startdt!='' && $filter_enddt!=''){
         $sql.="and salesdispatch_date BETWEEN  '".$_POST['filter_startdt']."' AND '".$_POST['filter_enddt']."' "; 
@@ -234,6 +236,7 @@ function sales_dispatch_report_filter(){
         $salesdispatch_item->product_code=$row['product_code'];
         $salesdispatch_item->product_name=$row['product_name'];
         $salesdispatch_item->sd_item_qty=$row['sd_item_qty'];
+        $salesdispatch_item->location_name=$row['location_name'];
        
         $array_dispatch[]=$salesdispatch_item;
     }
