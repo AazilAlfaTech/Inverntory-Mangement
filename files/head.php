@@ -6,6 +6,17 @@ if(!isset($_SESSION["user"])){
   header("location:../Logins/login1.php");
   exit;
 }
+//  function __construct()
+// {
+//     parent::__construct();
+// }
+
+// function check ($module, $id) {
+//     return in_array($id,  $_SESSION["user"]["permission"][$module]);
+//   }
+
+  //print_r($_SESSION["user"]["permission"][$module]);
+  //exit();
 
 ?>
 

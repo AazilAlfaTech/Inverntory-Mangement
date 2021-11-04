@@ -29,7 +29,7 @@ if(isset($_POST['user_email'])){
                     elseif($_SESSION["user"]["user_roleid"]==1){
 
                       if($result==null)
-                      {header("location:..//.php");}
+                      {header("location:../../default/customer/manage_customer.php");}
                   
                       
                           
