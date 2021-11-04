@@ -200,6 +200,11 @@ function get_all_purchaseorder_for_report(){
         $puchasorder1->group_name=$row['group_name'];
         $puchasorder1->ptype_name=$row['ptype_name'];
 
+        $puchasorder1->po_item_discounttotal=round(($row['po_item_qty']*$row['po_item_price']*$row['po_item_discount']/100),2);
+        $puchasorder1->po_item_grandtotal=round(($row['po_item_qty']*$row['po_item_price']-($row['po_item_qty']*$row['po_item_price']*$row['po_item_discount']/100)),2);
+        // $puchasorder1->po_item_subtottotal=round(($row['po_item_qty']*$row['po_item_price']),2);
+
+
         $array_purchaseorder[]=$puchasorder1;
     }
     return $array_purchaseorder;
@@ -273,7 +278,9 @@ function filter_purchaseorder(){
         $puchasorder1->po_item_discount=$row['po_item_discount'];
         $puchasorder1->group_name=$row['group_name'];
         $puchasorder1->ptype_name=$row['ptype_name'];
-        // $puchasorder1->po_finalprice=round(($row['sq_item_qty']*$row['sq_item_price'])-($row['sq_item_qty']*$row['sq_item_price']*$row['sq_item_discount']/100),2);
+        $puchasorder1->po_item_discounttotal=round(($row['po_item_qty']*$row['po_item_price']*$row['po_item_discount']/100),2);
+        $puchasorder1->po_item_grandtotal=round(($row['po_item_qty']*$row['po_item_price']-($row['po_item_qty']*$row['po_item_price']*$row['po_item_discount']/100)),2);
+ 
 
         $t = clone     $puchasorder1;
         $array_purchaseorder[]=$t;

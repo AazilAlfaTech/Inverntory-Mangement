@@ -6,6 +6,17 @@ if(!isset($_SESSION["user"])){
   header("location:../Logins/login1.php");
   exit;
 }
+//  function __construct()
+// {
+//     parent::__construct();
+// }
+
+// function check ($module, $id) {
+//     return in_array($id,  $_SESSION["user"]["permission"][$module]);
+//   }
+
+  //print_r($_SESSION["user"]["permission"][$module]);
+  //exit();
 
 ?>
 
@@ -597,8 +608,13 @@ if(!isset($_SESSION["user"])){
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
+                                        <a href="../reports/sales_report.php " >
+                                            <span class="pcoded-mtext">  Sales Report </span>
+                                        </a>
+                                    </li>
+                                    <li class="">
                                         <a href="../reports/sales_invoice_report.php " >
-                                            <span class="pcoded-mtext">Sales Report </span>
+                                            <span class="pcoded-mtext"> Detailed Sales Report </span>
                                         </a>
                                     </li>
                                     <li class=" ">

@@ -309,7 +309,7 @@ function grn_report()
 
     
      WHERE grn_status='ACTIVE'";
-    // echo $SQL;
+    //echo $SQL;
     $result=$this->db->query($SQL);
     $grn_array=array();
 

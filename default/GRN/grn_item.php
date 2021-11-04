@@ -215,6 +215,10 @@
             }
 
 
+            // SQL FOR OVERALL PURCHASE STOCK 
+            // SELECT grn_item_productid,product.product_name ,SUM(grn_item_qty),SUM(grn_item.grn_item_remain_qty) FROM grn_item JOIN product ON grn_item.grn_item_productid=product.product_id GROUP BY grn_item_productid
+
+
         }
 
 ?>
