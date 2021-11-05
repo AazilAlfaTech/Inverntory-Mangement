@@ -236,9 +236,10 @@ if(isset($_POST['filter'])){
                                                         <th>Location</th>
                                                        
                                                         <th>Quantity</th>
+                                                        <th>Sales Price</th>
                                                         <th>Dicount%</th>
                                                         <th>Discount</th>
-                                                        <th>Sales Price</th>
+                                                        
                                                         <th>Total</th>
                                                       
                                                     </tr>
@@ -256,9 +257,9 @@ if(isset($_POST['filter'])){
                                                             <td>$item->customer_name</td>
                                                             <td>$item->location_name</td>
                                                             <td>$item->si_item_qty</td>
-                                                           
-                                                            <td>$item->si_item_discount_amount</td>
                                                             <td>$item->si_item_price</td>
+                                                            <td>$item->si_item_discount_amount</td>
+                                                           
                                                             <td>$item->si_item_total</td>
                                                             
                                                             </tr>
@@ -331,7 +332,6 @@ $(document).ready(function () {
 							}
 						})
 					});				
-                            </script>
+            </script>
 
 
-?>

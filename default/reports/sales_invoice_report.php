@@ -179,12 +179,12 @@ if(isset($_POST['filter'])){
                                                 <div class="col-sm-3">
                                                     <label class=" col-form-label">Location</label>
                                                 
-                                                    <select class="js-example-basic-single col-sm-12 " name="" id="">
+                                                    <select class="js-example-basic-single col-sm-12 " name="filter_location" id="">
                                                     <option value="-1">Select Location</option>
                                                     <?php
                                                         foreach($res_loc as $item)
                                                       
-                                                        echo"<option value='$item->location_id '>$item->location_name</option>";
+                                                        echo"<option value='$item->location_name '>$item->location_name</option>";
                                                    ?>
 
 
@@ -233,10 +233,12 @@ if(isset($_POST['filter'])){
                                                         <th>Type</th>
                                                         <th>Product Name</th>
                                                         <th>Customer</th>
+                                                        <th>Location</th>
                                                         <th>Quantity</th>
+                                                        <th>Sales Price</th>
                                                         <th>Dicount%</th>
                                                         <th>Discount</th>
-                                                        <th>Sales Price</th>
+                                                        
                                                         <th>Total</th>
                                                       
                                                     </tr>
@@ -250,16 +252,16 @@ if(isset($_POST['filter'])){
                                                             <td>$item->salesinvoice_ref</td>
                                                             <td>$item->product_code</td>
                                                             <td>$item->group_name</td>
-                                                            
                                                             <td>$item->ptype_name</td>
                                                             <td>$item->product_name</td>
                                                             <td>$item->customer_name</td>
-
+                                                            <td>$item->location_name</td>
                                                             <td>$item->si_item_qty</td>
-                                                            <td>$item->si_item_discount</td>
-                                                            <td>$item->si_item_discount_amount</td>
-                                                            <td>$item->si_item_price</td>
-                                                            <td>$item->si_item_total</td>
+                                                            <td class='text-right'>$item->si_item_price</td>
+                                                            <td >$item->si_item_discount</td>
+                                                            <td class='text-right'>". number_format((float)$item->si_item_discount_amount, 2, '.', '')."</td>
+                                                            
+                                                            <td class='text-right'>". number_format((float)$item->si_item_total, 2, '.', '')."</td>
                                                             
                                                             </tr>
                                                             ";
@@ -271,12 +273,12 @@ if(isset($_POST['filter'])){
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th colspan="7">Totals:</th>
+                                                        <th colspan="8">Totals:</th>
+                                                        <th></th>
+                                                        <th colspan="2"></th>
                                                         <th></th>
                                                         <th></th>
-                                                        <th></th>
-                                                        <th></th>
-                                                        <th></th>
+                                                        
                                                 </tr>
                                                 </tfoot>
                                             </table>
@@ -315,19 +317,19 @@ $(document).ready(function () {
 										search: 'applied'
 									}).data().toArray();
 								const totals = tableData.reduce((total, rowData) => {
-										total[0] += parseFloat(rowData[7]);
-									//	total[1] += parseFloat(rowData[8]);
-                                        total[2] += parseFloat(rowData[9]);
-                                    //    total[3] += parseFloat(rowData[10]);
-                                        total[4] += parseFloat(rowData[10]);
+										total[0] += parseFloat(rowData[8]);
+									
+                                        total[1] += parseFloat(rowData[11]);
+                                  
+                                        total[2] += parseFloat(rowData[12]);
                                        
 										return total;
 									}, [0, 0,0]);
-								$(table.column(7).footer()).text(totals[0]);
-								//$(table.column(8).footer()).text(totals[1]);
-                                $(table.column(9).footer()).text(totals[2]);
-                               // $(table.column(10).footer()).text(totals[3]);
-                                 $(table.column(11).footer()).text(totals[4]);
+								$(table.column(8).footer()).text(totals[0]);
+								
+                                $(table.column(11).footer()).text(totals[1]);
+                              
+                                 $(table.column(12).footer()).text(totals[2]);
 							}
 						})
 					});				

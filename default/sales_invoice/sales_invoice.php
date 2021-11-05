@@ -279,10 +279,11 @@ if($result->num_rows==0){
 
 function sales_invoice_report(){
 
-    //$sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
+   
     
-    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name,product_group.group_name, product_type.ptype_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id JOIN product_group ON product.product_group=product_group.group_id JOIN product_type
-     ON product.product_type=product_type.ptype_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
+    // $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name,product_group.group_name, product_type.ptype_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id JOIN product_group ON product.product_group=product_group.group_id JOIN product_type
+    //  ON product.product_type=product_type.ptype_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
+    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name,product_group.group_name, product_type.ptype_name,location.location_name,customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id JOIN product_group ON product.product_group=product_group.group_id JOIN product_type ON product.product_type=product_type.ptype_id JOIN location ON sales_invoice.salesinvoice_loc=location.location_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
 
 
     $result=$this->db->query($sql);
@@ -299,10 +300,11 @@ function sales_invoice_report(){
         $salesinvoice3->group_name=$row['group_name'];
         $salesinvoice3->ptype_name=$row['ptype_name'];
         $salesinvoice3->customer_name=$row['customer_name'];
+        $salesinvoice3->location_name=$row['location_name'];
         $salesinvoice3->si_item_qty=$row['si_item_qty'];
         $salesinvoice3->si_item_price=$row['si_item_price'];
         $salesinvoice3->si_item_discount=$row['si_item_discount'];
-        $salesinvoice3->si_item_discount_amount=round(($row['si_item_qty']*$row['si_item_price']*$row['si_item_discount']),2);
+        $salesinvoice3->si_item_discount_amount=round(($row['si_item_qty']*$row['si_item_price']*$row['si_item_discount']/100),2);
         $salesinvoice3->si_item_total=round(($row['si_item_price']*$row['si_item_qty'])- $salesinvoice3->si_item_discount_amount,2);
        // $salesinvoice3->si_item_total=$row[''];
 
@@ -319,13 +321,13 @@ function sales_invoice_report_filter(){
     $filter_product=$_POST['filter_product'];
     $filter_startdt=$_POST['filter_startdt'];
     $filter_group=$_POST['filter_group'];
+    $filter_location=$_POST['filter_location'];
     $filter_type=$_POST['filter_type'];
     $filter_enddt=$_POST['filter_enddt'];
 
 
 
-    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name,product_group.group_name, product_type.ptype_name, customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id JOIN product_group ON product.product_group=product_group.group_id JOIN product_type
-     ON product.product_type=product_type.ptype_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
+    $sql="SELECT sales_invoice.salesinvoice_date,sales_invoice.salesinvoice_ref,product.product_code,product.product_name,product_group.group_name, product_type.ptype_name,location.location_name,customer.customer_name,sales_invoice_item.si_item_qty,sales_invoice_item.si_item_price,sales_invoice_item.si_item_discount FROM customer JOIN sales_invoice ON customer.customer_id=sales_invoice.salesinvoice_customer JOIN sales_invoice_item ON sales_invoice.salesinvoice_id=sales_invoice_item.si_item_invoiceid JOIN product ON sales_invoice_item.si_item_productid=product.product_id JOIN product_group ON product.product_group=product_group.group_id JOIN product_type ON product.product_type=product_type.ptype_id JOIN location ON sales_invoice.salesinvoice_loc=location.location_id WHERE sales_invoice_item.si_item_status='ACTIVE'";
 
 
     if($filter_cus!=-1){
@@ -340,13 +342,16 @@ function sales_invoice_report_filter(){
     if($filter_type!=-1){
         $sql.=" and ptype_name='$filter_type'";
     }
+    if($filter_location!=-1){
+        $sql.=" and location_name='$filter_location'";
+    }
     if($filter_startdt!='' && $filter_enddt!=''){
         $sql.="and salesinvoice_date BETWEEN  '".$_POST['filter_startdt']."' AND '".$_POST['filter_enddt']."' "; 
       
     }
 
     $result=$this->db->query($sql);
-   echo $sql;
+   //echo $sql;
     $salesinvoice_arr=array();
 
     while($row=$result->fetch_array()){
@@ -359,12 +364,14 @@ function sales_invoice_report_filter(){
         $salesinvoice3->group_name=$row['group_name'];
         $salesinvoice3->ptype_name=$row['ptype_name'];
         $salesinvoice3->customer_name=$row['customer_name'];
+        $salesinvoice3->location_name=$row['location_name'];
+
         $salesinvoice3->si_item_qty=$row['si_item_qty'];
         $salesinvoice3->si_item_price=$row['si_item_price'];
         $salesinvoice3->si_item_discount=$row['si_item_discount'];
-        $salesinvoice3->si_item_discount_amount=round(($row['si_item_qty']*$row['si_item_price']*$row['si_item_discount']),2);
-        $salesinvoice3->si_item_total=round(($row['si_item_price']*$row['si_item_qty'])- ($salesinvoice3->si_item_discount_amount),2);
-       // $salesinvoice3->si_item_total=$row[''];
+        $salesinvoice3->si_item_discount_amount=round(($row['si_item_qty']*$row['si_item_price']*$row['si_item_discount']/100),2);
+        $salesinvoice3->si_item_total=round(($row['si_item_price']*$row['si_item_qty'])- $salesinvoice3->si_item_discount_amount,2);
+      
 
        $salesinvoice_arr[]= $salesinvoice3;
 
@@ -411,6 +418,7 @@ function sales_report_filter(){
     $filter_cus=$_POST['filter_cus'];
     $filter_product=$_POST['filter_product'];
     $filter_startdt=$_POST['filter_startdt'];
+    $filter_location=$_POST['filter_location'];
    
     $filter_enddt=$_POST['filter_enddt'];
 
@@ -423,7 +431,9 @@ function sales_report_filter(){
     if($filter_product!=-1){
         $sql.=" and product_name='$filter_product'";
     }
-   
+    if($filter_location!=-1){
+        $sql.=" and location_name='$filter_location'";
+    }
     if($filter_startdt!='' && $filter_enddt!=''){
         $sql.="and salesinvoice_date BETWEEN  '".$_POST['filter_startdt']."' AND '".$_POST['filter_enddt']."' "; 
       

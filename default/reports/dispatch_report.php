@@ -33,7 +33,7 @@ $salesdispatch5=new sales_dispatch();
 $res_dispatch=$salesdispatch5->sales_dispatch_report();
 
 if(isset($_POST['filter'])){
-    $res_dispatch=$salesdispatch5->sales_dispatch_report_filter ($_POST);
+    $res_dispatch=$salesdispatch5->sales_dispatch_report_filter($_POST);
 }
 
 
@@ -111,22 +111,22 @@ include_once "../../files/head.php";
 
 
                                             <div class="form-group row">
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <label class=" col-form-label">From</label>
 
                                                     <input type="date" class="form-control" name="filter_startdt" pattern="" id="gr_code" placeholder="" >
                                                     
-                                                    </div>
+                                                   
                                                 </div>
 
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <label class=" col-form-label">To</label>
                                                     <input type="date" name="filter_enddt" class="form-control" id="gr_name" >
                                                    
-                                                    </div>
-
                                                 </div>
-                                                <div class="col-sm-4">
+
+                                                
+                                                <div class="col-sm-3">
                                                     <label class=" col-form-label">Product </label>
                                                   
                                                 
@@ -137,6 +137,20 @@ include_once "../../files/head.php";
                                                       
                                                         echo"<option value='$item->product_name'>$item->product_name</option>";
                                                    ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                <label class=" col-form-label">Location</label>
+                                                
+                                                <select class="js-example-basic-single col-sm-12 " name="filter_location" id="">
+                                                <option value="-1">Select Location</option>
+                                                <?php
+                                                    foreach($res_loc as $item)
+                                                  
+                                                    echo"<option value='$item->location_name '>$item->location_name</option>";
+                                               ?>
+
+
                                                 </select>
                                                 </div>
 
@@ -158,7 +172,7 @@ include_once "../../files/head.php";
 
                                     <div class="card-block">
                                         <div class="dt-responsive table-responsive">
-                                            <table id="basic-btn" class="table table-striped table-bordered nowrap">
+                                            <table id="table34" class="table table-striped table-bordered nowrap">
                                                 <thead>
                                                     <tr>
                                                         <th>DATE</th>
@@ -166,7 +180,7 @@ include_once "../../files/head.php";
                                                         <th>Sales Inv No.</th>
                                                         <th>Product Code</th>   
                                                         <th>Product Name</th>
-                                                        <!-- <th>Location</th> -->
+                                                        <th>Location</th>
                                             
                                                         <th>Quantity</th>
                                                    
@@ -182,6 +196,7 @@ include_once "../../files/head.php";
                                                         <td>$item->salesinvoice_ref</td>
                                                         <td>$item->product_code</td>
                                                         <td>$item->product_name</td>
+                                                        <td>$item->location_name</td>
                                                         <td>$item->sd_item_qty</td>
                                                        
                                                        
@@ -194,7 +209,9 @@ include_once "../../files/head.php";
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        
+                                                     <th colspan="6">Totals</th>
+                                                     <th></th>
+                                                    
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -212,3 +229,38 @@ include_once "../../files/head.php";
                             ?>
 
                             <!-- ------------------------------------------------------------------------------------------------- -->
+
+                            
+                            <script>
+
+$(document).ready(function () {
+						$('#table34').DataTable({
+							"searching": true,
+                            "lengthChange": true,
+                     
+                            "iDisplayLength": 10,
+                                                    //"pageLength": 40,
+							"scrollX": true,
+							"paging": true,
+							"info": true,
+                            dom: 'Bfrtip',
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+							drawCallback: () => {
+								const table = $('#table34').DataTable();
+								const tableData = table.rows({
+										search: 'applied'
+									}).data().toArray();
+								const totals = tableData.reduce((total, rowData) => {
+										total[0] += parseFloat(rowData[6]);
+									
+                                        
+                                       
+										return total;
+									}, [0, 0,0]);
+								$(table.column(6).footer()).text(totals[0]);
+								
+                               
+							}
+						})
+					});				
+                            </script>
