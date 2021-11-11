@@ -5,18 +5,19 @@ include_once "../../files/config.php";
 class interloctranfer_item {
 
 public $interloctranfer_item_id;
+public $interloctranfer_id;
 public $interloctranfer_item_product;
-public $interloctranfer_item_price;
 public $interloctranfer_item_qty;
 public $interloctranfer_item_batch;
 public $interloctranfer_item_status;
-public $interloctranfer_item_date;
+
 
 private $db;
 
  //.............................................
  
-function __construct(){
+function __construct()
+{
 
     $this->db=new mysqli(host,un,pw,db1);
     
@@ -24,15 +25,20 @@ function __construct(){
 
 //..............................insert funtion..................
 
-function insert_interloctranfer_item(){
+function insert_interloctranfer_item($interloc_id)
+{
+    $product_list=0;
 
-
-    $sql = "INSERT INTO interloctranfer_item (interloctranfer_item_product,interloctranfer_item_price,interloctranfer_item_qty,interloctranfer_item_batch) VALUES 
-    ('$this->interloctranfer_item_product','$this->interloctranfer_item_price','$this->interloctranfer_item_qty', '$this->interloctranfer_item_batch')";
-    $this->db->query($sql);
-     echo $sql;
-     return true;
-
+    foreach($_POST["intloc_item_productid"]as $item)
+    
+    {
+        $sql = "INSERT INTO interloctranfer_item (interloctranfer_id,interloctranfer_item_product,interloctranfer_item_qty,interloctranfer_item_batch) VALUES 
+        ($interloc_id,'".$_POST['intloc_item_productid'][$product_list]."','".$_POST['intloc_item_qty'][$product_list]."','".$_POST['intloc_item_batchno'][$product_list]."')";
+        $this->db->query($sql);
+        echo $sql;
+        $product_list++;
+    }
+        return true;
 }
 // //........................get all function........................
 

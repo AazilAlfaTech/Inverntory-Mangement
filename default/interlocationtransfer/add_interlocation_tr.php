@@ -1,14 +1,17 @@
 <?php
-include_once "inetrlocationtransfer.php";
+include_once "interlocationtransfer.php";
 $inter_loc_tr1 = new inter_loc_transfer();
+
+include_once "interlocationtransfer_item.php";
+$inter_loc_tritem1= new interloctranfer_item();
 
 include_once "../location/location.php";
 $loc1 = new location();
 
-include_once "../product/product.php";
-$prod1 = new product();
+// include_once "../product/product.php";
+// $prod1 = new product();
 
-$res_prod = $prod1->getall_product2();
+// $res_prod = $prod1->getall_product2();
 
 $res_loc = $loc1->get_all_location();
 
@@ -18,14 +21,14 @@ $res_loc = $loc1->get_all_location();
 
 if (isset($_POST['inter_loc_transferdate'])) {
 
-
     // $inter_loc_tr1->inter_loc_transfer_code = $_POST['inter_loc_transfercode'];
     $inter_loc_tr1->inter_loc_transfer_date = $_POST['inter_loc_transferdate'];
     $inter_loc_tr1->inter_loc_transfer_from = $_POST['inter_loc_transferfrom'];
-    $inter_loc_tr1->inter_loc_transferto = $_POST['inter_loc_transferto'];
+    $inter_loc_tr1->inter_loc_transfer_to = $_POST['inter_loctransferto'];
     $inter_loc_tr1->inter_loc_transfer_code = $inter_loc_tr1->int_loc_code1($_POST["inter_loc_transferdate"]);
 
-    $inter_loc_tr1->insert_inter_loc_transfer();
+    $inter_locid=$inter_loc_tr1->insert_inter_loc_transfer();
+    $inter_loc_tritem1->insert_interloctranfer_item($inter_locid);
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -102,7 +105,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="date" name="inter_loc_transferdate" id="" value="<?= $res_inter_loc1->purchaserequest_date ?>" required>
+                                                <input class="form-control" type="date" name="inter_loc_transferdate" id="" value="<?php echo date('Y-m-d');?>" required>
                                             </div>
 
                                         </div>
@@ -127,21 +130,22 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">To</label>
-                                                <select class="js-example-basic-single col-sm-12" name="inter_loc_transferto" id="inter_loc_transferto" required>
+                                                <select class="js-example-basic-single col-sm-12 toloc" name="inter_loctransferto" id="inter_loc_transferto" required>
 
                                                     <option value=" ">Select Location</option>
                                                     <?php
-                                                    foreach ($res_loc as $item)
-
-                                                        if ($item->location_id == $res_inter_loc1->purchaserequest_supplier)
-                                                            echo "<option value='$item->location_id' selected='selected'>$item->location_name</option>";
-                                                        else
-                                                            echo "<option value='$item->location_id'>$item->location_name</option>";
+                                                     
+                                                     foreach ($res_loc as $item)
+                                                         echo "<option value='$item->location_id'>$item->location_name</option>";
+                                                
                                                     ?>
 
 
                                                 </select>
+                                                <br>
+                                            <span class='error_fields'><label class="label label-md label-danger" >Invalid To Location</label></span>
                                             </div>
+                                            
 
                                         </div>
 
@@ -151,7 +155,7 @@ include_once "../../files/head.php";
 
 <div class="col-sm-4">
     <label class=" col-form-label">Select Product</label>
-    <select class="js-example-basic-single col-sm-12 grn_product" name="int_itemproductid" id="int_itemproductid">
+    <select class="js-example-basic-single col-sm-12 grn_product" name="int_itemp_roductid" id="int_itemproductid">
 
         <option value="-1 ">Select product</option>
         <?php
@@ -167,7 +171,7 @@ include_once "../../files/head.php";
 <div class="col-sm-4">
 
     <label class=" col-form-label">Select Batch No</label>
-    <select class="js-example-basic-single col-sm-12 prodbatch" name="int_itemproductbatch" id="int_itemproductbatch" >
+    <select class="js-example-basic-single col-sm-12 prodbatch" name="int_item_productbatch" id="int_itemproductbatch" >
         <option value="-1 ">Select Batch No</option>
     </select>
 </div>
@@ -193,7 +197,7 @@ include_once "../../files/head.php";
 
 
                                  
-                                        <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
+                                        <button type="button" class="btn btn-primary" name="addint btn" id="add_intbtn">ADD</button>
                                         <button type="button" class="btn btn-inverse reset">CLEAR</button>
 
 
@@ -207,7 +211,7 @@ include_once "../../files/head.php";
                                                     <tr>
                                                         <!-- <th>#</th> -->
                                                         <th>Product</th>
-                                                        <th>Qty</th>
+                                                        <!-- <th>Qty</th> -->
                                                         <th>Price</th>
                                                         <th>Batch No</th>
 
@@ -256,6 +260,24 @@ include_once "../../files/head.php";
 
                 <script>
 
+                    $(document).ready(function()
+                    {
+                        $(".error_fields").hide();
+
+                    });
+
+                    // From and To locations cannot be same
+                    $(".toloc").change(function()
+                    {
+                        var fromloc=$(".fromloc").val();
+                        console.log(fromloc);
+                        if($(".toloc").val()==fromloc)
+                        {
+                            // console.log("Invalid to location");
+                            $(".error_fields").show().delay( 1000 ).fadeOut( 1000 );
+                           
+                        }
+                    });
 
                     // Filtering the products according to the slected location
                     $(".fromloc").change(function()
@@ -320,13 +342,27 @@ include_once "../../files/head.php";
                     });
 
 
+
+
+
+                    // When add button is clicked
+                    $("#add_intbtn").click(function() 
+                    {
+
+                        add_products();
+                        clear_products();
+
+                    });
+
                     // Adding products to the dynamic table
                     function add_products()
                     {
-                        var inter_loc_prodid=$("int_itemproductid option:selected").val();
-                        var inter_loc_prodname=$("int_itemproductid option:selected").text();
-                        var inter_loc_prodbatch=$("int_itemproductbatch option:selected").val();
-                        var inter_loc_prodqty=$("int_itemqty").val();
+                        console.log("Hey");
+                        var inter_loc_prodid=$("#int_itemproductid option:selected").val();
+                        var inter_loc_prodname=$("#int_itemproductid option:selected").text();
+                        var inter_loc_prodbatch=$("#int_itemproductbatch option:selected").val();
+                        var inter_loc_prodqty=$("#int_itemqty").val();
+                        console.log(inter_loc_prodid);
 
                         if($('#int_itemproductid').val()=='' || $('#int_itemproductbatch').val()=='' || $('#int_itemqty').val()=='')
                         {
@@ -334,103 +370,56 @@ include_once "../../files/head.php";
                         }
                         else
                         {
-                            
+                            $("#tbody").append("<tr>\
+                            <td class='table-edit-view' >\
+                            <input  class='input-borderless input-sm productid' type='hidden'readonly name='intloc_item_productid[]' value='"+inter_loc_prodid+"'>\
+                            <input  class='input-borderless input-sm productid' type='text' readonly name='' value='"+inter_loc_prodname+"'>\                            </td>\
+                            <td class='table-edit-view'>\
+                                <input class='input-borderless input-sm row_data batchno'  type='text' readonly name='intloc_item_batchno[]' value='" + inter_loc_prodbatch + "'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> \
+                            </td>\
+                            <td class='table-edit-view'>\
+                                <input class='input-borderless input-sm row_data quantity' type='text' readonly name='intloc_item_qty[]' value='" + inter_loc_prodqty + "'> <div style='color: red; display: none' class='msg1'>'Digits only'</div>\
+                            </td>\
+                            <td>\
+                                <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
+                                <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
+                                <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>\
+                            </td>\
+                            </tr>");
+
+
+                        $(".btn_save").hide();
+                        $(".btn_cancel").hide();
                         }
                     }
 
-                    // function cal_prd_total() {
-                    //     var pprice = $("#int_itemprice").val();
-                    //     var pqty = $("#int_itemqty").val();
-                    //     var pdis = $("#int_batch").val();
-
-
-                    //     var tot = parseFloat(pprice) * parseFloat(pqty) * parseFloat(pdis) / 100
-
-                    //     ftot = parseFloat(pprice) * parseFloat(pqty) - parseFloat(tot)
-
-
-
-                    //     $("#preq_itemfinalprice").val(ftot);
-
-
-
-                        // console.log(pprice);
-                        // console.log(pqty);
-                        // console.log(pdis);
-
-                        // console.log(tot);
-
-                        // console.log(ftot);
-
-
-
-
-
-            //         }
+                   
 
             //         // -------------------------------------------------------------------------------------------------------------------------
 
-            //         $("#add_prbtn").click(function() {
+                    // $("#add_prbtn").click(function() {
 
-            //             add_products();
-            //             clear_products();
+                    //     add_products();
+                    //     clear_products();
 
-            //         });
+                    // });
 
             //         // ---------------------------------------------------------------------------------------------------------------------
-            //         function add_products() {
-            //             var sq_prod = $("#int_itemproductid option:selected").val();
-            //             var sq_prod_name = $("#int_itemproductid option:selected").text(); //dropdown
-            //             var sq_price = $("#int_itemprice").val();
-            //             var sq_qty = $("#int_itemqty").val();
-            //             var sq_dis = $("#int_batch").val();
-            //             var sq_fprice = $("#int_itemfinalprice").val();
-            //             sq_subtotal = parseFloat(sq_price * sq_qty)
-
-            //             $("#tbody").append("<tr>\
-            // <td class='table-edit-view' >" + sq_prod_name + "\
-            //     <input  class='form-control input-sm productid  ' type='hidden' name='sq_item_productid[]' value='" + sq_prod + "'>\
-            // </td>\
-            // <td class='table-edit-view'>\
-            //     <input class='input-borderless input-sm row_data price'  type='text' readonly name='sq_item_price[]' value='" + sq_price + "'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> \
-            //     <input class='form-control input-sm subtotal'   type='hidden'  value='" + sq_subtotal + "'>\
-            // </td>\
-            // <td class='table-edit-view'>\
-            //     <input class='input-borderless input-sm row_data quantity' type='text' readonly name='sq_item_qty[]' value='" + sq_qty + "'> <div style='color: red; display: none' class='msg1'>'Digits only'</div>\
-            // </td>\
-            // <td class='table-edit-view'>\
-            //     <input class='input-borderless input-sm row_data discount' type='text' readonly name='sq_item_discount[]' value='" + sq_dis + "'><div style='color: red; display: none' class='msg3'>'Digits only'</div>\
-            // </td>\
-            // <td>\
-            //     <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>\
-            //     <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>\
-            //     <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>\
-            // </td>\
-            //  </tr>");
-
-
-            //             $(".btn_save").hide();
-            //             $(".btn_cancel").hide();
-
-            //         }
-
+                   
                     // ----------------------------------------------------------------------------------------------------------------
 
 
-                    // function clear_products() {
+                    function clear_products() {
 
+                        $('#int_itemproductid').prop('selected', function() {
+                            return this.defaultSelected;
+                        });
 
-
-                    //     $("#preq_itemproductid option:selected").text(""); //dropdown
-                    //     $("#int_itemprice").val("");
-                    //     $("#int_itemqty").val("");
-                    //     $("#int_batch").val("");
-                    //     $("#preq_itemfinalprice").val("");
-
-
-
-
-                    // }
+                        // $("#int_itemproductid option:selected").text(""); //dropdown
+                        // $("#int_itemproductbatch").val("");
+                        $("#int_itemqty").val("");
+                       
+                    }
 
 
 

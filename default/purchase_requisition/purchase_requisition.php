@@ -146,7 +146,7 @@ function insert_purchaserequest(){
 function get_all_purchaserequest(){
 
     //$sql="SELECT * FROM purchase_request WHERE purchaserequest_status='ACTIVE' ";
-    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,purchase_request.purchaserequest_currentstatus,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
+    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,purchase_request.purchaserequest_status,purchase_request.purchaserequest_currentstatus,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
     ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE'";
     $result=$this->db->query($sql);
 
@@ -162,6 +162,7 @@ function get_all_purchaserequest(){
         $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
         $purchaserequest_item->purchaserequest_ref=$row["purchaserequest_ref"];
         $purchaserequest_item->purchaserequest_currentstatus=$row["purchaserequest_currentstatus"];
+        $purchaserequest_item->purchaserequest_status=$row["purchaserequest_status"];
 
         $purchaserequest_array[]=$purchaserequest_item;
     }
@@ -174,7 +175,7 @@ function get_all_purchaserequest(){
 function get_all_new_purchaserequest(){
 
     //$sql="SELECT * FROM purchase_request WHERE purchaserequest_status='ACTIVE' ";
-    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,purchase_request.purchaserequest_currentstatus,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
+    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,purchase_request.purchaserequest_status,purchase_request.purchaserequest_currentstatus,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
     ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE' AND purchaserequest_currentstatus='NEW'";
     $result=$this->db->query($sql);
 
@@ -190,6 +191,7 @@ function get_all_new_purchaserequest(){
         $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
         $purchaserequest_item->purchaserequest_ref=$row["purchaserequest_ref"];
         $purchaserequest_item->purchaserequest_currentstatus=$row["purchaserequest_currentstatus"];
+        $purchaserequest_item->purchaserequest_status=$row["purchaserequest_status"];
 
         $purchaserequest_array[]=$purchaserequest_item;
     }
@@ -204,7 +206,7 @@ function get_all_new_purchaserequest(){
 function get_purchaserequest_by_id($purchaserequestid){
 
     //$sql="SELECT * FROM purchase_request WHERE purchaserequest_id = $purchaserequestid";
-    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_currentstatus,purchase_request.purchaserequest_date ,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
+    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_currentstatus,purchase_request.purchaserequest_status,purchase_request.purchaserequest_date ,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
     ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_id = $purchaserequestid";
     //echo $sql;
     $result=$this->db->query($sql);
@@ -218,7 +220,8 @@ function get_purchaserequest_by_id($purchaserequestid){
     $purchaserequest_item->purchaserequest_date=$row["purchaserequest_date"];
     $purchaserequest_item->purchaserequest_ref =$row["purchaserequest_ref"];
     $purchaserequest_item->purchaserequest_currentstatus=$row["purchaserequest_currentstatus"];
-       
+    $purchaserequest_item->purchaserequest_status=$row["purchaserequest_status"];
+
     return $purchaserequest_item;
 }
 
@@ -231,7 +234,7 @@ function edit_purchaserequest($purchaserequestid){
  
 
     $sql="UPDATE purchase_request  SET 
-     purchaserequest_supplier='$this->purchaserequest_supplier'
+     purchaserequest_currentstatus='$this->purchaserequest_currentstatus'
      
      WHERE purchaserequest_id ='$purchaserequestid' ";
     echo $sql;

@@ -237,7 +237,7 @@
         function  get_all_grn_by_poid($id)
         {
             $SQL="SELECT *, product.product_name,product.product_inventory_val FROM purchase_order_item INNER JOIN product on purchase_order_item.po_item_productid=product.product_id
-             WHERE po_item_status='ACTIVE' AND 	po_item_currentstatus='PENDING' AND po_item_orderid='$id'";
+             WHERE (po_item_status='ACTIVE' AND 	po_item_currentstatus='PENDING' AND po_item_orderid='$id')OR (po_item_status='ACTIVE' AND po_item_currentstatus='NEW' AND po_item_orderid='$id')";
             $result=$this->db->query($SQL);
             $grn_po_array=array();
 
