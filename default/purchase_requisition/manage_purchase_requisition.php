@@ -8,17 +8,17 @@ include_once "purchase_requisition.php";
 
     // print_r($result_pr);
     if(isset($_GET['d_id']))
-{
-    $res_delete=$purchasereq1->delete_purchaserequest($_GET['d_id']);
-    
-    //code for delete validations
-    if($res_delete==true)
     {
-        header("location:../purchase_requisition/manage_purchase_requisition.php?delete_success=1");
+        $res_delete=$purchasereq1->delete_purchaserequest($_GET['d_id']);
+        
+        //code for delete validations
+        if($res_delete==true)
+        {
+            header("location:../purchase_requisition/manage_purchase_requisition.php?delete_success=1");
         }
         else
         {
-            $msg_2="Purchase requisition already in use therefore cannot delete";
+            $msg_2="Purchase requisition already in use therefore cannot delete";        
         } 
     }
 
@@ -179,11 +179,35 @@ include_once "../../files/head.php";
                                                                         <td>$item->purchaserequest_ref   </td>
                                                                         <td>$item->purchaserequest_date</td>
                                                                         <td>$item->supplier_name  </td>
-                                                                        <td><lable class='badge' st$item->purchaserequest_currentstatus>$item->purchaserequest_currentstatus</label></td>
 
                                                                       
                                                                      
+                                                                        <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->purchaserequest_currentstatus</label></td>
+
+                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>
+                                                                        <button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>
+                                                                        <button type='button' onclick='edit_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button> </a>
+                                                                        <button type='button'  onclick='delete_pr($item->purchaserequest_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
+                                                                        </td> 
+                                               
+                                               
+                                                                       
+                                                                       
+                                                                    </tr>
+                                                                    ";
+                                                    }
+                                                    elseif($item->purchaserequest_currentstatus=='APPROVED')
+                                                    { 
+                                                        echo"
+                                                                    <tr>
+                                                                    <td>$item->purchaserequest_id   </td>
+                                                                        <td>$item->purchaserequest_ref   </td>
+                                                                        <td>$item->purchaserequest_date</td>
+                                                                        <td>$item->supplier_name  </td>
+
+                                                                      
                                                                      
+                                                                        <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->purchaserequest_currentstatus</label></td>
 
                                                                         <td><div class='btn-group btn-group-sm' style='float: none;'>
                                                                         <button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>
@@ -205,7 +229,7 @@ include_once "../../files/head.php";
                                                             <td>$item->purchaserequest_ref   </td>
                                                             <td>$item->purchaserequest_date</td>
                                                             <td>$item->supplier_name  </td>
-                                                            <td><label class='badge' st$item->purchaserequest_currentstatus>$item->purchaserequest_currentstatus<label></td>
+                                                            <td><label class='badge badge-danger' >$item->purchaserequest_currentstatus</label></td>
 
                                                             <td><div class='btn-group btn-group-sm' style='float: none;'>
                                                             <button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>

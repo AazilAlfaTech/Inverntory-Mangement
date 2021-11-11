@@ -31,9 +31,9 @@ $purchase1 = new purchaserequest();
 
     if(isset($_POST['save']))
     {
-        // $purchase1->purchaserequest_supplier=$_POST["purchaserequestsupplier"];
+        $purchase1->purchaserequest_currentstatus=$_POST['pr_current_status'];
         // $product_item1->insert_purchaserequest_item($_POST['req_id'] );
-        // $purchase1-> edit_purchaserequest($_POST['req_id']);
+        $purchase1-> edit_purchaserequest($_POST['req_id']);
         // $product_item1->edit_PR_item(); //edit item
         $product_item1->insert_purchaserequest_item($_POST['req_id'] );
 
@@ -115,42 +115,33 @@ include_once "../../files/head.php";
                                 <div class="card-block">
 
                                     <form action="edit_purchase_req.php" method="POST">
-
-
-
-
                                         <div class="form-group row">
 
-                                            <div class="col-sm-4">
-                                                <label class=" col-form-label">Select Supplier</label>
-                                                <select class="js-example-basic-single col-sm-12" name="purchaserequestsupplier" id="purchreq_supplier" readonly>
-
-                                                    <option value=" ">Select supplier</option>
-                                                    <?php
-                                                        foreach($sup as $item)
-                                                      
-                                                        if($item->supplier_id ==$purchase1->purchaserequest_supplier )   
-
-			                                        echo "<option value='$item->supplier_id' selected='selected'>$item->supplier_name</option>";
-                                                    else
-                                                    echo"<option value='$item->supplier_id'>$item->supplier_name</option>";
-                                                    ?>
-
-
-                                                </select>
-
+                                            <div class="col-sm-3">
+                                            <label class=" col-form-label">Supplier</label>
+                                                <input class="form-control" type="text" name="purchaserequestsupplier" id="purchreq_supplier" value="<?=$purchase1->supplier_name ?>" readonly>
+                                                
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-3">
                                                 <label class=" col-form-label">Reference Code</label>
                                                 <input class="form-control" type="text" name="purchaserequest_ref" id="" value="<?=$purchase1->purchaserequest_ref ?>" readonly>
 
-                                                <input class="form-control" type="text" name="req_id" id="" value="<?=$purchase1->purchaserequest_id ?>" readonly hidden>
+                                                <input class="form-control" type="text" name="req_id" id="" value="<?=$purchase1->purchaserequest_id ?>" readonly>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-3">
                                                 <label class=" col-form-label">Date</label>
                                                 <input class="form-control" type="date" name="purchaserequestdate" id="" value="<?=$purchase1->purchaserequest_date ?>">
+                                            </div>
+                                            <div class='col-sm-3'>
+                                                <label class='col-form-label' >Status</label>
+                                                <select class='js-example-basic-single col-sm-12 c_status' name='pr_current_status'>
+                                                    <option value='NEW' <?php if( $purchase1->purchaserequest_currentstatus=="NEW") { ?> selected="selected"<?php } ?>>New</option>
+                                                    <option value='APPROVED' <?php if( $purchase1->purchaserequest_currentstatus=="APPROVED") { ?> selected="selected"<?php } ?>>Approved</option>
+                                                    <option value='REJECTED' <?php if( $purchase1->purchaserequest_currentstatus=="REJECTED") { ?> selected="selected"<?php } ?>>Rejected</option>
+                                                </select>
+
                                             </div>
 
                                         </div>

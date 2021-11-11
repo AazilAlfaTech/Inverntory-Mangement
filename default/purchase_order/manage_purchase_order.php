@@ -118,7 +118,7 @@ include_once "../../files/head.php";
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                     <i class='icofont icofont-close-line-circled text-white'></i>
                 </button>
-                <strong>The code or the name already exists.Please try again</strong> 
+                <strong>Not Successful.Please try again</strong> 
             </div>";
             }
             ?>
@@ -162,7 +162,8 @@ include_once "../../files/head.php";
                                                         if($item->purchaseorder_currentstatus=='NEW'|| $item->purchaseorder_currentstatus=='PENDING')
                                                         {
                                                             echo"
-                                                            <td>$item->purchaseorder_currentstatus</td>
+                                                            <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->purchaseorder_currentstatus</label></td>
+
                                                             <td style='white-space: nowrap, width: 1%;'>
                                                             <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
@@ -180,7 +181,9 @@ include_once "../../files/head.php";
                                                         elseif($item->purchaseorder_currentstatus=='COMPLETE')
                                                         {
                                                             echo"
-                                                            <td>$item->purchaseorder_currentstatus</td>
+                                                            
+                                                            <td><label class='badge badge-danger' >$item->purchaseorder_currentstatus</label></td>
+
                                                             <td style='white-space: nowrap, width: 1%;'>
                                                             <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
