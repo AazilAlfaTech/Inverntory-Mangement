@@ -147,7 +147,8 @@ function edit_PR_item(){
         
         $sql="UPDATE purchase_request_item SET pr_item_currentstatus='COMPLETED' WHERE pr_item_requestid=$purch_req_id";
         $this->db->query($sql);
-        echo $sql; 
+        // echo $sql; 
+        return true;
        
     }
 
@@ -156,7 +157,7 @@ function edit_PR_item(){
         $sql="UPDATE  purchase_request_item SET pr_item_status='INACTIVE',pr_item_currentstatus='CANCEL' WHERE pr_item_id=$PR_id ";
         $this->db->query($sql);
         //echo $sql; 
-        echo true;
+        return true;
     }
 }
 

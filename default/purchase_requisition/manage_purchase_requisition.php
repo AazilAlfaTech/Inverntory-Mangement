@@ -8,17 +8,17 @@ include_once "purchase_requisition.php";
 
     // print_r($result_pr);
     if(isset($_GET['d_id']))
-{
-    $res_delete=$purchasereq1->delete_purchaserequest($_GET['d_id']);
-    
-    //code for delete validations
-    if($res_delete==true)
     {
-        header("location:../purchase_requisition/manage_purchase_requisition.php?delete_success=1");
+        $res_delete=$purchasereq1->delete_purchaserequest($_GET['d_id']);
+        
+        //code for delete validations
+        if($res_delete==true)
+        {
+            header("location:../purchase_requisition/manage_purchase_requisition.php?delete_success=1");
         }
         else
         {
-            $msg_2="Purchase requisition already in use therefore cannot delete";
+            $msg_2="Purchase requisition already in use therefore cannot delete";        
         } 
     }
 

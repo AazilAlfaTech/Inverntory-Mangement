@@ -1,14 +1,17 @@
 <?php
-include_once "inetrlocationtransfer.php";
+include_once "interlocationtransfer.php";
 $inter_loc_tr1 = new inter_loc_transfer();
+
+include_once "interlocationtransfer_item.php";
+$inter_loc_tritem1= new interloctranfer_item();
 
 include_once "../location/location.php";
 $loc1 = new location();
 
-include_once "../product/product.php";
-$prod1 = new product();
+// include_once "../product/product.php";
+// $prod1 = new product();
 
-$res_prod = $prod1->getall_product2();
+// $res_prod = $prod1->getall_product2();
 
 $res_loc = $loc1->get_all_location();
 
@@ -18,14 +21,14 @@ $res_loc = $loc1->get_all_location();
 
 if (isset($_POST['inter_loc_transferdate'])) {
 
-
     // $inter_loc_tr1->inter_loc_transfer_code = $_POST['inter_loc_transfercode'];
     $inter_loc_tr1->inter_loc_transfer_date = $_POST['inter_loc_transferdate'];
     $inter_loc_tr1->inter_loc_transfer_from = $_POST['inter_loc_transferfrom'];
-    $inter_loc_tr1->inter_loc_transferto = $_POST['inter_loc_transferto'];
+    $inter_loc_tr1->inter_loc_transfer_to = $_POST['inter_loctransferto'];
     $inter_loc_tr1->inter_loc_transfer_code = $inter_loc_tr1->int_loc_code1($_POST["inter_loc_transferdate"]);
 
-    $inter_loc_tr1->insert_inter_loc_transfer();
+    $inter_locid=$inter_loc_tr1->insert_inter_loc_transfer();
+    $inter_loc_tritem1->insert_interloctranfer_item($inter_locid);
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -102,7 +105,7 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">Date</label>
-                                                <input class="form-control" type="date" name="inter_loc_transferdate" id="" value="<?= $res_inter_loc1->purchaserequest_date ?>" required>
+                                                <input class="form-control" type="date" name="inter_loc_transferdate" id="" value="<?php echo date('Y-m-d');?>" required>
                                             </div>
 
                                         </div>
@@ -127,16 +130,14 @@ include_once "../../files/head.php";
 
                                             <div class="col-sm-6">
                                                 <label class=" col-form-label">To</label>
-                                                <select class="js-example-basic-single col-sm-12 toloc" name="inter_loc_transferto" id="inter_loc_transferto" required>
+                                                <select class="js-example-basic-single col-sm-12 toloc" name="inter_loctransferto" id="inter_loc_transferto" required>
 
                                                     <option value=" ">Select Location</option>
                                                     <?php
-                                                    foreach ($res_loc as $item)
-
-                                                        if ($item->location_id == $res_inter_loc1->purchaserequest_supplier)
-                                                            echo "<option value='$item->location_id' selected='selected'>$item->location_name</option>";
-                                                        else
-                                                            echo "<option value='$item->location_id'>$item->location_name</option>";
+                                                     
+                                                     foreach ($res_loc as $item)
+                                                         echo "<option value='$item->location_id'>$item->location_name</option>";
+                                                
                                                     ?>
 
 
@@ -274,7 +275,7 @@ include_once "../../files/head.php";
                         {
                             // console.log("Invalid to location");
                             $(".error_fields").show().delay( 1000 ).fadeOut( 1000 );
-
+                           
                         }
                     });
 

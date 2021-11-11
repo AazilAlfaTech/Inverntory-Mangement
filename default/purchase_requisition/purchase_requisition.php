@@ -175,7 +175,7 @@ function get_all_purchaserequest(){
 function get_all_new_purchaserequest(){
 
     //$sql="SELECT * FROM purchase_request WHERE purchaserequest_status='ACTIVE' ";
-    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,purchase_request.purchaserequest_currentstatus,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
+    $sql="SELECT purchase_request.purchaserequest_id , purchase_request.purchaserequest_ref, purchase_request.purchaserequest_supplier,purchase_request.purchaserequest_date ,purchase_request.purchaserequest_status,purchase_request.purchaserequest_currentstatus,supplier.supplier_name FROM `purchase_request` INNER JOIN `supplier` 
     ON purchase_request.purchaserequest_supplier=supplier.supplier_id WHERE purchaserequest_status='ACTIVE' AND purchaserequest_currentstatus='NEW'";
     $result=$this->db->query($sql);
 

@@ -118,7 +118,7 @@ include_once "../../files/head.php";
                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                     <i class='icofont icofont-close-line-circled text-white'></i>
                 </button>
-                <strong>The code or the name already exists.Please try again</strong> 
+                <strong>Not Successful.Please try again</strong> 
             </div>";
             }
             ?>

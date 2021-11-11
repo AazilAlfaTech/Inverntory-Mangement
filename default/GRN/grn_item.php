@@ -44,6 +44,7 @@
                     VALUES ($id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_itemprice'][$grn_list]."',
                     '".$_POST['grn_item_discount'][$grn_list]."','".$grn_item3->product_batch($_POST['grn_itemid'][$grn_list])."')";
                     $this->db->query($SQL);
+                    echo $SQL;
                     if($_POST['grn_itemid_inventory'][$grn_list]=='AVCO'){
                         
                         $avco_product2->updatecostprice($_POST['grn_itemid'][$grn_list]);
