@@ -3,7 +3,7 @@ session_start();
 
 if(!isset($_SESSION["user"])){
 
-  header("location:../Logins/login1.php");
+  header("location:../login/login1.php");
   exit;
 }
 //  function __construct()
@@ -683,13 +683,13 @@ if(!isset($_SESSION["user"])){
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="../Logins/register.php " >
-                                            <span class="pcoded-mtext">Add New User</span>
+                                        <a href="../user/manage_user.php" >
+                                            <span class="pcoded-mtext">Users</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="../Logins/add_user_role.php"  >
-                                            <span class="pcoded-mtext">Add New User Role </span>
+                                        <a href="../permission/manage_user_role.php" >
+                                            <span class="pcoded-mtext">User Roles</span>
                                         </a>
                                     </li>
                                   

@@ -1,5 +1,5 @@
 <?php
-include_once ("user.php");
+include_once ("../user/user.php");
 session_start();
 $user1 = new user();
 
