@@ -42,4 +42,10 @@ function get_sales_invoice_item(){
     echo json_encode($salesinvoiceitem3_item);
 }
 
+function get_sum_remainingqty(){
+    include_once "../stock/stock.php";
+    $grn_item2= new stock();
+    $result_stock=$grn_item2->item_remaining_stock_productid($_GET['prodid'],$_GET['loc_id']);
+    echo json_encode($result_stock);
+}
 ?>

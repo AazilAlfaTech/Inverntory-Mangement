@@ -37,13 +37,14 @@
             var quants = row.find(".quantity").val();
             var prc = row.find(".price").val();
             
-            console.log(prc);
-           // var tot = quants * prc;
+        
            var disc= row.find(".discount").val();
+                        var subtotal=parseFloat(quants * prc);
                         var subtot= parseFloat(quants * prc * disc/100);
                         //console.log(subtot);
                         var tot = parseFloat(quants * prc - subtot);
                        // console.log(tot);
+                       row.find(".subtotal").attr("value",subtotal);
             row.find(".total").attr("value",tot);
         });
 
@@ -167,7 +168,7 @@ $(document).on('click', '.btn_save', function(event)
 
         cal_totquantity();
         cal_totprice();
-        //cal_totdiscount();
+        cal_totdiscount();
         final_total();
         }
 

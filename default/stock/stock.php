@@ -8,6 +8,9 @@ class stock{
     public $stock_productid;
     public $stock_qty;
     public $stock_costprice;
+    public $stock_loc;
+    public $stock_remainqty;
+    public $grn_qty;
     public $db;
 
 
@@ -119,9 +122,39 @@ return $array_stock;
     }
 
 
- }
+    function item_remaining_stock_productid($productid,$locationid)
+    {
+        //$sql="SELECT SUM(grn_item_remain_qty) AS totqty FROM grn_item WHERE grn_item_productid= $productid ";
+        $sql="SELECT SUM(stock_remainqty) AS totqty FROM stock WHERE stock_productid=$productid AND stock_loc=$locationid";
+       // echo $sql;
+        $result_qty=$this->db->query($sql);
+        $row=$result_qty->fetch_array();
+         
+        $grn_item1=new stock();
+        $grn_item1->grn_qty=$row['totqty'];
+        return $grn_item1;
+    }
+
+
+    function get_item_onlocation($loc_id){
+       // $sql="SELECT product.product_name FROM `stock`JOIN product ON stock.stock_productid=product.product_id WHERE stock_loc=$loc_id AND stock_transactiontype='GRN'";
+       $sql="SELECT product.product_name,stock_productid, SUM(stock_remainqty) AS totqty FROM `stock` JOIN product ON stock.stock_productid=product.product_id WHERE stock_loc='1' AND stock_transactiontype='GRN' GROUP BY stock.stock_productid"; 
+       $result=$this->db->query($sql);
+        $itemarray=array();
+
+        while($row=$result->fetch_array()){
+            $stockitem=new stock();
+            $stockitem->stock_productid=$row["stock_productid"];
+            $stockitem->product_name=$row['product_name'];
+            $stockitem->totalqty=$row["totqty"];
+
+            $itemarray[]=$stockitem;
+        }
+        return  $itemarray;
+    }
 
 
 
+}
 
 ?>

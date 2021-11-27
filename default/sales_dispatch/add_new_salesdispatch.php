@@ -25,7 +25,7 @@ if(isset($_POST['sdis_date'])){
     $sales_dispatch2->salesdispatch_customer=$_POST['sdis_cust'];
     $sales_dispatch2->salesdispatch_ref=$sales_dispatch2->sd_code($_POST['sdis_date']);
     $dispatchid=$sales_dispatch2->insert_sales_dispatch();
-    $salesdispatchitem->insert_sales_dispatch_item1($dispatchid);
+    $salesdispatchitem->insert_sales_dispatch_item1($dispatchid,$_POST['sdis_loc']);
   
     
 }
@@ -288,7 +288,7 @@ $.get("../ajax/ajaxsales.php?type=get_sales_invoice_item", { invoiceid: invoice 
             console.log(data);
         
             $.each(item_data, function(o, p) {
-                $.get("../ajax/ajaxpurchase.php?type=get_sum_remainingqty",{prodid:item_data[o].si_item_productid,loc_id:invoiceloc},function(data)
+                $.get("../ajax/ajaxsales.php?type=get_sum_remainingqty",{prodid:item_data[o].si_item_productid,loc_id:invoiceloc},function(data)
     {
      console.log(data);
       var d=JSON.parse(data); 

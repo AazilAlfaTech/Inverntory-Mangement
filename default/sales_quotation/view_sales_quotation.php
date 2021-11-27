@@ -54,7 +54,7 @@ include_once "../../files/print_head.php";
                                                     <tr>
                                                         <th>Status :</th>
                                                         <td>
-                                                            <span class="label label-warning">Pending</span>
+                                                            <span class="label label-warning"><?=$sales_quot3->salesquot_currentstatus ?></span>
                                                         </td>
                                                     </tr>
                                                 
@@ -144,7 +144,7 @@ include_once "../../files/print_head.php";
                                 </div>
                             </div>
                             <!-- Invoice card end -->
-                            <div class="row text-center">
+                            <div class="row text-center" id="print-btn">
                                 <div class="col-sm-12 invoice-btn-group text-center">
                                     <button type="button"
                                         class="btn btn-primary btn-print-invoice m-b-10 btn-sm waves-effect waves-light m-r-20 " onclick="window.print()">Print</button>

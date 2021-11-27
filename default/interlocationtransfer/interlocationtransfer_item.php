@@ -1,6 +1,7 @@
 <?php 
 
 include_once "../../files/config.php";
+include_once "../product/fifocaulation.php";
 
 class interloctranfer_item {
 
@@ -25,9 +26,11 @@ function __construct()
 
 //..............................insert funtion..................
 
-function insert_interloctranfer_item($interloc_id)
+function insert_interloctranfer_item($interloc_id,$locationidfrom,$locationidto)
 {
+    $fifostock5=new fifocalculation();
     $product_list=0;
+
 
     foreach($_POST["intloc_item_productid"]as $item)
     
@@ -36,7 +39,11 @@ function insert_interloctranfer_item($interloc_id)
         ($interloc_id,'".$_POST['intloc_item_productid'][$product_list]."','".$_POST['intloc_item_qty'][$product_list]."','".$_POST['intloc_item_batchno'][$product_list]."')";
         $this->db->query($sql);
         echo $sql;
+        $fifostock5->insert_fifo_stock_transfer($_POST['intloc_item_qty'][$product_list],$_POST['intloc_item_productid'][$product_list],$locationidfrom,$locationidto);
+
         $product_list++;
+
+
     }
         return true;
 }

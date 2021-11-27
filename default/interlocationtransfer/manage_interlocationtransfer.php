@@ -64,12 +64,17 @@
                     </div>
                 </div>
                 <!-- Page-header end -->
+                <?php
+                if($user4->check("INTA", 83)){
+                    echo'<div class="d-flex flex-row-reverse">
+                    <a href="add_interlocation_tr.php">
+                        <button class="btn btn-mat btn-primary ">Add New Interlocation Transfer</i></button>
+                    </a>
+                    </div>';
+                }
+                ?>
 
-                <div class="d-flex flex-row-reverse">
-                <a href="add_interlocation_tr.php">
-                    <button class="btn btn-mat btn-primary ">Add New Interlocation Transfer</i></button>
-                </a>
-                </div>
+                
 
 
                 <br>

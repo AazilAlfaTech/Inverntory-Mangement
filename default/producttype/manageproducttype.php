@@ -64,8 +64,9 @@ if (isset($_POST["typename"]))
                 header("location:../producttype/manageproducttype.php?notsuccess=1");
             }
     }else
-    {
-        $res_insert=$producttype1->add_type();
+    {   if($user4->check("MTA",35))
+        {
+            $res_insert=$producttype1->add_type();
             //code for insert validation
             if($res_insert==true){
                 
@@ -73,6 +74,12 @@ if (isset($_POST["typename"]))
             }elseif($res_insert==false){
                 header("location:../producttype/manageproducttype.php?notsuccess=1");
             }
+     
+        }else 
+        {
+            echo"No permission";
+        }
+        
     }
 
 
@@ -343,11 +350,19 @@ include_once "../../files/head.php";
                                                 <td>".$item->ptype_group_id->group_name."</td>
                                                 
 
-<td>
-                                                <div class='btn-group btn-group-sm' style='float: none;'>
-                                                <button type='button'  onclick='edit_type($item->ptype_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button>
-                                                <button type='button'  onclick='delete_type($item->ptype_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                                </div>
+                                                <td>
+                                                <div class='btn-group btn-group-sm' style='float: none;'>";
+                                                if($user4->check("MTE", 36)){
+                                                    echo"<button type='button'  onclick='edit_type($item->ptype_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button>";
+                                                }
+                                                if($user4->check("MTD", 38)){
+                                                    echo"  <button type='button'  onclick='delete_type($item->ptype_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>";
+                                                }
+                                                
+                                                
+                                                
+                                              
+                                             echo"   </div>
                                                 
 
                                                 </td>

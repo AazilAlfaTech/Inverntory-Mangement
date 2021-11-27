@@ -38,6 +38,7 @@ if (isset($_POST["supcode"]))
             }
     }else
     {
+        if($user4->check("RSA", 55)){
             $res_insert=$supplier1->insert_suppier();  
             //code for insert validation
             if($res_insert==true){
@@ -46,6 +47,10 @@ if (isset($_POST["supcode"]))
             }elseif($res_insert==false){
                 header("location:../supplier/manage_supplier.php?notsuccess=1");
             }
+        }else{
+            echo"No permission";
+        }
+          
     }
 
 
@@ -343,12 +348,22 @@ include_once "../../files/head.php";
            
              
 
-                <td><div class='btn-group btn-group-sm' style='float: none;'>
-                <button type='button' id='editprod' onclick='view_cus($item->supplier_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>
-             <button type='button' onclick='edit_sup($item->supplier_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button> </a>
-                <button type='button'  onclick='delete_sup($item->supplier_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
+                <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                if($user4->check("RSV", 57)){
+                    echo"<button type='button' id='editprod' onclick='view_cus($item->supplier_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button><button type='button' id='editprod' onclick='view_cus($item->supplier_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>";
+                }
+                if($user4->check("RSE", 56)){
+                    echo" <button type='button' onclick='edit_sup($item->supplier_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button> </a>";
+                }
+                if($user4->check("RSD", 58)){
+                    echo" <button type='button'  onclick='delete_sup($item->supplier_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>";
+                }
+
+                
+            
+               
               
-                </td> 
+            echo"   </td> 
 
 
                

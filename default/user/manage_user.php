@@ -38,12 +38,19 @@
                 </div>
                 <!-- Page-header end -->
 
-                <div class="d-flex flex-row-reverse">
-                <a href="../user/register.php">
-                    <button class="btn btn-mat btn-primary ">Add New User</i></button>
-                </a>
-                </div>
+               <?php
+                if($user4->check("UNA", 75)){
+                    echo'
+                        <div class="d-flex flex-row-reverse">
+                        <a href="../user/register.php">
+                            <button class="btn btn-mat btn-primary ">Add New User</i></button>
+                        </a>
+                        </div>
+                    ';
+                }
 
+
+               ?>
 
                 <br>
                 <br>
@@ -90,12 +97,18 @@
                                                 <td>$item->rolename</td>
                                                 <td style='white-space: nowrap, width: 1%;'>
                                                             <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
-                                                                <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                    <a href='viewuser.php?view=$item->user_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
-                                                                    <a href='register.php?edit=$item->user_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></a>
-                                                                    <button type='button'  onclick='deleteorder($item->user_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
+                                                                <div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                if($user4->check("UNV", 77)){
+                                                                    echo"<a href='viewuser.php?view=$item->user_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>";
+                                                                }
+                                                                if($user4->check("UNE", 76)){
+                                                                    echo" <a href='register.php?edit=$item->user_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></a>";
+                                                                }
+                                                                if($user4->check("UND", 78)){
+                                                                    echo" <button type='button'  onclick='deleteorder($item->user_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>";
+                                                                }
                                                                     
-                                                                </div>
+                                                                echo"   </div>
                                                             </td>
                                             </tr> ";
                                             }

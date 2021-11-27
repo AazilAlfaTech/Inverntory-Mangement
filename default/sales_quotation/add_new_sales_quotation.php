@@ -39,7 +39,7 @@
         
 
                 header("location:../sales_quotation/manage_sales_quotation.php?success=1");
-                exit();
+             
                 
         }
     }
@@ -70,7 +70,7 @@
                             <div class="page-header-breadcrumb">
                                 <ul class="breadcrumb-title">
                                     <li class="breadcrumb-item">
-                                        <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+                                        <a href="../dashboard/dashboard.php"> <i class="feather icon-home"></i> </a>
                                     </li>
                                     <li class="breadcrumb-item"><a href="../sales_quotation/manage_sales_quotation.php">SalesQuotation</a> </li>
                                     <li class="breadcrumb-item"><a href="../sales_quotation/add_new_sales_quotation.php">Add</a> </li>
@@ -187,7 +187,7 @@
                                             
                                         <button type="button" class="btn btn-primary" name="addprbtn" id="add_prbtn">ADD</button>
                                         <button type="button" class="btn btn-inverse reset">CLEAR</button>
-                                        <span class='error_fields'><div class="alert alert-success background-success p-1" style="width:180px;height:30px">Please fill all the fields</div></span>
+                                        <span class='error_fields'><label class="label label-md label-danger" >Please fill all the fields</label></span>
 
                                         <br>
                                         <br>
@@ -227,10 +227,7 @@
                                                                 <th> Sub Total :</th>
                                                                 <td ><input type="text" id="total_price" name="subtot" data-a-sign="Rs. " class=" form-control form-control-sm autonumber" readonly></td>
                                                             </tr>
-                                                            <!-- <tr>
-                                                                <th> Total Discount :</th>
-                                                                <td ><input type="text" id="total_discount" name="discount tot" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " readonly></td>
-                                                            </tr> -->
+                                                            
                                                         
                                                             <tr class="text-info">
                                                                 <td>
