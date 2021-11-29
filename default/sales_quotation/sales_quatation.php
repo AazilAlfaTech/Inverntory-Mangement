@@ -203,8 +203,7 @@ function get_all_sales_quotation_salesorder(){
 
 function get_salesquotation_by_id($sales_quotationid){
 
-    $sql="SELECT sales_quotation.salesquot_id,sales_quotation.salesquot_customer,sales_quotation.salesquot_ref,sales_quotation.salesquot_date,
-    sales_quotation.salesquot_status,customer.customer_name FROM sales_quotation INNER JOIN customer ON sales_quotation.salesquot_customer=customer.customer_id WHERE salesquot_status='ACTIVE' AND salesquot_id = $sales_quotationid";
+    $sql="SELECT sales_quotation.salesquot_id,sales_quotation.salesquot_customer,sales_quotation.salesquot_ref,sales_quotation.salesquot_date, sales_quotation.salesquot_currentstatus, sales_quotation.salesquot_status,customer.customer_name FROM sales_quotation INNER JOIN customer ON sales_quotation.salesquot_customer=customer.customer_id WHERE salesquot_status='ACTIVE' AND salesquot_id = $sales_quotationid";
 
     // echo $sql;
     $result=$this->db->query($sql);
@@ -218,6 +217,8 @@ function get_salesquotation_by_id($sales_quotationid){
     $sales_quotation_item->salesquot_ref=$row["salesquot_ref"];
     $sales_quotation_item->salesquot_date=$row["salesquot_date"];
     $sales_quotation_item->salesquot_status=$row["salesquot_status"];
+    $sales_quotation_item->salesquot_currentstatus=$row["salesquot_status"];
+
 
        
     return $sales_quotation_item;

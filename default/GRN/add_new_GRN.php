@@ -30,19 +30,19 @@
         $grn1->grn_date=$_POST["grndate"];
         $grn1->grn_ref_no=$grn1->grn_code($_POST["grndate"]);
         $result_grn1=$grn1->insert_grn();
-        $res_insert=$grn_item1->insert_grnitem($result_grn1);
+        $res_insert=$grn_item1->insert_grnitem($result_grn1,$_POST["grnrecievedloc"]);
 
         //code for insert alert validations
-        if($res_insert==true)
-        {              
-            echo "insert done";
-            header("location:../GRN/manage_GRN.php?success=1");
-        }
-        elseif($res_insert==false)
-        {
-            echo"false";
-            header("location:../GRN/manage_GRN.php?notsuccess=1");
-        }
+        // if($res_insert==true)
+        // {              
+        //     echo "insert done";
+        //     header("location:../GRN/manage_GRN.php?success=1");
+        // }
+        // elseif($res_insert==false)
+        // {
+        //     echo"false";
+        //     header("location:../GRN/manage_GRN.php?notsuccess=1");
+        // }
     }
 
    
@@ -259,6 +259,7 @@
                                                                     <span class='btn_edit'><button class='btn btn-mini btn-primary' type='button'>Edit</button></span>
                                                                     <span class='btn_save'><button class='btn btn-mini btn-success' type='button'>Save</button></span>
                                                                     <span class='btn_cancel'><button class='btn btn-mini btn-danger' type='button'>Cancel</button></span>
+                                                                    <span class='btn_delete'><button  class='btn btn-mini btn-danger btn_deleterow' type='button'>Delete</button></span>
                                                                 </td>
                                                             </tr>
                                                     

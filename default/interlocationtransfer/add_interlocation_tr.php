@@ -28,7 +28,7 @@ if (isset($_POST['inter_loc_transferdate'])) {
     $inter_loc_tr1->inter_loc_transfer_code = $inter_loc_tr1->int_loc_code1($_POST["inter_loc_transferdate"]);
 
     $inter_locid=$inter_loc_tr1->insert_inter_loc_transfer();
-    $inter_loc_tritem1->insert_interloctranfer_item($inter_locid);
+    $inter_loc_tritem1->insert_interloctranfer_item($inter_locid,$_POST['inter_loc_transferfrom'],$_POST['inter_loctransferto']);
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -168,13 +168,7 @@ include_once "../../files/head.php";
     </select>
 
 </div>
-<div class="col-sm-4">
 
-    <label class=" col-form-label">Select Batch No</label>
-    <select class="js-example-basic-single col-sm-12 prodbatch" name="int_item_productbatch" id="int_itemproductbatch" >
-        <option value="-1 ">Select Batch No</option>
-    </select>
-</div>
 
 
 <div class="col-sm-4">
@@ -209,11 +203,10 @@ include_once "../../files/head.php";
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <!-- <th>#</th> -->
+                                                        
                                                         <th>Product</th>
-                                                        <!-- <th>Qty</th> -->
-                                                        <th>Price</th>
-                                                        <th>Batch No</th>
+                                                        <th>Qty</th>
+                                                        
 
                                                         <th>Action</th>
                                                     </tr>
@@ -295,49 +288,48 @@ include_once "../../files/head.php";
                         {
                             console.log(i);
                             console.log(x);
-                            $("#int_itemproductid").append("<option value='"+d[i].grn_item_productid+"'> "+d[i].grn_item_prodname+" </option>");
+                            $("#int_itemproductid").append("<option value='"+d[i].stock_productid+"'> "+d[i].product_name+" </option>");
                         });
                         });
                     });
 
 
                     // Filtering the product batch according to the slected products
-                        $(".grn_product").change(function()
+                    //     $(".grn_product").change(function()
+                    // {
+                    //     console.log("Hello");
+                    //     var product_id=$(".grn_product").val();
+                    //     console.log(product_id);
+                    //     $.get("../ajax/ajaxpurchase.php?type=get_productbatchby_prodid",{prodid:product_id},function(data)
+                    //     {
+                    //     console.log(data);
+                    //     var d=JSON.parse(data);
+                    //     $("#int_itemproductbatch").html("");
+                    //     $("#int_itemproductbatch").append("<option value=''>Select Batch No</option>");
+                    //     $.each(d,function(i,x)
+                    //     {
+                    //         console.log(i);
+                    //         console.log(x);
+                    //         $("#int_itemproductbatch").append("<option value='"+d[i].product_batch+"'> "+d[i].product_batch+" </option>");
+                    //     });
+                    //     });
+                    // });
+
+                    // Filtering the product batch according to the slected products
+                    $(".grn_product").change(function()
                     {
                         console.log("Hello");
+                        
                         var product_id=$(".grn_product").val();
-                        console.log(product_id);
-                        $.get("../ajax/ajaxpurchase.php?type=get_productbatchby_prodid",{prodid:product_id},function(data)
+                        var location_id=$(".fromloc").val();
+                       
+                        $.get("../ajax/ajaxpurchase.php?type=get_productqty_prodid",{prodid:product_id,location:location_id},function(data)
                         {
                         console.log(data);
                         var d=JSON.parse(data);
-                        $("#int_itemproductbatch").html("");
-                        $("#int_itemproductbatch").append("<option value=''>Select Batch No</option>");
-                        $.each(d,function(i,x)
-                        {
-                            console.log(i);
-                            console.log(x);
-                            $("#int_itemproductbatch").append("<option value='"+d[i].product_batch+"'> "+d[i].product_batch+" </option>");
-                        });
-                        });
-                    });
+                        $("#int_itemqty").val(d.grn_qty);
 
-                    // Filtering the product batch according to the slected products
-                    $(".prodbatch").change(function()
-                    {
-                        console.log("Hello");
-                        var prodbatch=$(".prodbatch").val();
-                        console.log(prodbatch);
-                        $.get("../ajax/ajaxpurchase.php?type=get_productqty_prodbatch",{prod_batch:prodbatch},function(data)
-                        {
-                        console.log(data);
-                        var d=JSON.parse(data);
-                        $.each(d,function(i,x)
-                        {
-                            console.log(i);
-                            console.log(x);
-                            $("#int_itemqty").val(d[i].grn_item_remain_qty);
-                        });
+                        
                         });
                     });
 
@@ -360,11 +352,11 @@ include_once "../../files/head.php";
                         console.log("Hey");
                         var inter_loc_prodid=$("#int_itemproductid option:selected").val();
                         var inter_loc_prodname=$("#int_itemproductid option:selected").text();
-                        var inter_loc_prodbatch=$("#int_itemproductbatch option:selected").val();
+                       // var inter_loc_prodbatch=$("#int_itemproductbatch option:selected").val();
                         var inter_loc_prodqty=$("#int_itemqty").val();
                         console.log(inter_loc_prodid);
 
-                        if($('#int_itemproductid').val()=='' || $('#int_itemproductbatch').val()=='' || $('#int_itemqty').val()=='')
+                        if($('#int_itemproductid').val()==''  || $('#int_itemqty').val()=='')
                         {
                             $(".error_fields").show().delay( 1000 ).fadeOut( 1000 );
                         }
@@ -374,9 +366,6 @@ include_once "../../files/head.php";
                             <td class='table-edit-view' >\
                             <input  class='input-borderless input-sm productid' type='hidden'readonly name='intloc_item_productid[]' value='"+inter_loc_prodid+"'>\
                             <input  class='input-borderless input-sm productid' type='text' readonly name='' value='"+inter_loc_prodname+"'>\                            </td>\
-                            <td class='table-edit-view'>\
-                                <input class='input-borderless input-sm row_data batchno'  type='text' readonly name='intloc_item_batchno[]' value='" + inter_loc_prodbatch + "'> <div style='color: red; display: none' class='msg2'>'Digits only'</div> \
-                            </td>\
                             <td class='table-edit-view'>\
                                 <input class='input-borderless input-sm row_data quantity' type='text' readonly name='intloc_item_qty[]' value='" + inter_loc_prodqty + "'> <div style='color: red; display: none' class='msg1'>'Digits only'</div>\
                             </td>\

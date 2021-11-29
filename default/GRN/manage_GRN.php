@@ -37,13 +37,19 @@
                     </div>
                 </div>
                 <!-- Page-header end -->
+                <?php
+                    error_reporting(E_ALL & ~E_NOTICE);
+                    if($user4->check("GRNA", 28)){
+                        echo' <div class="d-flex flex-row-reverse">
+                        <a href="add_new_GRN.php">
+                            <button class="btn btn-mat btn-primary ">Add New GRN</i></button>
+                        </a>
+                        </div>
+                        ';
+                    }
+                ?>
 
-                <div class="d-flex flex-row-reverse">
-                <a href="add_new_GRN.php">
-                    <button class="btn btn-mat btn-primary ">Add New GRN</i></button>
-                </a>
-                </div>
-
+               
 
                 <br>
                 <br>
@@ -96,6 +102,7 @@
                                                     <?php
                                                         foreach ($result_grn1 as $item)
                                                         {
+                                                            error_reporting(E_ALL & ~E_NOTICE);
                                                             echo
                                                             "<tr>
                                                            
@@ -104,11 +111,15 @@
                                                                 <td>$item->grn_supplier</td>
 
                                                                 <td>
-                                                                    <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                    <button type='button' id='edit_pr' onclick='view_grn($item->grn_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-eye'></i></button>
+                                                                    <div class='btn-group btn-group-sm' style='float: none;'>";
+
+                                                                    if($user4->check("GRNV",30)){
+                                                                        echo"  <button type='button' id='edit_pr' onclick='view_grn($item->grn_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-eye'></i></button>";
+                                                                    }
+                                                                  
                                                                         
                                                
-                                                                    </div>
+                                                              ECHO"      </div>
                                                                 </td>
                                                             </tr> ";
                                                         }

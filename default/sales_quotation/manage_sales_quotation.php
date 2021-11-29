@@ -1,11 +1,9 @@
 <?php
-
+ error_reporting(E_ALL & ~E_NOTICE);
 include_once "sales_quatation.php";
 $sales_quot1=new sales_quotation();
 $result_sales=$sales_quot1->get_all_sales_quotation();
 
-include_once ("../user/user.php");
-$user4=new user();
 
 if(isset($_GET['d_id']))
 {
@@ -47,7 +45,7 @@ include_once "../../files/head.php";
                             <div class="page-header-breadcrumb">
                                 <ul class="breadcrumb-title">
                                     <li class="breadcrumb-item">
-                                        <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+                                        <a href="../dashboard/dashboard.php"> <i class="feather icon-home"></i> </a>
                                     </li>
                                     <li class="breadcrumb-item"><a href="../sales_quotation/manage_sales_quotation.php">SalesQuote</a> </li>
                                 </ul>
@@ -56,13 +54,14 @@ include_once "../../files/head.php";
                     </div>
                 </div>
                 <!-- Page-header end -->
-
+                <?php if($user4->check("SQA", 1)):?>
+                  
                 <div class="d-flex flex-row-reverse">
                     <a href="add_new_sales_quotation.php">
                     <button class="btn btn-mat btn-primary ">Add sales Quotation</i></button>
                     </a>
                 </div>
-
+                <?php endif ;   ?>
 
                 <br>
                 <br>
@@ -155,7 +154,8 @@ include_once "../../files/head.php";
                                             </thead>
                                             <tbody>
                                             <?php
-//    error_reporting(E_ALL & ~E_NOTICE);
+             error_reporting(E_ALL & ~E_NOTICE);
+            if( $user4->check("SQV", 3) || $user4->check("SQD", 4) || $user4->check ("SQE", 2) ){
             foreach ($result_sales as $item)
             {
                 if($item->salesquot_currentstatus=='NEW'){
@@ -174,16 +174,17 @@ include_once "../../files/head.php";
                         if ($user4->check("SQV", 3)) {
                             echo" <button type='button' id='edit_pr' onclick='view_sq($item->salesquot_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>
                             ";
-                          }else{
-                            echo"no";
                           }
                           if ($user4->check("SQD", 4)) {
                             echo"   <button type='button'  onclick='delete_sq($item->salesquot_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o delete_group_name'></span></button>
                             ";
                           }
-                          else{
-                            echo"no";
-                          }
+                        
+                          if ($user4->check ("SQE", 2)) {
+                            echo"    <button type='button' onclick='edit_sq($item->salesquot_id)'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button>
+                             ";
+                           }
+                          
                         
                        echo" </div>
                     </td>
@@ -205,22 +206,12 @@ include_once "../../files/head.php";
                         if ($user4->check("SQV", 3)) {
                             echo" <button type='button' id='edit_pr' onclick='view_sq($item->salesquot_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>
                             ";
-                          }else{
-                            echo"no";
                           }
                           if ($user4->check("SQD", 4)) {
                             echo"   <button type='button'  onclick='delete_sq($item->salesquot_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o delete_group_name'></span></button>
                             ";
                           }
-                          else{
-                            echo"no";
-                          }
-                          if ($user4->check ("SQE", 2)) {
-                           echo"    <button type='button' onclick='edit_sq($item->salesquot_id)'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button>
-                            ";
-                          }else{
-                            echo"no";
-                          }
+                         
                         echo"
                         </div>
                     </td>
@@ -228,7 +219,7 @@ include_once "../../files/head.php";
                 }
                 
             }
-
+        }
          
               
         ?>
@@ -275,3 +266,6 @@ include_once "../../files/head.php";
 
     }
 </script>
+
+
+                                                               

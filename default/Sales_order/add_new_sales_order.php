@@ -120,7 +120,7 @@ include_once "../../files/head.php";
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-block"  style="display: none;">
+                                
                                
                                     <div class="dt-responsive table-responsive">
 

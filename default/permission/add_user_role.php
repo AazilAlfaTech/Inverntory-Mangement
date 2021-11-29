@@ -123,7 +123,7 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox checkselect" type="checkbox"  value="2">
+                                            <input class="border-checkbox checkselect" type="checkbox"  >
                                             <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
@@ -131,19 +131,19 @@ include_once "../../files/head.php";
                                     <div class="col-sm-6">
 
                                     <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]"  value="5">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]"  value="77 ">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]"  value="6" >
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]"  value="75" >
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary"  >
-                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="7" >
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="76" >
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="8">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="78">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -174,19 +174,19 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="7">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="73">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="7">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="71">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary" >
-                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="7">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="72">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox checkboxval2" type="checkbox" name="permid[]" value="7">
+                                            <input class="border-checkbox checkboxval2" type="checkbox" name="permid[]" value="74">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -196,8 +196,8 @@ include_once "../../files/head.php";
 
 
                                 <hr>
-                                </div>
-                                <!-- <div class="row">
+                                
+                                <div class="row">
 
 
                                     <div class="col-sm-3">
@@ -209,26 +209,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="53">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="51">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="52">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="54">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -252,26 +252,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="57">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="55">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox"name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox"name="permid[]" value="56">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
-                                        <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                        <div class="border-checkbox-group border-checkbox-group-primary"> 
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="58">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -295,26 +295,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="65"> 
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="63">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="64">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="66">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -338,26 +338,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
                                             <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="61">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="59">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="60">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="62">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -381,26 +381,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="49">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="47">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="48">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="50">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -425,26 +425,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="33">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="31">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="32">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="34">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -467,26 +467,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="37">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="35">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="36">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="38">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -510,26 +510,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkboxval checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="45">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="43">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="44">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="46">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -552,26 +552,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval " type="checkbox" name="permid[]" value="41">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="39">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="40">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="42">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -596,30 +596,30 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect " type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="21">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="19">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="20">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="22">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
                                          <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="23">
                                             <label class="border-checkbox-label" for="checkbox1">Request Approval</label>
                                         </div>
 
@@ -642,26 +642,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="26">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="24">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="25">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="27">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -687,26 +687,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1" value="">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="30">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="28">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="29">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="31">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -732,26 +732,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" name="permid[]">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="3">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="1">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="2">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="4">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -776,26 +776,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="7">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="5">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="6">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="8">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -821,26 +821,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="11">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="9">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="10">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="12">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -866,26 +866,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="15">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="13">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="14">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="16">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -909,26 +909,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="69">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="67">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="68">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="70">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -954,26 +954,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="81">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="79">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="80">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="82">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -999,26 +999,26 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="85">
                                             <label class="border-checkbox-label" for="checkbox1">View</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="83">
                                             <label class="border-checkbox-label" for="checkbox1">Add</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="84">
                                             <label class="border-checkbox-label" for="checkbox1">Edit</label>
                                         </div>
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" name="permid[]">
+                                            <input class="border-checkbox checkboxval" type="checkbox" name="permid[]" value="86">
                                             <label class="border-checkbox-label" for="checkbox1">Delete</label>
                                         </div>
 
@@ -1129,8 +1129,8 @@ include_once "../../files/head.php";
 
                                     <div class="col-sm-3">
                                         <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1">Selecet All</label>
+                                            <input class="border-checkbox checkselect" type="checkbox" id="checkbox1">
+                                            <label class="border-checkbox-label" for="checkbox1">Select All</label>
                                         </div>
                                     </div>
 
@@ -1154,9 +1154,9 @@ include_once "../../files/head.php";
 
                                     </div>
 
-                                </div> -->
+                                </div>
 
-
+                                </div>
 
 
 

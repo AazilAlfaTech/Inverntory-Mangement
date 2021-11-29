@@ -29,6 +29,7 @@ include_once "supplier_group.php";
                 }
         }else
         {
+            if($user4->check("RSGA", 51)){
                 $res_insert=$suppliergroup1->insert_suppier_group();   
                 //code for insert validation
                 if($res_insert==true){
@@ -37,6 +38,11 @@ include_once "supplier_group.php";
                 }elseif($res_insert==false){
                     header("location:../supplier_group/manage_supplier_group.php ?notsuccess=1");
                 }
+
+            }else{
+                echo"No permission";
+            }
+                
         }
     
     
@@ -292,12 +298,19 @@ include_once "supplier_group.php";
                                                                 
                                                                         <td>$item->suppliergroup_code</td>
                                                                         <td>$item->suppliergroup_name  </td>
+
                                                                      
 
-                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                                        <button type='button' onclick='edit_sup_grp($item->suppliergroup_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button> </a>
-                                               <button type='button'  onclick='delete_sup_grp($item->suppliergroup_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                               </td> 
+                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                        
+                                                                        if($user4->check("RSGE", 52)){
+                                                                            echo"<button type='button' onclick='edit_sup_grp($item->suppliergroup_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button> </a>";
+                                                                        }
+                                                                        if($user4->check("RSGD", 54)){
+                                                                            echo" <button type='button'  onclick='delete_sup_grp($item->suppliergroup_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>";
+                                                                        }
+                                              
+                                             echo"  </td> 
                                                
                                                
                                                                        

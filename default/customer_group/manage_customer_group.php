@@ -28,8 +28,9 @@ include_once "customer_group.php";
                 }elseif($res_edit==false){
                     header("location:../customer_group/manage_customer_group.php?notsuccess=1");
                 }
-        }else
-        {
+        }else{
+            if($user4->check("PCGA", 59))
+            {
                 $res_insert=$customergroup1->insert_customer_group();   
                 //code for insert validation
                 if($res_insert==true){
@@ -38,6 +39,10 @@ include_once "customer_group.php";
                 }elseif($res_insert==false){
                     header("location:../customer_group/manage_customer_group.php?notsuccess=1");
                 }
+            }else{
+                echo "No permissio";
+            }
+                
         }
     
     
@@ -293,10 +298,18 @@ include_once "../../files/head.php";
                                                                         <td>$item->customergroup_name  </td>
                                                                      
 
-                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                                        <button type='button' onclick='edit_cus_grp($item->customergroup_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></span></button> </a>
-                                                                        <button type='button'  onclick='delete_cus_grp($item->customergroup_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-trash-o'></i></button>
-                                                                        </td> 
+                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                        if($user4->check("PCGE", 60)){
+                                                                            echo" <button type='button' onclick='edit_cus_grp($item->customergroup_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></span></button> </a>";
+                                                                        }
+                                                                        
+                                                                        if($user4->check("PCGD", 61)){
+                                                                            echo" <button type='button'  onclick='delete_cus_grp($item->customergroup_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-trash-o'></i></button>";
+                                                                        }
+                                                                        
+                                                                       
+                                                                       
+                                                                     ECHO"   </td> 
                                                
                                                
                                                                        

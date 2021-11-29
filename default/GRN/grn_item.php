@@ -27,7 +27,7 @@
                 return true;
             }
 
-            function insert_grnitem($id)
+            function insert_grnitem($id,$locationgrn)
             {
                 $avco_product2=new avco();
                 $purchaseorderitem5=new purchaseorderitem();
@@ -38,26 +38,38 @@
                foreach($_POST['grn_itemid'] as $item)
                 {
                     
-                    // $grn_batch=$grn_item3->product_batch($_POST['grn_itemid'][$grn_list]);
-                    // exit();
+                  //insert into grn item table
                     $SQL="INSERT INTO grn_item (grn_item_grnid,grn_item_productid,grn_item_qty,grn_item_remain_qty,grn_item_price,grn_item_discount,product_batch)
                     VALUES ($id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_itemprice'][$grn_list]."',
                     '".$_POST['grn_item_discount'][$grn_list]."','".$grn_item3->product_batch($_POST['grn_itemid'][$grn_list])."')";
                     $this->db->query($SQL);
-                    echo $SQL;
-                    if($_POST['grn_itemid_inventory'][$grn_list]=='AVCO'){
-                        
-                        $avco_product2->updatecostprice($_POST['grn_itemid'][$grn_list]);
-                       $resultcost=$avco_product2->get_costpricebyid($_POST['grn_itemid'][$grn_list]);
-                        $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_costprice) VALUES ('GRN',$id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."',$resultcost)";
+                    $GRNITEM_id=$this->db->insert_id;
+                   
+                    if($_POST['grn_itemid_inventory'][$grn_list]=='AVCO')
+                    {
+                        //update the price in the avco table
+                        $resultcost=$avco_product2->updatecostprice($_POST['grn_itemid'][$grn_list]);
+
+                        //get the cost of the product from avco table
+                        //$resultcost=$avco_product2->get_costpricebyid($_POST['grn_itemid'][$grn_list]);
+
+                        //insert grn item data into stock table
+                        $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_remainqty,stock_costprice,stock_loc) VALUES ('GRN',$GRNITEM_id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."',$resultcost,$locationgrn)";
                         $this->db->query( $sql_stock);
-                        echo $sql_stock;
-                    }elseif($_POST['grn_itemid_inventory'][$grn_list]=='FIFO'){
-                            $costprice=round(($_POST['grn_itemprice'][$grn_list] * 1) - ($_POST['grn_itemprice'][$grn_list] *1* $_POST['grn_item_discount'][$grn_list]/100),2);
-                            $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_costprice) VALUES ('GRN',$id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."',$costprice)";
+                     
+                    }elseif($_POST['grn_itemid_inventory'][$grn_list]=='FIFO')
+                    {
+                        //calculate unit cost price
+                        $costprice=round(($_POST['grn_itemprice'][$grn_list] * 1) - ($_POST['grn_itemprice'][$grn_list] *1* $_POST['grn_item_discount'][$grn_list]/100),2);
+
+                        //insert grn item data into stock table
+                        $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_remainqty,stock_costprice,stock_loc) VALUES ('GRN',$GRNITEM_id,'".$_POST['grn_itemid'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."','".$_POST['grn_item_qty'][$grn_list]."',$costprice,$locationgrn)";
                         $this->db->query( $sql_stock);
+                       
                     }
+                    //update the status of purchase order item
                     $purchaseorderitem5->update_po_item_currentstatus($_POST['poitem_id'][$grn_list],$_POST['CurrentStatus'][$grn_list]);
+                    //update the status of purchase order
                     $purchaseorder5->purchase_order_status($_POST['po_id'][$grn_list]);
 
                     

@@ -11,12 +11,10 @@ if(!isset($_SESSION["user"])){
 //     parent::__construct();
 // }
 
-// function check ($module, $id) {
-//     return in_array($id,  $_SESSION["user"]["permission"][$module]);
-//   }
+include_once("../user/user.php");
+$user5= new user();
 
-  //print_r($_SESSION["user"]["permission"][$module]);
-  //exit();
+$user4=new user();
 
 ?>
 
@@ -245,7 +243,7 @@ if(!isset($_SESSION["user"])){
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="../Logins/logout.php">
+                                        <a href="../login/logout.php">
                                             <i class="feather icon-log-out"></i> Logout
                                         </a>
                                     </li>
@@ -448,14 +446,28 @@ if(!isset($_SESSION["user"])){
                             </li>
 <!-- ------Sales------------------------------------------------------------------------------------------------------------------------------- -->
                              
-<li class="pcoded-hasmenu">
+                            <li class="pcoded-hasmenu">
                                 <a href="javascript:void(0)">
                                     <span class="pcoded-micon"><i class="feather icon-layers"></i></span>
                                     <span class="pcoded-mtext">Sales</span>
                                
                                 </a>
                                 <ul class="pcoded-submenu">
+                                <!-- <?php if($user5->checksubgroup("Sales", "Sales Quotation")):?>
                                     <li class="">
+                                        <a href="../sales_quotation/manage_sales_quotation.php" target="">
+                                            <span class="pcoded-mtext">Sales Quotation</span>
+                                        </a>
+                                    </li>
+                                <?php endif ;   ?>
+                                <?php if($user5->checksubgroup("Sales", "Sales Order")):?>
+                                    <li class=" ">
+                                        <a href="../sales_order/manage_sales_order.php" target="" >
+                                            <span class="pcoded-mtext">Sales Order </span>
+                                        </a>
+                                    </li>
+                                <?php endif ;   ?> -->
+                                <li class="">
                                         <a href="../sales_quotation/manage_sales_quotation.php" target="">
                                             <span class="pcoded-mtext">Sales Quotation</span>
                                         </a>

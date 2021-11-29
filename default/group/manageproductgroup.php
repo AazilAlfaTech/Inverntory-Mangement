@@ -3,6 +3,8 @@
 include_once "group.php";
 $group1=new group();//create a new object 
 
+
+
 // download the sample excel file
 if(!empty($_GET['file_download']))
 {
@@ -48,23 +50,30 @@ if(isset($_POST["groupcode"]))
         $res_edit=$group1->edit_group($_POST['groupid']);
             //code for edit valaidation
             if($res_edit==true){
-                "EDITING DONE";
-                header("location:../group/manageproductgroup.php?1success_edit=");
+               
+                header("location:../group/manageproductgroup.php?success_edit=1");
             }elseif($res_edit==false){
-                echo "FALSE";
+              
                 header("location:../group/manageproductgroup.php?notsuccess=1");
             }
     }else
     {
-        $res_insert=$group1->insert_group2();
+        if($user4->check("MGA",31 ))
+        {
+            $res_insert=$group1->insert_group2();
             //code for insert alert validations
                 if($res_insert==true){
-                    echo "insert done";
+                   
                     header("location:../group/manageproductgroup.php?success=1");
                 }elseif($res_insert==false){
-                    echo"false";
+                  
                     header("location:../group/manageproductgroup.php?notsuccess=1");
                 }
+            
+        }else{
+            echo"No Permission";
+        }
+        
 
     }
 
@@ -134,7 +143,7 @@ include_once "../../files/head.php";
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Import Group</h5>
-                                    <a href="manageproductgroup.php?file_download=../Import/excel/g_test.xlsx">Download sample file<a>
+                                    <label class="label label-md label-primary"><a href="manageproductgroup.php?file_download=../Import/excel/g_test.xlsx">Download sample file<a></label>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
                                             <li><i class="feather icon-maximize full-card"></i></li>
@@ -325,12 +334,18 @@ include_once "../../files/head.php";
                                             <td id='gr_id_td'>$item->group_id</td>
                                             <td>$item->group_code</td>
                                             <td>$item->group_name</td>
-
-                                            <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                            <button type='button' id='$item->group_id'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button>
-                                               <button type='button'  onclick='del_group($item->group_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-trash-o delete_group_name'></span></button>
+                                            <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                           
+                                            if($user4->check("MGE",32 )){
+                                                echo"  <button type='button' id='$item->group_id'  class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button>";
+                                            }
+                                            if($user4->check("MGD",34 )){
+                                                echo"<button type='button'  onclick='del_group($item->group_id,\'$item->group_code\')' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-trash-o delete_group_name'></span></button>";
+                                            }
+                                                                                     
+                                            
                                                
-                                           </div></td>
+                                        echo"   </div></td>
                                         </tr>
                                         
                                         ";
@@ -360,10 +375,10 @@ include_once "../../files/foot.php";
 <script>
   
 
-    function del_group(del_id){
+    function del_group(del_id,groupcode){
         console.log("hi");
         console.log(del_id);
-        if(confirm("Do you want to delete id"+""+del_id))
+        if(confirm("Do you want to delete group"+""+groupcode))
       { window.location.href="../group/manageproductgroup.php?delete_g="+del_id;
      }
 

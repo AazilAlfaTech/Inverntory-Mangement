@@ -83,7 +83,7 @@ class fifocalculation{
             }
 
 
-            function insert_avco($salesinvoiceitemqty,$productid,$salesinvoiceitemid){
+            function insert_avco($salesinvoiceitemqty,$productid,$salesinvoiceitemid,$locationid){
                     
         
                // get avco ost price
@@ -93,7 +93,7 @@ class fifocalculation{
 
                 if($salesinvoiceitemqty>0)
                         {
-                            $sqlGRNitem="SELECT * FROM grn_item WHERE grn_item_productid=$productid AND grn_item_qty > 0 ORDER BY grn_item_id ASC";
+                            $sqlGRNitem="SELECT * FROM stock WHERE stock_productid=$productid AND stock_loc=$locationid AND stock_transactiontype='GRN' AND stock_remainqty > 0 ORDER BY stock_transactiotypeid ASC";
                             $res_GRNitem=$this->db->query( $sqlGRNitem);
                             
                             if($res_GRNitem)
@@ -101,20 +101,20 @@ class fifocalculation{
                                 while($item2=$res_GRNitem->fetch_array())
                                 {
                                   
-                                   $grnitemid=$item2['grn_item_id'];
-                                   //echo $grnitemid;
-                                    $grnqty= $item2['grn_item_qty'];
-                                    $grnremainingqty=$item2['grn_item_remain_qty'];
-                                    $grnitemunitprice=$item2['grn_item_price'];
+                                    $grnitemid=$item2['stock_transactiotypeid'];
+                                          
+                                    $grnqty= $item2['stock_qty'];
+                                    $grnremainingqty=$item2['stock_remainqty'];
+                                    $grnitemunitprice=$item2['stock_costprice'];
         
                                     $fifosalesqty=min($salesinvoiceitemqty,$grnremainingqty);
                                     $fiforemainingqty= $grnremainingqty -  $fifosalesqty;
-                                    //$fifocost = $grnitemunitprice*$fifosalesqty;
-                                   
+                                    $fifocost = $grnitemunitprice;
+
                                     $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_purchaseitemid,fifo_salesitemid,fifo_soldqty,fifo_soldcost) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fiforemainingqty,$fifocost)";
                                     $this->db->query($sql_fifo);
                                  //   echo $sql_fifo;      
-                                    $sql_grn_item="UPDATE grn_item SET grn_item_remain_qty= $fiforemainingqty WHERE grn_item_id=$grnitemid ";
+                                    $sql_grn_item="PDATE stock SET stock_remainqty= $fiforemainingqty WHERE stock_transactiotypeid=$grnitemid AND stock_transactiontype='GRN'  ";
                                     $this->db->query( $sql_grn_item);
                                  //   echo  $sql_grn_item;
         
@@ -139,7 +139,99 @@ class fifocalculation{
                             }
                         }
                     }
-        
+                    function insert_fifo_stock($salesinvoiceitemqty,$productid,$salesinvoiceitemid,$locationid){
+                        
+                     
+                        if($salesinvoiceitemqty>0)
+                                {
+                                    //get item detaills from stock table based on product id ad location id
+                                    $sqlGRNitem="SELECT * FROM stock WHERE stock_productid=$productid AND stock_loc=$locationid AND stock_transactiontype='GRN' AND stock_remainqty > 0 ORDER BY stock_transactiotypeid ASC";
+                                    $res_GRNitem=$this->db->query($sqlGRNitem);
+                                    echo $sqlGRNitem;
+                
+                                    if($res_GRNitem)
+                                    {
+                                        while($item2=$res_GRNitem->fetch_array())
+                                        {
+                                          
+                                            $grnitemid=$item2['stock_transactiotypeid'];
+                                          
+                                            $grnqty= $item2['stock_qty'];
+                                            $grnremainingqty=$item2['stock_remainqty'];
+                                            $grnitemunitprice=$item2['stock_costprice'];
+                
+                                            $fifosalesqty=min($salesinvoiceitemqty,$grnremainingqty);
+                                            $fiforemainingqty= $grnremainingqty -  $fifosalesqty;
+                                            $fifocost = $grnitemunitprice;
+                
+                                            $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_purchaseitemid,fifo_salesitemid,fifo_soldqty,fifo_soldcost) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fifocost)";
+                                            $this->db->query($sql_fifo);
+                
+                                            $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_costprice,stock_loc) VALUES ('SALES',$salesinvoiceitemid,$productid,-$fifosalesqty,$fifocost,$locationid)";
+                                            $this->db->query( $sql_stock);
+                                             echo $sql_stock;
+                                            $sql_grn_item="UPDATE stock SET stock_remainqty= $fiforemainingqty WHERE stock_transactiotypeid=$grnitemid AND stock_transactiontype='GRN' AND stock_loc=$locationid  ";
+                                            $this->db->query( $sql_grn_item);
+                                           echo  $sql_grn_item;
+                
+                                            $salesinvoiceitemqty-=$fifosalesqty;  
+                                            if($salesinvoiceitemqty <= 0)
+                                            break;
+                
+                                        }
+                                    }else{
+                                        echo "Fallsseeee";
+                                    }
+                                }
+                            }
+
+
+                            function insert_fifo_stock_transfer($salesinvoiceitemqty,$productid,$locationfrom,$locationto){
+                        
+                     
+                                if($salesinvoiceitemqty>0)
+                                        {
+                                            //get item detaills from stock table based on product id ad location id
+                                            $sqlGRNitem="SELECT * FROM stock WHERE stock_productid=$productid AND stock_loc=$locationfrom AND stock_transactiontype='GRN' AND stock_remainqty > 0 ORDER BY stock_transactiotypeid ASC";
+                                            $res_GRNitem=$this->db->query($sqlGRNitem);
+                                            echo $sqlGRNitem;
+                        
+                                            if($res_GRNitem)
+                                            {
+                                                while($item2=$res_GRNitem->fetch_array())
+                                                {
+                                                  
+                                                    $grnitemid=$item2['stock_transactiotypeid'];
+                                                  
+                                                    $grnqty= $item2['stock_qty'];
+                                                    $grnremainingqty=$item2['stock_remainqty'];
+                                                    $grnitemunitprice=$item2['stock_costprice'];
+                        
+                                                    $fifosalesqty=min($salesinvoiceitemqty,$grnremainingqty);
+                                                    $fiforemainingqty= $grnremainingqty -  $fifosalesqty;
+                                                    $fifocost = $grnitemunitprice;
+                        
+                                                    // $sql_fifo="INSERT INTO fifocalculation (fifo_productid,fifo_purchaseitemid,fifo_salesitemid,fifo_soldqty,fifo_soldcost) VALUES ($productid,$grnitemid,$salesinvoiceitemid,$fifosalesqty,$fifocost)";
+                                                    // $this->db->query($sql_fifo);
+                        
+                                                    $sql_stock="INSERT INTO stock(stock_transactiontype, stock_transactiotypeid,stock_productid,stock_qty,stock_costprice,stock_remainqty,stock_loc) VALUES ('GRN',$grnitemid,$productid,$fifosalesqty,$fifocost,$fifosalesqty,$locationto)";
+                                                    $this->db->query( $sql_stock);
+                                                     echo $sql_stock;
+                                                    $sql_grn_item="UPDATE stock SET stock_remainqty= $fiforemainingqty WHERE stock_transactiotypeid=$grnitemid AND stock_transactiontype='GRN' AND stock_loc=$locationfrom ";
+                                                    $this->db->query( $sql_grn_item);
+                                                   echo  $sql_grn_item;
+                        
+                                                    $salesinvoiceitemqty-=$fifosalesqty;  
+                                                    if($salesinvoiceitemqty <= 0)
+                                                    break;
+                        
+                                                }
+                                            }else{
+                                                echo "Fallsseeee";
+                                            }
+                                        }
+                                    }
+                              
 
 }
 

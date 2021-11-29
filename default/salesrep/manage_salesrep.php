@@ -33,8 +33,13 @@ include_once "salesrep_city.php";
         }
     else
     {
-        $res_insert=$salesrep1->insert_salesrep();
-        $salesrep_city1->insert_salesrepcity($res_insert);
+        if($user4->check("USRA", 79)){
+            $res_insert=$salesrep1->insert_salesrep();
+            $salesrep_city1->insert_salesrepcity($res_insert);
+        }else{
+            echo"No permission";
+        }
+        
     }
         //code for alert validations
             // if($res_insert==true){
@@ -341,11 +346,17 @@ include_once "../../files/head.php";
                                                             <td>$item->salesrep_name  </td>
                                                          
 
-                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                            <button type='button' onclick='edit_salesrep($item->salesrep_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button>
-                                                            <button type='button'  onclick='delete_salesrep($item->salesrep_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o delete_group'></span></button>
+                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                            if($user4->check("USRE", 80)){
+                                                                echo"  <button type='button' onclick='edit_salesrep($item->salesrep_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button>";
+                                                            }
+                                                            if($user4->check("USRD", 26)){
+                                                                echo"<button type='button'  onclick='delete_salesrep($item->salesrep_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o delete_group'></span></button>";
+                                                            }
+                                                          
                                                             
-                                                        </div>
+                                                            
+                                                      echo"  </div>
                                                         </tr>
                                                         ";
                                                         }

@@ -38,12 +38,12 @@ class avco{
         $count_costprice=$row2['countcostprice'];
 
         $average_costprice=round(($sum_costprice/$count_costprice),2);
-     //   return $average_costprice;
+    
 
        $sql_updateprice="UPDATE avco_product SET avco_costprice=$average_costprice WHERE avco_productid=$productid ";
        $this->db->query($sql_updateprice);
-      // echo $sql_updateprice;
-       return true;
+     
+       return  $average_costprice;
 
 
 

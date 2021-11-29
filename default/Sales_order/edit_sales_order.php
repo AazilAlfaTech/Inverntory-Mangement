@@ -53,7 +53,8 @@ include_once "../../files/head.php";
                                     <li class="breadcrumb-item">
                                         <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Widget</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_order/manage_sales_order.php">SalesOrder</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_order/edit_sales_order.php">Edit</a> </li>
                                 </ul>
                             </div>
                         </div>
@@ -88,7 +89,7 @@ include_once "../../files/head.php";
                                         <div class="form-group row">
 
                                             <div class="col-sm-4">
-                                                <label class=" col-form-label"> SO Reference No</label>
+                                                <label class=" col-form-label">Reference No</label>
                                                 <input class="form-control" type="text" readonly='true' value=<?=$sales_order2->salesorder_ref ?>>
 
                                             </div>
@@ -130,7 +131,7 @@ include_once "../../files/head.php";
 
                                                 <label class=" col-form-label">Price</label>
                                                 
-                                                <select class="form-control pricelevel" name="soitemprice" id="sq_itemprice" >
+                                                <select class="form-control pricelevel" name="soitemprice" id="soitem_price" >
                                                     <option value=""> Pricelevel</option>
                                                 </select>
                                             </div>
@@ -159,6 +160,7 @@ include_once "../../files/head.php";
 
                                         <button type="button" class="btn btn-primary add" name="addprbtn" id="add_prbtn">ADD</button>
                                         <button class="btn btn-inverse reset" type="button">CLEAR</button>
+                                        <span class='error_fields'><label class="label label-md label-danger" >Please fill all the fields</label></span>
                                         <br>
                                         <br>
 
@@ -195,7 +197,7 @@ include_once "../../files/head.php";
 
                                                                 <select name='Price_edit[]'  class="input-borderless price productprice">
                                                                         <option value="<?=$item->so_itemprice?>"><?=$item->so_itemprice?></option>
-                                                                        </select>
+                                                                </select>
                                                                 <input class='form-control input-sm subtotal'   type='hidden'  value='<?=$item->so_subtotal?>'>
                                                             </td>
                                                             <td class='table-edit-view'><span class='tabledit-span'><?= $item->so_itemdiscount ?></span>

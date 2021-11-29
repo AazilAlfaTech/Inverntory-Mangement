@@ -34,7 +34,8 @@ var sq_price=$("#sq_itemprice").val();
 var sq_qty=$("#sq_itemqty").val();
 var sq_dis=$("#sq_itemdiscount").val();
 var sq_fprice=$("#sq_itemfinalprice").val();
-sq_subtotal=parseFloat(sq_price * sq_qty)
+var sq_subtotal=parseFloat(sq_price * sq_qty);
+console.log(sq_subtotal);
 
     if($("#sq_itemproductid").val()=='' || $("#sq_itemprice").val()==''|| $("#sq_itemqty").val()=='' ){
     // alert("Please fill all the fields");
