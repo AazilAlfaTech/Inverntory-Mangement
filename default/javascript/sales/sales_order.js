@@ -60,7 +60,7 @@ productquantity=$("#soitem_qty").val();
 productdiscount=$("#soitem_discount").val();
 producttotal=$("#sofinal_price").val();
 productsubtotal=parseFloat(productprice*productquantity);
-console.log(productid);
+console.log(productprice);
 
 
 $(".itembody").append("<tr>\

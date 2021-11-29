@@ -60,7 +60,9 @@ if(isset($_POST["locname"]))
             }
     }else
     {
-        $res_insert=$location1->insert_location();
+            if($user4->check("POV", 26))
+            {
+                $res_insert=$location1->insert_location();
             //code for insert validation
             if($res_insert==true){
                 echo "INSER DONE";
@@ -69,6 +71,13 @@ if(isset($_POST["locname"]))
                         echo "no insert";
                header("location:../location/managelocation.php?notsuccess=1");
             }
+
+            }else
+            {
+                echo"No permission";
+            }
+
+        
     }
 
 
@@ -354,10 +363,18 @@ include_once "../../files/head.php";
                                                             <td>$item->location_number </td> 
                                                             <td>$item->location_email </td>
 
-                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                            <a href='managelocation.php?edit_location=$item->location_id '>  <button type='button'  class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button> </a>
-                                                            <button type='button'  onclick='delete_location($item->location_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                                            </td> 
+                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                            if($user4->check("MLE", 44)){
+                                                                echo" <a href='managelocation.php?edit_location=$item->location_id '>  <button type='button'  class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button> </a>";
+                                                            }
+                                                            
+                                                            if($user4->check("MLD", 46)){
+                                                                echo" <button type='button'  onclick='delete_location($item->location_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>";
+                                                            }
+                                                            
+                                                           
+                                                           
+                                                          echo"  </td> 
                                                         </tr>
                                                         ";
                                                         }

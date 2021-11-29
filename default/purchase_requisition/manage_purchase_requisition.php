@@ -69,11 +69,19 @@ include_once "../../files/head.php";
                 </div>
                 <!-- Page-header end -->
 
-                <div class="d-flex flex-row-reverse">
-<a href="add_new_purchase_requisition.php">
+                <?php
+                 error_reporting(E_ALL & ~E_NOTICE);
+                if($user4->check("SQV", 3)){
+                    echo'<div class="d-flex flex-row-reverse">
+                    <a href="add_new_purchase_requisition.php">
                     <button class="btn btn-mat btn-primary ">Add New Purchase Requisition</i></button>
-</a>
-                </div>
+                    </a>
+                </div>';
+                }
+
+                ?>
+               
+                
 
 
                 <br>
@@ -170,72 +178,93 @@ include_once "../../files/head.php";
                                             <?php
 
                                                  foreach($result_pr as $item)
-                                                 {
+                                                 { error_reporting(E_ALL & ~E_NOTICE);
                                                     if($item->purchaserequest_currentstatus=='NEW')
                                                     { 
-                                                        echo"
-                                                                    <tr>
-                                                                    <td>$item->purchaserequest_id   </td>
-                                                                        <td>$item->purchaserequest_ref   </td>
-                                                                        <td>$item->purchaserequest_date</td>
-                                                                        <td>$item->supplier_name  </td>
-
-                                                                      
-                                                                     
-                                                                        <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->purchaserequest_currentstatus</label></td>
-
-                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                                        <button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>
-                                                                        <button type='button' onclick='edit_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button> </a>
-                                                                        <button type='button'  onclick='delete_pr($item->purchaserequest_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                                                        </td> 
-                                               
-                                               
-                                                                       
-                                                                       
-                                                                    </tr>
-                                                                    ";
-                                                    }
-                                                    elseif($item->purchaserequest_currentstatus=='APPROVED')
-                                                    { 
-                                                        echo"
-                                                                    <tr>
-                                                                    <td>$item->purchaserequest_id   </td>
-                                                                        <td>$item->purchaserequest_ref   </td>
-                                                                        <td>$item->purchaserequest_date</td>
-                                                                        <td>$item->supplier_name  </td>
-
-                                                                      
-                                                                     
-                                                                        <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->purchaserequest_currentstatus</label></td>
-
-                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                                        <button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>
-                                                                        <button type='button' onclick='edit_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button> </a>
-                                                                        <button type='button'  onclick='delete_pr($item->purchaserequest_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                                                        </td> 
-                                               
-                                               
-                                                                       
-                                                                       
-                                                                    </tr>
-                                                                    ";
-                                                    }
-                                                    elseif($item->purchaserequest_currentstatus=='COMPLETE')
-                                                    {
                                                         echo"
                                                         <tr>
                                                         <td>$item->purchaserequest_id   </td>
                                                             <td>$item->purchaserequest_ref   </td>
                                                             <td>$item->purchaserequest_date</td>
                                                             <td>$item->supplier_name  </td>
-                                                            <td><label class='badge badge-danger' >$item->purchaserequest_currentstatus</label></td>
 
-                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                            <button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>
-                                                            <button type='button'  onclick='delete_pr($item->purchaserequest_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                                            </td> 
-                                                        </tr>";
+                                                          
+                                                         
+                                                            <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->purchaserequest_currentstatus</label></td>
+
+                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                            if($user4->check("PRV",21 )){
+                                                                echo"<button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>";
+                                                            }
+                                                            if($user4->check("PRE", 20)){
+                                                                echo" <button type='button' onclick='edit_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button> </a>";
+                                                            }
+                                                            if($user4->check("PRD", 22)){
+                                                                echo" <button type='button'  onclick='delete_pr($item->purchaserequest_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>";
+                                                            }
+
+                                                            
+                                                           
+                                                           
+                                                            echo"</td> 
+                                                        </tr>
+                                                        ";
+                                                    }
+                                                    elseif($item->purchaserequest_currentstatus=='APPROVED')
+                                                    { 
+                                                        echo"
+                                                        <tr>
+                                                        <td>$item->purchaserequest_id   </td>
+                                                            <td>$item->purchaserequest_ref   </td>
+                                                            <td>$item->purchaserequest_date</td>
+                                                            <td>$item->supplier_name  </td>
+
+                                                          
+                                                         
+                                                            <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->purchaserequest_currentstatus</label></td>
+
+                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                            if($user4->check("PRV",21 )){
+                                                                echo"<button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>";
+                                                            }
+                                                            if($user4->check("PRE", 20)){
+                                                                echo" <button type='button' onclick='edit_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button> </a>";
+                                                            }
+                                                            if($user4->check("PRD", 22)){
+                                                                echo" <button type='button'  onclick='delete_pr($item->purchaserequest_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>";
+                                                            }
+
+                                                            
+                                                           
+                                                           
+                                                            echo"</td> 
+                                                        </tr>
+                                                        ";
+                                                    }
+                                                    elseif($item->purchaserequest_currentstatus=='COMPLETE')
+                                                    {
+                                                        echo"
+                                                                    <tr>
+                                                                    <td>$item->purchaserequest_id   </td>
+                                                                        <td>$item->purchaserequest_ref   </td>
+                                                                        <td>$item->purchaserequest_date</td>
+                                                                        <td>$item->supplier_name  </td>
+
+                                                                      
+                                                                     
+                                                                        <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->purchaserequest_currentstatus</label></td>
+
+                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                        if($user4->check("PRV",21 )){
+                                                                            echo"<button type='button' id='edit_pr' onclick='view_pr($item->purchaserequest_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span  class='fa fa-eye'></span></button>";
+                                                                        }
+                                                                        
+                                                                        
+                                                                       
+                                                                       
+                                                                        echo"</td> 
+                                                                    </tr>
+                                                                    ";
                                                     }
                                                 }
                                                 ?>

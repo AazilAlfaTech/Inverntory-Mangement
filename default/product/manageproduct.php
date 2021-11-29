@@ -103,6 +103,7 @@ if (isset($_POST["productname"]))
                         // }
                 }else
                 {
+                    if($user4->check("MPA", 47)){
                         $res_insert=$product1->insert_product();   
                         $pricelevel1-> insert_pricelevel( $res_insert);
                     
@@ -118,6 +119,11 @@ if (isset($_POST["productname"]))
                         // }elseif($res_insert==false){
                         //     header("location:../product/manageproduct.php?notsuccess=1");
                         // }
+
+                    }else{
+                        echo"No permission";
+                    }
+                        
                 }
 
         }
@@ -551,11 +557,21 @@ include_once "../../files/head.php";
                                                             <td>$item->product_typegroupname</td>
                                                             <td>$item->product_typename</td>
                                                             <td>
-                                                                <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                <button type='button' id='editprod' onclick='view_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>
-                                                                    <button type='button' id='editprod' onclick='edit_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button>
-                                                                    <button type='button'  onclick='delete_product($item->product_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                                                </div>
+                                                                <div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                if($user4->check("MPV", 49)){
+                                                                    echo" <button type='button' id='editprod' onclick='view_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>";
+                                                                }
+                                                                if($user4->check("MPE", 48)){
+                                                                    echo"  <button type='button' id='editprod' onclick='edit_product($item->product_id)';'check()' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button>";
+                                                                }
+                                                                if($user4->check("MPD", 50)){
+                                                                    echo"<button type='button'  onclick='delete_product($item->product_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>";
+                                                                }
+                                                                                                                                                                                                
+                                                               
+                                                                  
+                                                                    
+                                                            echo"   </div>
                                                             </td>
                                                         </tr>";
                                                     }

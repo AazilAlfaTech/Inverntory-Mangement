@@ -6,7 +6,7 @@ include_once "../sales_invoice/sales_invoice.php";
     $sales_invoice1 = new sales_invoice();
 
     $result_sales_invoice = $sales_invoice1->get_all_sales_invoice();
-
+   
     include_once "../payment/payment.php";
     $pay=new payment();
     
@@ -44,21 +44,25 @@ include_once "../sales_invoice/sales_invoice.php";
                             <div class="page-header-breadcrumb">
                                 <ul class="breadcrumb-title">
                                     <li class="breadcrumb-item">
-                                        <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+                                        <a href="../dashboard/dashboard.php"> <i class="feather icon-home"></i> </a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Widget</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_invoice/manage_sales_invoice.php">Widget</a> </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Page-header end -->
-
-                <div class="d-flex flex-row-reverse">
+                <?php
+                if($user4->check("SIA", 9)){
+                    echo' <div class="d-flex flex-row-reverse">
                     <a href="add_new_salesinvoice.php">
                     <button class="btn btn-mat btn-primary ">Add New Sales Invoice</i></button>
                     </a>
-                </div>
+                </div>';
+                }
+                ?>
+               
 
 
                 <br>
@@ -165,11 +169,17 @@ include_once "../sales_invoice/sales_invoice.php";
                                                                     <td ><label class='badge st$item->salesinvoice_paystatus'>$item->salesinvoice_paystatus</label></td>
 
                                                                                                                                                              
-                                                                    <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                                    <button type='button' id='edit_pr' onclick='view_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>
-                                                                    <button type='button' onclick='edit_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit''></span></button> </a>
-                                                                    ";
-                                                                    if($item->salesinvoice_paystatus!='PAID')
+                                                                    <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                    if($user4->check("SIV", 5)){
+                                                                        echo"  <button type='button' onclick='view_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>";
+                                                                    }
+                                                                    if($user4->check("SIE", 11)){
+                                                                        echo" <button type='button' onclick='edit_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit''></span></button> </a>";
+                                                                    }
+
+                                                                    
+                                                         
+                                                                    if($item->salesinvoice_paystatus!='PAID' && $user4->check("SOA", 5))
                                                                     echo"
                                                                     <button type='button' class='btn btn-mini btn-default waves-effect' onclick='getinvoiceid($item->salesinvoice_id,\"$item->salesinvoice_ref \",\"$item->salesinvoice_paymethod\")' data-toggle='modal' data-target='#default-Modal'>Payment</button>
                                                                     </td> 
@@ -194,13 +204,15 @@ include_once "../sales_invoice/sales_invoice.php";
                                                                     <td ><label class='badge st$item->salesinvoice_paystatus'>$item->salesinvoice_paystatus</label></td>
 
                                                                                                                                                              
-                                                                    <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                                    <button type='button' id='edit_pr' onclick='view_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>
+                                                                    <td><div class='btn-group btn-group-sm' style='float: none;'>";
                                                                    
-                                                                    <button type='button'  onclick='delete_si($item->salesinvoice_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
+                                                                    if($user4->check("SIV", 11)){
+                                                                        echo" <button type='button' onclick='view_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>";
+                                                                    }
+
                                                                     
-                                                                    ";
-                                                                    if($item->salesinvoice_paystatus!='PAID')
+                                                         
+                                                                    if($item->salesinvoice_paystatus!='PAID' )
                                                                     echo"
                                                                     <button type='button' class='btn btn-mini btn-default waves-effect' onclick='getinvoiceid($item->salesinvoice_id,\"$item->salesinvoice_ref \",\"$item->salesinvoice_paymethod\")' data-toggle='modal' data-target='#default-Modal'>Payment</button>
                                                                     </td> 
@@ -212,36 +224,43 @@ include_once "../sales_invoice/sales_invoice.php";
                                                                 ";
 
                                                             }else
+                                                            echo"
+                                                            <tr>
+                                                                
+                                                                <td>$item->salesinvoice_ref  </td>
+                                                                <td>$item->salesinvoice_date </td>
+                                                                <td>$item->salesinvoice_customer_name </td>
+                                                                <td><label class='badge st$item->salesinvoice_currentstatus'>$item->salesinvoice_currentstatus</label></td>
+                                                                <td class='text-right'>$item->salesinvoice_total</td>
+                                                                <td class='text-right'>$item->salesinvoice_amountpaid</td>
+                                                                <td class='text-right'>". number_format((float)$item->salesinvoice_balance, 2, '.', '')."</td>
+                                                                <td ><label class='badge st$item->salesinvoice_paystatus'>$item->salesinvoice_paystatus</label></td>
 
-                                                                    echo"
-                                                                    <tr>
-                                                                        
-                                                                        <td>$item->salesinvoice_ref  </td>
-                                                                        <td>$item->salesinvoice_date </td>
-                                                                        <td>$item->salesinvoice_customer_name </td>
-                                                                        <td><label class='badge st$item->salesinvoice_currentstatus'>$item->salesinvoice_currentstatus</label></td>
-                                                                        <td class='text-right'>$item->salesinvoice_total</td>
-                                                                        <td class='text-right'>$item->salesinvoice_amountpaid</td>
-                                                                        <td class='text-right'>". number_format((float)$item->salesinvoice_balance, 2, '.', '')."</td>
-                                                                        <td ><label class='badge st$item->salesinvoice_paystatus'>$item->salesinvoice_paystatus</label></td>
+                                                                                                                                                         
+                                                                <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                if($user4->check("SIV", 11)){
+                                                                    echo"  <button type='button' id='edit_pr' onclick='view_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>";
+                                                                }
+                                                                if($user4->check("SIE", 10)){
+                                                                    echo" <button type='button' onclick='edit_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit''></span></button> </a>";
+                                                                }
+                                                                if($user4->check("SID", 12)){
+                                                                    echo"  <button type='button'  onclick='delete_si($item->salesinvoice_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>";
+                                                                }
+                                                                
+                                                     
+                                                                if($item->salesinvoice_paystatus!='PAID')
+                                                                echo"
+                                                                <button type='button' class='btn btn-mini btn-default waves-effect' onclick='getinvoiceid($item->salesinvoice_id,\"$item->salesinvoice_ref \",\"$item->salesinvoice_paymethod\")' data-toggle='modal' data-target='#default-Modal'>Payment</button>
+                                                                </td> 
+                                       
+                                       
+                                                               
+                                                               
+                                                            </tr>
+                                                            ";
 
-                                                                                                                                                                 
-                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                                        <button type='button' id='edit_pr' onclick='view_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></button>
-                                                                        <button type='button' onclick='edit_si($item->salesinvoice_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit''></span></button> </a>
-                                                                        <button type='button'  onclick='delete_si($item->salesinvoice_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                                                     
-                                                                        ";
-                                                                        if($item->salesinvoice_paystatus!='PAID')
-                                                                        echo"
-                                                                        <button type='button' class='btn btn-mini btn-default waves-effect' onclick='getinvoiceid($item->salesinvoice_id,\"$item->salesinvoice_ref \",\"$item->salesinvoice_paymethod\")' data-toggle='modal' data-target='#default-Modal'>Payment</button>
-                                                                        </td> 
-                                               
-                                               
-                                                                       
-                                                                       
-                                                                    </tr>
-                                                                    ";
+                                                                    
                                                                         }
 
                                                 ?>

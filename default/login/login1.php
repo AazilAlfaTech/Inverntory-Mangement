@@ -13,23 +13,23 @@ if(isset($_POST['user_email'])){
 
     if($res==true){
         
-        if($_SESSION["user"]["user_roleid"]==2){
+        if($_SESSION["user"]){
 
          
           
 
             if($result==null)
-            {header("location:../../default/customer/manage_customer.php");}
+            {header("location:../../default/dashboard/dashboard.php");}
          
 
                 
             }
            
 
-                    elseif($_SESSION["user"]["user_roleid"]==1){
+                    elseif($_SESSION["user"]){ 
 
                       if($result==null)
-                      {header("location:../../default/customer/manage_customer.php");}
+                      {header("location:../../default/dashboard/dashboard.php");}
                   
                       
                           

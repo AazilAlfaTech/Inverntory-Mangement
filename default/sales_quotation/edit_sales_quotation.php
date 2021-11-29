@@ -55,9 +55,10 @@
                             <div class="page-header-breadcrumb">
                                 <ul class="breadcrumb-title">
                                     <li class="breadcrumb-item">
-                                        <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+                                        <a href="../dashboard//dashboard.php"> <i class="feather icon-home"></i> </a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Widget</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_quotation/manage_sales_quotation.php">SalesQuotation</a> </li>
+                                    <li class="breadcrumb-item"><a href="../sales_order/edit_sales_quotation.php">Edit</a> </li>
                                 </ul>
                             </div>
                         </div>
@@ -161,7 +162,7 @@
 
                                         <button type="button" class="btn btn-primary " id="add_prbtn"  >ADD</button>
                                         <button class="btn btn-inverse reset" type="button" >CLEAR</button>
-                                        <span class='error_fields'><div class="alert alert-success background-success p-1" style="width:180px;height:30px">Please fill all the fields</div></span>
+                                        <span class='error_fields'><label class="label label-md label-danger" >Please fill all the fields</label></span>
                                         <br>
                                         <br>
 
@@ -198,9 +199,10 @@
                                                                     </td>
                                                                     <td class='table-edit-view'><span class='tabledit-span'><?=  $item->sq_item_price ?></span>
                                                                         
-                                                                        <select name='sq_item_price_edit[]' id="productprice" class="input-borderless price">
+                                                                        <select name='sq_item_price_edit[]' class="input-borderless price productprice">
                                                                         <option value="<?=$item->sq_item_price?>"><?=$item->sq_item_price?></option>
                                                                         </select>
+                                                                        
                                                                         <input class='form-control input-sm subtotal'   type='hidden'  value='<?=$item->sq_item_subtotal?>'>
 
 
@@ -244,10 +246,7 @@
                                                                 <th> Sub Total :</th>
                                                                 <td ><input type="text" id="total_price" data-a-sign="Rs. " class=" form-control form-control-sm autonumber" readonly></td>
                                                             </tr>
-                                                            <!-- <tr>
-                                                                <th> Total Discount :</th>
-                                                                <td ><input type="text" id="total_discount" class="form-control form-control-sm  autonumber" data-a-sign="Rs. " ></td>
-                                                            </tr> -->
+                                                           
                                                         
                                                             <tr class="text-info">
                                                                 <td>

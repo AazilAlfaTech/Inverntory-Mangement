@@ -53,12 +53,18 @@ include_once "../../files/head.php";
                     </div>
                 </div>
                 <!-- Page-header end -->
+                <?php 
+                 error_reporting(E_ALL & ~E_NOTICE);
+                 if($user4->check("POA",24)){
+                    echo' <div class="d-flex flex-row-reverse">
+                    <a href="add_new_purchase_Order.php">
+                        <button class="btn btn-mat btn-primary ">Add New Purchase Order</i></button>
+                    </a>
+                    </div>';
+                 }
+                ?>
 
-                <div class="d-flex flex-row-reverse">
-<a href="add_new_purchase_Order.php">
-                    <button class="btn btn-mat btn-primary ">Add New Purchase Order</i></button>
-</a>
-                </div>
+               
 
 
                 <br>
@@ -153,6 +159,7 @@ include_once "../../files/head.php";
                                                 <?php
                                                     foreach($result_PO as $item)
                                                     {
+                                                        error_reporting(E_ALL & ~E_NOTICE);
                                                         echo"
                                                         <tr>
                                                         <td>$item->purchaseorder_id</td>
@@ -166,12 +173,23 @@ include_once "../../files/head.php";
 
                                                             <td style='white-space: nowrap, width: 1%;'>
                                                             <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
-                                                                <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                    <a href='viewpurchaseorder.php?view=$item->purchaseorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
-                                                                    <a href='edit_purch_order.php?edit=$item->purchaseorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></a>
-                                                                    <button type='button'  onclick='deleteorder($item->purchaseorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
+                                                                <div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                if($user4->check("POV", 26)){
+                                                                  echo" <a href='viewpurchaseorder.php?view=$item->purchaseorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>"; 
+                                                                }
+                                                                if($user4->check("POE", 25)){
+                                                                    echo"<a href='edit_purch_order.php?edit=$item->purchaseorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></a> "; 
+                                                                  }
+  
+                                                                  if($user4->check("POD", 27)){
+                                                                    echo" <button type='button'  onclick='deleteorder($item->purchaseorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>"; 
+                                                                  }
+  
                                                                     
-                                                                </div>
+                                                                    
+                                                                    
+                                                                    
+                                                               echo" </div>
                                                             </td>
                                                             
                                                             </tr>
@@ -181,15 +199,19 @@ include_once "../../files/head.php";
                                                         elseif($item->purchaseorder_currentstatus=='COMPLETE')
                                                         {
                                                             echo"
-                                                            
-                                                            <td><label class='badge badge-danger' >$item->purchaseorder_currentstatus</label></td>
+                                                            <td><label class='badge badge-success' style='background-color: #04AA6D;'>$item->purchaseorder_currentstatus</label></td>
 
                                                             <td style='white-space: nowrap, width: 1%;'>
                                                             <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
-                                                                <div class='btn-group btn-group-sm' style='float: none;'>
-                                                                    <a href='viewpurchaseorder.php?view=$item->purchaseorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
+                                                                <div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                if($user4->check("POV", 26)){
+                                                                  echo" <a href='viewpurchaseorder.php?view=$item->purchaseorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>"; 
+                                                                }
+                                                                
                                                                     
-                                                                </div>
+                                                                    
+                                                                    
+                                                               echo" </div>
                                                             </td>
                                                             
                                                             </tr>
@@ -233,3 +255,15 @@ include_once "../../files/foot.php";
     $( ".alert" ).fadeIn( 300 ).delay( 3500 ).fadeOut( 400 );
 
 </script>
+if($user4->check("POV", 26)){
+    echo"";
+}
+
+error_reporting(E_ALL & ~E_NOTICE);
+
+if($user4->check("POV", 26))
+{
+   
+{
+    echo"No permission";
+}

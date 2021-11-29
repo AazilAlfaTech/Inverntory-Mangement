@@ -37,12 +37,17 @@ include_once "../../files/head.php";
                     </div>
                 </div>
                 <!-- Page-header end -->
+                <?php
+                   if($user4->check("SDA", 13)){
 
-                <div class="d-flex flex-row-reverse">
-                    <a href="add_new_salesdispatch.php">
-                        <button class="btn btn-mat btn-primary ">Add New Sales Dispatch </i></button>
-                    </a>
-                </div>
+                        echo'<div class="d-flex flex-row-reverse">
+                        <a href="add_new_salesdispatch.php">
+                            <button class="btn btn-mat btn-primary ">Add New Sales Dispatch </i></button>
+                        </a>
+                    </div>';
+                    }
+                ?>
+                
 
 
                 <br>
@@ -120,11 +125,13 @@ include_once "../../files/head.php";
 
                                                             <td style='white-space: nowrap, width: 1%;'>
                                                                 <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
-                                                                 <div class='btn-group btn-group-sm' style='float: none;'>
+                                                                 <div class='btn-group btn-group-sm' style='float: none;'>'";
+                                                                if($user4->check("SDV", 15)){
+                                                                    echo" <a href='viewsalesorder.php?view=$item->salesdispatch_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>";
+                                                                }
+                                                               
 
-                                                                <a href='viewsalesorder.php?view=$item->salesdispatch_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
-
-                                                                
+                                                          echo"      
                                                             </div>
                                                         </td>
                                                         </tr>

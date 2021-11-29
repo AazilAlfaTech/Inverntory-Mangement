@@ -49,6 +49,8 @@ if (isset($_POST["custcode"]))
             }
     }else
     {
+
+        if($user4->check("PCA", 63)){
             $res_insert=$customer1->insert_customer();;  
             //code for insert validation
             if($res_insert==true){
@@ -57,6 +59,11 @@ if (isset($_POST["custcode"]))
             }elseif($res_insert==false){
                 header("location:../customer/manage_customer.php?notsuccess=1");
             }
+        }else{
+            echo"No permission";
+
+        }
+           
     }
 
 
@@ -435,11 +442,22 @@ include_once "../../files/head.php";
                                                                      
                                                                      
 
-                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                                        <button type='button' id='editprod' onclick='view_cus($item->customer_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-eye'></i></button>
-                                                                        <button type='button' onclick='edit_cus($item->customer_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button> </a>
-                                                                        <button type='button'  onclick='delete_cus($item->customer_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-trash-o'></i></button>
-                                                                        </td> 
+                                                                        <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                        if($user4->check("PCV",65)){
+                                                                            echo"<button type='button' id='editprod' onclick='view_cus($item->customer_id)';'check()' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-eye'></i></button>";
+                                                                        }
+                                                                        if($user4->check("PCE",64)){
+                                                                            echo" <button type='button' onclick='edit_cus($item->customer_id)' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button> </a>";
+                                                                        }
+                                                                        if($user4->check("PCD",66)){
+                                                                            echo" <button type='button'  onclick='delete_cus($item->customer_id)'   class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-trash-o'></i></button>";
+                                                                        }
+                                                                        
+                                                                                                                                                
+                                                                        
+                                                                       
+                                                                       
+                                                                     echo" </td> 
                                                
                                                
                                                                        

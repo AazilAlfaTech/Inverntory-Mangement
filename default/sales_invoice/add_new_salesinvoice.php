@@ -162,7 +162,8 @@ include_once "../../files/head.php";
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class=" dt-responsive table-responsive">
+                                               
+                                                <div class="dt-responsive table-responsive">
 
                                                     <table id="autofill" class="table table-striped table-bordered" >
                                                         <thead>
@@ -180,7 +181,7 @@ include_once "../../files/head.php";
 
                                                 </div>
                                                     
-                                                <!-- </div> -->
+
 
 
                                         
@@ -195,9 +196,9 @@ include_once "../../files/head.php";
                                     <div class="card-header"><h5>Sales Invoice Item</h5></div>
                                     <div class="card-block">
 
-                                        <div class="table-responsive">
+                                        <div class="dt-responsive table-responsive">
 
-                                            <table class="table table-striped table-bordered ">
+                                            <table id="autofill" class="table table-striped table-bordered nowrap">
                                                 <thead>
                                                     <tr>
 
@@ -318,8 +319,21 @@ include_once "../../files/head.php";
 
                                             </div>
                                             <div class="card-block cheque  border-primary">
+                                                <div class="col-sm-6">
                                                 <label class=" col-form-label">Cheque No.</label>
                                                 <input type="text" class="form-control form-control-sm" name="chequeno">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                <label class=" col-form-label">Bank</label>
+                                                    <input type="text" class="form-control form-control-sm" name="">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                <label class=" col-form-label">Branch</label>
+                                                <input type="text" class="form-control form-control-sm" name="">
+
+                                                </div>
+
+                                                
                                             </div>
 
                                             <hr>
@@ -386,7 +400,9 @@ include_once "../../files/head.php";
 
                         if($(".dispatchloc").val()=="")
                         {
+                            $("#sinv_customer").val("");
                             alert ("Please select location");
+
                         }else{
                            
                         var customer_id = $("#sinv_customer").val();
@@ -439,7 +455,7 @@ include_once "../../files/head.php";
 
                             // console.log(item_data);
                             $.each(item_data, function(o, p) {
-                                $.get("../ajax/ajaxpurchase.php?type=get_sum_remainingqty",{prodid:item_data[o].so_itemproductid,loc_id:invoiceloc},function(data)
+                                $.get("../ajax/ajaxsales.php?type=get_sum_remainingqty",{prodid:item_data[o].so_itemproductid,loc_id:invoiceloc},function(data)
     {
      console.log(data);
       var d=JSON.parse(data); 

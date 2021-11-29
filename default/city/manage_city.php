@@ -28,18 +28,27 @@ $city1 = new city();
         $res_edit=$city1->edit_city ($_POST["edit_city"]);
         }
     else{
-        $res_insert=$city1->insert_city();}
-        //code for alert validations
-            if($res_insert==true){
-               
-                header("location:../city/manage_city.php?success=1");
+        if($user4->check("MCIA",67)){
+            $res_insert=$city1->insert_city();
+            //code for alert validations
+                if($res_insert==true){
+                   
+                    header("location:../city/manage_city.php?success=1");
+    
+                }elseif($res_edit==true){
+                    header("location:../city/manage_city.php?success_edit=1");
+                }else{
+                    echo"False";
+                }
+            
+        }else{
+            echo"No permission";
+        }
 
-            }elseif($res_edit==true){
-                header("location:../city/manage_city.php?success_edit=1");
-            }else{
-                echo"False";
-            }
 
+
+       
+        }
     }
 //code to get city details  into datatable........................................................................
     
@@ -259,11 +268,17 @@ include_once "../../files/head.php";
                                                             <td>".$item->city_province->province_name."</td> 
                                                             <td>".$item->city_district->district_name."  </td>
 
-                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>
-                                                            <button type='button' onclick='edit_city($item->city_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button>
-                                                            <button type='button'  onclick='delete_city($item->city_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-trash-o'></i></button>
+                                                            <td><div class='btn-group btn-group-sm' style='float: none;'>";
+                                                            if($user4->check("MCIE",68)){
+                                                                echo"<button type='button' onclick='edit_city($item->city_id)'    class='tabledit-edit-button btn btn-primary waves-effect waves-light edit_group' style='float: none;margin: 5px;'><i class='fa fa-edit'></i></button>";
+                                                            }
+                                                            if($user4->check("MCID",70)){
+                                                                echo"<button type='button'  onclick='delete_city($item->city_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><i class='fa fa-trash-o'></i></button>";
+                                                            }
                                                             
-                                                        </div>
+                                                            
+                                                            
+                                                        echo"</div>
 
 
                                                         </td>

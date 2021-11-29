@@ -56,7 +56,8 @@
                 }
         }else
         {
-            $res_insert=$uom1->insert_uom();
+            if($user4->check("MUA", 39)){
+                $res_insert=$uom1->insert_uom();
                 //code for insert validation
                 if($res_insert==true){
                     
@@ -64,6 +65,11 @@
                 }elseif($res_insert==false){
                     header("location:../uom/manageuom.php?notsuccess=1");
                 }
+
+            }else{
+                echo"No permission";
+            }
+           
         }
     
     
@@ -326,13 +332,19 @@
                                                                         <td>$item->uom_id</td>
                                                                         <td>$item->uom_code </td>
                                                                         <td>$item->uom_name </td>
-                                                                        <td> <div class='btn-group btn-group-sm' style='float: none;'>
-
+                                                                        <td> <div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                        if($user4->check("MUE", 40)){
+                                                                            echo"<button type='button'  onclick='edit_uom($item->uom_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button>";
+                                                                        }
+                                                                        if($user4->check("MUD", 42)){
+                                                                            echo"  <button type='button'  onclick='delete_uom($item->uom_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o delete_group'></span></button>";
+                                                                        }
                                                                         
-                                                                        <button type='button'  onclick='edit_uom($item->uom_id)'class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit'></span></button>
-                                                                        <button type='button'  onclick='delete_uom($item->uom_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o delete_group'></span></button>
                                                                         
-                                                                    </div></td>
+                                                                        
+                                                                      
+                                                                        
+                                                                  echo"  </div></td>
 
                                                                     </tr>
                                                                     ";

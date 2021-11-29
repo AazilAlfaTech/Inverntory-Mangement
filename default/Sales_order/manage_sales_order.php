@@ -45,7 +45,7 @@ include_once "../../files/head.php";
                             <div class="page-header-breadcrumb">
                                 <ul class="breadcrumb-title">
                                     <li class="breadcrumb-item">
-                                        <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+                                        <a href="../dashboard//dashboard.php"> <i class="feather icon-home"></i> </a>
                                     </li>
                                     <li class="breadcrumb-item"><a href="../sales_order/manage_sales_order.php">Sales Order</a> </li>
                                 </ul>
@@ -54,12 +54,16 @@ include_once "../../files/head.php";
                     </div>
                 </div>
                 <!-- Page-header end -->
-
-                <div class="d-flex flex-row-reverse">
-                    <a href="add_new_sales_order.php">
-                        <button class="btn btn-mat btn-primary ">Add New Sales Order</i></button>
-                    </a>
-                </div>
+                <?php 
+                    if($user4->check("SOA", 5)){
+                        echo'<div class="d-flex flex-row-reverse">
+                        <a href="add_new_sales_order.php">
+                            <button class="btn btn-mat btn-primary ">Add New Sales Order</i></button>
+                        </a>
+                    </div>';
+                    }
+                ?>
+                
 
 
                 <br>
@@ -156,77 +160,94 @@ include_once "../../files/head.php";
                                             <tbody>
 
                                             <?php
-                                             foreach($result_salesorder as $item){
-                                                if($item->salesorder_currentstatus=='COMPLETE')
-                                                {
-                                                    echo"
-                                                    <tr>
-                                                    <td id='gr_id_td'>$item->salesorder_id</td>
-                                                    <td>$item->salesorder_date</td>
-                                                    <td>$item->salesorder_ref</td>
-                                                    <td>$item->salesorder_customer_name</td>
-                                                    <td><label class='badge st$item->salesorder_currentstatus'>$item->salesorder_currentstatus</label></td>
-                                                    <td style='white-space: nowrap, width: 1%;'>
-                                                        <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
-                                                        <div class='btn-group btn-group-sm' style='float: none;'>
-                                                        <a href='viewsalesorder.php?view=$item->salesorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
-                                                       
-                                                        <button type='button'  onclick='deleteorder($item->salesorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                                        
-                                                        </div>
-                                                    </td>
-                                                    </tr>
-                                                    ";
+                                             // if(){
+                                             foreach($result_salesorder as $item)
+                                            {
+                                               
+                                                        if($item->salesorder_currentstatus=='COMPLETED')
+                                                        {
+                                                            echo"
+                                                            <tr>
+                                                            <td id='gr_id_td'>$item->salesorder_id</td>
+                                                            <td>$item->salesorder_date</td>
+                                                            <td>$item->salesorder_ref</td>
+                                                            <td>$item->salesorder_customer_name</td>
+                                                            <td><label class='badge st$item->salesorder_currentstatus'>$item->salesorder_currentstatus</label></td>
+                                                            <td style='white-space: nowrap, width: 1%;'>
+                                                                <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
+                                                                <div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                if($user4->check("SOV", 7)){
+                                                                    echo" <a href='viewsalesorder.php?view=$item->salesorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>";
+                                                                }
+                                                               
+                                                                echo"</div>
+                                                            </td>
+                                                            </tr>
+                                                            ";
 
-                                                }else if($item->salesorder_currentstatus=='PENDING'){
-                                                    echo"
-                                                    <tr>
-                                                    <td id='gr_id_td'>$item->salesorder_id</td>
-                                                    <td>$item->salesorder_date</td>
-                                                    <td>$item->salesorder_ref</td>
-                                                    <td>$item->salesorder_customer_name</td>
-                                                    <td><label class='badge st$item->salesorder_currentstatus'>$item->salesorder_currentstatus</label></td>
-                                                    <td style='white-space: nowrap, width: 1%;'>
-                                                        <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
-                                                        <div class='btn-group btn-group-sm' style='float: none;'>
-                                                        <a href='viewsalesorder.php?view=$item->salesorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
-                                                        <a href='edit_sales_order.php?edit=$item->salesorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit''></span></a>
-                                                       
-                                                        
-                                                        </div>
-                                                    </td>
-                                                    </tr>
-                                                    ";
-                                                }
-                                                else{
-                                                    echo"
-                                                    <tr>
-                                                    <td id='gr_id_td'>$item->salesorder_id</td>
-                                                    <td>$item->salesorder_date</td>
-                                                    <td>$item->salesorder_ref</td>
-                                                    <td>$item->salesorder_customer_name</td>
-                                                    <td><label class='badge st$item->salesorder_currentstatus'>$item->salesorder_currentstatus</label></td>
-                                                    <td style='white-space: nowrap, width: 1%;'>
-                                                        <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
-                                                        <div class='btn-group btn-group-sm' style='float: none;'>
-                                                        <a href='viewsalesorder.php?view=$item->salesorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>
-                                                        <a href='edit_sales_order.php?edit=$item->salesorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit''></span></a>
-                                                        <button type='button'  onclick='deleteorder($item->salesorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>
-                                                        
-                                                        </div>
-                                                    </td>
-                                                    </tr>
-                                                    ";
-                                                }
-                                             }
+                                                        }else if($item->salesorder_currentstatus=='PENDING')
+                                                        {
+                                                            echo"
+                                                            <tr>
+                                                            <td id='gr_id_td'>$item->salesorder_id</td>
+                                                            <td>$item->salesorder_date</td>
+                                                            <td>$item->salesorder_ref</td>
+                                                            <td>$item->salesorder_customer_name</td>
+                                                            <td><label class='badge st$item->salesorder_currentstatus'>$item->salesorder_currentstatus</label></td>
+                                                            <td style='white-space: nowrap, width: 1%;'>
+                                                                <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
+                                                                <div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                if($user4->check("SOV", 7)){
+                                                                    echo" <a href='viewsalesorder.php?view=$item->salesorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>";
+                                                                }
+                                                                if($user4->check("SOE", 6)){
+                                                                    echo"<a href='edit_sales_order.php?edit=$item->salesorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit''></span></a>";
+                                                                }
+                                                            echo"   </div>
+                                                            </td>
+                                                            </tr>
+                                                            ";
+                                                        }
+                                                        else
+                                                        {
+                                                            echo"
+                                                            <tr>
+                                                            <td id='gr_id_td'>$item->salesorder_id</td>
+                                                            <td>$item->salesorder_date</td>
+                                                            <td>$item->salesorder_ref</td>
+                                                            <td>$item->salesorder_customer_name</td>
+                                                            <td><label class='badge st$item->salesorder_currentstatus'>$item->salesorder_currentstatus</label></td>
+                                                            <td style='white-space: nowrap, width: 1%;'>
+                                                                <div class='tabledit-toolbar btn-toolbar' style='text-align: left;'>
+                                                                <div class='btn-group btn-group-sm' style='float: none;'>";
+                                                                if($user4->check("SOV", 7)){
+                                                                    echo "<a href='viewsalesorder.php?view=$item->salesorder_id' class='tabledit-edit-button btn btn-success waves-effect waves-light' style='float: none;margin: 5px;'><span <i class='fa fa-eye'></i></span></a>";
+                                                                }
+                                                                if($user4->check("SOE", 6)){
+                                                                    echo "<a href='edit_sales_order.php?edit=$item->salesorder_id' class='tabledit-edit-button btn btn-primary waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-edit''></span></a>";
+                                                                }
+                                                                if($user4->check("SOD", 8)){
+                                                                    echo "<button type='button'  onclick='deleteorder($item->salesorder_id)' class='tabledit-delete-button btn btn-danger waves-effect waves-light' style='float: none;margin: 5px;'><span class='fa fa-trash-o'></span></button>";
+                                                                }
+                                                               
+                                                               
+                                                                
+                                                                
+                                                             echo"   </div>
+                                                            </td>
+                                                            </tr>
+                                                            ";
+                                                        }   
+                                                    
+                                            }
 
-
+                                             // }
 
                                                    
-                                                ?>
+                                            ?>
 
                                             </tbody>
-                       </table>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
