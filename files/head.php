@@ -245,7 +245,7 @@ if(!isset($_SESSION["user"])){
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="../Logins/logout.php">
+                                        <a href="../logins/logout.php">
                                             <i class="feather icon-log-out"></i> Logout
                                         </a>
                                     </li>
