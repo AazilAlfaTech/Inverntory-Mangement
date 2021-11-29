@@ -10,7 +10,10 @@ if(!isset($_SESSION["user"])){
 // {
 //     parent::__construct();
 // }
+include_once("../user/user.php");
 
+
+$user4=new user();
 
 
 ?>
