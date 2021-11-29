@@ -11,10 +11,7 @@ if(!isset($_SESSION["user"])){
 //     parent::__construct();
 // }
 
-include_once("../user/user.php");
-$user5= new user();
 
-$user4=new user();
 
 ?>
 
@@ -453,20 +450,7 @@ $user4=new user();
                                
                                 </a>
                                 <ul class="pcoded-submenu">
-                                <!-- <?php if($user5->checksubgroup("Sales", "Sales Quotation")):?>
-                                    <li class="">
-                                        <a href="../sales_quotation/manage_sales_quotation.php" target="">
-                                            <span class="pcoded-mtext">Sales Quotation</span>
-                                        </a>
-                                    </li>
-                                <?php endif ;   ?>
-                                <?php if($user5->checksubgroup("Sales", "Sales Order")):?>
-                                    <li class=" ">
-                                        <a href="../sales_order/manage_sales_order.php" target="" >
-                                            <span class="pcoded-mtext">Sales Order </span>
-                                        </a>
-                                    </li>
-                                <?php endif ;   ?> -->
+                               
                                 <li class="">
                                         <a href="../sales_quotation/manage_sales_quotation.php" target="">
                                             <span class="pcoded-mtext">Sales Quotation</span>

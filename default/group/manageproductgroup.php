@@ -1,5 +1,10 @@
 <?php
 
+include_once("../user/user.php");
+
+
+$user4=new user();
+
 include_once "group.php";
 $group1=new group();//create a new object 
 
@@ -58,6 +63,7 @@ if(isset($_POST["groupcode"]))
             }
     }else
     {
+        // error_reporting(E_ALL & ~E_NOTICE);
         if($user4->check("MGA",31 ))
         {
             $res_insert=$group1->insert_group2();
@@ -101,8 +107,8 @@ if(isset($_GET['delete_g'])){
 //code to get group details  into datatable........................................................................
 $result_group=$group1->get_all_group();
 
-
 include_once "../../files/head.php";
+
 
 ?>
 <!-- --------------------------------------------------------------------------------------------------- -->
@@ -327,7 +333,8 @@ include_once "../../files/head.php";
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
+                                <?php  
+                                error_reporting(E_ALL & ~E_NOTICE);
                                     foreach($result_group as $item)
                                     {echo"
                                         <tr>
