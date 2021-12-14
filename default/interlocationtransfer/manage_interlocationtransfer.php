@@ -176,8 +176,8 @@
                                                            
                                                                 <td>$item->inter_loc_transfer_code</td>
                                                                 <td>$item->inter_loc_transfer_date</td>
-                                                                <td>".$item->inter_loc_transfer_from->location_name."</td>
-                                                                <td>$item->inter_loc_transfer_to</td>
+                                                                <td>$item->locationfrom</td>
+                                                                <td>$item->locationto</td>
                                                                 
                                                                 <td>
                                                                     <div class='btn-group btn-group-sm' style='float: none;'>

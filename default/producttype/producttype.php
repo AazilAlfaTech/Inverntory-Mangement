@@ -162,10 +162,10 @@
         //getall producttype 
         function getall_type()
         {
-            $SQL="SELECT * FROM product_type WHERE ptype_status='ACTIVE'";
+            $SQL="SELECT * FROM product_type join product_group on product_type.ptype_group_id=product_group.group_id WHERE ptype_status='ACTIVE'";
             $result=$this->db->query($SQL);
             $type_array=array();
-            $type_group1=new group();
+            //$type_group1=new group();
 
             while($row=$result->fetch_array())
             
@@ -174,7 +174,8 @@
                 $ptype->ptype_id=$row["ptype_id"];
                 $ptype->ptype_name=$row["ptype_name"];
                 $ptype->ptype_code=$row["ptype_code"];
-                $ptype->ptype_group_id=$type_group1->get_group_by_id($row["ptype_group_id"]);
+                $ptype->group_name=$row["group_name"];
+               
                 $ptype->ptype_status=$row["ptype_status"];
                 $type_array[]=$ptype;
             }

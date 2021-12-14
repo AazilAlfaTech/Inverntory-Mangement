@@ -29,7 +29,7 @@ include_once "supplier_group.php";
                 }
         }else
         {
-            if($user4->check("RSGA", 51)){
+            // if($user4->check("RSGA", 51)){
                 $res_insert=$suppliergroup1->insert_suppier_group();   
                 //code for insert validation
                 if($res_insert==true){
@@ -39,9 +39,9 @@ include_once "supplier_group.php";
                     header("location:../supplier_group/manage_supplier_group.php ?notsuccess=1");
                 }
 
-            }else{
-                echo"No permission";
-            }
+            // }else{
+            //     echo"No permission";
+            // }
                 
         }
     

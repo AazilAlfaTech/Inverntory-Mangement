@@ -36,7 +36,7 @@ function insert_inter_loc_transfer(){
 // //........................get all function........................
 
 function get_all_inter_loc_transfer(){
-    $sql = "SELECT * FROM inter_loc_transfer WHERE  inter_loc_transfer_status = 'ACTIVE'  ";
+    $sql = "select inter_loc_transfer.inter_loc_transfer_id ,inter_loc_transfer.inter_loc_transfer_code,inter_loc_transfer.inter_loc_transfer_from, inter_loc_transfer.inter_loc_transfer_to,inter_loc_transfer.inter_loc_transfer_date,inter_loc_transfer.inter_loc_transfer_status, t1.location_name as locationfrom, t2.location_name as locationto from inter_loc_transfer inner join location t1 on t1.location_id = inter_loc_transfer.inter_loc_transfer_from inner join location t2 on t2.location_id = inter_loc_transfer.inter_loc_transfer_to WHERE  inter_loc_transfer_status = 'ACTIVE'  ";
 
     //echo $sql;
 
@@ -44,7 +44,7 @@ function get_all_inter_loc_transfer(){
     $result = $this->db->query($sql);   
 
     $inter_loc_transfer_array = array();
-    $location1= new location();
+   
     
     while($row = $result->fetch_array()){
 
@@ -53,8 +53,11 @@ function get_all_inter_loc_transfer(){
         $inter_loc_transfer_item->inter_loc_transfer_id=$row["inter_loc_transfer_id"];
         $inter_loc_transfer_item->inter_loc_transfer_code=$row["inter_loc_transfer_code"];
         $inter_loc_transfer_item->inter_loc_transfer_date=$row["inter_loc_transfer_date"];
-        $inter_loc_transfer_item->inter_loc_transfer_from=$location1->get_location_by_id($row["inter_loc_transfer_from"]);
-        // $inter_loc_transfer_item->inter_loc_transfer_to=$location1->get_location_by_id($row["inter_loc_transfer_to"]);
+        $inter_loc_transfer_item->inter_loc_transfer_from=$row["inter_loc_transfer_from"];
+        $inter_loc_transfer_item->inter_loc_transfer_to=$row["inter_loc_transfer_to"];
+        $inter_loc_transfer_item->locationfrom=$row["locationfrom"];
+        $inter_loc_transfer_item->locationto=$row["locationto"];
+
 
     $inter_loc_transfer_array[] = $inter_loc_transfer_item;
 
@@ -127,8 +130,9 @@ function int_loc_code1($int_date){
 //...........................get by ID..........
 
 function get_inter_loc_transfer_by_id($inter_loc_transfer_id){
-    $sql = "SELECT * FROM inter_loc_transfer WHERE inter_loc_transfer_id =$inter_loc_transfer_id 
-    AND inter_loc_transfer_status = 'ACTIVE'";
+    // $sql = "SELECT * FROM inter_loc_transfer WHERE inter_loc_transfer_id =$inter_loc_transfer_id 
+    // AND inter_loc_transfer_status = 'ACTIVE'";
+    $sql="select inter_loc_transfer.inter_loc_transfer_id ,inter_loc_transfer.inter_loc_transfer_code,inter_loc_transfer.inter_loc_transfer_from, inter_loc_transfer.inter_loc_transfer_to,inter_loc_transfer.inter_loc_transfer_date,inter_loc_transfer.inter_loc_transfer_status, t1.location_name as locationfrom, t2.location_name as locationto from inter_loc_transfer inner join location t1 on t1.location_id = inter_loc_transfer.inter_loc_transfer_from inner join location t2 on t2.location_id = inter_loc_transfer.inter_loc_transfer_to WHERE  inter_loc_transfer_status = 'ACTIVE' AND inter_loc_transfer_id =$inter_loc_transfer_id ";
 
     //echo $sql;
 
@@ -136,12 +140,15 @@ function get_inter_loc_transfer_by_id($inter_loc_transfer_id){
     $result=$this->db->query($sql);
     $row=$result->fetch_array();
         $inter_loc_transfer_item=new inter_loc_transfer(); //object
-        $location1= new location();
+        
         $inter_loc_transfer_item->inter_loc_transfer_id=$row["inter_loc_transfer_id"];
         $inter_loc_transfer_item->inter_loc_transfer_code=$row["inter_loc_transfer_code"];
         $inter_loc_transfer_item->inter_loc_transfer_date=$row["inter_loc_transfer_date"];
-        $inter_loc_transfer_item->inter_loc_transfer_from=$location1->get_location_by_id($row["inter_loc_transfer_from"]);
-        $inter_loc_transfer_item->inter_loc_transfer_to=$location1->get_location_by_id($row["inter_loc_transfer_to"]);
+        $inter_loc_transfer_item->inter_loc_transfer_from=$row["inter_loc_transfer_from"];
+        $inter_loc_transfer_item->inter_loc_transfer_to=$row["inter_loc_transfer_to"];
+        $inter_loc_transfer_item->locationfrom=$row["locationfrom"];
+        $inter_loc_transfer_item->locationto=$row["locationto"];
+
 
        
     return $inter_loc_transfer_item;

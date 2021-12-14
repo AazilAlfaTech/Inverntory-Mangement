@@ -56,7 +56,7 @@
                 }
         }else
         {
-            if($user4->check("MUA", 39)){
+            // if($user4->check("MUA", 39)){
                 $res_insert=$uom1->insert_uom();
                 //code for insert validation
                 if($res_insert==true){
@@ -64,11 +64,11 @@
                     header("location:../uom/manageuom.php?success=1");
                 }elseif($res_insert==false){
                     header("location:../uom/manageuom.php?notsuccess=1");
-                }
+               }
 
-            }else{
-                echo"No permission";
-            }
+            // }else{
+            //     echo"No permission";
+            // }
            
         }
     

@@ -60,22 +60,22 @@ if(isset($_POST["locname"]))
             }
     }else
     {
-            if($user4->check("POV", 26))
-            {
-                $res_insert=$location1->insert_location();
-            //code for insert validation
-            if($res_insert==true){
-                echo "INSER DONE";
-                header("location:../location/managelocation.php?success=1");
-            }elseif($res_insert==false){
-                        echo "no insert";
-               header("location:../location/managelocation.php?notsuccess=1");
-            }
+            // if($user4->check("POV", 26))
+            // {
+                    $res_insert=$location1->insert_location();
+                //code for insert validation
+                if($res_insert==true){
+                    echo "INSER DONE";
+                    header("location:../location/managelocation.php?success=1");
+                }elseif($res_insert==false){
+                            echo "no insert";
+                header("location:../location/managelocation.php?notsuccess=1");
+                }
 
-            }else
-            {
-                echo"No permission";
-            }
+            // }else
+            // {
+            //     echo"No permission";
+            // }
 
         
     }

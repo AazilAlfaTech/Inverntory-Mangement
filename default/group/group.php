@@ -78,8 +78,7 @@ function get_group_by_id($groupid){
  
     $result=$this->db->query($sql);
 
-    // $group_array=array();
-
+   
     $row=$result->fetch_array();
     
         $group_item=new group();
