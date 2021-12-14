@@ -64,8 +64,11 @@ if(isset($_POST["groupcode"]))
     }else
     {
         // error_reporting(E_ALL & ~E_NOTICE);
-        if($user4->check("MGA",31 ))
-        {
+        // if(!($user4->check("MGA",31 )))
+        // { echo"No Permission";
+            
+            
+        // }else{
             $res_insert=$group1->insert_group2();
             //code for insert alert validations
                 if($res_insert==true){
@@ -74,10 +77,8 @@ if(isset($_POST["groupcode"]))
                 }elseif($res_insert==false){
                   
                     header("location:../group/manageproductgroup.php?notsuccess=1");
-                }
-            
-        }else{
-            echo"No Permission";
+                // }
+           
         }
         
 

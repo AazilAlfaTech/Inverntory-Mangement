@@ -38,7 +38,7 @@ if (isset($_POST["supcode"]))
             }
     }else
     {
-        if($user4->check("RSA", 55)){
+        // if($user4->check("RSA", 55)){
             $res_insert=$supplier1->insert_suppier();  
             //code for insert validation
             if($res_insert==true){
@@ -47,9 +47,9 @@ if (isset($_POST["supcode"]))
             }elseif($res_insert==false){
                 header("location:../supplier/manage_supplier.php?notsuccess=1");
             }
-        }else{
-            echo"No permission";
-        }
+        // }else{
+        //     echo"No permission";
+        // }
           
     }
 

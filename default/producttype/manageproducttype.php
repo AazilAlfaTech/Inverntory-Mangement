@@ -64,8 +64,9 @@ if (isset($_POST["typename"]))
                 header("location:../producttype/manageproducttype.php?notsuccess=1");
             }
     }else
-    {   if($user4->check("MTA",35))
-        {
+    {   
+        // if($user4->check("MTA",35))
+        // {
             $res_insert=$producttype1->add_type();
             //code for insert validation
             if($res_insert==true){
@@ -75,10 +76,10 @@ if (isset($_POST["typename"]))
                 header("location:../producttype/manageproducttype.php?notsuccess=1");
             }
      
-        }else 
-        {
-            echo"No permission";
-        }
+        // }else 
+        // {
+        //     echo"No permission";
+        // }
         
     }
 
@@ -345,9 +346,9 @@ include_once "../../files/head.php";
                                             "<tr>
                                                 <td>$item->ptype_id</td>
                                                 <td>$item->ptype_code</td>
-                                                <td>$item->ptype_name
+                                                <td>$item->ptype_name</td>
                                       
-                                                <td>".$item->ptype_group_id->group_name."</td>
+                                                <td>$item->group_name</td>
                                                 
 
                                                 <td>

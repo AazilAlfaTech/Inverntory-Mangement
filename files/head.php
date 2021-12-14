@@ -12,6 +12,10 @@ if(!isset($_SESSION["user"])){
 // }
 include_once("../user/user.php");
 
+include_once("../user/user.php");
+
+
+$user4=new user();
 
 $user4=new user();
 

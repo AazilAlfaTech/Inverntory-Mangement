@@ -50,7 +50,7 @@ if (isset($_POST["custcode"]))
     }else
     {
 
-        if($user4->check("PCA", 63)){
+        // if($user4->check("PCA", 63)){
             $res_insert=$customer1->insert_customer();;  
             //code for insert validation
             if($res_insert==true){
@@ -59,10 +59,10 @@ if (isset($_POST["custcode"]))
             }elseif($res_insert==false){
                 header("location:../customer/manage_customer.php?notsuccess=1");
             }
-        }else{
-            echo"No permission";
+        // }else{
+        //     echo"No permission";
 
-        }
+        // }
            
     }
 

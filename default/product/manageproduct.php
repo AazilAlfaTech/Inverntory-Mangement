@@ -103,7 +103,7 @@ if (isset($_POST["productname"]))
                         // }
                 }else
                 {
-                    if($user4->check("MPA", 47)){
+                    // if($user4->check("MPA", 47)){
                         $res_insert=$product1->insert_product();   
                         $pricelevel1-> insert_pricelevel( $res_insert);
                     
@@ -120,9 +120,9 @@ if (isset($_POST["productname"]))
                         //     header("location:../product/manageproduct.php?notsuccess=1");
                         // }
 
-                    }else{
-                        echo"No permission";
-                    }
+                    // }else{
+                    //     echo"No permission";
+                    // }
                         
                 }
 

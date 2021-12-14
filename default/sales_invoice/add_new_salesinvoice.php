@@ -2,7 +2,7 @@
 
 include_once "../customer/customer.php";
 $customer1 = new customer();
-include_once "../Sales_order/sales_order.php";
+include_once "../sales_order/sales_order.php";
 $sales_order1 = new sales_order();
 include_once "../sales_invoice/sales_invoice.php";
 $sales_invoice1 = new sales_invoice();

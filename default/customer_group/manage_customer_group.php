@@ -29,8 +29,8 @@ include_once "customer_group.php";
                     header("location:../customer_group/manage_customer_group.php?notsuccess=1");
                 }
         }else{
-            if($user4->check("PCGA", 59))
-            {
+            // if($user4->check("PCGA", 59))
+            // {
                 $res_insert=$customergroup1->insert_customer_group();   
                 //code for insert validation
                 if($res_insert==true){
@@ -39,9 +39,9 @@ include_once "customer_group.php";
                 }elseif($res_insert==false){
                     header("location:../customer_group/manage_customer_group.php?notsuccess=1");
                 }
-            }else{
-                echo "No permissio";
-            }
+            // }else{
+            //     echo "No permissio";
+            // }
                 
         }
     
