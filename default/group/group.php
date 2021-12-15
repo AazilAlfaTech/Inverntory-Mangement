@@ -21,15 +21,6 @@ function __construct(){
     return true;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-// function insert_group(){
-
-//         $sql="INSERT INTO product_group(group_code,group_name) VALUES ($this->group_code,'$this->group_name');";
-//         echo $sql;
-//         $this->db->query($sql);
-//         return true;
-   
-// }
 
 function insert_group2(){
     $CODE=$_POST["groupcode"];
@@ -133,9 +124,9 @@ function get_group_by_code($groupcode){
    // echo $sql;
     $result=$this->db->query($sql);
 
-    // $group_array=array();
+    
 
-    $row=$result->fetch_array();
+        $row=$result->fetch_array();
         $group_item=new group();
         $group_item->group_id=$row["group_id"];
         $group_item->group_code=$row["group_code"];

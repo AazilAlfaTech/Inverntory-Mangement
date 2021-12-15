@@ -77,7 +77,8 @@ if (isset($_POST["productname"]))
                 $product1->product_uom=$_POST["unitid"];
                 $product1->product_desc=$_POST["productdesc"];
                 $product1->product_inventory_val=$_POST["productval"];
-                $product1->product_batch=$_POST["productbatch"];
+                $product1->product_reorderlevel=$_POST["productreorderlevel"];
+                $product1->product_reorderqty=$_POST["productreorderqty"];
 
                 $product1->product_code = $product1->get_count($_POST["prodtypeid"],$_POST["productgroup"]);
 
@@ -95,12 +96,12 @@ if (isset($_POST["productname"]))
                     
                 
                         //code for insert validation
-                        // if($res_edit==true){
+                        if($res_edit==true){
                         
-                        //     header("location:../product/manageproduct.php?success_edit=1");
-                        // }elseif($res_edit==false){
-                        //     header("location:../product/manageproduct.php?notsuccess=1");
-                        // }
+                            header("location:../product/manageproduct.php?success_edit=1");
+                        }elseif($res_edit==false){
+                            header("location:../product/manageproduct.php?notsuccess=1");
+                        }
                 }else
                 {
                     // if($user4->check("MPA", 47)){
@@ -110,15 +111,15 @@ if (isset($_POST["productname"]))
                         if($_POST["productval"]=='AVCO')
                         {
                             $avco_product1->insert_avco( $res_insert);
-                            echo "AVCO DONE";
+                           
                         }
                         //code for insert validation
-                        // if($res_insert==true){
+                        if($res_insert==true){
                             
-                        //  header("location:../product/manageproduct.php?success=1");
-                        // }elseif($res_insert==false){
-                        //     header("location:../product/manageproduct.php?notsuccess=1");
-                        // }
+                         header("location:../product/manageproduct.php?success=1");
+                        }elseif($res_insert==false){
+                            header("location:../product/manageproduct.php?notsuccess=1");
+                        }
 
                     // }else{
                     //     echo"No permission";
@@ -298,7 +299,7 @@ include_once "../../files/head.php";
                                                 <input type="text" class="form-control" placeholder="" name="productname" id="prod_name" value="<?=$product1->product_name?>" required>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-2">
                                                 <label class=" col-form-label"> Inventory Valuation</label>
                                                 <br>
                                             
@@ -310,10 +311,15 @@ include_once "../../files/head.php";
 
 
                                             </div>
-                                            <div class="col-sm-4" id="pbatch">
-                                                <label class=" col-form-label"> Product batch</label>
-                                                <input type="text" class="form-control" placeholder="" name="productbatch" id="prod_batch" value="<?=$product1->product_batch?>">
+                                            <div class="col-sm-3" >
+                                                <label class=" col-form-label"> Reorder qty</label>
+                                                <input type="number" class="form-control" placeholder="" name="productreorderqty" id="prod_batch" value="<?=$product1->product_reorderqty?>">
                                             </div>
+                                            <div class="col-sm-3" >
+                                                <label class=" col-form-label"> Reorder level</label>
+                                                <input type="number" class="form-control" placeholder="" name="productreorderlevel" id="prod_batch" value="<?=$product1->product_reorderlevel?>">
+                                            </div>
+
 
                                         </div>
 
