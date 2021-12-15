@@ -1,7 +1,7 @@
 <?php
 
 include_once ("producttype.php");
-include_once "../group/group.php";
+include_once ("../group/group.php");
 
 $producttype1=new producttype ();
 $group=new group();

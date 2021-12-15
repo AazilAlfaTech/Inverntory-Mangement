@@ -15,6 +15,8 @@
             public $product_desc;
             public $product_inventory_val;
             public $product_batch;
+            public $product_reorderlevel	;
+            public $product_reorderqty;
             public $product_status;
             public $db;
 
@@ -25,9 +27,9 @@
 
             function insert_product()
             {
-                $SQL="INSERT INTO product (product_name,product_group,product_code,product_type,product_uom,product_desc,product_inventory_val,product_batch )
+                $SQL="INSERT INTO product (product_name,product_group,product_code,product_type,product_uom,product_desc,product_inventory_val,product_reorderlevel,product_reorderqty )
                 VALUES ('$this->product_name','$this->product_group','$this->product_code','$this->product_type','$this->product_uom','$this->product_desc','$this->product_inventory_val',
-                '$this->product_batch')";
+                '$this->product_reorderlevel','$this->product_reorderqty')";
                 $this->db->query($SQL);
 
                
@@ -163,7 +165,7 @@
             function edit_product($productid)
             {
                 $SQL="UPDATE product SET product_name='$this->product_name',product_type='$this->product_type',product_uom='$this->product_uom',
-                product_desc='$this->product_desc',product_inventory_val='$this->product_inventory_val',product_batch='$this->product_batch' 
+                product_desc='$this->product_desc',product_inventory_val='$this->product_inventory_val',product_reorderlevel='$this->product_reorderlevel',product_reorderqty='$this->product_reorderqty' 
                 WHERE product_id=$productid";
                 $this->db->query($SQL);
                 move_uploaded_file($_FILES["productimage"]["tmp_name"],"../product/productimage/$productid.jpg");
@@ -192,10 +194,13 @@
             // --------------------------------------------------------------------------------------------------------------------------------------
             function getall_product(){
            
-                $SQL="SELECT * FROM product WHERE product_status='ACTIVE'";
+                $SQL="SELECT product.product_id,product.product_code,product.product_name,product.product_type,product.product_uom,product.product_inventory_val,
+                product.product_batch,product.product_desc,product.product_reorderlevel,product.product_reorderqty,product_type.ptype_name,product_group.group_name,product_group.group_id,product_group.group_code,
+                product_uom.uom_name FROM product INNER JOIN product_type ON product.product_type =product_type.ptype_id INNER JOIN product_group
+                ON product_type.ptype_group_id =product_group.group_id INNER JOIN product_uom ON product.product_uom=product_uom.uom_id WHERE product_status='ACTIVE'";
                 $result=$this->db->query($SQL);
                 $product_array=array();
-                $ptype1=new producttype();
+              
 
                 while($row=$result->fetch_array())
                 {
@@ -203,12 +208,15 @@
                     $product->product_id=$row["product_id"];
                     $product->product_code=$row["product_code"];
                     $product->product_name=$row["product_name"];
-                    $product->product_type=$ptype1->get_type_by_id ($row["product_type"]);
-                    $product->product_uom=$row["product_uom"];
+                    $product->product_type=$row["product_type"];//id product type
+                    $product->product_typename=$row["ptype_name"];//product type name
+                    $product->product_typegroupID=$row["group_id"];//group id
+                    $product->product_typegroupname=$row["group_name"];//group name
+                    $product->uom_name=$row["uom_name"];
                     $product->product_desc=$row["product_desc"];
                     $product->product_inventory_val=$row["product_inventory_val"];
-                    $product->product_batch=$row["product_batch"];
-                    $product->product_status=$row["product_status"];
+                    $product->product_reorderlevel=$row["product_reorderlevel"];
+                    $product->product_reorderqty=$row["product_reorderqty"];
                     $product_array[]=$product;
                 }
                 return  $product_array;
@@ -218,8 +226,9 @@
             function getall_product2()
             {
                 $SQL="SELECT product.product_id,product.product_code,product.product_name,product.product_type,product.product_uom,product.product_inventory_val,
-                product.product_batch,product.product_desc,product_type.ptype_name,product_group.group_name,product_group.group_id,product_group.group_code  FROM product INNER JOIN product_type ON product.product_type =product_type.ptype_id INNER JOIN product_group
-                ON product_type.ptype_group_id =product_group.group_id  WHERE product_status='ACTIVE' ";
+                product.product_batch,product.product_desc,product.product_reorderlevel,product.product_reorderqty,product_type.ptype_name,product_group.group_name,product_group.group_id,product_group.group_code,
+                product_uom.uom_name FROM product INNER JOIN product_type ON product.product_type =product_type.ptype_id INNER JOIN product_group
+                ON product_type.ptype_group_id =product_group.group_id INNER JOIN product_uom ON product.product_uom=product_uom.uom_id WHERE product_status='ACTIVE' ";
                 $result=$this->db->query($SQL);
                 $product_array=array();
                 // echo $SQL;
@@ -235,11 +244,12 @@
                     $product->product_typename=$row["ptype_name"];//product type name
                     $product->product_typegroupID=$row["group_id"];//group id
                     $product->product_typegroupname=$row["group_name"];//group name
-                    //$product->product_type=$ptype1->get_type_by_id ($row["product_type"]);
-                    $product->product_uom=$uom1->get_uom_by_id($row["product_uom"]);
+                    $product->uom_name=$row["uom_name"];
                     $product->product_desc=$row["product_desc"];
                     $product->product_inventory_val=$row["product_inventory_val"];
-                    $product->product_batch=$row["product_batch"];
+                    $product->product_reorderlevel=$row["product_reorderlevel"];
+                    $product->product_reorderqty=$row["product_reorderqty"];
+
                     // $product->product_status=$row["product_status"];
     
                     $product_array[]=$product;
@@ -250,24 +260,29 @@
             function get_product_by_id($productid)
             {
 
-                $SQL="SELECT * FROM product WHERE product_id=$productid";
+                $SQL="SELECT product.product_id,product.product_code,product.product_name,product.product_type,product.product_uom,product.product_inventory_val,
+                product.product_batch,product.product_desc,product.product_reorderlevel,product.product_reorderqty,product_type.ptype_name,product_group.group_name,product_group.group_id,product_group.group_code,
+                product_uom.uom_name FROM product INNER JOIN product_type ON product.product_type =product_type.ptype_id INNER JOIN product_group
+                ON product_type.ptype_group_id =product_group.group_id INNER JOIN product_uom ON product.product_uom=product_uom.uom_id WHERE product_status='ACTIVE' AND product_id=$productid";
                 $result=$this->db->query($SQL);
                 // echo $SQL;
 
                 $row=$result->fetch_array();
-                $ptype1=new producttype();
-                $uom1=new uom();
+                
                 $product=new product();
                 $product->product_id=$row["product_id"];
                 $product->product_code=$row["product_code"];
                 $product->product_name=$row["product_name"];
-                $product->product_group=$row["product_group"];
-                $product->product_type=$ptype1->get_type_by_id ($row["product_type"]);
-                $product->product_uom=$uom1->get_uom_by_id($row["product_uom"]);
+                $product->product_type=$row["product_type"];//id product type
+                $product->product_typename=$row["ptype_name"];//product type name
+                $product->product_typegroupID=$row["group_id"];//group id
+                $product->product_typegroupname=$row["group_name"];//group name
+                $product->uom_name=$row["uom_name"];
                 $product->product_desc=$row["product_desc"];
                 $product->product_inventory_val=$row["product_inventory_val"];
-                $product->product_batch=$row["product_batch"];
-                $product->product_status=$row["product_status"];
+                $product->product_reorderlevel=$row["product_reorderlevel"];
+                $product->product_reorderqty=$row["product_reorderqty"];
+
 
                 return $product;
 
@@ -276,16 +291,17 @@
             {
                
                 $SQL="SELECT product.product_id,product.product_code,product.product_name,product.product_type,product.product_uom,product.product_inventory_val,
-                product.product_batch,product.product_desc,product_type.ptype_name,product_group.group_name,product_group.group_id,product_group.group_code  FROM product INNER JOIN product_type ON product.product_type =product_type.ptype_id INNER JOIN product_group
-                ON product_type.ptype_group_id =product_group.group_id  WHERE product_id=$productid";
+                product.product_batch,product.product_desc,product.product_reorderlevel,product.product_reorderqty,product_type.ptype_name,product_group.group_name,product_group.group_id,product_group.group_code,
+                product_uom.uom_name FROM product INNER JOIN product_type ON product.product_type =product_type.ptype_id INNER JOIN product_group
+                ON product_type.ptype_group_id =product_group.group_id INNER JOIN product_uom ON product.product_uom=product_uom.uom_id WHERE product_status='ACTIVE' AND product_id=$productid";
                 $result=$this->db->query($SQL);
                 // echo $SQL;
 
                 $row=$result->fetch_array();
                 
-                $uom1=new uom();
+              
                 $product=new product();
-                $ptype1=new producttype();
+              
                 $product->product_id=$row["product_id"];
                 $product->product_code=$row["product_code"];
                 $product->product_name=$row["product_name"];
@@ -293,13 +309,12 @@
                 $product->product_typename=$row["ptype_name"];//product type name
                 $product->product_typegroupID=$row["group_id"];//group id
                 $product->product_typegroupname=$row["group_name"];//group name
-               
-                //$product->product_type=$ptype1->get_type_by_id ($row["product_type"]);
-                $product->product_uom=$uom1->get_uom_by_id($row["product_uom"]);
+                $product->uom_name=$row["uom_name"];
                 $product->product_desc=$row["product_desc"];
                 $product->product_inventory_val=$row["product_inventory_val"];
-                $product->product_batch=$row["product_batch"];
-                // $product->product_status=$row["product_status"];
+                $product->product_reorderlevel=$row["product_reorderlevel"];
+                $product->product_reorderqty=$row["product_reorderqty"];
+
 
                 return $product;
 
