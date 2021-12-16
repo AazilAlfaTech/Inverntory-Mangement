@@ -71,7 +71,7 @@ function insert_customer(){
 
         // Gets the extension of the file selected
         $a=pathinfo($_FILES['doc']['name'],PATHINFO_EXTENSION);
-        print_r($a);
+        // print_r($a);
         if($a=='xlsx')
         {
             // include the class excel libraray
@@ -92,12 +92,12 @@ function insert_customer(){
                 {
                     // Get the column name and the value
                     $customer_code=$sheet->getCellByColumnAndRow(0,$i)->getValue();
-                    $customer_name=$sheet->getCellByColumnAndRow(1,$i)->getValue();
-                    $customer_add=$sheet->getCellByColumnAndRow(2,$i)->getValue();
-                    $customer_contactno=$sheet->getCellByColumnAndRow(3,$i)->getValue();
-                    $customer_email=$sheet->getCellByColumnAndRow(4,$i)->getValue();
-                    $customer_city=$sheet->getCellByColumnAndRow(5,$i)->getValue();
-                    $customer_group_name=$sheet->getCellByColumnAndRow(6,$i)->getValue();
+                    $customer_group_name=$sheet->getCellByColumnAndRow(1,$i)->getValue();
+                    $customer_name=$sheet->getCellByColumnAndRow(2,$i)->getValue();
+                    $customer_add=$sheet->getCellByColumnAndRow(3,$i)->getValue();
+                    $customer_city=$sheet->getCellByColumnAndRow(4,$i)->getValue();
+                    $customer_contactno=$sheet->getCellByColumnAndRow(5,$i)->getValue();
+                    $customer_email=$sheet->getCellByColumnAndRow(6,$i)->getValue();
                     $customer_salesrep=$sheet->getCellByColumnAndRow(7,$i)->getValue();
                     $customer_creditdays=$sheet->getCellByColumnAndRow(8,$i)->getValue();
                     $customer_creditlimit=$sheet->getCellByColumnAndRow(9,$i)->getValue();
@@ -106,10 +106,10 @@ function insert_customer(){
                     $customer_group_id=$customer_group->return_cus_groupid($customer_group_name);
                     
 
-                    // echo"$name";
+                    echo"$name";
                     if($customer_code!='')
                     {
-                        $sql1="SELECT * FROM customer WHERE customer_status='ACTIVE' AND customer_code='$CODE' OR customer_email='$MAIL' OR customer_contactno='$CONTACT'";
+                        $sql1="SELECT * FROM customer WHERE customer_status='ACTIVE' AND customer_code='$customer_code' OR customer_email='$customer_email' OR customer_contactno='$customer_contactno'";
                         $result_sql1=$this->db->query($sql1);
 
                         if($result_sql1->num_rows==0)

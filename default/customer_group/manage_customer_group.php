@@ -9,7 +9,7 @@ include_once "customer_group.php";
     
     if(isset($_POST["submit"]))
 {
-    $group1->import_customer_group();
+    $customergroup1->import_customer_group();
     
 }
     

@@ -89,7 +89,7 @@ function import_supplier()
                     // echo"$name";
                     if($supplier_code!='')
                     {
-                        $sql1= "SELECT * FROM supplier WHERE supplier_status='ACTIVE' AND supplier_code='$CODE' OR supplier_email='$MAIL' OR supplier_contactno='$CONTACT' ";
+                        $sql1= "SELECT * FROM supplier WHERE supplier_status='ACTIVE' AND supplier_code='$supplier_code' OR supplier_email='$supplier_email' OR supplier_contactno='$supplier_contactno' ";
                         // echo($sql1);
                         $res_code=$this->db->query($sql1);
 
