@@ -256,7 +256,7 @@ function return_sup_groupid($sup_groupname){
         $row=$result->fetch_array();
         $sup_group_id=$row["suppliergroup_id"]; 
         return $sup_group_id;
-        // print_r($group_id);
+        print_r($sup_group_id);
     }
     else
     {

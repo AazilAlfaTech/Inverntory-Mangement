@@ -237,7 +237,7 @@ function get_customer_group_by_name($cus_grp_name){
 }
 
 function return_cus_groupid($cus_groupname){
-    $sql="SELECT customergroup_id FROM customer_group WHERE customergroup_name='$cus_groupname'";
+    $sql="SELECT customergroup_id FROM customer_group WHERE customergroup_code='$cus_groupname'";
     $result=$this->db->query($sql);
     echo '<pre>';
     print_r($result);
@@ -248,7 +248,7 @@ function return_cus_groupid($cus_groupname){
         $row=$result->fetch_array();
         $cus_group_id=$row["customergroup_id"]; 
         return $cus_group_id;
-        // print_r($group_id);
+        print_r($cus_group_id);
     }
     else
     {

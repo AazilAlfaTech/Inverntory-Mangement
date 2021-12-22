@@ -21,7 +21,7 @@ include_once "../salesrep/salesrep.php";
     // import customer
     if(isset($_POST["submit"]))
     {
-        $group1->import_customer();
+        $customer1->import_customer();
         
     }
 

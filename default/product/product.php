@@ -15,7 +15,7 @@
             public $product_desc;
             public $product_inventory_val;
             public $product_batch;
-            public $product_reorderlevel	;
+            public $product_reorderlevel;
             public $product_reorderqty;
             public $product_status;
             public $db;
@@ -116,7 +116,9 @@
                             $product_uom=$sheet->getCellByColumnAndRow(3,$i)->getValue();
                             $product_desc=$sheet->getCellByColumnAndRow(4,$i)->getValue();
                             $product_inventory_val=$sheet->getCellByColumnAndRow(5,$i)->getValue();
-                            $product_batch=$sheet->getCellByColumnAndRow(6,$i)->getValue();
+                            $product_reorderlevel=$sheet->getCellByColumnAndRow(6,$i)->getValue();
+                            $product_reorderqty=$sheet->getCellByColumnAndRow(6,$i)->getValue();
+
 
                             $group=new group();
                             $prod_groupid=$group->return_groupid($product_group);
@@ -137,9 +139,9 @@
                             if($product_name!='')
                             {
                                 // mysqli_query($con,"INSERT INTO test_import (name,email,age) VALUES ( '$name','$email','$age')");
-                                $sql="INSERT INTO product (product_name,product_code,product_group,product_type,product_uom,product_desc,product_inventory_val,product_batch )
-                                VALUES ('$product_name','$prod','$prod_groupid','$prod_typeid','$prod_uomid','$product_desc','$product_inventory_val',
-                                '$product_batch')";
+                                $sql="INSERT INTO product (product_name,product_code,product_group,product_type,product_uom,product_desc,product_inventory_val,product_reorderlevel,product_reorderqty)
+                                VALUES ('$product_name','$prod','$prod_groupid','$prod_typeid','$prod_uomid','$product_desc','$product_inventory_val','$product_reorderlevel',
+                                '$product_reorderqty')";
                                 $this->db->query($sql);
                                 $msg=1;
                             }

@@ -103,7 +103,8 @@ function edit_salesrep($salesrepid){
 
 //-------------------------------------------------------------------------------------------------------------------
 
-function delete_salesrep($salesrep_id){
+function delete_salesrep($salesrep_id)
+{
 
     $sql="UPDATE salesrep SET salesrep_status='INACTIVE' WHERE salesrep_id=$salesrep_id ";
     //echo $sql;
@@ -115,26 +116,48 @@ function delete_salesrep($salesrep_id){
 
 //----------------------------------------------------------------------------------------------------------------------------
 
-function get_salesrep_by_code($salesrepcode){
+    function get_salesrep_by_code($salesrepcode)
+    {
 
-    $sql="SELECT * FROM salesrep WHERE salesrep_code = '$salesrepcode'";
-    //echo $sql;
-    $result=$this->db->query($sql);
-    $row=$result->fetch_array();
+        $sql="SELECT * FROM salesrep WHERE salesrep_code = '$salesrepcode'";
+        //echo $sql;
+        $result=$this->db->query($sql);
+        $row=$result->fetch_array();
 
-    $salesrep_item = new salesrep();
+        $salesrep_item = new salesrep();
 
-    $salesrep_item->salesrep_id=$row["salesrep_id"];
-    $salesrep_item->salesrep_code=$row["salesrep_code"];
-    $salesrep_item->salesrep_name=$row["salesrep_name"];
-    // $salesrep_item->salesrep_province=$row["salesrep_province"];
-    $salesrep_item->salesrep_status=$row["salesrep_status"];
+        $salesrep_item->salesrep_id=$row["salesrep_id"];
+        $salesrep_item->salesrep_code=$row["salesrep_code"];
+        $salesrep_item->salesrep_name=$row["salesrep_name"];
+        // $salesrep_item->salesrep_province=$row["salesrep_province"];
+        $salesrep_item->salesrep_status=$row["salesrep_status"];
 
+        
+        return $salesrep_item;
+    }
+
+    function return_salesrep_id($salesrep_name)
+    {
+        $sql="SELECT salesrep_id FROM salesrep WHERE salesrep_name='$salesrep_name'";
+        $result=$this->db->query($sql);
+        echo '<pre>';
+        print_r($result);
        
-    return $salesrep_item;
-}
-
-
+        if ($result->num_rows > 0) 
+        {
+            // output data of each row
+            $row=$result->fetch_array();
+            $sales_rep_id=$row["csalesrep_id"]; 
+            return $sales_rep_id;
+            print_r($sales_rep_id);
+        }
+        else
+        {
+            
+            echo "invalid sales rep!";
+            // return false;
+        }
+    }
 
 
 }

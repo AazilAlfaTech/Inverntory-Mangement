@@ -12,7 +12,7 @@ include_once "../supplier_group/supplier_group.php";
     
      if(isset($_POST["submit"]))
      {
-         $group1->import_supplier();
+         $supplier1->import_supplier();
          
      }
 

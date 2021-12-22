@@ -7,7 +7,7 @@ include_once "supplier_group.php";
     // import supplier group
     if(isset($_POST["submit"]))
     {
-        $group1->import_supplier_group();
+        $suppliergroup1->import_supplier_group();
         
     }
 
